@@ -1,0 +1,293 @@
+/*
+* demo.css
+* File include item demo only specific css only
+******************************************************************************/
+
+.menu .app-brand.demo {
+  height: 64px;
+  margin-top: 12px;
+}
+
+.app-brand-logo.demo svg {
+  width: 22px;
+  height: 38px;
+}
+
+.app-brand-text.demo {
+  font-size: 1.75rem;
+  letter-spacing: -0.5px;
+  /*text-transform: lowercase;*/
+  text-transform: none;
+}
+
+
+/* ! For .layout-navbar-fixed added fix padding top tpo .layout-page */
+/* Detached navbar */
+.layout-navbar-fixed .layout-wrapper:not(.layout-horizontal):not(.layout-without-menu) .layout-page {
+  padding-top: 76px !important;
+}
+/* Default navbar */
+.layout-navbar-fixed .layout-wrapper:not(.layout-without-menu) .layout-page {
+  padding-top: 64px !important;
+}
+
+/* Navbar page z-index issue solution */
+.content-wrapper .navbar {
+  z-index: auto;
+}
+
+/*
+* Content
+******************************************************************************/
+
+.demo-blocks > * {
+  display: block !important;
+}
+
+.demo-inline-spacing > * {
+  margin: 1rem 0.375rem 0 0 !important;
+}
+
+/* ? .demo-vertical-spacing class is used to have vertical margins between elements. To remove margin-top from the first-child, use .demo-only-element class with .demo-vertical-spacing class. For example, we have used this class in forms-input-groups.html file. */
+.demo-vertical-spacing > * {
+  margin-top: 1rem !important;
+  margin-bottom: 0 !important;
+}
+.demo-vertical-spacing.demo-only-element > :first-child {
+  margin-top: 0 !important;
+}
+
+.demo-vertical-spacing-lg > * {
+  margin-top: 1.875rem !important;
+  margin-bottom: 0 !important;
+}
+.demo-vertical-spacing-lg.demo-only-element > :first-child {
+  margin-top: 0 !important;
+}
+
+.demo-vertical-spacing-xl > * {
+  margin-top: 5rem !important;
+  margin-bottom: 0 !important;
+}
+.demo-vertical-spacing-xl.demo-only-element > :first-child {
+  margin-top: 0 !important;
+}
+
+.rtl-only {
+  display: none !important;
+  text-align: left !important;
+  direction: ltr !important;
+}
+
+[dir='rtl'] .rtl-only {
+  display: block !important;
+}
+
+/*
+* Layout demo
+******************************************************************************/
+
+.layout-demo-wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  margin-top: 1rem;
+}
+.layout-demo-placeholder img {
+  width: 900px;
+}
+.layout-demo-info {
+  text-align: center;
+  margin-top: 1rem;
+}
+
+
+/* ESTILO PARA MENU */
+/**********************************************************/
+/*disenio de posicion y tamanio del logo*/
+.text-center>.menu-logo {
+  margin-bottom: -45px;
+  width: 150px;
+}
+
+/*modifica el nombre de la pagina*/
+.desing-name{
+  font-family: 'Poppins', sans-serif;
+  color:#7367F0 !important;
+  padding-left: 15px;
+
+}
+
+.desing-title-page{
+  font-family: 'Poppins', sans-serif; 
+  color: #7367F0; 
+  font-weight: bold; 
+  padding-top: 1rem; 
+  padding-bottom: 1rem; 
+  margin-bottom: 1rem; 
+  text-align: center; 
+  font-size: 40px;
+}
+
+/********************************************************************/
+/*calendario*/
+.panel{
+  margin-left: 0.6rem;
+  margin-right: 0.6rem;
+  margin-top: 0.7rem;
+  margin-bottom: 0.9rem;
+}
+
+/* Estilos personalizados para los botones de filtro -----*/
+.filter-btn {
+  width: 80%; /* Ocupa todo el ancho disponible ----*/
+  justify-content: flex-start;
+  text-align:left;
+  margin-left: 0.2rem;
+}
+
+/* El cuadrado de color dentro del botón */
+.filter-btn::before {
+  content: '';
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  margin-right: 10px;
+  border-radius: 3px; /* Para hacer los bordes del cuadrado ligeramente redondeados */
+}
+.filter-btn:hover{
+  border: #4c4c4d;
+}
+
+/* Color de fondo del cuadrado según el tipo de evento */
+.filter-btn[data-type="ropa"]::before {
+  background-color: #d2eea3; /* Color de Reunión */
+}
+
+.btn.btn-calendar-1 {
+  color: #555555f1;
+  border-color: #fffff3;
+  background: transparent;
+  justify-content: flex-start;
+}
+.btn.btn-calendar-1:hover {
+  color: #555555f1;
+  background-color: #d2eea3;
+  border-color: #83ec52;
+  box-shadow: 0 0.125rem 0.25rem 0 rgba(133, 146, 163, 0.4);
+  transform: translateY(-1px);
+}
+
+/* Color de fondo del cuadrado según el tipo de evento */
+.filter-btn[data-type="tecnologia"]::before {
+  background-color: #c6aff9; /* Color de Reunión */
+}
+
+.btn.btn-calendar-2 {
+  color: #555555f1;
+  border-color: #fffff3;
+  background: transparent;
+  justify-content: flex-start;
+}
+.btn.btn-calendar-2:hover {
+  color: #555555f1;
+  background-color: #c6aff9;
+  border-color: #b18ff8;
+  box-shadow: 0 0.125rem 0.25rem 0 rgba(133, 146, 163, 0.4);
+  transform: translateY(-1px);
+}
+
+/* Color de fondo del cuadrado según el tipo de evento */
+.filter-btn[data-type="deporte"]::before {
+  background-color: #f2d288; /* Color de Reunión */
+}
+
+.btn.btn-calendar-3 {
+  color: #555555f1;
+  border-color: #fffff3;
+  background: transparent;
+}
+.btn.btn-calendar-3:hover {
+  color: #555555f1;
+  background-color: #f2d288;
+  border-color: #f8ba2a;
+  box-shadow: 0 0.125rem 0.25rem 0 rgba(133, 146, 163, 0.4);
+  transform: translateY(-1px);
+}
+
+
+.fc-toolbar h2, /* Esto afecta el título del mes */
+.fc-day-header span { /* Esto afecta los días de la semana */
+  text-transform: capitalize; /* Capitaliza la primera letra */
+}
+.fc-day-header {
+  background-color: #eeeeee;
+}
+/* Centrar el título de los meses --------/
+.fc-toolbar-title {
+  flex-grow: 1;
+  text-align: center;
+  width: 100%;
+  justify-content: center;
+}
+/*font-size: 18px; /* Ajusta el tamaño de la fuente si lo deseas /
+text-align: center;
+flex-grow: 1; 
+display:flex;*/
+.fc-toolbar {
+  margin-left: 0.8rem !important;
+  margin-right: 0.9rem !important;
+  
+}
+
+.fc-event{
+  margin-bottom: 0.2rem !important;
+}
+
+
+/*--------------------------------------*/
+.fa{
+  display:inline-block;
+  font:normal normal normal 14px/1 FontAwesome;
+  font-size:inherit;
+  text-rendering:auto;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale
+}
+.fa-lg{font-size:1.33333333em;
+  line-height:.75em;vertical-align:-15%}
+.fa-2x{font-size:2em}
+.fa-3x{font-size:3em}
+.fa-4x{font-size:4em}
+.fa-5x{font-size:5em}
+.fa-fw{width:1.28571429em;text-align:center}
+.fa-ul{padding-left:0;margin-left:2.14285714em;list-style-type:none}
+.fa-ul>li{position:relative}
+.fa-search:before{content:"\f002"}
+.fa-envelope-o:before{content:"\f003"}
+.fa-heart:before{content:"\f004"}
+.fa-star:before{content:"\f005"}
+.fa-star-o:before{content:"\f006"}
+.fa-user:before{content:"\f007"}
+
+.fa-film:before{content:"\f008"}
+.fa-th-large:before{content:"\f009"}
+.fa-th:before{content:"\f00a"}
+.fa-th-list:before{content:"\f00b"}
+.fa-check:before{content:"\f00c"}
+.fa-remove:before,.fa-close:before,.fa-times:before{content:"\f00d"}
+.fa-search-plus:before{content:"\f00e"}
+.fa-search-minus:before{content:"\f010"}
+.fa-power-off:before{content:"\f011"}
+.fa-signal:before{content:"\f012"}
+.fa-gear:before,.fa-cog:before{content:"\f013"}
+.fa-trash-o:before{content:"\f014"}
+.fa-home:before{content:"\f015"}
+.fa-file-o:before{content:"\f016"}

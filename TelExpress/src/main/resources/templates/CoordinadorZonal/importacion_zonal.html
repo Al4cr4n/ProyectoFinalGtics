@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+
+<html
+        lang="es"
+        class="light-style layout-menu-fixed"
+        dir="ltr"
+        data-theme="theme-default"
+        data-assets-path="../../assets/"
+        data-template="vertical-menu-template-free"
+>
+<head>
+    <meta charset="utf-8" />
+    <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+    />
+
+    <title>Importaciones- CoordinadorZonal</title>
+
+    <meta name="description" content="" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="../../assets/img/favicon/favicon.ico" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+            href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+            rel="stylesheet"
+    />
+
+    <!-- Icons. Uncomment required icon fonts -->
+    <link rel="stylesheet" href="../../assets/vendor/fonts/boxicons.css" />
+
+    <!-- Core CSS -->
+    <link rel="stylesheet" href="../../assets/vendor/css/core.css" class="template-customizer-core-css" />
+    <link rel="stylesheet" href="../../assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
+    <link rel="stylesheet" href="../../assets/css/demo.css" />
+
+    <!-- Vendors CSS -->
+    <link rel="stylesheet" href="../../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+
+    <link rel="stylesheet" href="../../assets/vendor/libs/apex-charts/apex-charts.css" />
+
+    <!-- Page CSS -->
+
+    <!-- Helpers -->
+    <script src="../../assets/vendor/js/helpers.js"></script>
+
+    <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
+    <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
+    <script src="../../assets/js/config.js"></script>
+
+    <!--TelExpress fuente de letra-->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    
+    <!-- Estilos personalizados -->
+     <!-- FullCalendar CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css" rel="stylesheet" />
+
+    
+
+    <style>
+        
+        /* Ajustar la altura de los eventos -------/
+        .fc-event-container {
+            max-height: 2em;
+            overflow: hidden;
+        }
+    
+        /* Asegurarse de que el contenedor del calendario ocupa todo el espacio *-----
+        .col-md-8, .col-lg-9 {
+            padding-left: 15px;
+            padding-right: 15px;
+        }*/
+       
+    </style>
+    
+
+</head>
+
+<body>
+<!-- Layout wrapper -->
+<div class="layout-wrapper layout-content-navbar">
+    <div class="layout-container">
+        <!-- Menu -->
+        <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+            <!-- Contenedor para la imagen centrada -->
+            <div style="text-align: center;">
+                <img src="logo.png" alt="Imagen" style="width: 150px; margin-bottom: -70px; margin-top: -20px">
+            </div>
+
+            <div class="app-brand demo" style="text-align: center;">
+                <a href="inicio_coordinador_zonal.html" class="app-brand-link">
+                    <span class="app-brand-text demo menu-text fw-bolder" style="font-family: 'Poppins', sans-serif; color: #7367F0; padding-left: 15px;">TelExpress</span>
+                </a>
+
+                <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
+                    <i class="bx bx-chevron-left bx-sm align-middle"></i>
+                </a>
+            </div>
+            <!-- Contenedor para la imagen centrada -->
+
+            <div class="menu-inner-shadow"></div> <!-- efecto visual de sombra dentro del menu -->
+
+            <ul class="menu-inner py-1">
+                <!-- Inicio -->
+                <li class="menu-item ">
+                    <a href="inicio_coordinador_zonal.html" class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                        <div data-i18n="Start">Inicio</div>
+                    </a>
+                </li>
+
+                <!-- Dashboard -->
+                <li class="menu-item">
+                    <a href="dashboard_zonal.html" class="menu-link" >
+                        <i class="menu-icon tf-icons bx bx-grid-alt"></i>
+                        <div data-i18n="Dashboard">Dashboard</div>
+                    </a>
+                </li>
+                <!--Crear Agente -->
+                <li class="menu-item">
+                    <a href="listaagente_zonal.html" class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-user-plus"></i>
+                        <div data-i18n="Agentes">Agentes</div>
+                    </a>
+
+                </li>
+                <li class="menu-item active">
+                    <a href="importacion_zonal.html" class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-import"></i>
+                        <div data-i18n="Importaciones">Importaciones</div>
+                    </a>
+                </li>
+                <li class="menu-item ">
+                    <a href="productos_zonal.html" class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-package"></i>
+                        <div data-i18n="Productos">Productos</div>
+                    </a>
+                </li>
+
+
+
+            </ul>
+        </aside>
+        <!-- / Menu -->
+
+        <!-- Layout container -->
+        <div class="layout-page">
+            <!-- Navbar -->
+            <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme" id="layout-navbar">
+                <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+                    <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
+                        <i class="bx bx-menu bx-sm"></i>
+                    </a>
+                </div>
+
+                <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+                    <!-- Search -->
+                    <div class="navbar-nav align-items-center">
+                        <div class="nav-item d-flex align-items-center">
+                        </div>
+                    </div>
+                    <!-- /Search -->
+
+                    <ul class="navbar-nav flex-row align-items-center ms-auto">
+                        <!-- Notificaciones -->
+                        <li class="nav-item navbar-dropdown dropdown-user dropdown">
+                            <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+                                <div class="position-relative">
+                                    <div class="bx bx-bell" style="font-size: 26px; color: #7367F0;"></div>
+                                    <span class="badge bg-danger rounded-circle position-absolute d-flex justify-content-center align-items-center" style="top: -5px; right: -5px; font-size: 12px; width: 18px; height: 18px;">
+                      5
+                    </span>
+                                </div>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li class="dropdown-header">Notificaciones</li>
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        <div class="d-flex align-items-center">
+                                            <div class="bx bx-message-square-dots me-3" style="font-size: 20px; color: #7367F0;"></div>
+                                            <div>
+                                                <span class="d-block">Nueva solicitud recibida</span>
+                                                <small class="text-muted">Hace 5 minutos</small>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        <div class="d-flex align-items-center">
+                                            <div class="bx bx-check-circle me-3" style="font-size: 20px; color: #28C76F;"></div>
+                                            <div>
+                                                <span class="d-block">Tarea completada</span>
+                                                <small class="text-muted">Hace 2 horas</small>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        <div class="d-flex align-items-center">
+                                            <div class="bx bx-error me-3" style="font-size: 20px; color: #EA5455;"></div>
+                                            <div>
+                                                <span class="d-block">Error en el sistema</span>
+                                                <small class="text-muted">Hace 1 día</small>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        <div class="d-flex align-items-center">
+                                            <div class="bx bx-download me-3" style="font-size: 20px; color: #FF9F43;"></div>
+                                            <div>
+                                                <span class="d-block">Archivo descargado</span>
+                                                <small class="text-muted">Hace 3 días</small>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+
+                                <li class="dropdown-footer">
+                                    <a class="dropdown-item text-center text-primary" href="#">Ver todas las notificaciones</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <!-- User -->
+                        <li class="nav-item navbar-dropdown dropdown-user dropdown">
+                            <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+                                <div class="avatar avatar-online">
+                                    <img src="../../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                                </div>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        <div class="d-flex">
+                                            <div class="flex-shrink-0 me-3">
+                                                <div class="avatar avatar-online">
+                                                    <img src="../../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                                                </div>
+                                            </div>
+                                            <div class="flex-grow-1">
+                                                <span class="fw-semibold d-block">John Doe</span>
+                                                <small class="text-muted">Admin</small>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <div class="dropdown-divider"></div>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        <i class="bx bx-user me-2"></i>
+                                        <span class="align-middle">My Profile</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        <i class="bx bx-cog me-2"></i>
+                                        <span class="align-middle">Settings</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                      <span class="d-flex align-items-center align-middle">
+                        <i class="flex-shrink-0 bx bx-credit-card me-2"></i>
+                        <span class="flex-grow-1 align-middle">Billing</span>
+                        <span class="flex-shrink-0 badge badge-center rounded-pill bg-danger w-px-20 h-px-20">4</span>
+                      </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <div class="dropdown-divider"></div>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="../Sistema/Login.html">
+                                        <i class="bx bx-power-off me-2"></i>
+                                        <span class="align-middle">Log Out</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+            <!-- / Navbar -->
+
+            <!-- Content wrapper -->
+          <div class="content-wrapper">
+            <!-- Content -->
+            <div class="container-xxl flex-grow-1 container-p-y">
+
+                <h4 style="font-family: 'Poppins', sans-serif; color: #7367F0; font-weight: bold; padding-top: 1rem; padding-bottom: 1rem; margin-bottom: 1rem; text-align: center; font-size: 40px;">Importaciones en el mes</h4>
+                <div class="card">
+                    <!--h5 class="card-header">Light Table head</h5-->
+                    
+                    <!--calendario y su mini filtro para eventos que se ven por dia en el calendario-->
+                    <div class="row">
+                        <!-- Sidebar para filtrar eventos -->
+                        <div class="col-md-4 col-lg-3">
+                            <div class="panel">
+                                <!--div class="panel-heading">
+                                    <h3 class="panel-title">Filtrar Eventos</h3>
+                                </div-->
+                                <div class="panel-body">
+                                    <h4 class="text-thin ">Filtro por categoria</h4>
+                                    <div id="event-filters col">
+                                        <button class="btn btn-secondary filter-btn row my-1" data-type="all">Mostrar Todos</button>
+                                        <button class="btn btn-calendar-1 filter-btn row my-1" data-type="ropa">Ropa</button>
+                                        <button class="btn btn-calendar-2 filter-btn row my-1" data-type="tecnologia">Tecnologia</button>
+                                        <button class="btn btn-calendar-3 filter-btn row my-1" data-type="deporte">Deportes</button>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Calendario -->
+                        <div class="col-md-8 col-lg-9">
+                            <div class="panel">
+                                <div class="panel-body">
+                                    <div id="calendar" ></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Bootstrap Table with Header - Light -->
+            </div>
+          </div>
+
+        </div>
+        <!-- Content wrapper -->
+    </div>
+    <!-- / Layout page -->
+</div>
+    
+
+<!-- Overlay -->
+<div class="layout-overlay layout-menu-toggle"></div>
+</div>
+
+
+<!-- Core JS -->
+<!-- build:js assets/vendor/js/core.js -->
+<script src="../../assets/vendor/libs/jquery/jquery.js"></script>
+<script src="../../assets/vendor/libs/popper/popper.js"></script>
+<script src="../../assets/vendor/js/bootstrap.js"></script>
+<script src="../../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+
+<script src="../../assets/vendor/js/menu.js"></script>
+<!-- endbuild -->
+
+<!-- Vendors JS -->
+<script src="../../assets/vendor/libs/apex-charts/apexcharts.js"></script>
+
+<!-- Main JS -->
+<script src="../../assets/js/main.js"></script>
+
+<!-- Page JS -->
+<script src="../../assets/js/dashboards-analytics.js"></script>
+
+<!-- Place this tag in your head or just before your close body tag. -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+
+<!-- FullCalendar CSS -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css" rel="stylesheet" />
+<!-- FullCalendar JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/locale/es.js"></script><!--traduce -->
+
+<script>
+$(document).ready(function() {
+    // Inicializar el calendario
+    $('#calendar').fullCalendar({
+        locale:'es', //traduce los meses y dias a espa;ol
+        headerToolbar: {
+            left: 'prev,next',  // Botones de navegación a la izquierda
+            center: 'title',    // Título (mes y año) centrado
+            right: ''           // No hay elementos a la derecha
+        },
+        events: [
+            {
+                id:1,
+                title: 'Llegada de ropa',
+                start: '2024-09-09',
+                type: 'ropa',
+                backgroundColor: '#d2eea3',
+                borderColor: '#d2eea3',
+                textColor:'#000f'
+            },
+            {
+                id:2,
+                title: 'Llegada de tecnologia',
+                start: '2024-09-12',
+                type: 'tecnologia',
+                backgroundColor: '#c6aff9',
+                borderColor: '#c6aff9',
+                textColor:'#000f'
+            },
+            {
+                id:3,
+                title: 'Llegada de deportivo',
+                start: '2024-09-15',
+                type: 'deporte',
+                backgroundColor: '#f2d288',
+                borderColor: '#f2d288',
+                textColor:'#000f'
+            },
+            {
+                id:4,
+                title: 'Llegada de ropa',
+                start: '2024-09-10',
+                type: 'ropa',
+                backgroundColor: '#d2eea3',
+                borderColor: '#d2eea3',
+                textColor:'#000f'
+            },
+            {
+                id:5,
+                title: 'Llegada de ropa',
+                start: '2024-09-10',
+                end: '2024-09-10',
+                type: 'ropa',
+                backgroundColor: '#d2eea3',
+                borderColor: '#d2eea3',
+                textColor:'#000f'
+            },
+            {
+                id:6,
+                title: 'Llegada de ropa',
+                start: '2024-09-10',
+                type: 'ropa',
+                backgroundColor: '#d2eea3',
+                borderColor: '#d2eea3',
+                textColor:'#000f'
+            },
+            {
+                id:7,
+                title: 'Llegada de ropa',
+                start: '2024-09-10',
+                type: 'ropa',
+                backgroundColor: '#d2eea3',
+                borderColor: '#d2eea3',
+                textColor:'#000f'
+            },
+            {
+                id:7,
+                title: 'Llegada de ropa',
+                start: '2024-09-10',
+                type: 'ropa',
+                backgroundColor: '#d2eea3',
+                borderColor: '#d2eea3',
+                textColor:'#000f'
+            },
+            {
+                id:8,
+                title: 'Llegada de deporte',
+                start: '2024-09-10',
+                type: 'deporte',
+                backgroundColor: '#f2d288',
+                borderColor: '#f2d288',
+                textColor:'#000f'
+            }
+        ],
+        eventLimit: true, // Habilitar el límite de eventos por día
+        eventLimitText: function(n) {
+            return "+" + n + " more"; // Mostrar el texto "+x more"
+        },
+        eventLimitClick: 'popover', // Mostrar un popover con los eventos ocultos
+        views: {
+            month: { 
+                eventLimit: 2 // Limitar a 2 eventos visibles por día
+            }
+        }
+    });
+
+    // Almacenar todos los eventos originales
+    var allEvents = $('#calendar').fullCalendar('clientEvents');
+
+    // Filtrar eventos por tipo
+    $('.filter-btn').on('click', function() {
+        var eventType = $(this).data('type');
+
+        //var allEvents = $('#calendar').fullCalendar('clientEvents');
+        // Eliminar todos los eventos
+        $('#calendar').fullCalendar('removeEvents');
+
+        // Mostrar todos los eventos si se selecciona "Mostrar Todos"
+        if (eventType === 'all') {
+            //allEvents.forEach(function(event) {
+            //    event._def.ui.display = 'block';
+            //});
+            // Mostrar todos los eventos si se selecciona "Mostrar Todos"
+            $('#calendar').fullCalendar('addEventSource', allEvents);
+        } else {
+            // Filtrar eventos por tipo y agregarlos de nuevo
+            var filteredEvents = allEvents.filter(function(event) {
+                return event.type === eventType;
+            });
+            //allEvents.forEach(function(event) {
+            //    event._def.ui.display = event.type === eventType ? 'block' : 'none';
+            //});
+            $('#calendar').fullCalendar('addEventSource', filteredEvents);
+        }
+
+        // Refrescar el calendario
+        $('#calendar').fullCalendar('rerenderEvents');
+    });
+});
+</script>
+
+
+
+</body>
+</html>

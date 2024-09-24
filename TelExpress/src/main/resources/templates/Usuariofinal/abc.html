@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en" class="light-style layout-menu-fixed" dir="ltr" data-theme="theme-default">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+    <title>Chat Interface</title>
+    <link rel="stylesheet" href="../../assets/vendor/fonts/boxicons.css" />
+    <link rel="stylesheet" href="../../assets/vendor/css/core.css" class="template-customizer-core-css" />
+    <link rel="stylesheet" href="../../assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
+    <link rel="stylesheet" href="../../assets/css/demo.css" />
+    <link rel="stylesheet" href="../../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+    <link rel="stylesheet" href="../../assets/vendor/libs/apex-charts/apex-charts.css" />
+    <script src="../../assets/vendor/js/helpers.js"></script>
+    <script src="../../assets/js/config.js"></script>
+    <style>
+        /* Main layout styling */
+        .main-content {
+            display: flex;
+            height: 100vh;
+        }
+
+        /* Sidebar styling */
+        .menu-inner {
+            width: 250px;
+            padding: 20px;
+            border-right: 1px solid #ccc;
+        }
+
+        /* Contacts List */
+        .contacts-list {
+            padding: 10px;
+        }
+
+        .contact-button {
+            display: block;
+            background-color: #f0f0f0;
+            padding: 10px;
+            margin: 5px 0;
+            text-align: center;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .contact-button:hover {
+            background-color: #e0e0e0;
+        }
+
+        /* Chat Section */
+        .chat-container {
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            margin: 20px;
+            border: 1px solid #ccc;
+            border-radius: 15px;
+            overflow: hidden;
+            background-color: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .chat-header {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            background-color: #f0f2f5;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .chat-header .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .chat-body {
+            flex-grow: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background-color: #fafafa;
+        }
+
+        .chat-message {
+            display: flex;
+            margin-bottom: 15px;
+            align-items: center;
+        }
+
+        .chat-message .avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: #ccc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+        }
+
+        .chat-message .message-content {
+            background-color: #fff;
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Message Input */
+        .message-input-container {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border-top: 1px solid #ccc;
+            background-color: #f0f2f5;
+        }
+
+        .message-input-container input[type="text"] {
+            flex-grow: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 20px;
+            margin-right: 10px;
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .message-input-container button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            margin-right: 5px;
+        }
+
+        .message-input-container button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Icons */
+        .message-input-container i {
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="layout-wrapper layout-content-navbar">
+    <div class="layout-container">
+        <!-- Sidebar -->
+        <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+            <div class="app-brand demo" style="text-align: center;">
+                <a href="inicio_usuariofinal.html" class="app-brand-link">
+                    <span class="app-brand-text demo menu-text fw-bolder">TelExpress</span>
+                </a>
+            </div>
+            <ul class="menu-inner py-1">
+                <li class="menu-item">
+                    <a href="inicio_usuariofinal.html" class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                        <div>Inicio</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="mis_pedidos.html" class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-list-ul"></i>
+                        <div>Mis pedidos</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="tienda.html" class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-store"></i>
+                        <div>Tienda</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="pago.html" class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-credit-card"></i>
+                        <div>Pago</div>
+                    </a>
+                </li>
+                <li class="menu-item active">
+                    <a href="chat.html" class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-chat"></i>
+                        <div>Chat</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="unete.html" class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-user-plus"></i>
+                        <div>Únete al team</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="faq.html" class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-question-mark"></i>
+                        <div>F&Q</div>
+                    </a>
+                </li>
+            </ul>
+        </aside>
+        <!-- /Sidebar -->
+
+        <!-- Main content -->
+        <div class="layout-page main-content">
+            <!-- Contacts List -->
+            <div class="menu-inner contacts-list">
+                <h4>Contactos</h4>
+                <div class="contact-button">AgenteO1</div>
+                <div class="contact-button">AgenteO2</div>
+                <div class="contact-button">AgenteO3</div>
+                <div class="contact-button">AgenteO4</div>
+                <div class="contact-button">ChatBot</div>
+            </div>
+
+            <!-- Chat Container -->
+            <div class="chat-container">
+                <!-- Chat Header -->
+                <div class="chat-header">
+                    <div class="user-info">
+                        <i class="bx bx-user-circle" style="font-size: 24px;"></i>
+                        <span>Marcia Bautista</span>
+                    </div>
+                </div>
+
+                <!-- Chat Body -->
+                <div class="chat-body">
+                    <div class="chat-message">
+                        <div class="avatar"><i class="bx bx-user"></i></div>
+                        <div class="message-content">Hola :)</div>
+                    </div>
+                    <div class="chat-message">
+                        <div class="avatar"><i class="bx bx-user"></i></div>
+                        <div class="message-content">¿Cuál es tu número de orden generado?</div>
+                    </div>
+                    <div class="chat-message">
+                        <div class="avatar"><i class="bx bx-user"></i></div>
+                        <div class="message-content">Mi número de orden es 97897</div>
+                    </div>
+                    <div class="chat-message">
+                        <div class="avatar"><i class="bx bx-user"></i></div>
+                        <div class="message-content">La dirección España 146 es correcta</div>
+                    </div>
+                    <div class="chat-message">
+                        <div class="avatar"><i class="bx bx-user"></i></div>
+                        <div class="message-content">Sí :)</div>
+                    </div>
+                </div>
+
+                <!-- Message Input -->
+                <div class="message-input-container">
+                    <button><i class="bx bx-plus"></i></button>
+                    <input type="text" placeholder="Type your message here..." />
+                    <button><i class="bx bx-camera"></i></button>
+                    <button><i class="bx bx-microphone"></i></button>
+                </div>
+            </div>
+        </div>
+        <!-- /Main content -->
+    </div>
+    <!-- / Layout page -->
+</div>
+
+</body>
+</html>

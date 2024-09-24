@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en" class="light-style layout-menu-fixed" dir="ltr" data-theme="theme-default">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+    <title>Editar Orden</title>
+    <link rel="icon" type="image/x-icon" href="../../assets/img/favicon/favicon.ico" />
+    <link rel="stylesheet" href="../../assets/vendor/fonts/boxicons.css" />
+    <link rel="stylesheet" href="../../assets/vendor/css/core.css" class="template-customizer-core-css" />
+    <link rel="stylesheet" href="../../assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
+    <link rel="stylesheet" href="../../assets/css/demo.css" />
+    <link rel="stylesheet" href="../../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+    <link rel="stylesheet" href="../../assets/vendor/libs/apex-charts/apex-charts.css" />
+    <script src="../../assets/vendor/js/helpers.js"></script>
+    <script src="../../assets/js/config.js"></script>
+    <style>
+        /* Custom styles for status labels */
+        .status-label {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 5px;
+            color: #fff;
+            font-weight: bold;
+        }
+        .validacion { background-color: #d1bf00; }
+
+        /* Sidebar icons */
+        .menu-icon {
+            margin-right: 8px;
+        }
+
+        /* Product images */
+        .product-img {
+            width: 50px;
+            height: auto;
+        }
+
+        /* Communication Section */
+        .communication-section {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* Shipping and Payment Details */
+        .details-box {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-top: 20px;
+        }
+
+        /* Form styles */
+        .details-box form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .details-box label {
+            margin-top: 10px;
+        }
+
+        .details-box input {
+            padding: 5px;
+            margin-top: 5px;
+        }
+
+        /* Buttons */
+        .btn-modify {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            margin-right: 10px;
+            text-decoration: none;
+        }
+
+        .btn-modify:hover {
+            background-color: #0056b3;
+        }
+
+        .btn-delete {
+            background-color: #dc3545;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+        .btn-delete:hover {
+            background-color: #c82333;
+        }
+
+        .btn-save {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            margin-top: 10px;
+            align-self: flex-start;
+        }
+
+        .btn-save:hover {
+            background-color: #0056b3;
+        }
+
+        .review-link {
+            color: #6a1b9a;
+            text-decoration: none;
+        }
+
+        .review-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+<div class="layout-wrapper layout-content-navbar">
+    <div class="layout-container">
+        <!-- Sidebar -->
+        <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+            <div style="text-align: center;">
+                <img src="logo.png" alt="Imagen" style="width: 150px; margin-bottom: -70px; margin-top: -20px">
+            </div>
+
+            <div class="app-brand demo" style="text-align: center;">
+                <a href="inicio_usuariofinal.html" class="app-brand-link">
+                    <span class="app-brand-text demo menu-text fw-bolder" style="font-family: 'Poppins', sans-serif; color: #7367F0; padding-left: 15px;">TelExpress</span>
+                </a>
+
+                <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
+                    <i class="bx bx-chevron-left bx-sm align-middle"></i>
+                </a>
+            </div>
+            <ul class="menu-inner py-1">
+                <li class="menu-item">
+                    <a href="inicio_usuariofinal.html" class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                        <div>Inicio</div>
+                    </a>
+                </li>
+                <li class="menu-item active">
+                    <a href="lista_pedidos.html" class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-list-ul"></i>
+                        <div>Mis pedidos</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="lista_productos.html" class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-store"></i>
+                        <div>Tienda</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="pago.html" class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-credit-card"></i>
+                        <div>Pago</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="chat.html" class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-chat"></i>
+                        <div>Chat</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="unete.html" class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-user-plus"></i>
+                        <div>Únete al team</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="FAQS.html" class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-question-mark"></i>
+                        <div>Ayuda al cliente</div>
+                    </a>
+                    <ul class="menu-sub">
+                        <li class="menu-item">
+                            <a href="FAQS.html" class="menu-link">
+                                <div>* FAQs</div>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="resenia.html" class="menu-link">
+                                <div>* Reseñas</div>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </aside>
+        <!-- /Sidebar -->
+
+        <!-- Main content -->
+        <div class="layout-page">
+            <!-- Navbar -->
+            <nav
+                    class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
+                    id="layout-navbar"
+            >
+                <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+                    <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
+                        <i class="bx bx-menu bx-sm"></i>
+                    </a>
+                </div>
+
+                <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+
+
+                    <ul class="navbar-nav flex-row align-items-center ms-auto">
+                        <!-- Place this tag where you want the button to render. -->
+
+
+                        <!-- Notificaciones -->
+                        <li class="nav-item navbar-dropdown dropdown-user dropdown">
+                            <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+                                <div class="position-relative">
+                                    <div class="bx bx-bell" style="font-size: 26px; color: #7367F0;"></div>
+                                    <span class="badge bg-danger rounded-circle position-absolute d-flex justify-content-center align-items-center" style="top: -5px; right: -5px; font-size: 12px; width: 18px; height: 18px;">
+                                      5
+                                    </span>
+                                </div>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li class="dropdown-header">Notificaciones</li>
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        <div class="d-flex align-items-center">
+                                            <div class="bx bx-message-square-dots me-3" style="font-size: 20px; color: #7367F0;"></div>
+                                            <div>
+                                                <span class="d-block">Nueva solicitud recibida</span>
+                                                <small class="text-muted">Hace 5 minutos</small>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        <div class="d-flex align-items-center">
+                                            <div class="bx bx-check-circle me-3" style="font-size: 20px; color: #28C76F;"></div>
+                                            <div>
+                                                <span class="d-block">Tarea completada</span>
+                                                <small class="text-muted">Hace 2 horas</small>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        <div class="d-flex align-items-center">
+                                            <div class="bx bx-error me-3" style="font-size: 20px; color: #EA5455;"></div>
+                                            <div>
+                                                <span class="d-block">Error en el sistema</span>
+                                                <small class="text-muted">Hace 1 día</small>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        <div class="d-flex align-items-center">
+                                            <div class="bx bx-download me-3" style="font-size: 20px; color: #FF9F43;"></div>
+                                            <div>
+                                                <span class="d-block">Archivo descargado</span>
+                                                <small class="text-muted">Hace 3 días</small>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+
+                                <li class="dropdown-footer">
+                                    <a class="dropdown-item text-center text-primary" href="#">Ver todas las notificaciones</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <!--/ Notificaciones -->
+
+                        <!-- User -->
+                        <li class="nav-item navbar-dropdown dropdown-user dropdown">
+                            <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+                                <div class="avatar avatar-online">
+                                    <img src="../../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                                </div>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li>
+                                    <a class="dropdown-item" href="perfil_agente.html">
+                                        <div class="d-flex">
+                                            <div class="flex-shrink-0 me-3">
+                                                <div class="avatar avatar-online">
+                                                    <img src="../../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                                                </div>
+                                            </div>
+                                            <div class="flex-grow-1">
+
+                                                <span class="fw-semibold d-block">Juanito Jun</span>
+                                                <small class="text-muted">Agente</small>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <div class="dropdown-divider"></div>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="../Sistema/cambio_contraseña.html">
+                                        <i class="bx bx-user me-2"></i>
+                                        <span class="align-middle">Cambio de Contraseña</span>
+                                    </a>
+                                </li>
+
+
+                                <li>
+                                    <div class="dropdown-divider"></div>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="../Sistema/Login.html">
+                                        <i class="bx bx-power-off me-2"></i>
+                                        <span class="align-middle">Cerrar Sesión</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <!--/ User -->
+                    </ul>
+                </div>
+            </nav>
+            <!-- /Navbar -->
+
+            <!-- Content wrapper -->
+            <div class="content-wrapper">
+                <!-- Order Details -->
+                <div class="container-xxl flex-grow-1 container-p-y">
+                    <h4 class="fw-bold py-3 mb-4">Orden: #10002
+                        <span class="status-label validacion">En validación</span>
+                        <!-- "Enviar una reseña" link redirects to another view (e.g., 'enviar_resena.html') -->
+                        <a href="enviar_resena.html" class="review-link">Enviar una reseña</a>
+                    </h4>
+
+                    <!-- Products Table -->
+                    <div class="card">
+                        <h5 class="card-header">Productos</h5>
+                        <div class="table-responsive text-nowrap">
+                            <table class="table">
+                                <thead class="table-light">
+                                <tr>
+                                    <th><input type="checkbox"></th>
+                                    <th>Productos</th>
+                                    <th>Código</th>
+                                    <th>Precio</th>
+                                    <th>Cantidad</th>
+                                    <th>Total</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td><input type="checkbox"></td>
+                                    <td><img src="zapatilla1.jpeg" alt="Producto" class="product-img"> Zapatillas deportivas</td>
+                                    <td>10012</td>
+                                    <td>S/120.00</td>
+                                    <td><select><option>1</option><option>2</option><option>3</option></select></td>
+                                    <td>S/240.00</td>
+                                </tr>
+                                <!-- Add more rows as needed -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Order Totals -->
+                    
+                    <div class="row">
+                        <div class="col-md-6 offset-md-6 text-end">
+                            <p><strong>Subtotal:</strong> $980.00</p>
+                            <p><strong>Delivery:</strong> S/. 15.00</p>
+                            <hr>
+                            <p><strong>Total General:</strong> S/. 995.00</p>
+                        </div>
+                    </div>
+
+                    <!-- Communication Section -->
+                     <div class="row">
+                        <div class="communication-section justify-content-between ">
+                            <div style="margin-left: 2rem;">
+                                <p>Comunicarse con un agente:</p>
+                                <i class="bx bx-chat" style="font-size: 24px; cursor: pointer;" onclick="window.location.href='chat.html';"></i>
+                            </div>
+                            <div style="margin-right: 1rem;">
+                                <button class="btn-delete">Eliminar</button>
+                                <!-- Modify button redirects to another view (e.g., 'editar_pedido.html') -->
+                                <a href="editar_orden.html" class="btn-modify">Modificar</a>
+                            </div>
+                            
+                        </div>
+                    </div>
+
+                    <!-- Shipping and Payment Details -->
+                    <div class="">
+                    <div class="details-box card">
+                        <h5>Detalles de Envío</h5>
+                        <form id="shipping-details-form">
+                            <label for="direccion">Dirección de envío:</label>
+                            <input type="text" id="direccion" name="direccion" value="Av. La Marina 1234, San Miguel">
+
+                            <label for="medio-pago">Medio de Pago:</label>
+                            <input type="text" id="medio-pago" name="medio-pago" value="Tarjeta">
+
+                            <label for="agente">Agente a cargo:</label>
+                            <input type="text" id="agente" name="agente" value="Aún no cuenta con un agente">
+
+                            <button type="submit" class="btn-save">Guardar</button>
+                        </form>
+                    </div>
+                    </div>
+
+                    <div class="details-box card">
+                        <h5>Detalles de Pago</h5>
+                        <form id="payment-details-form">
+                            <label for="monto-cancelado">Monto Cancelado:</label>
+                            <input type="text" id="monto-cancelado" name="monto-cancelado" value="S/754.99">
+
+                            <label for="monto-adeudado">Monto Adeudado/Pendiente:</label>
+                            <input type="text" id="monto-adeudado" name="monto-adeudado" value="S/100.00">
+
+                            <button type="submit" class="btn-save">Guardar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- /Content wrapper -->
+        </div>
+        <!-- /Main content -->
+    </div>
+    <!-- / Layout page -->
+</div>
+
+</body>
+</html>

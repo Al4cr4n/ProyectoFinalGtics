@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en" class="light-style layout-menu-fixed" dir="ltr" data-theme="theme-default">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+    <title>Enviar Reseña</title>
+    <link rel="icon" type="image/x-icon" href="../../assets/img/favicon/favicon.ico" />
+    <link rel="stylesheet" href="../../assets/vendor/fonts/boxicons.css" />
+    <link rel="stylesheet" href="../../assets/vendor/css/core.css" class="template-customizer-core-css" />
+    <link rel="stylesheet" href="../../assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
+    <link rel="stylesheet" href="../../assets/css/demo.css" />
+    <link rel="stylesheet" href="../../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+    <link rel="stylesheet" href="../../assets/vendor/libs/apex-charts/apex-charts.css" />
+    <script src="../../assets/vendor/js/helpers.js"></script>
+    <script src="../../assets/js/config.js"></script>
+    <style>
+        /* Custom styles */
+        .product-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .product-buttons button {
+            background-color: #ececec;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .product-buttons button:hover {
+            background-color: #d4d4d4;
+        }
+
+        .review-form {
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 5px;
+        }
+
+        .review-form textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            resize: vertical;
+        }
+
+        .review-form .file-upload {
+            margin-top: 10px;
+        }
+
+        .review-form .file-upload input {
+            display: none;
+        }
+
+        .file-upload label {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+        .star-rating {
+            display: flex;
+            gap: 5px;
+            margin-top: 10px;
+        }
+
+        .star-rating i {
+            font-size: 24px;
+            cursor: pointer;
+            color: #ccc;
+        }
+
+        .star-rating i.selected {
+            color: #ffc107;
+        }
+
+        /* Buttons */
+        .btn-cancel {
+            background-color: #dc3545;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+
+        .btn-submit {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            text-decoration: none; /* Remove underline from link */
+            display: inline-block; /* Make it inline-block for button styling */
+        }
+
+        .btn-cancel:hover {
+            background-color: #c82333;
+        }
+
+        .btn-submit:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<div class="layout-wrapper layout-content-navbar">
+    <div class="layout-container">
+        <!-- Sidebar -->
+        <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+            <div style="text-align: center;">
+                <img src="logo.png" alt="Imagen" style="width: 150px; margin-bottom: -70px; margin-top: -20px">
+            </div>
+
+            <div class="app-brand demo" style="text-align: center;">
+                <a href="inicio_usuariofinal.html" class="app-brand-link">
+                    <span class="app-brand-text demo menu-text fw-bolder" style="font-family: 'Poppins', sans-serif; color: #7367F0; padding-left: 15px;">TelExpress</span>
+                </a>
+
+                <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
+                    <i class="bx bx-chevron-left bx-sm align-middle"></i>
+                </a>
+            </div>
+            <ul class="menu-inner py-1">
+                <li class="menu-item">
+                    <a href="inicio_usuariofinal.html" class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                        <div>Inicio</div>
+                    </a>
+                </li>
+                <li class="menu-item active">
+                    <a href="lista_pedidos.html" class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-list-ul"></i>
+                        <div>Mis pedidos</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="lista_productos.html" class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-store"></i>
+                        <div>Tienda</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="pago.html" class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-credit-card"></i>
+                        <div>Pago</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="chat.html" class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-chat"></i>
+                        <div>Chat</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="unete.html" class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-user-plus"></i>
+                        <div>Únete al team</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="javascript:void(0);" class="menu-link menu-toggle">
+                        <i class="menu-icon tf-icons bx bx-support"></i>
+                        <div data-i18n="Helptoclient">Ayuda al cliente</div>
+                    </a>
+
+                    <ul class="menu-sub">
+                        <li class="menu-item">
+                            <a href="FAQS.html" class="menu-link">
+                                <div data-i18n="faqs">FAQs</div>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="resenia.html" class="menu-link">
+                                <div data-i18n="Reseñas">Reseñas</div>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="Foro.html" class="menu-link">
+                                <div data-i18n="Foro">Foro</div>
+                            </a>
+                        </li>
+
+                    </ul>
+                </li>
+            </ul>
+        </aside>
+        <!-- /Sidebar -->
+
+        <!-- Main content -->
+        <div class="layout-page">
+            <!-- Navbar -->
+            <nav
+                    class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
+                    id="layout-navbar"
+            >
+                <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+                    <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
+                        <i class="bx bx-menu bx-sm"></i>
+                    </a>
+                </div>
+
+                <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+
+
+                    <ul class="navbar-nav flex-row align-items-center ms-auto">
+                        <!-- Place this tag where you want the button to render. -->
+
+
+                        <!-- Notificaciones -->
+                        <li class="nav-item navbar-dropdown dropdown-user dropdown">
+                            <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+                                <div class="position-relative">
+                                    <div class="bx bx-bell" style="font-size: 26px; color: #7367F0;"></div>
+                                    <span class="badge bg-danger rounded-circle position-absolute d-flex justify-content-center align-items-center" style="top: -5px; right: -5px; font-size: 12px; width: 18px; height: 18px;">
+                                      5
+                                    </span>
+                                </div>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li class="dropdown-header">Notificaciones</li>
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        <div class="d-flex align-items-center">
+                                            <div class="bx bx-message-square-dots me-3" style="font-size: 20px; color: #7367F0;"></div>
+                                            <div>
+                                                <span class="d-block">Nueva solicitud recibida</span>
+                                                <small class="text-muted">Hace 5 minutos</small>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        <div class="d-flex align-items-center">
+                                            <div class="bx bx-check-circle me-3" style="font-size: 20px; color: #28C76F;"></div>
+                                            <div>
+                                                <span class="d-block">Tarea completada</span>
+                                                <small class="text-muted">Hace 2 horas</small>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        <div class="d-flex align-items-center">
+                                            <div class="bx bx-error me-3" style="font-size: 20px; color: #EA5455;"></div>
+                                            <div>
+                                                <span class="d-block">Error en el sistema</span>
+                                                <small class="text-muted">Hace 1 día</small>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        <div class="d-flex align-items-center">
+                                            <div class="bx bx-download me-3" style="font-size: 20px; color: #FF9F43;"></div>
+                                            <div>
+                                                <span class="d-block">Archivo descargado</span>
+                                                <small class="text-muted">Hace 3 días</small>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+
+                                <li class="dropdown-footer">
+                                    <a class="dropdown-item text-center text-primary" href="#">Ver todas las notificaciones</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <!--/ Notificaciones -->
+
+                        <!-- User -->
+                        <li class="nav-item navbar-dropdown dropdown-user dropdown">
+                            <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+                                <div class="avatar avatar-online">
+                                    <img src="../../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                                </div>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li>
+                                    <a class="dropdown-item" href="perfil_agente.html">
+                                        <div class="d-flex">
+                                            <div class="flex-shrink-0 me-3">
+                                                <div class="avatar avatar-online">
+                                                    <img src="../../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                                                </div>
+                                            </div>
+                                            <div class="flex-grow-1">
+
+                                                <span class="fw-semibold d-block">Juanito Jun</span>
+                                                <small class="text-muted">Agente</small>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <div class="dropdown-divider"></div>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="../Sistema/cambio_contraseña.html">
+                                        <i class="bx bx-user me-2"></i>
+                                        <span class="align-middle">Cambio de Contraseña</span>
+                                    </a>
+                                </li>
+
+
+                                <li>
+                                    <div class="dropdown-divider"></div>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="../Sistema/Login.html">
+                                        <i class="bx bx-power-off me-2"></i>
+                                        <span class="align-middle">Cerrar Sesión</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <!--/ User -->
+                    </ul>
+                </div>
+            </nav>
+            <!-- /Navbar -->
+
+            <!-- Content wrapper -->
+            <div class="content-wrapper">
+                <!-- Review Section -->
+                <div class="container-xxl flex-grow-1 container-p-y">
+                    <h4 class="fw-bold py-3 mb-4">Escoge un producto:</h4>
+                    <!-- Product Buttons -->
+                    <div class="product-buttons">
+                        <button>PRODUCTO: #10012</button>
+                        <button>PRODUCTO: #10013</button>
+                        <button>PRODUCTO: #10014</button>
+                        <button>PRODUCTO: #10015</button>
+                    </div>
+
+                    <!-- Review Form -->
+                    <div class="review-form card">
+                        <h5>Ingrese la foto del producto recibido</h5>
+                        <div class="file-upload">
+                            <input type="file" id="file-input">
+                            <label for="file-input">Subir</label>
+                        </div>
+
+                        <h5 style="margin-top:1rem;">El producto es de buena calidad?</h5>
+                        <textarea rows="3"></textarea>
+
+                        <h5 style="margin-top:1rem;">Recibió rápido su producto?</h5>
+                        <textarea rows="3"></textarea>
+
+                        <h5 style="margin-top:1rem;">Qué tan conforme está con la atención del agente? (Nombre del agente)</h5>
+                        <!-- Star Rating -->
+                        <div class="star-rating">
+                            <i class="bx bxs-star" data-value="1"></i>
+                            <i class="bx bxs-star" data-value="2"></i>
+                            <i class="bx bxs-star" data-value="3"></i>
+                            <i class="bx bxs-star" data-value="4"></i>
+                            <i class="bx bxs-star" data-value="5"></i>
+                        </div>
+
+                        <!-- Submit and Cancel Buttons -->
+                        <div style="margin-top: 20px;">
+                            <button class="btn-cancel">CANCELAR</button>
+                            <!-- The "ENVIAR" button as a link to 'resena_enviada.html' -->
+                            <a href="resenia.html" class="btn-submit">ENVIAR</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /Content wrapper -->
+        </div>
+        <!-- /Main content -->
+    </div>
+    <!-- / Layout page -->
+</div>
+
+<!-- JavaScript for star rating -->
+<script>
+    // Star rating script
+    const stars = document.querySelectorAll('.star-rating i');
+    stars.forEach(star => {
+        star.addEventListener('click', function() {
+            const value = parseInt(this.getAttribute('data-value'));
+
+            // Clear all selected stars
+            stars.forEach(s => s.classList.remove('selected'));
+
+            // Highlight all stars up to the selected one
+            stars.forEach((s, index) => {
+                if (index < value) {
+                    s.classList.add('selected');
+                }
+            });
+
+            // Perform any action needed with the star rating value
+            console.log(value);
+        });
+    });
+</script>
+</body>
+</html>

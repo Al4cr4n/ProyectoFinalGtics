@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+
+<!-- =========================================================
+* Sneat - Bootstrap 5 HTML Admin Template - Pro | v1.0.0
+==============================================================
+
+* Product Page: https://themeselection.com/products/sneat-bootstrap-html-admin-template/
+* Created by: ThemeSelection
+* License: You must have a valid license purchased in order to legally use the theme for your project.
+* Copyright ThemeSelection (https://themeselection.com)
+
+=========================================================
+ -->
+<!-- beautify ignore:start -->
+<html
+        lang="en"
+        class="light-style layout-menu-fixed"
+        dir="ltr"
+        data-theme="theme-default"
+        data-assets-path="../../assets/"
+        data-template="vertical-menu-template-free"
+        xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="utf-8" />
+    <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
+    />
+
+    <title>Crear- CoordinadorZonal</title>
+
+    <meta name="description" content="" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="../../assets/img/favicon/favicon.ico" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+            href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+            rel="stylesheet"
+    />
+
+    <!-- Icons. Uncomment required icon fonts -->
+    <link rel="stylesheet" href="../../assets/vendor/fonts/boxicons.css" />
+
+    <!-- Core CSS -->
+    <link rel="stylesheet" href="../../assets/vendor/css/core.css" class="template-customizer-core-css" />
+    <link rel="stylesheet" href="../../assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
+    <link rel="stylesheet" href="../../assets/css/demo.css" />
+
+    <!-- Vendors CSS -->
+    <link rel="stylesheet" href="../../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+
+    <link rel="stylesheet" href="../../assets/vendor/libs/apex-charts/apex-charts.css" />
+
+    <!-- Page CSS -->
+
+    <!-- Helpers -->
+    <script src="../../assets/vendor/js/helpers.js"></script>
+
+    <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
+    <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
+    <script src="../../assets/js/config.js"></script>
+
+    <!--TelExpress fuente de letra-->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+
+</head>
+
+<body>
+<!-- Layout wrapper -->
+<div class="layout-wrapper layout-content-navbar">
+    <div class="layout-container">
+        <!-- Menu -->
+        <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+
+            <!-- Contenedor para la imagen centrada -->
+            <div style="text-align: center;">
+                <img src="logo.png" alt="Imagen" style="width: 150px; margin-bottom: -70px; margin-top: -20px">
+            </div>
+
+            <div class="app-brand demo" style="text-align: center;">
+                <a href="inicio_coordinador_zonal.html" class="app-brand-link">
+                    <span class="app-brand-text demo menu-text fw-bolder" style="font-family: 'Poppins', sans-serif; color: #7367F0; padding-left: 15px;">TelExpress</span>
+                </a>
+
+                <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
+                    <i class="bx bx-chevron-left bx-sm align-middle"></i>
+                </a>
+            </div>
+            <!-- Contenedor para la imagen centrada -->
+
+            <div class="menu-inner-shadow"></div>
+
+            <ul class="menu-inner py-1">
+                <!-- INICIO -->
+                <li class="menu-item">
+                    <a href="inicio_coordinador_zonal.html" class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                        <div data-i18n="Inicio">Inicio</div>
+                    </a>
+                </li>
+
+                <!-- DASHBOARD -->
+                <li class="menu-item">
+                    <a href="dashboard_zonal.html" class="menu-link" >
+                        <i class="menu-icon tf-icons bx bx-grid-alt"></i>
+                        <div data-i18n="Dashboard">Dashboard</div>
+                    </a>
+                </li>
+                <!--AGENTES-->
+                <li class="menu-item active">
+                    <a href="listaagente_zonal.html" class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-user-plus"></i>
+                        <div data-i18n="Agentes">Agentes</div>
+                    </a>
+
+                </li>
+                <li class="menu-item">
+                    <a href="importacion_zonal.html" class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-import"></i>
+                        <div data-i18n="Importaciones">Importaciones</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="productos_zonal.html" class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-package"></i>
+                        <div data-i18n="Productos">Productos</div>
+                    </a>
+                </li>
+
+                </li>
+
+            </ul>
+        </aside>
+        <!-- / Menu -->
+
+        <!-- Layout container -->
+        <div class="layout-page">
+            <!-- Navbar -->
+
+            <nav
+                    class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
+                    id="layout-navbar"
+            >
+                <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+                    <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
+                        <i class="bx bx-menu bx-sm"></i>
+                    </a>
+                </div>
+
+                <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+                    <!-- Search -->
+                    <div class="navbar-nav align-items-center">
+                        <div class="nav-item d-flex align-items-center">
+                        </div>
+                    </div>
+                    <!-- /Search -->
+
+                    <ul class="navbar-nav flex-row align-items-center ms-auto">
+
+                        <!-- Notificaciones -->
+                        <li class="nav-item navbar-dropdown dropdown-user dropdown">
+                            <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+                                <!-- Icono de campana con contador de notificaciones -->
+                                <div class="position-relative">
+                                    <div class="bx bx-bell" style="font-size: 26px; color: #7367F0;"></div>
+                                    <!-- Contador de notificaciones -->
+                                    <span class="badge bg-danger rounded-circle position-absolute d-flex justify-content-center align-items-center"
+                                          style="top: -5px; right: -5px; font-size: 12px; width: 18px; height: 18px;">
+        5
+      </span>
+                                </div>
+                            </a>
+
+                            <!-- Dropdown de notificaciones -->
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li class="dropdown-header">Notificaciones</li> <!-- Encabezado -->
+
+                                <!-- Notificación 1 -->
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        <div class="d-flex align-items-center">
+                                            <div class="bx bx-message-square-dots me-3" style="font-size: 20px; color: #7367F0;"></div> <!-- Ícono de la notificación -->
+                                            <div>
+                                                <span class="d-block">Nueva solicitud recibida</span>
+                                                <small class="text-muted">Hace 5 minutos</small> <!-- Hora de la notificación -->
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+
+                                <!-- Notificación 2 -->
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        <div class="d-flex align-items-center">
+                                            <div class="bx bx-check-circle me-3" style="font-size: 20px; color: #28C76F;"></div> <!-- Ícono de confirmación -->
+                                            <div>
+                                                <span class="d-block">Tarea completada</span>
+                                                <small class="text-muted">Hace 2 horas</small> <!-- Hora de la notificación -->
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+
+                                <!-- Notificación 3 -->
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        <div class="d-flex align-items-center">
+                                            <div class="bx bx-error me-3" style="font-size: 20px; color: #EA5455;"></div> <!-- Ícono de error -->
+                                            <div>
+                                                <span class="d-block">Error en el sistema</span>
+                                                <small class="text-muted">Hace 1 día</small> <!-- Hora de la notificación -->
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+
+                                <!-- Notificación 4 -->
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        <div class="d-flex align-items-center">
+                                            <div class="bx bx-download me-3" style="font-size: 20px; color: #FF9F43;"></div> <!-- Ícono de descarga -->
+                                            <div>
+                                                <span class="d-block">Archivo descargado</span>
+                                                <small class="text-muted">Hace 3 días</small> <!-- Hora de la notificación -->
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+
+                                <!-- Ver todas las notificaciones -->
+                                <li class="dropdown-footer">
+                                    <a class="dropdown-item text-center text-primary" href="#">Ver todas las notificaciones</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <!-- Notificaciones -->
+
+
+
+
+                        <!-- User -->
+                        <li class="nav-item navbar-dropdown dropdown-user dropdown">
+                            <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+                                <div class="avatar avatar-online">
+                                    <img src="../../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                                </div>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        <div class="d-flex">
+                                            <div class="flex-shrink-0 me-3">
+                                                <div class="avatar avatar-online">
+                                                    <img src="../../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                                                </div>
+                                            </div>
+                                            <div class="flex-grow-1">
+                                                <span class="fw-semibold d-block">John Doe</span>
+                                                <small class="text-muted">Admin</small>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <div class="dropdown-divider"></div>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        <i class="bx bx-user me-2"></i>
+                                        <span class="align-middle">My Profile</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        <i class="bx bx-cog me-2"></i>
+                                        <span class="align-middle">Settings</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                        <span class="d-flex align-items-center align-middle">
+                          <i class="flex-shrink-0 bx bx-credit-card me-2"></i>
+                          <span class="flex-grow-1 align-middle">Billing</span>
+                          <span class="flex-shrink-0 badge badge-center rounded-pill bg-danger w-px-20 h-px-20">4</span>
+                        </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <div class="dropdown-divider"></div>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="auth-login-basic.html">
+                                        <i class="bx bx-power-off me-2"></i>
+                                        <span class="align-middle">Log Out</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <!--/ User -->
+                    </ul>
+                </div>
+
+
+            </nav>
+            <!--Aqui termina el navbar-->
+            <!--Este es el contenedor principal-->
+            <div class="container-xxl flex-grow-1 container-p-y">
+                <h4 style="font-family: 'Poppins', sans-serif; color: #7367F0; font-weight: bold; padding-top: 1rem; padding-bottom: 1rem; margin-bottom: 1rem; text-align: center; font-size: 40px;">Perfil</h4>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="card-body">
+                            <!--Account-->
+                            <form id="formAccountSettings" method="POST" onsubmit="return false">
+                                <div class="row">
+                                    <div class="mb-3 col-md-6">
+                                        <label for="firstName" class="form-label">Nombre</label>
+                                        <input
+                                                class="form-control"
+                                                type="text"
+                                                id="firstName"
+                                                name="firstName"
+                                                value="Albert"
+                                                readonly
+                                        />
+                                    </div>
+                                    <div class="mb-3 col-md-6">
+                                        <label for="lastName" class="form-label">Apellido</label>
+                                        <input class="form-control" type="text" name="lastName" id="lastName" value="Cook" readonly />
+                                    </div>
+                                    <div class="mb-3 col-md-6">
+                                        <label for="dni" class="form-label">DNI</label>
+                                        <input class="form-control" type="text" name="dni" id="dni" value="71202481" readonly />
+                                    </div>
+                                    <div class="mb-3 col-md-6">
+                                        <label for="phoneNumber" class="form-label">Teléfono</label>
+                                        <input class="form-control" type="text" name="phoneNumber" id="phoneNumber" value="966934322" readonly />
+                                    </div>
+                                    <div class="mb-3 col-md-6">
+                                        <label for="email" class="form-label">Correo</label>
+                                        <input
+                                                class="form-control"
+                                                type="text"
+                                                id="email"
+                                                name="email"
+                                                value="albert.cook@gmail.com"
+                                                readonly
+                                        />
+                                    </div>
+                                    <div class="mb-3 col-md-6">
+                                        <label for="organization" class="form-label">Código despachador</label>
+                                        <input
+                                                type="text"
+                                                class="form-control"
+                                                id="organization"
+                                                name="organization"
+                                                value="O8CDS8"
+                                                readonly
+                                        />
+                                    </div>
+                                    <div class="mb-3 col-md-6">
+                                        <label for="ruc" class="form-label">RUC</label>
+                                        <input class="form-control" type="text" name="ruc" id="ruc" value="1712024819" readonly />
+                                    </div>
+                                    <div class="mb-3 col-md-6">
+                                        <label for="razonSocial" class="form-label">Razón Social</label>
+                                        <input class="form-control" type="text" name="razonSocial" id="razonSocial" value="Ingresa razón social" readonly />
+                                    </div>
+                                    <div class="mb-3 col-md-6">
+                                        <label for="address" class="form-label">Dirección</label>
+                                        <input type="text" class="form-control" id="address" name="address" value="Av. Lima 123" readonly />
+                                    </div>
+                                    <div class="mb-3 col-md-6">
+                                        <label for="district" class="form-label">Distrito</label>
+                                        <input type="text" class="form-control" id="district" name="district" value="Los Olivos" readonly />
+                                    </div>
+                                    <div class="mb-3 col-md-6">
+                                        <label for="jurisdiction" class="form-label">Código de jurisdicción</label>
+                                        <input type="text" class="form-control" id="jurisdiction" name="jurisdiction" value="EW1313" readonly />
+                                    </div>
+                                    <div class="mb-3 col-md-6">
+                                        <label for="zone" class="form-label">Zona</label>
+                                        <input type="text" class="form-control" id="zone" name="zone" value="Norte" readonly />
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Content wrapper -->
+
+    </div>
+    <!-- / Layout page -->
+</div>
+
+<!-- Overlay -->
+<div class="layout-overlay layout-menu-toggle"></div>
+</div>
+<!-- / Layout wrapper -->
+
+
+<!-- Modal de Confirmación -->
+<div class="modal fade" id="modalConfirmarSolicitud" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalCenterTitle" style="font-family: 'Poppins', sans-serif; font-size: 20px; text-align: center;">Confirmar solicitud</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <hr class="my-4 " />
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col mb-3">
+                        <label>¿Estás seguro de la creación de un nuevo agente de compra?</label>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-center mx-2">
+                <a href="crearagente_zonal.html" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</a>
+                <a href="listaagente_zonal.html" class="btn btn-primary">Confirmar</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+<!-- Core JS -->
+<!-- build:js assets/vendor/js/core.js -->
+<script src="../../assets/vendor/libs/jquery/jquery.js"></script>
+<script src="../../assets/vendor/libs/popper/popper.js"></script>
+<script src="../../assets/vendor/js/bootstrap.js"></script>
+<script src="../../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+
+<script src="../../assets/vendor/js/menu.js"></script>
+<!-- endbuild -->
+
+<!-- Vendors JS -->
+<script src="../../assets/vendor/libs/apex-charts/apexcharts.js"></script>
+
+<!-- Main JS -->
+<script src="../../assets/js/main.js"></script>
+
+<!-- Page JS -->
+<script src="../../assets/js/dashboards-analytics.js"></script>
+
+<!-- Place this tag in your head or just before your close body tag. -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+</body>
+</html>

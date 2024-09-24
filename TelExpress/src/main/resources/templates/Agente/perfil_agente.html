@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en" class="light-style layout-menu-fixed" dir="ltr" data-theme="theme-default" data-assets-path="../../assets/" data-template="vertical-menu-template-free">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+    <title>Perfil Agente</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="../../assets/img/favicon/favicon.ico" />
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="../../assets/vendor/fonts/boxicons.css" />
+
+    <!-- Core CSS -->
+    <link rel="stylesheet" href="../../assets/vendor/css/core.css" />
+    <link rel="stylesheet" href="../../assets/vendor/css/theme-default.css" />
+    <link rel="stylesheet" href="../../assets/css/demo.css" />
+
+    <!-- Vendors CSS -->
+    <link rel="stylesheet" href="../../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+    <link rel="stylesheet" href="../../assets/vendor/libs/apex-charts/apex-charts.css" />
+
+    <!-- Helpers -->
+    <script src="../../assets/vendor/js/helpers.js"></script>
+    <script src="../../assets/js/config.js"></script>
+</head>
+
+<body>
+    <!-- Layout wrapper -->
+    <div class="layout-wrapper layout-content-navbar">
+        <div class="layout-container">
+            <!-- Menu -->
+            <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+                <!-- Contenedor para la imagen centrada -->
+                <div style="text-align: center;">
+                  <img src="logo.png" alt="Imagen" style="width: 150px; margin-bottom: -70px; margin-top: -20px">
+                </div>
+          
+                <div class="app-brand demo" style="text-align: center;">
+                  <a href="inicio_agente.html" class="app-brand-link">
+                    <span class="app-brand-text demo menu-text fw-bolder" style="font-family: 'Poppins', sans-serif; color: #7367F0; padding-left: 15px;">TelExpress</span>
+                  </a>
+          
+                  <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
+                    <i class="bx bx-chevron-left bx-sm align-middle"></i>
+                  </a>
+                </div>
+          
+          
+                <div class="menu-inner-shadow"></div>
+          
+                <ul class="menu-inner py-1">
+                  <!-- Dashboard -->
+                  <li class="menu-item active">
+                    <a href="inicio_agente.html" class="menu-link">
+                      <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                      <div data-i18n="Inicio">Inicio</div>
+                    </a>
+                  </li>
+          
+                  <li class="menu-item">
+                    <a href="usuarios_agente.html" class="menu-link">
+                      <i class="menu-icon tf-icons bx bx-user"></i>
+                      <div data-i18n="ListaDeUsuarios">Lista de usuarios</div>
+                    </a>
+                  </li>
+          
+                  <li class="menu-item">
+                      <a href="chat_agente.html" class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-chat"></i>
+                        <div data-i18n="Chats">Chats</div>
+                      </a>
+                    </li>
+                  
+                  <!--
+                  <li class="menu-header small text-uppercase">
+                    <span class="menu-header-text">Páginas</span>
+                  </li>-->
+                  <li class="menu-item">
+                    <a href="javascript:void(0);" class="menu-link menu-toggle">
+                      <i class="menu-icon tf-icons bx bx-cart-alt"></i>
+                      <div data-i18n="Órdenes">Órdenes</div>
+                    </a>
+                    <ul class="menu-sub">
+                      <li class="menu-item">
+                        <a href="ordenes_agente.html" class="menu-link">
+                          <div data-i18n="TodasLasOrdenes">Todas las órdenes</div>
+                        </a>
+                      </li>
+                      <li class="menu-item">
+                        <a href="ordenes_sin_asignar.html" class="menu-link">
+                          <div data-i18n="OrdenesSinAsignar">Órdenes sin asignar</div>
+                        </a>
+                      </li>
+                      <li class="menu-item">
+                        <a href="ordenes_pendientes.html" class="menu-link">
+                          <div data-i18n="OrdenesPendientes">Órdenes pendientes</div>
+                        </a>
+                      </li>
+                      <li class="menu-item">
+                          <a href="ordenes_en_progreso.html" class="menu-link">
+                            <div data-i18n="OrdenesEnProgreso">Órdenes en progreso</div>
+                          </a>
+                      </li>
+                      <li class="menu-item">
+                        <a href="ordenes_resueltas.html" class="menu-link">
+                          <div data-i18n="OrdenesResueltas">Órdenes resueltas</div>
+                        </a>
+                      </li>
+          
+          
+                    </ul>
+                  </li>
+          
+                  <li class="menu-item">
+                      <a href="usuarios_baneados.html" class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-block"></i>
+                        <div data-i18n="UsuariosBaneados">Usuarios baneados</div>
+                      </a>
+                    </li>
+          
+          
+                </ul>
+            </aside>
+
+            
+
+            <!-- Layout container -->
+            <div class="layout-page">
+                <!-- Navbar -->
+                <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme" id="layout-navbar">
+                    <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+                      <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
+                        <i class="bx bx-menu bx-sm"></i>
+                      </a>
+                    </div>
+            
+                    <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+            
+            
+                      <ul class="navbar-nav flex-row align-items-center ms-auto">
+                        <!-- Place this tag where you want the button to render. -->
+            
+            
+                        <!-- Notificaciones -->
+                        <li class="nav-item navbar-dropdown dropdown-user dropdown">
+                          <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+                            <div class="position-relative">
+                              <div class="bx bx-bell" style="font-size: 26px; color: #7367F0;"></div>
+                              <span class="badge bg-danger rounded-circle position-absolute d-flex justify-content-center align-items-center" style="top: -5px; right: -5px; font-size: 12px; width: 18px; height: 18px;">
+                                  5
+                                </span>
+                            </div>
+                          </a>
+                          <ul class="dropdown-menu dropdown-menu-end">
+                            <li class="dropdown-header">Notificaciones</li>
+                            <li>
+                              <a class="dropdown-item" href="#">
+                                <div class="d-flex align-items-center">
+                                  <div class="bx bx-message-square-dots me-3" style="font-size: 20px; color: #7367F0;"></div>
+                                  <div>
+                                    <span class="d-block">Nueva solicitud recibida</span>
+                                    <small class="text-muted">Hace 5 minutos</small>
+                                  </div>
+                                </div>
+                              </a>
+                            </li>
+            
+                            <li>
+                              <a class="dropdown-item" href="#">
+                                <div class="d-flex align-items-center">
+                                  <div class="bx bx-check-circle me-3" style="font-size: 20px; color: #28C76F;"></div>
+                                  <div>
+                                    <span class="d-block">Tarea completada</span>
+                                    <small class="text-muted">Hace 2 horas</small>
+                                  </div>
+                                </div>
+                              </a>
+                            </li>
+            
+                            <li>
+                              <a class="dropdown-item" href="#">
+                                <div class="d-flex align-items-center">
+                                  <div class="bx bx-error me-3" style="font-size: 20px; color: #EA5455;"></div>
+                                  <div>
+                                    <span class="d-block">Error en el sistema</span>
+                                    <small class="text-muted">Hace 1 día</small>
+                                  </div>
+                                </div>
+                              </a>
+                            </li>
+            
+                            <li>
+                              <a class="dropdown-item" href="#">
+                                <div class="d-flex align-items-center">
+                                  <div class="bx bx-download me-3" style="font-size: 20px; color: #FF9F43;"></div>
+                                  <div>
+                                    <span class="d-block">Archivo descargado</span>
+                                    <small class="text-muted">Hace 3 días</small>
+                                  </div>
+                                </div>
+                              </a>
+                            </li>
+            
+                            <li class="dropdown-footer">
+                              <a class="dropdown-item text-center text-primary" href="#">Ver todas las notificaciones</a>
+                            </li>
+                          </ul>
+                        </li>
+                        <!--/ Notificaciones -->
+            
+                        <!-- User -->
+                        <li class="nav-item navbar-dropdown dropdown-user dropdown">
+                          <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+                            <div class="avatar avatar-online">
+                              <img src="../../assets/img/avatars/1.png" alt="" class="w-px-40 h-auto rounded-circle">
+                            </div>
+                          </a>
+                          <ul class="dropdown-menu dropdown-menu-end">
+                            <li>
+                              <a class="dropdown-item" href="#">
+                                <div class="d-flex">
+                                  <div class="flex-shrink-0 me-3">
+                                    <div class="avatar avatar-online">
+                                      <img src="../../assets/img/avatars/1.png" alt="" class="w-px-40 h-auto rounded-circle">
+                                    </div>
+                                  </div>
+                                  <div class="flex-grow-1">
+                                    <span class="fw-semibold d-block">Juanito Jun</span>
+                                    <small class="text-muted">Agente</small>
+                                  </div>
+                                </div>
+                              </a>
+                            </li>
+                            <li>
+                              <div class="dropdown-divider"></div>
+                            </li>
+                            <li>
+                              <a class="dropdown-item" href="../Sistema/cambio_contraseña.html">
+                                <i class="bx bx-user me-2"></i>
+                                <span class="align-middle">Cambio de Contraseña</span>
+                              </a>
+                            </li>
+
+            
+                            <li>
+                              <div class="dropdown-divider"></div>
+                            </li>
+                            <li>
+                              <a class="dropdown-item" href="../Sistema/Login.html">
+                                <i class="bx bx-power-off me-2"></i>
+                                <span class="align-middle">Cerrar Sesión</span>
+                              </a>
+                            </li>
+                          </ul>
+                        </li>
+                        <!--/ User -->
+                      </ul>
+                    </div>
+                  </nav>
+                    <!-- Navbar content here -->
+                </nav>
+
+                <!-- Content wrapper -->
+                <div class="content-wrapper">
+                    <!-- Content -->
+                    <div class="container-xxl flex-grow-1 container-p-y d-flex justify-content-center align-items-center vh-100">
+                        <div class="card" style="width: 50%; padding: 20px;">
+                            <div class="card-body text-center">
+                                <img src="../../assets/img/avatars/1.png" alt="User Avatar" class="d-block mx-auto w-px-100 h-px-100 rounded-circle mb-4">
+                                <h4 class="mb-4" style="font-family: 'Poppins', sans-serif; color: #7367F0; font-weight: bold;">Mi perfil</h4>
+
+                                <div class="mb-3">
+                                    <label for="firstName" class="form-label">Nombres:</label>
+                                    <input type="text" class="form-control" id="firstName" value="Juanito Jun" readonly>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="lastName" class="form-label">Apellidos:</label>
+                                    <input type="text" class="form-control" id="lastName" value="Yu Yon" readonly>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="codigo" class="form-label">Código de despachador:</label>
+                                    <input type="text" class="form-control" id="codigo" value="0001203" readonly>
+                                </div>
+
+                                <div class="d-flex justify-content-center mt-4">
+                                    <!--<a href="../Sistema/cambio_contraseña.html" class="btn btn-primary">Cambiar contraseña</button>-->
+                                    <a href="inicio_agente.html" class="btn btn-danger">Regresar</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- / Content -->
+                    <div class="content-backdrop fade"></div>
+                </div>
+                <!-- / Content wrapper -->
+            </div>
+            <!-- / Layout page -->
+        </div>
+    </div>
+    <!-- / Layout wrapper -->
+
+    <!-- Core JS -->
+    <script src="../../assets/vendor/libs/jquery/jquery.js"></script>
+    <script src="../../assets/vendor/libs/popper/popper.js"></script>
+    <script src="../../assets/vendor/js/bootstrap.js"></script>
+    <script src="../../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+    <script src="../../assets/vendor/js/menu.js"></script>
+
+    <!-- Vendors JS -->
+    <script src="../../assets/vendor/libs/apex-charts/apexcharts.js"></script>
+
+    <!-- Main JS -->
+    <script src="../../assets/js/main.js"></script>
+
+    <!-- Page JS -->
+    <script src="../../assets/js/dashboards-analytics.js"></script>
+</body>
+
+</html>

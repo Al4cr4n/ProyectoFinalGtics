@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+
+
+<html
+        lang="en"
+        class="light-style layout-menu-fixed"
+        dir="ltr"
+        data-theme="theme-default"
+        data-assets-path="../../assets/"
+        data-template="vertical-menu-template-free"
+>
+<head>
+  <meta charset="utf-8" />
+  <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
+  />
+
+  <title>Pago</title>
+
+  <meta name="description" content="" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="../../assets/img/favicon/favicon.ico" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+          href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+          rel="stylesheet"
+  />
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Icons. Uncomment required icon fonts -->
+  <link rel="stylesheet" href="../../assets/vendor/fonts/boxicons.css" />
+
+  <!-- Core CSS -->
+  <link rel="stylesheet" href="../../assets/vendor/css/core.css" class="template-customizer-core-css" />
+  <link rel="stylesheet" href="../../assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
+  <link rel="stylesheet" href="../../assets/css/demo.css" />
+
+  <!-- Vendors CSS -->
+  <link rel="stylesheet" href="../../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+
+  <link rel="stylesheet" href="../../assets/vendor/libs/apex-charts/apex-charts.css" />
+
+  <!-- Page CSS -->
+
+  <!-- Helpers -->
+  <script src="../../assets/vendor/js/helpers.js"></script>
+
+  <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
+  <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
+  <script src="../../assets/js/config.js"></script>
+</head>
+<body>
+<!-- Layout wrapper -->
+<div class="layout-wrapper layout-content-navbar">
+  <div class="layout-container">
+    <!-- Menu -->
+
+    <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+      <!-- Contenedor para la imagen centrada -->
+      <div style="text-align: center;">
+        <img src="logo.png" alt="Imagen" style="width: 150px; margin-bottom: -70px; margin-top: -20px">
+      </div>
+
+      <div class="app-brand demo" style="text-align: center;">
+        <a href="inicio_usuariofinal.html" class="app-brand-link">
+          <span class="app-brand-text demo menu-text fw-bolder" style="font-family: 'Poppins', sans-serif; color: #7367F0; padding-left: 15px;">TelExpress</span>
+        </a>
+
+        <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
+          <i class="bx bx-chevron-left bx-sm align-middle"></i>
+        </a>
+      </div>
+
+
+      <div class="menu-inner-shadow"></div>
+
+      <ul class="menu-inner py-1">
+        <!-- Barra lateral -->
+        <li class="menu-item ">
+          <a href="inicio_usuariofinal.html" class="menu-link">
+            <i class="menu-icon tf-icons bx bx-home-circle"></i>
+            <div data-i18n="Inicio">Inicio</div>
+          </a>
+        </li>
+
+        <li class="menu-item">
+          <a href="lista_pedidos.html" class="menu-link">
+            <i class="menu-icon tf-icons bx bx-list-ul"></i>
+            <div data-i18n="MisPedidos">Mis pedidos</div>
+          </a>
+        </li>
+
+        <li class="menu-item">
+            <a href="lista_productos.html" class="menu-link">
+              <i class="menu-icon tf-icons bx bx-store"></i>
+              <div data-i18n="Tienda">Tienda</div>
+            </a>
+        </li>
+
+        <li class="menu-item active">
+            <a href="pago.html" class="menu-link">
+              <i class="menu-icon tf-icons bx bx-credit-card"></i>
+              <div data-i18n="Pago">Pago</div>
+            </a>
+        </li>
+
+
+
+        <li class="menu-item">
+            <a href="chat.html" class="menu-link">
+              <i class="menu-icon tf-icons bx bx-chat"></i>
+              <div data-i18n="Chats">Chats</div>
+            </a>
+        </li>
+
+        <li class="menu-item">
+            <a href="unete.html" class="menu-link">
+              <i class="menu-icon tf-icons bx bx-user-plus"></i>
+              <div data-i18n="Unete">Unete al team</div>
+            </a>
+        </li>
+
+        <li class="menu-item">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+              <i class="menu-icon tf-icons bx bx-support"></i>
+              <div data-i18n="Ayuda">Ayuda al cliente</div>
+            </a>
+            <ul class="menu-sub">
+              <li class="menu-item">
+                <a href="FAQS.html" class="menu-link">
+                  <div data-i18n="Faqs">FAQs</div>
+                </a>
+              </li>
+              <li class="menu-item">
+                <a href="resenia.html" class="menu-link">
+                  <div data-i18n="Reseñas">Reseñas</div>
+                </a>
+              </li>
+              <li class="menu-item">
+                <a href="Foro.html" class="menu-link">
+                  <div data-i18n="Foro">Foro</div>
+                </a>
+              </li>
+              
+            </ul>
+          </li>
+        
+
+      </ul>
+    </aside>
+    <!-- / Menu -->
+    <!-- Layout container -->
+    <div class="layout-page">
+      <!-- Navbar -->
+
+      <nav
+              class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
+              id="layout-navbar"
+      >
+        <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+          <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
+            <i class="bx bx-menu bx-sm"></i>
+          </a>
+        </div>
+
+        <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+
+
+          <ul class="navbar-nav flex-row align-items-center ms-auto">
+            <!-- Place this tag where you want the button to render. -->
+
+
+            <!-- Notificaciones -->
+            <li class="nav-item navbar-dropdown dropdown-user dropdown">
+              <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+                <div class="position-relative">
+                  <div class="bx bx-bell" style="font-size: 26px; color: #7367F0;"></div>
+                  <span class="badge bg-danger rounded-circle position-absolute d-flex justify-content-center align-items-center" style="top: -5px; right: -5px; font-size: 12px; width: 18px; height: 18px;">
+                      5
+                    </span>
+                </div>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end">
+                <li class="dropdown-header">Notificaciones</li>
+                <li>
+                  <a class="dropdown-item" href="#">
+                    <div class="d-flex align-items-center">
+                      <div class="bx bx-message-square-dots me-3" style="font-size: 20px; color: #7367F0;"></div>
+                      <div>
+                        <span class="d-block">Nueva solicitud recibida</span>
+                        <small class="text-muted">Hace 5 minutos</small>
+                      </div>
+                    </div>
+                  </a>
+                </li>
+
+                <li>
+                  <a class="dropdown-item" href="#">
+                    <div class="d-flex align-items-center">
+                      <div class="bx bx-check-circle me-3" style="font-size: 20px; color: #28C76F;"></div>
+                      <div>
+                        <span class="d-block">Tarea completada</span>
+                        <small class="text-muted">Hace 2 horas</small>
+                      </div>
+                    </div>
+                  </a>
+                </li>
+
+                <li>
+                  <a class="dropdown-item" href="#">
+                    <div class="d-flex align-items-center">
+                      <div class="bx bx-error me-3" style="font-size: 20px; color: #EA5455;"></div>
+                      <div>
+                        <span class="d-block">Error en el sistema</span>
+                        <small class="text-muted">Hace 1 día</small>
+                      </div>
+                    </div>
+                  </a>
+                </li>
+
+                <li>
+                  <a class="dropdown-item" href="#">
+                    <div class="d-flex align-items-center">
+                      <div class="bx bx-download me-3" style="font-size: 20px; color: #FF9F43;"></div>
+                      <div>
+                        <span class="d-block">Archivo descargado</span>
+                        <small class="text-muted">Hace 3 días</small>
+                      </div>
+                    </div>
+                  </a>
+                </li>
+
+                <li class="dropdown-footer">
+                  <a class="dropdown-item text-center text-primary" href="#">Ver todas las notificaciones</a>
+                </li>
+              </ul>
+            </li>
+            <!--/ Notificaciones -->
+
+            <!-- User -->
+            <li class="nav-item navbar-dropdown dropdown-user dropdown">
+              <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+                <div class="avatar avatar-online">
+                  <img src="../../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                </div>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end">
+                <li>
+                  <a class="dropdown-item" href="perfil_agente.html">
+                    <div class="d-flex">
+                      <div class="flex-shrink-0 me-3">
+                        <div class="avatar avatar-online">
+                          <img src="../../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                        </div>
+                      </div>
+                      <div class="flex-grow-1">
+                        
+                        <span class="fw-semibold d-block">Sofia Perez</span>
+                        <small class="text-muted">Usuario</small>
+                      </div>
+                    </div>
+                  </a>
+                </li>
+                <li>
+                  <div class="dropdown-divider"></div>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="../Sistema/cambio_contraseña.html">
+                    <i class="bx bx-user me-2"></i>
+                    <span class="align-middle">Cambio de Contraseña</span>
+                  </a>
+                </li>
+
+
+                <li>
+                  <div class="dropdown-divider"></div>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="../Sistema/Login.html">
+                    <i class="bx bx-power-off me-2"></i>
+                    <span class="align-middle">Cerrar Sesión</span>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <!--/ User -->
+          </ul>
+        </div>
+      </nav>
+
+      <!-- / Navbar -->
+
+      <!-- Content wrapper -->
+      <div class="content-wrapper">
+        <!-- Aquí se agrega el contenido central -->
+        <div class="container-xxl flex-grow-1 container-p-y">
+          
+            <h4 style="font-family: 'Poppins', sans-serif; color: #7367F0; font-weight: bold; padding-top: 1rem; padding-bottom: 1rem; margin-bottom: 1rem; text-align: center; font-size: 40px;">
+                Pagos 
+            </h4>
+            <div class="row">
+                <div class="col-12">
+                  <div class="nav-align-top mb-4">
+                    <ul class="nav nav-pills mb-3" role="tablist">
+                      <li class="nav-item">
+                        <button
+                          type="button"
+                          class="nav-link active"
+                          role="tab"
+                          data-bs-toggle="tab"
+                          data-bs-target="#navs-pills-top-home"
+                          aria-controls="navs-pills-top-home"
+                          aria-selected="true"
+                        >
+                          Pagos pendientes
+                        </button>
+                      </li>
+              
+                      <li class="nav-item">
+                        <button
+                          type="button"
+                          class="nav-link"
+                          role="tab"
+                          data-bs-toggle="tab"
+                          data-bs-target="#navs-pills-top-profile"
+                          aria-controls="navs-pills-top-profile"
+                          aria-selected="false"
+                        >
+                          Pagos realizados
+                        </button>
+                      </li>
+                    </ul>
+              
+                    <!-- Contenido de las pestañas -->
+                    <div class="tab-content">
+                      <!-- Tabla de pagos pendientes -->
+                      <div class="tab-pane fade show active" id="navs-pills-top-home" role="tabpanel">
+                        <div class="card"></div>
+                        <div class="table-responsive text-nowrap">
+                          <table class="table table-striped">
+                            <thead>
+                              <tr>
+                                <th>Selecc</th>
+                                <th>N° Orden</th>
+                                <th>Producto</th>
+                                <th>Precio</th>
+                                <th>Cantidad</th>
+                                <th>Monto</th>
+                                <th>Delivery</th>
+                                <th>Total</th>
+                                <th></th>
+                              </tr>
+                            </thead>
+                            <tbody class="table-border-bottom-0">
+                              <tr>
+                                <td><input type="checkbox" name="order1" value="1"></td>
+                                <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>1</strong></td>
+                                <td>Celular</td>
+                                <td>1000</td>
+                                <td>10</td>
+                                <td>10000</td>
+                                <td>200</td>
+                                <td>10200</td>
+                                <td>
+                                  <div class="dropdown">
+                                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                                      <i class="bx bx-dots-vertical-rounded"></i>
+                                    </button>
+                                    <div class="dropdown-menu">
+                                      <a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal"data-bs-target="#modalScrollable"
+                                        ><i class="bx bx-detail me-1"></i> Ver detalle</a>
+                                    
+                                    </div>
+                                  </div>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td><input type="checkbox" name="order2" value="2"></td>
+                                <td><i class="fab fa-react fa-lg text-info me-3"></i> <strong>2</strong></td>
+                                <td>Celular</td>
+                                <td>1000</td>
+                                <td>10</td>
+                                <td>10000</td>
+                                <td>200</td>
+                                <td>10200</td>
+                                <td>
+                                  <div class="dropdown">
+                                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                                      <i class="bx bx-dots-vertical-rounded"></i>
+                                    </button>
+                                    <div class="dropdown-menu">
+                                      <a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal"data-bs-target="#modalScrollable"
+                                        ><i class="bx bx-detail me-1"></i> Ver detalle</a>
+                                      
+                                    </div>
+                                  </div>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td><input type="checkbox" name="order3" value="3"></td>
+                                <td><i class="fab fa-vuejs fa-lg text-success me-3"></i> <strong>3</strong></td>
+                                <td>Celular</td>
+                                <td>1000</td>
+                                <td>10</td>
+                                <td>10000</td>
+                                <td>200</td>
+                                <td>10200</td>
+                                <td>
+                                  <div class="dropdown">
+                                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                                      <i class="bx bx-dots-vertical-rounded"></i>
+                                    </button>
+                                    <div class="dropdown-menu">
+                                      <a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal"data-bs-target="#modalScrollable"
+                                        ><i class="bx bx-detail me-1"></i> Ver detalle</a>
+                                      
+                                    </div>
+                                  </div>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td><input type="checkbox" name="order4" value="4"></td>
+                                <td><i class="fab fa-bootstrap fa-lg text-primary me-3"></i> <strong>4</strong></td>
+                                <td>Celular</td>
+                                <td>1000</td>
+                                <td>10</td>
+                                <td>10000</td>
+                                <td>200</td>
+                                <td>10200</td>
+                                <td>
+                                  <div class="dropdown">
+                                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                                      <i class="bx bx-dots-vertical-rounded"></i>
+                                    </button>
+                                    <div class="dropdown-menu">
+                                      <a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal"data-bs-target="#modalScrollable"
+                                        ><i class="bx bx-detail me-1"></i> Ver detalle</a>
+                                      
+                                    </div>
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+
+                      
+                        <!-- Botón para pagar los pagos pendientes -->
+                        <div class="text-end mt-3">
+                          <button type="button" class="btn btn-primary" onclick="window.location.href='pagar.html';">Pagar compras pendientes(0 seleccionados)</button>
+                        </div>
+                        <!-- Paginación -->
+                        <div class="d-flex justify-content-end mt-4">
+                          <nav aria-label="Page navigation" class="text-end">
+                            <ul class="pagination">
+                              <li class="page-item prev">
+                                <a class="page-link" href="#">
+                                  <i class="tf-icon bx bx-chevron-left"></i>
+                                </a>
+                              </li>
+                              <li class="page-item active">
+                                <a class="page-link" href="#">1</a>
+                              </li>
+                              <li class="page-item">
+                                <a class="page-link" href="#">2</a>
+                              </li>
+                              <li class="page-item next">
+                                <a class="page-link" href="#">
+                                  <i class="tf-icon bx bx-chevron-right"></i>
+                                </a>
+                              </li>
+                            </ul>
+                          </nav>
+                        </div>
+                      </div>
+              
+                      <!-- Tabla de pagos realizados -->
+                      <div class="tab-pane fade" id="navs-pills-top-profile" role="tabpanel">
+                        <div class="card"></div>
+                        <div class="table-responsive text-nowrap">
+                          <table class="table table-striped">
+                            <thead>
+                              <tr>
+                                <th>N° Orden</th>
+                                <th>Producto</th>
+                                <th>F. Facturacion</th>
+                                <th>Monto total</th>
+                                <th>Estado</th>
+                                
+                              </tr>
+                            </thead>
+                            <tbody class="table-border-bottom-0">
+                              <tr>
+                                <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>1</strong></td>
+                                <td>Celular</td>
+                                <td>29/08/24</td>
+                                <td>10200</td>
+                                <td>Pagado</td>
+                                
+                              </tr>
+                              <tr>
+                                <td><i class="fab fa-react fa-lg text-info me-3"></i> <strong>2</strong></td>
+                                <td>Tablet</td>
+                                <td>30/11/24</td>
+                                <td>10900</td>
+                                <td>Pagado</td>
+                                
+                              </tr>
+                              <tr>
+                                <td><i class="fab fa-vuejs fa-lg text-success me-3"></i> <strong>3</strong></td>
+                                <td>Camara</td>
+                                <td>01/03/24</td>
+                                <td>10700</td>
+                                <td>Pagado</td>
+                                
+                              </tr>
+                              <tr>
+                                <td><i class="fab fa-bootstrap fa-lg text-primary me-3"></i> <strong>4</strong></td>
+                                <td>Armario</td>
+                                <td>30/05/24</td>
+                                <td>10500</td>
+                                <td>Pagado</td>
+                                
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <!-- Paginación -->
+                        <div class="d-flex justify-content-end mt-4">
+                            <nav aria-label="Page navigation" class="text-end">
+                              <ul class="pagination">
+                                <li class="page-item prev">
+                                  <a class="page-link" href="#">
+                                    <i class="tf-icon bx bx-chevron-left"></i>
+                                  </a>
+                                </li>
+                                <li class="page-item active">
+                                  <a class="page-link" href="#">1</a>
+                                </li>
+                                <li class="page-item">
+                                  <a class="page-link" href="#">2</a>
+                                </li>
+                                <li class="page-item next">
+                                  <a class="page-link" href="#">
+                                    <i class="tf-icon bx bx-chevron-right"></i>
+                                  </a>
+                                </li>
+                              </ul>
+                            </nav>
+                          </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+        </div>
+      </div>
+      <!-- /Aquí termina el contenido central -->
+
+    </div>
+    <!-- / Layout page -->
+  </div>
+
+  <!-- Overlay -->
+  <div class="layout-overlay layout-menu-toggle"></div>
+</div>
+<!-- / Layout wrapper -->
+
+ <!-- Modal -->
+ <div class="modal fade" id="modalScrollable" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalScrollableTitle">Detalle de orden #1</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="order-details">
+          <div class="order-item">
+            <span class="label">Cargo Fijo:</span>
+            <span class="value">S/ 10</span>
+          </div>
+          <div class="order-item">
+            <span class="label">Cantidad:</span>
+            <span class="value">10</span>
+          </div>
+          <div class="order-item">
+            <span class="label">Precio por unidad</span>
+            <span class="value">S/ 200</span>
+          </div>
+          <div class="order-item">
+            <span class="label">Subtotal</span>
+            <span class="value">S/ 2010</span>
+          </div>
+          <div class="order-item">
+            <span class="label">Delivery</span>
+            <span class="value">S/ 100</span>
+          </div>
+          <div class="order-item">
+            <span class="label">Total</span>
+            <span class="value">S/ 2110</span>
+          </div>
+
+
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+        <button type="button" class="btn btn-primary">Pagar deuda</button>
+      </div>
+    </div>
+  </div>
+</div>
+<style>
+  .order-details {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .order-item {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 5px;
+    padding-top: 5px;
+  }
+
+  .label {
+    font-weight: bold;
+  }
+
+  .value {
+    color: #333;
+  }
+</style>
+
+
+<!-- Core JS -->
+<!-- build:js assets/vendor/js/core.js -->
+<script src="../../assets/vendor/libs/jquery/jquery.js"></script>
+<script src="../../assets/vendor/libs/popper/popper.js"></script>
+<script src="../../assets/vendor/js/bootstrap.js"></script>
+<script src="../../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+
+<script src="../../assets/vendor/js/menu.js"></script>
+<!-- endbuild -->
+
+<!-- Vendors JS -->
+<script src="../../assets/vendor/libs/apex-charts/apexcharts.js"></script>
+
+<!-- Main JS -->
+<script src="../../assets/js/main.js"></script>
+
+<!-- Page JS -->
+<script src="../../assets/js/dashboards-analytics.js"></script>
+
+<!-- Place this tag in your head or just before your close body tag. -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+</body>
+</html>

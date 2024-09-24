@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en" class="light-style layout-menu-fixed" dir="ltr" data-theme="theme-default">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+    <title>Chat</title>
+    <link rel="icon" type="image/x-icon" href="../../assets/img/favicon/favicon.ico" />
+    <link rel="stylesheet" href="../../assets/vendor/fonts/boxicons.css" />
+    <link rel="stylesheet" href="../../assets/vendor/css/core.css" class="template-customizer-core-css" />
+    <link rel="stylesheet" href="../../assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
+    <link rel="stylesheet" href="../../assets/css/demo.css" />
+    <link rel="stylesheet" href="../../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+    <link rel="stylesheet" href="../../assets/vendor/libs/apex-charts/apex-charts.css" />
+    <script src="../../assets/vendor/js/helpers.js"></script>
+    <script src="../../assets/js/config.js"></script>
+    <style>
+        /* Custom styles for status labels */
+        .status-label {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 5px;
+            color: #fff;
+            font-weight: bold;
+        }
+        .validacion { background-color: #d1bf00; }
+
+        /* Sidebar icons */
+        .menu-icon {
+            margin-right: 8px;
+        }
+
+        /* Table styling */
+        .table-bordered th, .table-bordered td {
+            border: 1px solid #dee2e6;
+        }
+
+        /* Product images */
+        .product-img {
+            width: 50px;
+            height: auto;
+        }
+
+        /* Communication Section */
+        .communication-section {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* Shipping and Payment Details */
+        .details-box {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-top: 20px;
+        }
+
+        /* Form styles */
+        .details-box form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .details-box label {
+            margin-top: 10px;
+        }
+
+        .details-box input {
+            padding: 5px;
+            margin-top: 5px;
+        }
+
+        /* Buttons */
+        .btn-modify {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            margin-right: 10px;
+            text-decoration: none;
+        }
+
+        .btn-modify:hover {
+            background-color: #0056b3;
+        }
+
+        .btn-delete {
+            background-color: #dc3545;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+        .btn-delete:hover {
+            background-color: #c82333;
+        }
+
+        .btn-save {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            margin-top: 10px;
+            align-self: flex-start;
+        }
+
+        .btn-save:hover {
+            background-color: #0056b3;
+        }
+
+        /* Chat Interface Styles */
+        .chat-wrapper {
+            display: flex;
+            width: 100%;
+            height: 80vh;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            margin-top: 20px;
+        }
+
+        /* Sidebar */
+        .chat-sidebar {
+            width: 25%;
+            background-color: #f8f8f8;
+            border-right: 1px solid #ddd;
+            padding: 20px;
+        }
+
+        .chat-sidebar h4 {
+            margin-top: 0;
+        }
+
+        .contact {
+            padding: 10px;
+            margin-bottom: 5px;
+            background-color: #e9ecef;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .contact:hover {
+            background-color: #ced4da;
+        }
+
+        /* Main Chat Area */
+        .chat-area {
+            display: flex;
+            flex-direction: column;
+            width: 75%;
+            height: 100%;
+        }
+
+        .chat-header {
+            padding: 20px;
+            background-color: #ffb436;
+            color: white;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .chat-body {
+            flex-grow: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background-color: #f0f0f0;
+        }
+
+        .message {
+            margin-bottom: 15px;
+            display: flex;
+        }
+
+        .message .text {
+            background-color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            max-width: 70%;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .message.sent {
+            justify-content: flex-end;
+        }
+
+        .message.received .text {
+            background-color: #e1f5fe;
+        }
+
+        /* Chat Input */
+        .chat-input-area {
+            padding: 10px;
+            background-color: #f8f8f8;
+            display: flex;
+            align-items: center;
+        }
+
+        #chat-input {
+            flex-grow: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        #send-btn {
+            background-color: #0ccd90;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+
+        #send-btn:hover {
+            background-color: #0056b3;
+        }
+        
+    </style>
+</head>
+<body>
+<div class="layout-wrapper layout-content-navbar">
+    <div class="layout-container">
+        <!-- Sidebar -->
+        <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+            <div style="text-align: center;">
+                <img src="logo.png" alt="Imagen" style="width: 150px; margin-bottom: -70px; margin-top: -20px">
+            </div>
+
+            <div class="app-brand demo" style="text-align: center;">
+                <a href="inicio_usuariofinal.html" class="app-brand-link">
+                    <span class="app-brand-text demo menu-text fw-bolder" style="font-family: 'Poppins', sans-serif; color: #7367F0; padding-left: 15px;">TelExpress</span>
+                </a>
+
+                <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
+                    <i class="bx bx-chevron-left bx-sm align-middle"></i>
+                </a>
+            </div>
+            <ul class="menu-inner py-1">
+                <li class="menu-item">
+                    <a href="inicio_usuariofinal.html" class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                        <div>Inicio</div>
+                    </a>
+                </li>
+                <li class="menu-item ">
+                    <a href="lista_pedidos.html" class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-list-ul"></i>
+                        <div>Mis pedidos</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="lista_productos.html" class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-store"></i>
+                        <div>Tienda</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="pago.html" class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-credit-card"></i>
+                        <div>Pago</div>
+                    </a>
+                </li>
+                <li class="menu-item active">
+                    <a href="chat.html" class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-chat"></i>
+                        <div>Chat</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="unete.html" class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-user-plus"></i>
+                        <div>Únete al team</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="javascript:void(0);" class="menu-link menu-toggle">
+                        <i class="menu-icon tf-icons bx bx-support"></i>
+                        <div data-i18n="Helptoclient">Ayuda al cliente</div>
+                    </a>
+
+                    <ul class="menu-sub">
+                        <li class="menu-item">
+                            <a href="FAQS.html" class="menu-link">
+                                <div data-i18n="faqs">FAQs</div>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="resenia.html" class="menu-link">
+                                <div data-i18n="Reseñas">Reseñas</div>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="Foro.html" class="menu-link">
+                                <div data-i18n="Foro">Foro</div>
+                            </a>
+                        </li>
+
+                    </ul>
+                </li>
+
+
+            </ul>
+        </aside>
+        <!-- /Sidebar -->
+
+        <!-- Main content -->
+        <div class="layout-page">
+            <!-- Navbar -->
+            <nav
+                    class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
+                    id="layout-navbar"
+            >
+                <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+                    <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
+                        <i class="bx bx-menu bx-sm"></i>
+                    </a>
+                </div>
+
+                <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+
+
+                    <ul class="navbar-nav flex-row align-items-center ms-auto">
+                        <!-- Place this tag where you want the button to render. -->
+
+
+                        <!-- Notificaciones -->
+                        <li class="nav-item navbar-dropdown dropdown-user dropdown">
+                            <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+                                <div class="position-relative">
+                                    <div class="bx bx-bell" style="font-size: 26px; color: #7367F0;"></div>
+                                    <span class="badge bg-danger rounded-circle position-absolute d-flex justify-content-center align-items-center" style="top: -5px; right: -5px; font-size: 12px; width: 18px; height: 18px;">
+                                      5
+                                    </span>
+                                </div>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li class="dropdown-header">Notificaciones</li>
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        <div class="d-flex align-items-center">
+                                            <div class="bx bx-message-square-dots me-3" style="font-size: 20px; color: #7367F0;"></div>
+                                            <div>
+                                                <span class="d-block">Nueva solicitud recibida</span>
+                                                <small class="text-muted">Hace 5 minutos</small>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        <div class="d-flex align-items-center">
+                                            <div class="bx bx-check-circle me-3" style="font-size: 20px; color: #28C76F;"></div>
+                                            <div>
+                                                <span class="d-block">Tarea completada</span>
+                                                <small class="text-muted">Hace 2 horas</small>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        <div class="d-flex align-items-center">
+                                            <div class="bx bx-error me-3" style="font-size: 20px; color: #EA5455;"></div>
+                                            <div>
+                                                <span class="d-block">Error en el sistema</span>
+                                                <small class="text-muted">Hace 1 día</small>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        <div class="d-flex align-items-center">
+                                            <div class="bx bx-download me-3" style="font-size: 20px; color: #FF9F43;"></div>
+                                            <div>
+                                                <span class="d-block">Archivo descargado</span>
+                                                <small class="text-muted">Hace 3 días</small>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+
+                                <li class="dropdown-footer">
+                                    <a class="dropdown-item text-center text-primary" href="#">Ver todas las notificaciones</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <!--/ Notificaciones -->
+
+                        <!-- User -->
+                        <li class="nav-item navbar-dropdown dropdown-user dropdown">
+                            <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+                                <div class="avatar avatar-online">
+                                    <img src="../../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                                </div>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li>
+                                    <a class="dropdown-item" href="perfil_agente.html">
+                                        <div class="d-flex">
+                                            <div class="flex-shrink-0 me-3">
+                                                <div class="avatar avatar-online">
+                                                    <img src="../../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                                                </div>
+                                            </div>
+                                            <div class="flex-grow-1">
+
+                                                <span class="fw-semibold d-block">Juanito Jun</span>
+                                                <small class="text-muted">Agente</small>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <div class="dropdown-divider"></div>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="../Sistema/cambio_contraseña.html">
+                                        <i class="bx bx-user me-2"></i>
+                                        <span class="align-middle">Cambio de Contraseña</span>
+                                    </a>
+                                </li>
+
+
+                                <li>
+                                    <div class="dropdown-divider"></div>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="../Sistema/Login.html">
+                                        <i class="bx bx-power-off me-2"></i>
+                                        <span class="align-middle">Cerrar Sesión</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <!--/ User -->
+                    </ul>
+                </div>
+            </nav>
+            <!-- /Navbar -->
+
+            <!-- Content wrapper -->
+            <div class="content-wrapper">
+                <!-- Order Details -->
+                <div class="container-xxl flex-grow-1 container-p-y">
+
+                    <!-- Chat Interface -->
+                    <div class="chat-wrapper">
+                        <!-- Sidebar for Contacts -->
+                        <div class="chat-sidebar">
+                            <h4>Contactos</h4>
+                            <div class="contact" onclick="selectContact('AgenteO1')">AgenteO1</div>
+                            <div class="contact" onclick="selectContact('AgenteO2')">AgenteO2</div>
+                            <div class="contact" onclick="selectContact('AgenteO3')">AgenteO3</div>
+                            <div class="contact" onclick="selectContact('AgenteO4')">AgenteO4</div>
+                            <div class="contact" onclick="selectContact('ChatBot')">ChatBot</div>
+                        </div>
+
+                        <!-- Main Chat Area -->
+                        <div class="chat-area">
+                            <div class="chat-header">
+                                <h4 id="chat-with">Chat</h4>
+                            </div>
+                            <div class="chat-body" id="chat-body">
+                                <!-- Chat messages will be appended here dynamically -->
+                            </div>
+                            <div class="chat-input-area">
+                                <input type="text" id="chat-input" placeholder="Type your message here...">
+                                <button id="send-btn">Send</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!-- /Content wrapper -->
+        </div>
+        <!-- /Main content -->
+    </div>
+    <!-- / Layout page -->
+</div>
+
+<!-- JavaScript for Chat Functionality -->
+<script>
+    // Function to handle sending messages
+    document.getElementById('send-btn').addEventListener('click', sendMessage);
+
+    // Handle Enter key for sending messages
+    document.getElementById('chat-input').addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') {
+            sendMessage();
+        }
+    });
+
+    function sendMessage() {
+        const input = document.getElementById('chat-input');
+        const messageText = input.value.trim();
+
+        if (messageText !== '') {
+            // Add the sent message to the chat body
+            appendMessage('sent', messageText);
+
+            // Clear the input field
+            input.value = '';
+
+            // Simulate a received response for demonstration
+            setTimeout(() => {
+                appendMessage('received', 'Respuesta automática.');
+            }, 1000);
+        }
+    }
+
+    // Function to append messages to the chat body
+    function appendMessage(type, text) {
+        const chatBody = document.getElementById('chat-body');
+
+        const messageDiv = document.createElement('div');
+        messageDiv.classList.add('message', type);
+
+        const textDiv = document.createElement('div');
+        textDiv.classList.add('text');
+        textDiv.innerText = text;
+
+        messageDiv.appendChild(textDiv);
+        chatBody.appendChild(messageDiv);
+
+        // Scroll to the latest message
+        chatBody.scrollTop = chatBody.scrollHeight;
+    }
+
+    // Function to select a contact
+    function selectContact(name) {
+        document.getElementById('chat-with').innerText = `Chat with ${name}`;
+        document.getElementById('chat-body').innerHTML = ''; // Clear chat body for the new contact
+    }
+</script>
+
+</body>
+</html>
