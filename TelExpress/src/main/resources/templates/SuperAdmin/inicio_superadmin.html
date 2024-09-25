@@ -252,7 +252,7 @@
               <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);"
                  data-bs-toggle="dropdown">
                 <div class="avatar avatar-online">
-                  <img src="../../static/assets/img/avatars/1.png" alt
+                  <img src="/assets/img/avatars/1.png" alt
                        class="w-px-40 h-auto rounded-circle"/>
                 </div>
               </a>
@@ -354,16 +354,16 @@
                 </div>
               </div>
               <br>
-              <div>
+              <!--<div>
                 <nav aria-label="Page navigation example">
                   <ul class="pagination justify-content-center">
-                    <!-- Generar la paginación dinámicamente -->
+                    &lt;!&ndash; Generar la paginación dinámicamente &ndash;&gt;
                     <li th:each="pagina : ${paginas}" class="page-item">
                       <a class="page-link" th:text="${pagina.numero}" th:href="@{'/usuarios?page=' + ${pagina.numero}}"></a>
                     </li>
                   </ul>
                 </nav>
-              </div>
+              </div>-->
             </div>
 
 

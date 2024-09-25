@@ -9,7 +9,8 @@ import lombok.Getter;
 public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idusuario;
+    @Column(name="idusuario")
+    private Integer id;
 
     private String nombre;
     private String apellido;
@@ -19,6 +20,14 @@ public class Usuario {
     private String telefono;
 
     private String ruc;
+
+    @ManyToOne
+    @JoinColumn(name= "roles_idRoles")
+    private Rol rol;
+
+    @ManyToOne
+    @JoinColumn(name="distritos_iddistritos")
+    private Distrito distrito;
 
 
 }

@@ -33,9 +33,9 @@ public class SuperAdminController {
 
     @GetMapping("inicio_superadmin")
     public String inicioSuperadmin(Model model){
-        model.addAttribute("listaUsuario",adminRepository.buscarUsuarioPorRol());
-        model.addAttribute("listaAgente",adminRepository.buscarAgentePorRol());
-        model.addAttribute("listaCoordinador",adminRepository.buscarCoordiPorRol());
+        model.addAttribute("listaUsuario",adminRepository.buscarUsuarioPorRol(4));
+        /*model.addAttribute("listaAgente",adminRepository.buscarAgentePorRol(3));
+        model.addAttribute("listaCoordinador",adminRepository.buscarCoordiPorRol(2));*/
         return "SuperAdmin/inicio_superadmin";
     }
 
