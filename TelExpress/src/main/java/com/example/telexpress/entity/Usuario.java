@@ -24,13 +24,13 @@ public class Usuario {
     private String telefono;
     private String contrasena;
 
-    @Column(name = "fecha_nacimiento", nullable = false)
+    @Column(name = "fechanacim", nullable = false)
     private LocalDate fechanacimiento;
 
     private String ruc;
 
     @ManyToOne
-    @JoinColumn(name= "roles_idRoles")
+    @JoinColumn(name= "idroles")
     private Rol rol;
 
     @ManyToOne
@@ -38,6 +38,10 @@ public class Usuario {
     private Distrito distrito;
 
     @ManyToOne
-    @JoinColumn(name="zona_idzona", nullable = false)
+    @JoinColumn(name="idzona", nullable = false)
     private Zona zona;
+
+    @ManyToOne
+    @JoinColumn(name= "idproveedor", nullable = false)
+    private Proveedor proveedor;
 }

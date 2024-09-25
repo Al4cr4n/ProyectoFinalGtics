@@ -272,14 +272,14 @@
               </thead>
               <tbody>
               <!-- Ejemplo de filas de la tabla -->
-              <tr>
-                <td>1</td>
-                <td>Agente A</td>
-                <td>Apellido A</td>
-                <td>987654321</td>
-                <td>12345678</td>
-                <td>20123456789</td>
-                <td>Tienda A</td>
+              <tr th:each="agente, info: ${lista_agentes}">
+                <td th:text="${info.index + 1}"></td>
+                <td th:text="${agente.nombre}"></td>
+                <td th:text="${agente.apellido}"></td>
+                <td th:text="${agente.telefono}"></td>
+                <td th:text="${agente.ruc}"></td>
+                <td th:text="${agente.nombre}"></td>
+                <td th:text="${agente.nombre}"></td>
                 <td>Validado</td>
                 <td>
                   <button class="btn btn-sm btn-primary">

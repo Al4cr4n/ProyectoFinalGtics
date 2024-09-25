@@ -17,6 +17,6 @@ public class Distrito {
     private String nombredistrito;
 
     @ManyToOne
-    @JoinColumn(name="zona_idzona")
+    @JoinColumn(name="idzona")
     private Zona zona;
 }
