@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS `db_grupo2`.`codigodespachador` (
   `estado` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`idcodigoDespachador`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 22
+AUTO_INCREMENT = 29
 DEFAULT CHARACTER SET = utf8mb3;
 INSERT INTO `DB_GRUPO2`.`codigoDespachador` 
 (`codigoDespachador`, `estado`) VALUES
@@ -49,7 +49,7 @@ CREATE TABLE IF NOT EXISTS `db_grupo2`.`codigosjurisdiccion` (
   `estado` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`idcodigos`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 22
+AUTO_INCREMENT = 29
 DEFAULT CHARACTER SET = utf8mb3;
 INSERT INTO `DB_GRUPO2`.`codigosJurisdiccion` 
 (`codigoJurisdiccion`, `estado`) VALUES
@@ -150,21 +150,50 @@ DEFAULT CHARACTER SET = utf8mb3;
 
 
 -- -----------------------------------------------------
--- Table `db_grupo2`.`roles`
+-- Table `db_grupo2`.`producto`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `db_grupo2`.`roles` (
-  `idRoles` INT NOT NULL AUTO_INCREMENT,
-  `rol` VARCHAR(50) NOT NULL,
-  PRIMARY KEY (`idRoles`))
+CREATE TABLE IF NOT EXISTS `db_grupo2`.`producto` (
+  `idproducto` INT NOT NULL AUTO_INCREMENT,
+  `nombreProducto` VARCHAR(100) NOT NULL,
+  `categoria` VARCHAR(45) NOT NULL,
+  `cantidadDisponible` INT NOT NULL,
+  `descripcion` VARCHAR(1000) NOT NULL,
+  `precio` DOUBLE NOT NULL,
+  `costoEnvio` DOUBLE NOT NULL,
+  `cantidadTotal` INT NULL DEFAULT NULL,
+  `cantidadComprada` INT NULL DEFAULT NULL,
+  PRIMARY KEY (`idproducto`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 5
+AUTO_INCREMENT = 11
 DEFAULT CHARACTER SET = utf8mb3;
-INSERT INTO `roles` (`idRoles`, `rol`)
+INSERT INTO `DB_GRUPO2`.`producto` (`idproducto`, `nombreProducto`, `categoria`, `cantidadDisponible`, `descripcion`, `precio`, `costoEnvio`, `cantidadTotal`, `cantidadComprada`)
 VALUES
-(1, 'Superadmin'),
-(2, 'Coordinador'),
-(3, 'Agente'),
-(4, 'Usuario');
+(1, 'Laptop Lenovo', 'Electrónica', 15, 'Laptop Lenovo con 16GB RAM, 512GB SSD, pantalla de 15.6 pulgadas.', 1200.50, 25.00, 1,70),
+(2, 'iPhone 13', 'Electrónica', 20, 'iPhone 13 con 128GB, pantalla OLED de 6.1 pulgadas.', 999.99, 20.00,  2,100),
+(3, 'Samsung Galaxy S21', 'Electrónica', 10, 'Samsung Galaxy S21 con 128GB, pantalla de 6.2 pulgadas.', 850.75, 18.00,  3,200),
+(4, 'Silla Gamer', 'Muebles', 30, 'Silla gamer ergonómica con soporte lumbar ajustable.', 199.99, 15.00, 300, 300),
+(5, 'Teclado Mecánico', 'Accesorios', 50, 'Teclado mecánico RGB con switches azules.', 75.00, 10.00, 200, 500),
+(6, 'Monitor 4K', 'Electrónica', 12, 'Monitor 4K UHD de 27 pulgadas con HDR.', 350.00, 22.00, 80, 200),
+(7, 'Cámara Canon EOS', 'Fotografía', 8, 'Cámara Canon EOS Rebel T7i con lente de 18-55mm.', 700.99, 30.00, 50,100),
+(8, 'Auriculares Bluetooth', 'Accesorios', 25, 'Auriculares inalámbricos Bluetooth con cancelación de ruido.', 150.00, 8.00, 100, 400),
+(9, 'Mouse Inalámbrico', 'Accesorios', 60, 'Mouse inalámbrico con sensor óptico de alta precisión.', 35.99, 5.00, 300, 700),
+(10, 'Impresora HP LaserJet', 'Oficina', 5, 'Impresora HP LaserJet con impresión a doble cara automática.', 250.50, 12.00, 40, 400);
+
+
+-- -----------------------------------------------------
+-- Table `db_grupo2`.`fotos`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `db_grupo2`.`fotos` (
+  `idfotos` INT NOT NULL AUTO_INCREMENT,
+  `foto1` BLOB NOT NULL,
+  `productos_idproductos` INT NOT NULL,
+  PRIMARY KEY (`idfotos`),
+  INDEX `fk_fotos_productos1_idx` (`productos_idproductos` ASC) VISIBLE,
+  CONSTRAINT `fk_fotos_productos1`
+    FOREIGN KEY (`productos_idproductos`)
+    REFERENCES `db_grupo2`.`producto` (`idproducto`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb3;
 
 
 -- -----------------------------------------------------
@@ -204,6 +233,24 @@ VALUES
 
 
 -- -----------------------------------------------------
+-- Table `db_grupo2`.`roles`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `db_grupo2`.`roles` (
+  `idRoles` INT NOT NULL AUTO_INCREMENT,
+  `rol` VARCHAR(50) NOT NULL,
+  PRIMARY KEY (`idRoles`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 5
+DEFAULT CHARACTER SET = utf8mb3;
+INSERT INTO `roles` (`idRoles`, `rol`)
+VALUES
+(1, 'Superadmin'),
+(2, 'Coordinador'),
+(3, 'Agente'),
+(4, 'Usuario');
+
+
+-- -----------------------------------------------------
 -- Table `db_grupo2`.`usuario`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `db_grupo2`.`usuario` (
@@ -227,7 +274,7 @@ CREATE TABLE IF NOT EXISTS `db_grupo2`.`usuario` (
   `distritos_iddistritos` INT NULL DEFAULT NULL,
   `idzona` INT NOT NULL,
   `fechanacim` DATE NULL DEFAULT NULL,
-  `estado` VARCHAR(45) NULL,
+  `estado` VARCHAR(45) NULL DEFAULT NULL,
   `idproveedor` INT NOT NULL,
   PRIMARY KEY (`idusuario`),
   UNIQUE INDEX `dni_UNIQUE` (`dni` ASC) VISIBLE,
@@ -240,17 +287,15 @@ CREATE TABLE IF NOT EXISTS `db_grupo2`.`usuario` (
   CONSTRAINT `fk_usuario_distritos1`
     FOREIGN KEY (`distritos_iddistritos`)
     REFERENCES `db_grupo2`.`distritos` (`iddistritos`),
+  CONSTRAINT `fk_usuario_proveedor1`
+    FOREIGN KEY (`idproveedor`)
+    REFERENCES `db_grupo2`.`proveedor` (`idproveedor`),
   CONSTRAINT `fk_usuario_roles1`
     FOREIGN KEY (`idroles`)
     REFERENCES `db_grupo2`.`roles` (`idRoles`),
   CONSTRAINT `fk_usuario_zona1`
     FOREIGN KEY (`idzona`)
-    REFERENCES `db_grupo2`.`zona` (`idzona`),
-  CONSTRAINT `fk_usuario_proveedor1`
-    FOREIGN KEY (`idproveedor`)
-    REFERENCES `db_grupo2`.`proveedor` (`idproveedor`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    REFERENCES `db_grupo2`.`zona` (`idzona`))
 ENGINE = InnoDB
 AUTO_INCREMENT = 36
 DEFAULT CHARACTER SET = utf8mb3;
@@ -343,58 +388,6 @@ VALUES
 
 
 -- -----------------------------------------------------
--- Table `db_grupo2`.`producto`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `db_grupo2`.`producto` (
-  `idproducto` INT NOT NULL AUTO_INCREMENT,
-  `nombreProducto` VARCHAR(100) NOT NULL,
-  `categoria` VARCHAR(45) NOT NULL,
-  `cantidadDisponible` INT NOT NULL,
-  `descripcion` VARCHAR(1000) NOT NULL,
-  `precio` DOUBLE NOT NULL,
-  `costoEnvio` DOUBLE NOT NULL,
-  `cantidadTotal` INT NULL DEFAULT NULL,
-  `ordenes_idordenes` INT NOT NULL,
-  `cantidadComprada` INT NULL,
-  PRIMARY KEY (`idproducto`),
-  INDEX `fk_productos_ordenes1_idx` (`ordenes_idordenes` ASC) VISIBLE,
-  CONSTRAINT `fk_productos_ordenes1`
-    FOREIGN KEY (`ordenes_idordenes`)
-    REFERENCES `db_grupo2`.`ordenes` (`idordenes`))
-ENGINE = InnoDB
-AUTO_INCREMENT = 11
-DEFAULT CHARACTER SET = utf8mb3;
-INSERT INTO `DB_GRUPO2`.`producto` (`idproducto`, `nombreProducto`, `categoria`, `cantidadDisponible`, `descripcion`, `precio`, `costoEnvio`, `cantidadTotal`, `ordenes_idordenes`, `cantidadComprada`)
-VALUES
-(1, 'Laptop Lenovo', 'Electrónica', 15, 'Laptop Lenovo con 16GB RAM, 512GB SSD, pantalla de 15.6 pulgadas.', 1200.50, 25.00, 100, 1,70),
-(2, 'iPhone 13', 'Electrónica', 20, 'iPhone 13 con 128GB, pantalla OLED de 6.1 pulgadas.', 999.99, 20.00, 150, 2,100),
-(3, 'Samsung Galaxy S21', 'Electrónica', 10, 'Samsung Galaxy S21 con 128GB, pantalla de 6.2 pulgadas.', 850.75, 18.00, 120, 3,200),
-(4, 'Silla Gamer', 'Muebles', 30, 'Silla gamer ergonómica con soporte lumbar ajustable.', 199.99, 15.00, 300, 4,300),
-(5, 'Teclado Mecánico', 'Accesorios', 50, 'Teclado mecánico RGB con switches azules.', 75.00, 10.00, 200, 5,500),
-(6, 'Monitor 4K', 'Electrónica', 12, 'Monitor 4K UHD de 27 pulgadas con HDR.', 350.00, 22.00, 80, 6,200),
-(7, 'Cámara Canon EOS', 'Fotografía', 8, 'Cámara Canon EOS Rebel T7i con lente de 18-55mm.', 700.99, 30.00, 50, 7,100),
-(8, 'Auriculares Bluetooth', 'Accesorios', 25, 'Auriculares inalámbricos Bluetooth con cancelación de ruido.', 150.00, 8.00, 100, 8,400),
-(9, 'Mouse Inalámbrico', 'Accesorios', 60, 'Mouse inalámbrico con sensor óptico de alta precisión.', 35.99, 5.00, 300, 9,700),
-(10, 'Impresora HP LaserJet', 'Oficina', 5, 'Impresora HP LaserJet con impresión a doble cara automática.', 250.50, 12.00, 40, 10,400);
-
-
--- -----------------------------------------------------
--- Table `db_grupo2`.`fotos`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `db_grupo2`.`fotos` (
-  `idfotos` INT NOT NULL AUTO_INCREMENT,
-  `foto1` BLOB NOT NULL,
-  `productos_idproductos` INT NOT NULL,
-  PRIMARY KEY (`idfotos`),
-  INDEX `fk_fotos_productos1_idx` (`productos_idproductos` ASC) VISIBLE,
-  CONSTRAINT `fk_fotos_productos1`
-    FOREIGN KEY (`productos_idproductos`)
-    REFERENCES `db_grupo2`.`producto` (`idproducto`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb3;
-
-
--- -----------------------------------------------------
 -- Table `db_grupo2`.`pagos`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `db_grupo2`.`pagos` (
@@ -416,6 +409,28 @@ CREATE TABLE IF NOT EXISTS `db_grupo2`.`pagos` (
   CONSTRAINT `fk_pagos_usuario1`
     FOREIGN KEY (`usuario_idusuario`)
     REFERENCES `db_grupo2`.`usuario` (`idusuario`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb3;
+
+
+-- -----------------------------------------------------
+-- Table `db_grupo2`.`producto_has_ordenes`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `db_grupo2`.`producto_has_ordenes` (
+  `producto_idproducto` INT NOT NULL,
+  `ordenes_idordenes` INT NOT NULL,
+  PRIMARY KEY (`producto_idproducto`, `ordenes_idordenes`),
+  INDEX `fk_ordenes` (`ordenes_idordenes` ASC) VISIBLE,
+  CONSTRAINT `fk_ordenes`
+    FOREIGN KEY (`ordenes_idordenes`)
+    REFERENCES `db_grupo2`.`ordenes` (`idordenes`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  CONSTRAINT `fk_producto`
+    FOREIGN KEY (`producto_idproducto`)
+    REFERENCES `db_grupo2`.`producto` (`idproducto`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
 
@@ -493,7 +508,7 @@ CREATE TABLE IF NOT EXISTS `db_grupo2`.`reposicionproductos` (
     FOREIGN KEY (`productos_idproductos`)
     REFERENCES `db_grupo2`.`producto` (`idproducto`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 22
+AUTO_INCREMENT = 29
 DEFAULT CHARACTER SET = utf8mb3;
 INSERT INTO `DB_GRUPO2`.`reposicionProductos` 
 (`cantidad`, `fechaSolicitud`, `productos_idproductos`) VALUES
@@ -504,6 +519,7 @@ INSERT INTO `DB_GRUPO2`.`reposicionProductos`
 (15, '2024-09-15', 4),
 (45, '2024-09-20', 2),
 (70, '2024-09-22', 3);
+
 
 
 -- -----------------------------------------------------
@@ -532,7 +548,7 @@ CREATE TABLE IF NOT EXISTS `db_grupo2`.`resenias` (
     FOREIGN KEY (`usuario_idusuario`)
     REFERENCES `db_grupo2`.`usuario` (`idusuario`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 16
+AUTO_INCREMENT = 21
 DEFAULT CHARACTER SET = utf8mb3;
 INSERT INTO `DB_GRUPO2`.`resenias` (`descripcion`, `calidad`, `rapidez`, `puntuacion`, `foto`, `respuesta`, `productos_idproductos`, `tituloForo`, `descripcionForo`,`usuario_idusuario`,`tipoPublicacion`) VALUES
 ('Excelente producto, lo recomendaría a todos.', 'Alta', 'Rápida', 5, NULL, 'Gracias por tu comentario!', 1, 'Recomendación de Producto A', 'Me encantó el Producto A, superó mis expectativas.',29,'Foro'),

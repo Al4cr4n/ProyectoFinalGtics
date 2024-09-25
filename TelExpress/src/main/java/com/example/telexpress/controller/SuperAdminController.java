@@ -34,7 +34,7 @@ public class SuperAdminController {
 
     /*METODO DE TODAS LAS LISTAS DE LA VISTA PRINCIPAL*/
 
-    @GetMapping("inicio_superadmin")
+    @GetMapping("/inicio_superadmin")
     public String inicioSuperadmin(Model model){
         List<Usuario> usuarios = adminRepository.buscarUsuarioPorRol(4);
         System.out.println("Usuarios: " + usuarios);
