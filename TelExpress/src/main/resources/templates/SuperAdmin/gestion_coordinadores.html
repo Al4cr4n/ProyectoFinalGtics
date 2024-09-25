@@ -308,9 +308,9 @@
                 <td th:text="${usuario.zona.nombre}"></td>
                 <td th:text="${usuario.fechanacimiento}"></td>
                 <td>
-                  <a th:href="@{/editarzonal(id =${usuario.idusuario})}" class="btn btn-sm btn-primary">
+                  <a th:href="@{/editarzonal(id =${usuario.id})}" class="btn btn-sm btn-primary">
                     <i class="bx bx-edit-alt"></i></a>
-                  <button th:onclick="'/deletecoordi('+ $(usuario.idusuario} +')'" class="btn btn-sm btn-danger">
+                  <button th:onclick="'/deletecoordi('+ $(usuario.id} +')'" class="btn btn-sm btn-danger">
                     <i class="bx bx-trash"></i></button>
                 </td>
               </tr>
@@ -325,13 +325,13 @@
           </div>
 
           <!-- Paginación -->
-          <nav aria-label="Page navigation">
+          <!--<nav aria-label="Page navigation">
             <ul class="pagination justify-content-center">
               <li class="page-item"><a class="page-link" href="#">1</a></li>
               <li class="page-item"><a class="page-link" href="#">2</a></li>
               <li class="page-item"><a class="page-link" href="#">3</a></li>
             </ul>
-          </nav>
+          </nav>-->
         </div>
         <!-- Content backdrop -->
         <div class="content-backdrop fade"></div>
@@ -349,11 +349,11 @@
 <!--script para la tabla-->
 <script>
   $(document).ready(function() {
-    $('coordinadoresTable').DataTable({
+    $('#coordinadoresTable').DataTable({
       "paging": true, //Activa la paginaci[on
       "lengthChange":true, //Permitir cambiar el tama;o de la pagina
       "searching": true,         // Buscar dentro de la tabla
-      "pageLength": 10,  // Mostrar 10 filas por página
+      "pageLength": 15,  // Mostrar 10 filas por página
       "ordering": true,          // Permitir ordenar columnas
       "info": true,              // Mostrar información del paginado
       "autoWidth": false,        // Ajuste automático de ancho de columnas

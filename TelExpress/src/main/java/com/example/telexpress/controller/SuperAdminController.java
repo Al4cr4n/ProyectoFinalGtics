@@ -116,8 +116,6 @@ public class SuperAdminController {
             System.out.println("Zonal ID: " + cz.getId());
         }
         model.addAttribute("coordinadores",listazonal);
-
-
         return "SuperAdmin/gestion_coordinadores";
     }
 /*para gestionar coordinador zonal*/
