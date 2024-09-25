@@ -14,6 +14,12 @@ public class SuperAdminController {
         return "SuperAdmin/inicio_superadmin";
     }
 
+    @GetMapping("inicio_superadmin")
+    public String inicioSuperadmin(){
+
+        return "SuperAdmin/inicio_superadmin";
+    }
+
     @GetMapping("/dashboard_superadmin")
     public String dashboardSuperadmin() {
 
