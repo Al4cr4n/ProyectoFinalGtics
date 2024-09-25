@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -25,7 +26,8 @@ public class ProductoController {
 
     }
 
-    @GetMapping({"/producto/lista", "inventario_superadmin"})
+
+    @GetMapping({"/producto/lista", "/superadmin/inventario_superadmin", "/superadmin/producto/lista"})
     public String listarProductos(Model model) {
 
         model.addAttribute("lista", productoRepository.findAll());
