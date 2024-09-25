@@ -24,7 +24,7 @@ public class Usuario {
     private String telefono;
     private String contrasena;
 
-    @Column(name = "fecha_nacimiento", nullable = false)
+    @Column(name = "fechanacim", nullable = false)
     private LocalDate fechanacimiento;
 
     private String ruc;

@@ -120,7 +120,7 @@ public class SuperAdminController {
 
         return "SuperAdmin/gestion_coordinadores";
     }
-
+/*para gestionar coordinador zonal*/
     @GetMapping("/coordinador_zonal_formulario")
     public String CoordinadorZonalFormularioSuperadmin(Model model, @RequestParam("id") Integer id) {
         Optional<Usuario> coordinador = adminRepository.findById(id);
@@ -136,13 +136,35 @@ public class SuperAdminController {
         }
 
     }
-
+/*para gestionar coordinador zonal*/
     @GetMapping("/new")
     public String crearnuevocoordi(Model model){
         List<Zona> zonas = zonaRepository.findAll();
         model.addAttribute("zonas", zonas);
         model.addAttribute("coordinadorzonal", new Usuario());
         return "SuperAdmin/coordinador_zonal_formulario";
+    }
+
+    /* para actualizar datos de coodinador zonal*/
+    @PostMapping("/update")
+    public String actualizardatoscoordi(Usuario usuario, @RequestParam("zonaid") Integer zonaid) {
+
+        Zona zona = zonaRepository.findById(zonaid).orElse(null);
+        if (zona != null) {
+            usuario.setZona(zona); // Asignar la zona seleccionada al usuario
+        }
+        adminRepository.save(usuario);
+        return "redirect:SuperAdmin/gestion_coordinadores";
+    }
+
+    /*para gestionar coordinador zonal*/
+    @GetMapping("/deletecoordi")
+    public String eliminarcoordi(Model model, @RequestParam("id") Integer id){
+        Optional <Usuario> coordi = adminRepository.findById(id);
+        if (coordi.isPresent()){
+            adminRepository.deleteById(id);
+        }
+        return "redirect:SuperAdmin/gestion_coordinadores";
     }
 
     @GetMapping("/gestion_usuarios")
