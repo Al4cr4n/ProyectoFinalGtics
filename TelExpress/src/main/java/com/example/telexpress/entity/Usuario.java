@@ -23,6 +23,7 @@ public class Usuario {
     private String dni;
     private String telefono;
     private String contrasena;
+    private String estadoUsuario;
 
     @Column(name = "fechanacim", nullable = false)
     private LocalDate fechanacimiento;

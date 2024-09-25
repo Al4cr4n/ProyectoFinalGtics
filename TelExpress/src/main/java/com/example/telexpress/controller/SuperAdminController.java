@@ -20,8 +20,11 @@ public class SuperAdminController {
 
     final AdminRepository adminRepository;
     final ZonaRepository zonaRepository;
-    public SuperAdminController(AdminRepository adminRepository, ZonaRepository zonaRepository){
+    final ProductoRepository productoRepository;
+    final UsuarioRepository usuarioRepository;
+    public SuperAdminController(AdminRepository adminRepository, ZonaRepository zonaRepository, ProductoRepository productoRepository, UsuarioRepository usuarioRepository) {
         this.adminRepository=adminRepository; this.zonaRepository=zonaRepository;
+        this.productoRepository=productoRepository; this.usuarioRepository=usuarioRepository;
     }
 
 
@@ -206,6 +209,29 @@ public class SuperAdminController {
 
         return "SuperAdmin/solicitud_agente";
     }
+
+    @GetMapping({ "/superadmin/dashboard_superadmin"})
+    public String listasDashboard(Model model) {
+        List<Producto> listaTop = productoRepository.findAll();
+        listaTop.sort(Comparator.comparing(Producto::getCantidadComprada).reversed());
+
+        model.addAttribute("listaTop", listaTop);
+
+        // Devuelve la vista correspondiente
+
+
+        long totalUsuarios = usuarioRepository.count();
+        long usuariosActivos = usuarioRepository.countByEstadoUsuario("Activo");
+        long usuariosInactivos = usuarioRepository.countByEstadoUsuario("Inactivo");
+        long usuariosBaneados = usuarioRepository.countByEstadoUsuario("Baneado");
+
+        model.addAttribute("totalUsuarios", totalUsuarios);
+        model.addAttribute("usuariosActivos", usuariosActivos);
+        model.addAttribute("usuariosInactivos", usuariosInactivos);
+        model.addAttribute("usuariosBaneados", usuariosBaneados);
+        return "SuperAdmin/dashboard_superadmin";
+    }
+
 
 
 
