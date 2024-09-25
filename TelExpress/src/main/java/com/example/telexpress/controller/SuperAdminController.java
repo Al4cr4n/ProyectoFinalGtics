@@ -185,6 +185,14 @@ public class SuperAdminController {
         model.addAttribute("lista_agentes",lista_agentes);
         return "SuperAdmin/gestion_agentes";
     }
+
+    @GetMapping("/editar_agentes")
+    public String editar_agentes(Model model) {
+
+        return "SuperAdmin/editar_agente";
+    }
+
+
     @GetMapping("/rol_agente_solicitudes")
     public String rolAgenteSolicitudesSuperadmin() {
 
