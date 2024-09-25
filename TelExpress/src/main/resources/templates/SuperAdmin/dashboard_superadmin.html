@@ -579,259 +579,35 @@
                                 <h5 class="card-header">Top 10 Productos Más Vendidos</h5>
                                 <div class="card-body">
                                     <div class="table-responsive text-nowrap">
-                                        <table class="table table-bordered">
-                                            <thead>
+                                        <table class="table table-striped">
+                                            <thead class="table-light">
                                             <tr>
                                                 <th>N°</th>
                                                 <th>Nombre</th>
                                                 <th>Categoría</th>
-                                                <th>Precio</th>
                                                 <th>Cantidad</th>
+                                                <th>Descripción</th>
+                                                <th>Precio</th>
+                                                <th>Costo de envío</th>
                                                 <th>Acciones</th>
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>Auriculares</td>
-                                                <td>Electrónica</td>
-                                                <td>50</td>
-                                                <td>100</td>
-                                                <td>
-                                                    <div class="dropdown">
-                                                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
-                                                                data-bs-toggle="dropdown">
-                                                            <i class="bx bx-dots-vertical-rounded"></i>
-                                                        </button>
-                                                        <div class="dropdown-menu">
-                                                            <a class="dropdown-item" href="/superadmin/inventario_editar_producto"><i
-                                                                    class="bx bx-edit-alt me-1"></i> Editar</a>
-                                                            <a class="dropdown-item" href="javascript:void(0);"><i
-                                                                    class="bx bx-trash me-1"></i> Eliminar</a>
-                                                            <a class="dropdown-item" href="javascript:void(0);"><i
-                                                                    class="bx bx-log-in-circle me-1"></i> Añadir
-                                                                Stock</a>
-                                                        </div>
-                                                    </div>
+                                            <tr th:each="producto, info : ${listaTop}">
+                                                <td th:text="${info.index + 1}"></td>
+                                                <td th:text="${producto.nombreProducto}"></td>
+                                                <td th:text="${producto.categoria}"></td>
+                                                <td th:text="${producto.cantidadDisponible}"></td>
+                                                <td th:text="${producto.descripcion}"></td>
+                                                <td th:text="${producto.precio}"></td>
+                                                <td th:text="${producto.costoEnvio}"></td>
+
+                                                <td><button class="btn btn-sm btn-primary"  th:href="@{'/producto/editar?id=' + ${producto.idProducto}}"><i class="bx bx-edit-alt"></i></button>
                                                 </td>
                                             </tr>
-                                            <tr>
-                                                <td>2</td>
-                                                <td>Teléfono móvil</td>
-                                                <td>Electrónica</td>
-                                                <td>300</td>
-                                                <td>50</td>
-                                                <td>
-                                                    <div class="dropdown">
-                                                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
-                                                                data-bs-toggle="dropdown">
-                                                            <i class="bx bx-dots-vertical-rounded"></i>
-                                                        </button>
-                                                        <div class="dropdown-menu">
-                                                            <a class="dropdown-item" href="/superadmin/inventario_editar_producto"><i
-                                                                    class="bx bx-edit-alt me-1"></i> Editar</a>
-                                                            <a class="dropdown-item" href="javascript:void(0);"><i
-                                                                    class="bx bx-trash me-1"></i> Eliminar</a>
-                                                            <a class="dropdown-item" href="javascript:void(0);"><i
-                                                                    class="bx bx-log-in-circle me-1"></i> Añadir
-                                                                Stock</a>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>3</td>
-                                                <td>Tablet</td>
-                                                <td>Electrónica</td>
-                                                <td>200</td>
-                                                <td>80</td>
-                                                <td>
-                                                    <div class="dropdown">
-                                                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
-                                                                data-bs-toggle="dropdown">
-                                                            <i class="bx bx-dots-vertical-rounded"></i>
-                                                        </button>
-                                                        <div class="dropdown-menu">
-                                                            <a class="dropdown-item" href="/superadmin/inventario_editar_producto"><i
-                                                                    class="bx bx-edit-alt me-1"></i> Editar</a>
-                                                            <a class="dropdown-item" href="javascript:void(0);"><i
-                                                                    class="bx bx-trash me-1"></i> Eliminar</a>
-                                                            <a class="dropdown-item" href="javascript:void(0);"><i
-                                                                    class="bx bx-log-in-circle me-1"></i> Añadir
-                                                                Stock</a>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>4</td>
-                                                <td>Ordenador portátil</td>
-                                                <td>Informática</td>
-                                                <td>600</td>
-                                                <td>40</td>
-                                                <td>
-                                                    <div class="dropdown">
-                                                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
-                                                                data-bs-toggle="dropdown">
-                                                            <i class="bx bx-dots-vertical-rounded"></i>
-                                                        </button>
-                                                        <div class="dropdown-menu">
-                                                            <a class="dropdown-item" href="/superadmin/inventario_editar_producto"><i
-                                                                    class="bx bx-edit-alt me-1"></i> Editar</a>
-                                                            <a class="dropdown-item" href="javascript:void(0);"><i
-                                                                    class="bx bx-trash me-1"></i> Eliminar</a>
-                                                            <a class="dropdown-item" href="javascript:void(0);"><i
-                                                                    class="bx bx-log-in-circle me-1"></i> Añadir
-                                                                Stock</a>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>5</td>
-                                                <td>Cámara</td>
-                                                <td>Fotografía</td>
-                                                <td>400</td>
-                                                <td>30</td>
-                                                <td>
-                                                    <div class="dropdown">
-                                                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
-                                                                data-bs-toggle="dropdown">
-                                                            <i class="bx bx-dots-vertical-rounded"></i>
-                                                        </button>
-                                                        <div class="dropdown-menu">
-                                                            <a class="dropdown-item" href="/superadmin/inventario_editar_producto"><i
-                                                                    class="bx bx-edit-alt me-1"></i> Editar</a>
-                                                            <a class="dropdown-item" href="javascript:void(0);"><i
-                                                                    class="bx bx-trash me-1"></i> Eliminar</a>
-                                                            <a class="dropdown-item" href="javascript:void(0);"><i
-                                                                    class="bx bx-log-in-circle me-1"></i> Añadir
-                                                                Stock</a>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>6</td>
-                                                <td>Impresora</td>
-                                                <td>Oficina</td>
-                                                <td>150</td>
-                                                <td>70</td>
-                                                <td>
-                                                    <div class="dropdown">
-                                                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
-                                                                data-bs-toggle="dropdown">
-                                                            <i class="bx bx-dots-vertical-rounded"></i>
-                                                        </button>
-                                                        <div class="dropdown-menu">
-                                                            <a class="dropdown-item" href="/superadmin/inventario_editar_producto"><i
-                                                                    class="bx bx-edit-alt me-1"></i> Editar</a>
-                                                            <a class="dropdown-item" href="javascript:void(0);"><i
-                                                                    class="bx bx-trash me-1"></i> Eliminar</a>
-                                                            <a class="dropdown-item" href="javascript:void(0);"><i
-                                                                    class="bx bx-log-in-circle me-1"></i> Añadir
-                                                                Stock</a>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>7</td>
-                                                <td>Smartwatch</td>
-                                                <td>Electrónica</td>
-                                                <td>250</td>
-                                                <td>90</td>
-                                                <td>
-                                                    <div class="dropdown">
-                                                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
-                                                                data-bs-toggle="dropdown">
-                                                            <i class="bx bx-dots-vertical-rounded"></i>
-                                                        </button>
-                                                        <div class="dropdown-menu">
-                                                            <a class="dropdown-item" href="/superadmin/inventario_editar_producto"><i
-                                                                    class="bx bx-edit-alt me-1"></i> Editar</a>
-                                                            <a class="dropdown-item" href="javascript:void(0);"><i
-                                                                    class="bx bx-trash me-1"></i> Eliminar</a>
-                                                            <a class="dropdown-item" href="javascript:void(0);"><i
-                                                                    class="bx bx-log-in-circle me-1"></i> Añadir
-                                                                Stock</a>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>8</td>
-                                                <td>Televisor</td>
-                                                <td>Electrodomésticos</td>
-                                                <td>500</td>
-                                                <td>60</td>
-                                                <td>
-                                                    <div class="dropdown">
-                                                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
-                                                                data-bs-toggle="dropdown">
-                                                            <i class="bx bx-dots-vertical-rounded"></i>
-                                                        </button>
-                                                        <div class="dropdown-menu">
-                                                            <a class="dropdown-item" href="/superadmin/inventario_editar_producto"><i
-                                                                    class="bx bx-edit-alt me-1"></i> Editar</a>
-                                                            <a class="dropdown-item" href="javascript:void(0);"><i
-                                                                    class="bx bx-trash me-1"></i> Eliminar</a>
-                                                            <a class="dropdown-item" href="javascript:void(0);"><i
-                                                                    class="bx bx-log-in-circle me-1"></i> Añadir
-                                                                Stock</a>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>9</td>
-                                                <td>Consola de videojuegos</td>
-                                                <td>Videojuegos</td>
-                                                <td>450</td>
-                                                <td>55</td>
-                                                <td>
-                                                    <div class="dropdown">
-                                                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
-                                                                data-bs-toggle="dropdown">
-                                                            <i class="bx bx-dots-vertical-rounded"></i>
-                                                        </button>
-                                                        <div class="dropdown-menu">
-                                                            <a class="dropdown-item" href="/superadmin/inventario_editar_producto"><i
-                                                                    class="bx bx-edit-alt me-1"></i> Editar</a>
-                                                            <a class="dropdown-item" href="javascript:void(0);"><i
-                                                                    class="bx bx-trash me-1"></i> Eliminar</a>
-                                                            <a class="dropdown-item" href="javascript:void(0);"><i
-                                                                    class="bx bx-log-in-circle me-1"></i> Añadir
-                                                                Stock</a>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>10</td>
-                                                <td>Cámara de seguridad</td>
-                                                <td>Seguridad</td>
-                                                <td>350</td>
-                                                <td>85</td>
-                                                <td>
-                                                    <div class="dropdown">
-                                                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
-                                                                data-bs-toggle="dropdown">
-                                                            <i class="bx bx-dots-vertical-rounded"></i>
-                                                        </button>
-                                                        <div class="dropdown-menu">
-                                                            <a class="dropdown-item" href="/superadmin/inventario_editar_producto"><i
-                                                                    class="bx bx-edit-alt me-1"></i> Editar</a>
-                                                            <a class="dropdown-item" href="javascript:void(0);"><i
-                                                                    class="bx bx-trash me-1"></i> Eliminar</a>
-                                                            <a class="dropdown-item" href="javascript:void(0);"><i
-                                                                    class="bx bx-log-in-circle me-1"></i> Añadir
-                                                                Stock</a>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
+
                                             </tbody>
+
                                         </table>
                                     </div>
                                 </div>

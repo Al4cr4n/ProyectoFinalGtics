@@ -34,6 +34,13 @@ public class ProductoController {
         return "SuperAdmin/inventario_superadmin";
     }
 
+    @GetMapping({"/producto/listaTop", "/superadmin/dashboard_superadmin", "/superadmin/producto/listaTop"})
+    public String listarTopProductos(Model model) {
+
+        model.addAttribute("listaTop", productoRepository.findAll());
+        return "SuperAdmin/dashboard_superadmin";
+    }
+
     @GetMapping("/producto/nuevo")
     public String nuevoProductoFrm(Model model) {
         model.addAttribute("listaProveedores",proveedorRepository.findAll());

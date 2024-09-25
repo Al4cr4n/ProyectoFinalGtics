@@ -90,12 +90,7 @@ public class SuperAdminController {
 
 
 
-    @GetMapping("/dashboard_superadmin")
-    public String dashboardSuperadmin() {
 
-
-        return "SuperAdmin/dashboard_superadmin";
-    }
 
 
     @GetMapping("/inventario_registrar_producto")
