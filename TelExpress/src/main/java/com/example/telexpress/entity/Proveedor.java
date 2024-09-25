@@ -31,7 +31,7 @@ public class Proveedor {
     private String correo;
 
     @ManyToOne
-    @JoinColumn(name = "idzona")
+    @JoinColumn(name = "zona_idzona1")
     private Zona zona;
 
 }
