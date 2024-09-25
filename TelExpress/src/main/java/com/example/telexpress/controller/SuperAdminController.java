@@ -186,9 +186,9 @@ public class SuperAdminController {
         return "SuperAdmin/gestion_agentes";
     }
 
-    @GetMapping("/gestion_agentes")
+    @GetMapping("/editar_agentes")
     public String editar_agentes(Model model) {
-        
+
         return "SuperAdmin/editar_agente";
     }
 
