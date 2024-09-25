@@ -272,16 +272,16 @@
               </thead>
               <tbody>
               <!-- Ejemplo de filas de la tabla -->
-              <tr>
-                <td>1</td>
-                <td>Usuario A</td>
-                <td>Apellido A</td>
-                <td>12345678</td>
-                <td>usuarioA@correo.com</td>
-                <td>Dirección A</td>
+              <tr th:each="usuario, info: ${listaUsuario}">
+                <td th:text="${info.index + 1}"></td>
+                <td th:text="${usuario.nombre}"></td>
+                <td th:text="${usuario.apellido}"></td>
+                <td th:text="${usuario.dni}"></td>
+                <td th:text="${usuario.correo}"></td>
+                <td th:text="${usuario.direccion}"></td>
                 <td><button class="btn btn-sm btn-secondary">Ingresar</button></td>
                 <td>
-                  <button class="btn btn-sm btn-primary" onclick="window.location.href='/modificar_usuario'">
+                  <button class="btn btn-sm btn-primary" onclick="window.location.href='/editar_usuario'">
                     <i class="bx bx-edit-alt"></i>
                   </button>
                   <button class="btn btn-sm btn-danger"><i class="bx bx-trash"></i></button>

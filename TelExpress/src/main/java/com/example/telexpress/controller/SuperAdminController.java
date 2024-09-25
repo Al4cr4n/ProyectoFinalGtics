@@ -174,11 +174,13 @@ public class SuperAdminController {
     }
 
     @GetMapping("/gestion_usuarios")
-    public String gestionUsuariosSuperadmin() {
-
-
+    public String gestionUsuariosSuperadmin(Model model) {
+        List<Usuario> listaUsuario= adminRepository.buscarUsuarioPorRol(4);
+        model.addAttribute("listaUsuario",listaUsuario);
         return "SuperAdmin/gestion_usuarios";
     }
+
+
 
     @GetMapping("/modificar_usuario")
     public String modificarUsuarioSuperadmin() {

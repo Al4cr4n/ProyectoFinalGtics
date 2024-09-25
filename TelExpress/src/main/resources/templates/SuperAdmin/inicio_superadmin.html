@@ -549,13 +549,13 @@
                     </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
-                    <tr>
-                      <td><i class="fab fa-angular fa-lg text-danger me-3"></i>Albert</td>
-                      <td>Cook</td>
-                      <td>01234567</td>
-                      <td>01234567</td>
-                      <td>01234567</td>
-                      <td>Angular Project</td>
+                    <tr th:each="agente : ${listaAgente}">
+                      <td th:text="${agente.nombre}"></td>
+                      <td th:text="${agente.apellido}"></td>
+                      <td th:text="${agente.telefono}"></td>
+                      <td th:text="${agente.dni}"></td>
+                      <td th:text="${agente.ruc}"></td>
+                      <td th:text="${agente.proveedor.nombreTienda}"></td>
                       <td>
                         <div class="dropdown">
                           <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
@@ -575,110 +575,7 @@
                         </div>
                       </td>
                     </tr>
-                    <tr>
-                      <td><i class="fab fa-react fa-lg text-info me-3"></i>Barry</td>
-                      <td>Hunter</td>
-                      <td>01234567</td>
-                      <td>01234567</td>
-                      <td>01234567</td>
-                      <td>React Project</td>
-                      <td>
-                        <div class="dropdown">
-                          <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                            <i class="bx bx-dots-vertical-rounded"></i>
-                          </button>
-                          <div class="dropdown-menu">
-                            <a class="dropdown-item" href="javascript:void(0);"
-                            ><i class="bx bx-edit-alt me-1"></i> Editar</a
-                            >
-                            <a class="dropdown-item" href="javascript:void(0);"
-                            ><i class="bx bx-trash me-1"></i> Eliminar</a
-                            >
-                            <a class="dropdown-item" href="javascript:void(0);"
-                            ><i class="bx bx-log-in-circle me-1"></i> Ingresar</a
-                            >
-                          </div>
-                        </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td><i class="fab fa-vuejs fa-lg text-success me-3"></i>Trevor</td>
-                      <td>Baker</td>
-                      <td>01234567</td>
-                      <td>01234567</td>
-                      <td>01234567</td>
-                      <td>VueJs Project</td>
-                      <td>
-                        <div class="dropdown">
-                          <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                            <i class="bx bx-dots-vertical-rounded"></i>
-                          </button>
-                          <div class="dropdown-menu">
-                            <a class="dropdown-item" href="javascript:void(0);"
-                            ><i class="bx bx-edit-alt me-1"></i> Editar</a
-                            >
-                            <a class="dropdown-item" href="javascript:void(0);"
-                            ><i class="bx bx-trash me-1"></i> Eliminar</a
-                            >
-                            <a class="dropdown-item" href="javascript:void(0);"
-                            ><i class="bx bx-log-in-circle me-1"></i> Ingresar</a
-                            >
-                          </div>
-                        </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td><i class="fab fa-bootstrap fa-lg text-primary me-3"></i>Jerry</td>
-                      <td>Milton</td>
-                      <td>01234567</td>
-                      <td>01234567</td>
-                      <td>01234567</td>
-                      <td>Bootstrap Project</td>
-                      <td>
-                        <div class="dropdown">
-                          <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                            <i class="bx bx-dots-vertical-rounded"></i>
-                          </button>
-                          <div class="dropdown-menu">
-                            <a class="dropdown-item" href="javascript:void(0);"
-                            ><i class="bx bx-edit-alt me-1"></i> Editar</a
-                            >
-                            <a class="dropdown-item" href="javascript:void(0);"
-                            ><i class="bx bx-trash me-1"></i> Eliminar</a
-                            >
-                            <a class="dropdown-item" href="javascript:void(0);"
-                            ><i class="bx bx-log-in-circle me-1"></i> Ingresar</a
-                            >
-                          </div>
-                        </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td><i class="fab fa-angular fa-lg text-danger me-3"></i>Albert</td>
-                      <td>Cook</td>
-                      <td>01234567</td>
-                      <td>01234567</td>
-                      <td>01234567</td>
-                      <td>Angular Project</td>
-                      <td>
-                        <div class="dropdown">
-                          <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                            <i class="bx bx-dots-vertical-rounded"></i>
-                          </button>
-                          <div class="dropdown-menu">
-                            <a class="dropdown-item" href="javascript:void(0);"
-                            ><i class="bx bx-edit-alt me-1"></i> Editar</a
-                            >
-                            <a class="dropdown-item" href="javascript:void(0);"
-                            ><i class="bx bx-trash me-1"></i> Eliminar</a
-                            >
-                            <a class="dropdown-item" href="javascript:void(0);"
-                            ><i class="bx bx-log-in-circle me-1"></i> Ingresar</a
-                            >
-                          </div>
-                        </div>
-                      </td>
-                    </tr>
+
                     </tbody>
                   </table>
                 </div>
@@ -725,13 +622,14 @@
                     </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
-                    <tr>
-                      <td><i class="fab fa-angular fa-lg text-danger me-3"></i>Albert</td>
-                      <td>Cook</td>
-                      <td>01234567</td>
-                      <td>01234567</td>
-                      <td>01234567</td>
-                      <td>Angular Project</td>
+                    <tr th:each="coordi : ${listaCoordi}">
+                      <td th:text="${coordi.nombre}"></td>
+                      <td th:text="${coordi.apellido}"></td>
+                      <td th:text="${coordi.telefono}"></td>
+                      <td th:text="${coordi.dni}"></td>
+                      <td th:text="${coordi.correo}"></td>
+                      <td th:text="${coordi.zona}"></td>
+
                       <td>
                         <div class="dropdown">
                           <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
@@ -751,110 +649,7 @@
                         </div>
                       </td>
                     </tr>
-                    <tr>
-                      <td><i class="fab fa-react fa-lg text-info me-3"></i>Barry</td>
-                      <td>Hunter</td>
-                      <td>01234567</td>
-                      <td>01234567</td>
-                      <td>01234567</td>
-                      <td>React Project</td>
-                      <td>
-                        <div class="dropdown">
-                          <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                            <i class="bx bx-dots-vertical-rounded"></i>
-                          </button>
-                          <div class="dropdown-menu">
-                            <a class="dropdown-item" href="javascript:void(0);"
-                            ><i class="bx bx-edit-alt me-1"></i> Editar</a
-                            >
-                            <a class="dropdown-item" href="javascript:void(0);"
-                            ><i class="bx bx-trash me-1"></i> Eliminar</a
-                            >
-                            <a class="dropdown-item" href="javascript:void(0);"
-                            ><i class="bx bx-log-in-circle me-1"></i> Ingresar</a
-                            >
-                          </div>
-                        </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td><i class="fab fa-vuejs fa-lg text-success me-3"></i>Trevor</td>
-                      <td>Baker</td>
-                      <td>01234567</td>
-                      <td>01234567</td>
-                      <td>01234567</td>
-                      <td>VueJs Project</td>
-                      <td>
-                        <div class="dropdown">
-                          <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                            <i class="bx bx-dots-vertical-rounded"></i>
-                          </button>
-                          <div class="dropdown-menu">
-                            <a class="dropdown-item" href="javascript:void(0);"
-                            ><i class="bx bx-edit-alt me-1"></i> Editar</a
-                            >
-                            <a class="dropdown-item" href="javascript:void(0);"
-                            ><i class="bx bx-trash me-1"></i> Eliminar</a
-                            >
-                            <a class="dropdown-item" href="javascript:void(0);"
-                            ><i class="bx bx-log-in-circle me-1"></i> Ingresar</a
-                            >
-                          </div>
-                        </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td><i class="fab fa-bootstrap fa-lg text-primary me-3"></i>Jerry</td>
-                      <td>Milton</td>
-                      <td>01234567</td>
-                      <td>01234567</td>
-                      <td>01234567</td>
-                      <td>Bootstrap Project</td>
-                      <td>
-                        <div class="dropdown">
-                          <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                            <i class="bx bx-dots-vertical-rounded"></i>
-                          </button>
-                          <div class="dropdown-menu">
-                            <a class="dropdown-item" href="javascript:void(0);"
-                            ><i class="bx bx-edit-alt me-1"></i> Editar</a
-                            >
-                            <a class="dropdown-item" href="javascript:void(0);"
-                            ><i class="bx bx-trash me-1"></i> Eliminar</a
-                            >
-                            <a class="dropdown-item" href="javascript:void(0);"
-                            ><i class="bx bx-log-in-circle me-1"></i> Ingresar</a
-                            >
-                          </div>
-                        </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td><i class="fab fa-angular fa-lg text-danger me-3"></i>Albert</td>
-                      <td>Cook</td>
-                      <td>01234567</td>
-                      <td>01234567</td>
-                      <td>01234567</td>
-                      <td>Angular Project</td>
-                      <td>
-                        <div class="dropdown">
-                          <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                            <i class="bx bx-dots-vertical-rounded"></i>
-                          </button>
-                          <div class="dropdown-menu">
-                            <a class="dropdown-item" href="javascript:void(0);"
-                            ><i class="bx bx-edit-alt me-1"></i> Editar</a
-                            >
-                            <a class="dropdown-item" href="javascript:void(0);"
-                            ><i class="bx bx-trash me-1"></i> Eliminar</a
-                            >
-                            <a class="dropdown-item" href="javascript:void(0);"
-                            ><i class="bx bx-log-in-circle me-1"></i> Ingresar</a
-                            >
-                          </div>
-                        </div>
-                      </td>
-                    </tr>
+
                     </tbody>
                   </table>
                 </div>
