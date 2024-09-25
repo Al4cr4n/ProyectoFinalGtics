@@ -50,6 +50,13 @@ public class SuperAdminController {
         return "SuperAdmin/gestion_coordinadores";
     }
 
+    @GetMapping("/coordinador_zonal_formulario")
+    public String CoordinadorZonalFormularioSuperadmin() {
+
+
+        return "SuperAdmin/coordinador_zonal_formulario";
+    }
+
     @GetMapping("/gestion_usuarios")
     public String gestionUsuariosSuperadmin() {
 
