@@ -5,27 +5,29 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
 -- -----------------------------------------------------
--- Schema DB_GRUPO2
+-- Schema mydb
+-- -----------------------------------------------------
+-- -----------------------------------------------------
+-- Schema db_grupo2
 -- -----------------------------------------------------
 
 -- -----------------------------------------------------
--- Schema DB_GRUPO2
+-- Schema db_grupo2
 -- -----------------------------------------------------
 DROP DATABASE IF EXISTS `DB_GRUPO2`;
-CREATE SCHEMA IF NOT EXISTS `DB_GRUPO2` DEFAULT CHARACTER SET utf8mb3 ;
-USE `DB_GRUPO2` ;
+CREATE SCHEMA IF NOT EXISTS `db_grupo2` DEFAULT CHARACTER SET utf8mb3 ;
+USE `db_grupo2` ;
 
 -- -----------------------------------------------------
--- Table `DB_GRUPO2`.`codigodespachador`
+-- Table `db_grupo2`.`codigodespachador`
 -- -----------------------------------------------------
-
-CREATE TABLE IF NOT EXISTS `DB_GRUPO2`.`codigodespachador` (
+CREATE TABLE IF NOT EXISTS `db_grupo2`.`codigodespachador` (
   `idcodigoDespachador` INT NOT NULL AUTO_INCREMENT,
   `codigoDespachador` VARCHAR(45) NOT NULL,
   `estado` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`idcodigoDespachador`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 8
+AUTO_INCREMENT = 15
 DEFAULT CHARACTER SET = utf8mb3;
 INSERT INTO `DB_GRUPO2`.`codigoDespachador` 
 (`codigoDespachador`, `estado`) VALUES
@@ -39,15 +41,15 @@ INSERT INTO `DB_GRUPO2`.`codigoDespachador`
 
 
 -- -----------------------------------------------------
--- Table `DB_GRUPO2`.`codigosjurisdiccion`
+-- Table `db_grupo2`.`codigosjurisdiccion`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `DB_GRUPO2`.`codigosjurisdiccion` (
+CREATE TABLE IF NOT EXISTS `db_grupo2`.`codigosjurisdiccion` (
   `idcodigos` INT NOT NULL AUTO_INCREMENT,
   `codigoJurisdiccion` VARCHAR(45) NOT NULL,
   `estado` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`idcodigos`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 8
+AUTO_INCREMENT = 15
 DEFAULT CHARACTER SET = utf8mb3;
 INSERT INTO `DB_GRUPO2`.`codigosJurisdiccion` 
 (`codigoJurisdiccion`, `estado`) VALUES
@@ -61,43 +63,14 @@ INSERT INTO `DB_GRUPO2`.`codigosJurisdiccion`
 
 
 -- -----------------------------------------------------
--- Table `DB_GRUPO2`.`faq`
+-- Table `db_grupo2`.`zona`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `DB_GRUPO2`.`faq` (
-  `idfaq` INT NOT NULL AUTO_INCREMENT,
-  `respuesta` VARCHAR(200) NOT NULL,
-  `pregunta` VARCHAR(200) NOT NULL,
-  PRIMARY KEY (`idfaq`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb3;
-
-
--- -----------------------------------------------------
--- Table `DB_GRUPO2`.`roles`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `DB_GRUPO2`.`roles` (
-  `idRoles` INT NOT NULL AUTO_INCREMENT,
-  `rol` VARCHAR(50) NOT NULL,
-  PRIMARY KEY (`idRoles`))
-ENGINE = InnoDB
-AUTO_INCREMENT = 5
-DEFAULT CHARACTER SET = utf8mb3;
-INSERT INTO `roles` (`idRoles`, `rol`)
-VALUES
-(1, 'Superadmin'),
-(2, 'Coordinador'),
-(3, 'Agente'),
-(4, 'Usuario');
-
-
--- -----------------------------------------------------
--- Table `DB_GRUPO2`.`zona`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `DB_GRUPO2`.`zona` (
+CREATE TABLE IF NOT EXISTS `db_grupo2`.`zona` (
   `idzona` INT NOT NULL,
   `nombreZona` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`idzona`))
-ENGINE = InnoDB;
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb3;
 INSERT INTO `zona` (`idzona`, `nombreZona`)
 VALUES
 (1, 'Norte'),
@@ -107,9 +80,9 @@ VALUES
 
 
 -- -----------------------------------------------------
--- Table `DB_GRUPO2`.`distritos`
+-- Table `db_grupo2`.`distritos`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `DB_GRUPO2`.`distritos` (
+CREATE TABLE IF NOT EXISTS `db_grupo2`.`distritos` (
   `iddistritos` INT NOT NULL,
   `nombreDistrito` VARCHAR(45) NOT NULL,
   `zona_idzona` INT NOT NULL,
@@ -117,10 +90,9 @@ CREATE TABLE IF NOT EXISTS `DB_GRUPO2`.`distritos` (
   INDEX `fk_distritos_zona1_idx` (`zona_idzona` ASC) VISIBLE,
   CONSTRAINT `fk_distritos_zona1`
     FOREIGN KEY (`zona_idzona`)
-    REFERENCES `DB_GRUPO2`.`zona` (`idzona`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+    REFERENCES `db_grupo2`.`zona` (`idzona`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb3;
 INSERT INTO `DB_GRUPO2`.`distritos` (`iddistritos`, `nombreDistrito`, `zona_idzona`)
 VALUES
 -- Zona Norte (1)
@@ -166,10 +138,41 @@ VALUES
 
 
 
+
 -- -----------------------------------------------------
--- Table `DB_GRUPO2`.`usuario`
+-- Table `db_grupo2`.`faq`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `DB_GRUPO2`.`usuario` (
+CREATE TABLE IF NOT EXISTS `db_grupo2`.`faq` (
+  `idfaq` INT NOT NULL AUTO_INCREMENT,
+  `respuesta` VARCHAR(200) NOT NULL,
+  `pregunta` VARCHAR(200) NOT NULL,
+  PRIMARY KEY (`idfaq`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb3;
+
+
+-- -----------------------------------------------------
+-- Table `db_grupo2`.`roles`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `db_grupo2`.`roles` (
+  `idRoles` INT NOT NULL AUTO_INCREMENT,
+  `rol` VARCHAR(50) NOT NULL,
+  PRIMARY KEY (`idRoles`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 5
+DEFAULT CHARACTER SET = utf8mb3;
+INSERT INTO `roles` (`idRoles`, `rol`)
+VALUES
+(1, 'Superadmin'),
+(2, 'Coordinador'),
+(3, 'Agente'),
+(4, 'Usuario');
+
+
+-- -----------------------------------------------------
+-- Table `db_grupo2`.`usuario`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `db_grupo2`.`usuario` (
   `idusuario` INT NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(45) NOT NULL,
   `apellido` VARCHAR(45) NOT NULL,
@@ -187,85 +190,92 @@ CREATE TABLE IF NOT EXISTS `DB_GRUPO2`.`usuario` (
   `solicitudAgente` TINYINT NULL DEFAULT NULL,
   `isBan` TINYINT NOT NULL,
   `roles_idRoles` INT NOT NULL,
-  `distritos_iddistritos` INT NOT NULL,
+  `distritos_iddistritos` INT NULL,
+  `zona_idzona` INT NOT NULL,
+  `fechanacim` DATE NULL,
   PRIMARY KEY (`idusuario`),
   UNIQUE INDEX `dni_UNIQUE` (`dni` ASC) VISIBLE,
   UNIQUE INDEX `correo_UNIQUE` (`correo` ASC) VISIBLE,
   UNIQUE INDEX `ruc_UNIQUE` (`ruc` ASC) VISIBLE,
   INDEX `fk_usuario_roles1_idx` (`roles_idRoles` ASC) VISIBLE,
   INDEX `fk_usuario_distritos1_idx` (`distritos_iddistritos` ASC) VISIBLE,
-  CONSTRAINT `fk_usuario_roles1`
-    FOREIGN KEY (`roles_idRoles`)
-    REFERENCES `DB_GRUPO2`.`roles` (`idRoles`),
+  INDEX `fk_usuario_zona1_idx` (`zona_idzona` ASC) VISIBLE,
   CONSTRAINT `fk_usuario_distritos1`
     FOREIGN KEY (`distritos_iddistritos`)
-    REFERENCES `DB_GRUPO2`.`distritos` (`iddistritos`)
+    REFERENCES `db_grupo2`.`distritos` (`iddistritos`),
+  CONSTRAINT `fk_usuario_roles1`
+    FOREIGN KEY (`roles_idRoles`)
+    REFERENCES `db_grupo2`.`roles` (`idRoles`),
+  CONSTRAINT `fk_usuario_zona1`
+    FOREIGN KEY (`zona_idzona`)
+    REFERENCES `db_grupo2`.`zona` (`idzona`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
 AUTO_INCREMENT = 36
 DEFAULT CHARACTER SET = utf8mb3;
-INSERT INTO `usuario` (`idusuario`, `nombre`, `apellido`, `dni`, `contrasena`, `direccion`, `ruc`, `notificaciones`, `correo`, `telefono`, `estadoUsuario`, `codigoJurisdiccion`, `codigoDespachador`, `razonSocial`, `solicitudAgente`, `isBan`, `roles_idRoles`,`distritos_iddistritos`)
+INSERT INTO `usuario` (`idusuario`, `nombre`, `apellido`, `dni`, `contrasena`, `direccion`, `ruc`, `notificaciones`, `correo`, `telefono`, `estadoUsuario`, `codigoJurisdiccion`, `codigoDespachador`, `razonSocial`, `solicitudAgente`, `isBan`, `roles_idRoles`,`distritos_iddistritos`,`zona_idzona`,`fechanacim`)
 VALUES
 -- --Un superadmin--
-(1, 'Juan', 'Pérez', '87654301', 'pass111', 'Calle Luna 100', '20123456701',  'Notificaciones Activas', 'juan.perez@example.com', '987654321', 'Activo', 'JUR101', 'DES401', 'Pérez SAC',0, 0, 1,1),
+(1, 'Juan', 'Pérez', '87654301', 'pass111', 'Calle Luna 100', '20123456701',  'Notificaciones Activas', 'juan.perez@example.com', '987654321', 'Activo', 'JUR101', 'DES401', 'Pérez SAC',0, 0, 1,1,1,NULL),
 -- --8 coordinadores zonales como máximo -- --
 -- -- -- 2 coordis por zona -- -- --
 -- -- -- norte -- -- --
-(4, 'Laura', 'Ramírez', '87654304', 'pass444', 'Av. Luna 400', '20123456704', 'Notificaciones Inactivas', 'laura.ramirez@example.com', '934567890', 'Activo', 'JUR104', 'DES404', 'Ramírez EIRL', 0, 0, 2,3),
-(5, 'Pedro', 'Fernández', '87654305', 'pass555', 'Calle Mar 500', '20123456705',  'Notificaciones Activas', 'pedro.fernandez@example.com', '945678901', 'Inactivo', 'JUR105', 'DES405', 'Fernández SAC', 0, 0, 2,5),
+(4, 'Laura', 'Ramírez', '87654304', 'pass444', 'Av. Luna 400', '20123456704', 'Notificaciones Inactivas', 'laura.ramirez@example.com', '934567890', 'Activo', 'JUR104', 'DES404', 'Ramírez EIRL', 0, 0, 2,3,1,'1987-11-15'),
+(5, 'Pedro', 'Fernández', '87654305', 'pass555', 'Calle Mar 500', '20123456705',  'Notificaciones Activas', 'pedro.fernandez@example.com', '945678901', 'Inactivo', 'JUR105', 'DES405', 'Fernández SAC', 0, 0, 2,5,1, '1990-02-22'),
 -- -- -- sur -- -- --
-(26, 'Rodrigo', 'Flores', '87654326', 'pass2626', 'Av. Pino 2600', '20123456726',  'Notificaciones Activas', 'rodrigo.flores@example.com', '996112233', 'Activo', 'JUR126', 'DES426', 'Flores SAC', 0, 0, 2,9),
-(27, 'Valeria', 'Huerta', '87654327', 'pass2727', 'Calle Sauce 2700', '20123456727', 'Notificaciones Inactivas', 'valeria.huerta@example.com', '997223344', 'Inactivo', 'JUR127', 'DES427', 'Huerta EIRL', 1, 0, 2,10),
+(26, 'Rodrigo', 'Flores', '87654326', 'pass2626', 'Av. Pino 2600', '20123456726',  'Notificaciones Activas', 'rodrigo.flores@example.com', '996112233', 'Activo', 'JUR126', 'DES426', 'Flores SAC', 0, 0, 2,9,2,'1993-03-18'),
+(27, 'Valeria', 'Huerta', '87654327', 'pass2727', 'Calle Sauce 2700', '20123456727', 'Notificaciones Inactivas', 'valeria.huerta@example.com', '997223344', 'Inactivo', 'JUR127', 'DES427', 'Huerta EIRL', 1, 0, 2,10,2,'1991-05-09'),
 -- -- -- este -- -- --
-(28, 'Francisco', 'Pinto', '87654328', 'pass2828', 'Av. Cedro 2800', '20123456728',  'Notificaciones Activas', 'francisco.pinto@example.com', '998334455', 'Activo', 'JUR128', 'DES428', 'Pinto SAC', 0, 0, 2,19),
-(29, 'Gabriela', 'Montalvo', '87654329', 'pass2929', 'Calle Abeto 2900', '20123456729',  'Notificaciones Inactivas', 'gabriela.montalvo@example.com', '999445566', 'Activo', 'JUR129', 'DES429', 'Montalvo EIRL', 1, 0, 2,20),
+(28, 'Francisco', 'Pinto', '87654328', 'pass2828', 'Av. Cedro 2800', '20123456728',  'Notificaciones Activas', 'francisco.pinto@example.com', '998334455', 'Activo', 'JUR128', 'DES428', 'Pinto SAC', 0, 0, 2,19,3,'1992-07-22'),
+(29, 'Gabriela', 'Montalvo', '87654329', 'pass2929', 'Calle Abeto 2900', '20123456729',  'Notificaciones Inactivas', 'gabriela.montalvo@example.com', '999445566', 'Activo', 'JUR129', 'DES429', 'Montalvo EIRL', 1, 0, 2,20,3,'1988-10-30'),
 -- -- -- oeste -- -- --
-(30, 'Sergio', 'Villalobos', '87654330', 'pass3030', 'Av. Olivo 3000', '20123456730', 'Notificaciones Activas', 'sergio.villalobos@example.com', '990556677', 'Inactivo', 'JUR130', 'DES430', 'Villalobos SAC', 0, 0, 2,25),
-(31, 'Elisa', 'Cabrera', '87654331', 'pass3131', 'Calle Roble 3100', '20123456731', 'Notificaciones Activas', 'elisa.cabrera@example.com', '991667788', 'Activo', 'JUR131', 'DES431', 'Cabrera EIRL', 1,0, 2,26),
+(30, 'Sergio', 'Villalobos', '87654330', 'pass3030', 'Av. Olivo 3000', '20123456730', 'Notificaciones Activas', 'sergio.villalobos@example.com', '990556677', 'Inactivo', 'JUR130', 'DES430', 'Villalobos SAC', 0, 0, 2,25,4,'1989-12-14'),
+(31, 'Elisa', 'Cabrera', '87654331', 'pass3131', 'Calle Roble 3100', '20123456731', 'Notificaciones Activas', 'elisa.cabrera@example.com', '991667788', 'Activo', 'JUR131', 'DES431', 'Cabrera EIRL', 1,0, 2,26,4,'1995-06-19'),
 -- --24 agentes de compra como máximo -- --
 -- -- -- 6 agentes por zona -- -- --
 -- -- -- norte -- -- --
-(3, 'Carlos', 'García', '87654303', 'pass333', 'Calle Estrella 300', '20123456703', 'Notificaciones Activas', 'carlos.garcia@example.com', '923456789', 'Inactivo', 'JUR103', 'DES403', 'García SAC', 0,0, 3,7),
+(3, 'Carlos', 'García', '87654303', 'pass333', 'Calle Estrella 300', '20123456703', 'Notificaciones Activas', 'carlos.garcia@example.com', '923456789', 'Inactivo', 'JUR103', 'DES403', 'García SAC', 0,0, 3,7,1,'1994-08-24'),
 -- -- -- sur -- -- --
-(2, 'Maria', 'López', '87654302', 'pass222', 'Av. Sol 200', '20123456702',  'Notificaciones Inactivas', 'maria.lopez@example.com', '912345678', 'Activo', 'JUR102', 'DES402', 'López EIRL', 0, 0, 3,11),
-(6, 'Elena', 'Castro', '87654306', 'pass666', 'Av. Roca 600', '20123456706',  'Notificaciones Activas', 'elena.castro@example.com', '956789012', 'Activo', 'JUR106', 'DES406', 'Castro EIRL', 0,0, 3,12),
+(2, 'Maria', 'López', '87654302', 'pass222', 'Av. Sol 200', '20123456702',  'Notificaciones Inactivas', 'maria.lopez@example.com', '912345678', 'Activo', 'JUR102', 'DES402', 'López EIRL', 0, 0, 3,11,2,'1993-01-17'),
+(6, 'Elena', 'Castro', '87654306', 'pass666', 'Av. Roca 600', '20123456706',  'Notificaciones Activas', 'elena.castro@example.com', '956789012', 'Activo', 'JUR106', 'DES406', 'Castro EIRL', 0,0, 3,12,2,'1987-11-11'),
 -- -- -- este -- -- --
-(32, 'Miguel', 'Ortega', '87654332', 'pass3232', 'Av. Pino 3200', '20123456732',  'Notificaciones Inactivas', 'miguel.ortega@example.com', '992778899', 'Activo', 'JUR132', 'DES432', 'Ortega SAC', 0, 0, 3,21),
-(33, 'Luciana', 'Rivera', '87654333', 'pass3333', 'Calle Sauce 3300', '20123456733',  'Notificaciones Activas', 'luciana.rivera@example.com', '993889900', 'Activo', 'JUR133', 'DES433', 'Rivera EIRL', 1, 0, 3,22),
+(32, 'Miguel', 'Ortega', '87654332', 'pass3232', 'Av. Pino 3200', '20123456732',  'Notificaciones Inactivas', 'miguel.ortega@example.com', '992778899', 'Activo', 'JUR132', 'DES432', 'Ortega SAC', 0, 0, 3,21,3,'1990-03-29'),
+(33, 'Luciana', 'Rivera', '87654333', 'pass3333', 'Calle Sauce 3300', '20123456733',  'Notificaciones Activas', 'luciana.rivera@example.com', '993889900', 'Activo', 'JUR133', 'DES433', 'Rivera EIRL', 1, 0, 3,22,3,'1988-05-06'),
 -- -- -- oeste -- -- --
-(34, 'Julio', 'Escobar', '87654334', 'pass3434', 'Av. Cedro 3400', '20123456734', 'Notificaciones Inactivas', 'julio.escobar@example.com', '994990011', 'Inactivo', 'JUR134', 'DES434', 'Escobar SAC', 0,0, 3,27),
-(35, 'Natalia', 'Castillo', '87654335', 'pass3535', 'Calle Abeto 3500', '20123456735',  'Notificaciones Activas', 'natalia.castillo@example.com', '995001122', 'Activo', 'JUR135', 'DES435', 'Castillo EIRL', 1,0, 3,28),
+(34, 'Julio', 'Escobar', '87654334', 'pass3434', 'Av. Cedro 3400', '20123456734', 'Notificaciones Inactivas', 'julio.escobar@example.com', '994990011', 'Inactivo', 'JUR134', 'DES434', 'Escobar SAC', 0,0, 3,27,4,'1991-04-25'),
+(35, 'Natalia', 'Castillo', '87654335', 'pass3535', 'Calle Abeto 3500', '20123456735',  'Notificaciones Activas', 'natalia.castillo@example.com', '995001122', 'Activo', 'JUR135', 'DES435', 'Castillo EIRL', 1,0, 3,28,4,'1992-08-14'),
 -- --2400 usuarios finales como máximo -- --
 -- -- -- 600 usuarios por zona -- -- --
 -- -- -- norte -- -- --
-(7, 'Raúl', 'Torrusuarioes', '87654307', 'pass777', 'Calle Nube 700', '20123456707',  'Notificaciones Inactivas', 'raul.torres@example.com', '967890123', 'Activo', 'JUR107', 'DES407', 'Torres SAC', 1, 0, 4,3),
-(10, 'Lucía', 'Mendoza', '87654310', 'pass1010', 'Av. Viento 1000', '20123456710',  'Notificaciones Activas', 'lucia.mendoza@example.com', '990123456', 'Activo', 'JUR110', 'DES410', 'Mendoza EIRL', 1,0, 4,4),
-(11, 'Ana', 'Rojas', '87654311', 'pass1111', 'Calle Fuego 1100', '20123456711',  'Notificaciones Inactivas', 'ana.rojas@example.com', '991234567', 'Activo', 'JUR111', 'DES411', 'Rojas SAC', 1, 0, 4,5),
-(14, 'Andrés', 'Guzmán', '87654314', 'pass1414', 'Av. Relámpago 1400', '20123456714',  'Notificaciones Inactivas', 'andres.guzman@example.com', '994567890', 'Inactivo', 'JUR114', 'DES414', 'Guzmán EIRL', 0, 0, 4,6),
-(18, 'Hugo', 'Mejía', '87654318', 'pass1818', 'Av. Truenos 1800', '20123456718',  'Notificaciones Inactivas', 'hugo.mejia@example.com', '998901234', 'Activo', 'JUR118', 'DES418', 'Mejía EIRL', 1, 0, 4,7),
+(7, 'Raúl', 'Torres', '87654307', 'pass777', 'Calle Nube 700', '20123456707',  'Notificaciones Inactivas', 'raul.torres@example.com', '967890123', 'Activo', 'JUR107', 'DES407', 'Torres SAC', 1, 0, 4,3,1,'1994-06-07'),
+(10, 'Lucía', 'Mendoza', '87654310', 'pass1010', 'Av. Viento 1000', '20123456710',  'Notificaciones Activas', 'lucia.mendoza@example.com', '990123456', 'Activo', 'JUR110', 'DES410', 'Mendoza EIRL', 1,0, 4,4,1,'1993-09-20'),
+(11, 'Ana', 'Rojas', '87654311', 'pass1111', 'Calle Fuego 1100', '20123456711',  'Notificaciones Inactivas', 'ana.rojas@example.com', '991234567', 'Activo', 'JUR111', 'DES411', 'Rojas SAC', 1, 0, 4,5,1,'1989-12-27'),
+(14, 'Andrés', 'Guzmán', '87654314', 'pass1414', 'Av. Relámpago 1400', '20123456714',  'Notificaciones Inactivas', 'andres.guzman@example.com', '994567890', 'Inactivo', 'JUR114', 'DES414', 'Guzmán EIRL', 0, 0, 4,6,1,'1995-05-04'),
+(18, 'Hugo', 'Mejía', '87654318', 'pass1818', 'Av. Truenos 1800', '20123456718',  'Notificaciones Inactivas', 'hugo.mejia@example.com', '998901234', 'Activo', 'JUR118', 'DES418', 'Mejía EIRL', 1, 0, 4,7,1,'1988-07-30'),
 -- -- -- sur -- -- --
-(8, 'Sofía', 'Vargas', '87654308', 'pass888', 'Av. Arena 800', '20123456708',  'Notificaciones Activas', 'sofia.vargas@example.com', '978901234', 'Inactivo', 'JUR108', 'DES408', 'Vargas EIRL', 0, 0, 4,13),
-(13, 'Gloria', 'Paredes', '87654313', 'pass1313', 'Calle Trueno 1300', '20123456713','Notificaciones Activas', 'gloria.paredes@example.com', '993456789', 'Activo', 'JUR113', 'DES413', 'Paredes SAC', 0, 0, 4,14),
-(15, 'Patricia', 'Montes', '87654315', 'pass1515', 'Calle Lluvia 1500', '20123456715',  'Notificaciones Activas', 'patricia.montes@example.com', '995678901', 'Activo', 'JUR115', 'DES415', 'Montes SAC', 1, 0, 4,15),
-(17, 'Daniela', 'Cruz', '87654317', 'pass1717', 'Calle Rayo 1700', '20123456717',  'Notificaciones Activas', 'daniela.cruz@example.com', '997890123', 'Inactivo', 'JUR117', 'DES417', 'Cruz SAC', 0,0, 4,16),
-(19, 'Camila', 'Vega', '87654319', 'pass1919', 'Calle Ríos 1900', '20123456719',  'Notificaciones Activas', 'camila.vega@example.com', '999012345', 'Activo', 'JUR119', 'DES419', 'Vega SAC', 1, 0, 4,17),
+(8, 'Sofía', 'Vargas', '87654308', 'pass888', 'Av. Arena 800', '20123456708',  'Notificaciones Activas', 'sofia.vargas@example.com', '978901234', 'Inactivo', 'JUR108', 'DES408', 'Vargas EIRL', 0, 0, 4,13,2,'1994-01-12'),
+(13, 'Gloria', 'Paredes', '87654313', 'pass1313', 'Calle Trueno 1300', '20123456713','Notificaciones Activas', 'gloria.paredes@example.com', '993456789', 'Activo', 'JUR113', 'DES413', 'Paredes SAC', 0, 0, 4,14,2,'1995-12-02'),
+(15, 'Patricia', 'Montes', '87654315', 'pass1515', 'Calle Lluvia 1500', '20123456715',  'Notificaciones Activas', 'patricia.montes@example.com', '995678901', 'Activo', 'JUR115', 'DES415', 'Montes SAC', 1, 0, 4,15,2,'1989-05-15'),
+(17, 'Daniela', 'Cruz', '87654317', 'pass1717', 'Calle Rayo 1700', '20123456717',  'Notificaciones Activas', 'daniela.cruz@example.com', '997890123', 'Inactivo', 'JUR117', 'DES417', 'Cruz SAC', 0,0, 4,16,2, '1987-03-11'),
+(19, 'Camila', 'Vega', '87654319', 'pass1919', 'Calle Ríos 1900', '20123456719',  'Notificaciones Activas', 'camila.vega@example.com', '999012345', 'Activo', 'JUR119', 'DES419', 'Vega SAC', 1, 0, 4,17,2,'1992-10-17'),
 -- -- -- este -- -- --
-(9, 'Jorge', 'Díaz', '87654309', 'pass999', 'Calle Sol 900', '20123456709',  'Notificaciones Inactivas', 'jorge.diaz@example.com', '989012345', 'Activo', 'JUR109', 'DES409', 'Díaz SAC', 1, 0, 4,23),
-(12, 'Luis', 'Ortiz', '87654312', 'pass1212', 'Av. Brisa 1200', '20123456712',  'Notificaciones Activas', 'luis.ortiz@example.com', '992345678', 'Inactivo', 'JUR112', 'DES412', 'Ortiz EIRL', 1, 0, 4,24),
-(16, 'Gabriel', 'Salazar', '87654316', 'pass1616', 'Av. Viento 1600', '20123456716',  'Notificaciones Inactivas', 'gabriel.salazar@example.com', '996789012', 'Activo', 'JUR116', 'DES416', 'Salazar EIRL', 1,0, 4,23),
-(20, 'Alonso', 'Valdez', '87654320', 'pass2020', 'Av. Roca 2000', '20123456720',  'Notificaciones Inactivas', 'alonso.valdez@example.com', '990123456', 'Inactivo', 'JUR120', 'DES420', 'Valdez EIRL', 0, 0, 4,22),
+(9, 'Jorge', 'Díaz', '87654309', 'pass999', 'Calle Sol 900', '20123456709',  'Notificaciones Inactivas', 'jorge.diaz@example.com', '989012345', 'Activo', 'JUR109', 'DES409', 'Díaz SAC', 1, 0, 4,23,3,'1993-11-09'),
+(12, 'Luis', 'Ortiz', '87654312', 'pass1212', 'Av. Brisa 1200', '20123456712',  'Notificaciones Activas', 'luis.ortiz@example.com', '992345678', 'Inactivo', 'JUR112', 'DES412', 'Ortiz EIRL', 1, 0, 4,24,3,'1988-12-21'),
+(16, 'Gabriel', 'Salazar', '87654316', 'pass1616', 'Av. Viento 1600', '20123456716',  'Notificaciones Inactivas', 'gabriel.salazar@example.com', '996789012', 'Activo', 'JUR116', 'DES416', 'Salazar EIRL', 1,0, 4,23,3,'1987-01-28'),
+(20, 'Alonso', 'Valdez', '87654320', 'pass2020', 'Av. Roca 2000', '20123456720',  'Notificaciones Inactivas', 'alonso.valdez@example.com', '990123456', 'Inactivo', 'JUR120', 'DES420', 'Valdez EIRL', 0, 0, 4,22,3,'1989-08-03'),
 -- -- -- oeste -- -- --
-(21, 'Diego', 'Navarro', '87654321', 'pass2121', 'Calle Verde 2100', '20123456721',  'Notificaciones Activas', 'diego.navarro@example.com', '991112233', 'Activo', 'JUR121', 'DES421', 'Navarro SAC', 0, 0, 4,29),
-(22, 'Mónica', 'Zambrano', '87654322', 'pass2222', 'Av. Sol 2200', '20123456722',  'Notificaciones Inactivas', 'monica.zambrano@example.com', '992223344', 'Inactivo', 'JUR122', 'DES422', 'Zambrano EIRL', 1,0, 4,30),
-(23, 'Javier', 'Cárdenas', '87654323', 'pass2323', 'Calle Luna 2300', '20123456723',  'Notificaciones Activas', 'javier.cardenas@example.com', '993334455', 'Activo', 'JUR123', 'DES423', 'Cárdenas SAC', 0,0, 4,31),
-(24, 'Carolina', 'Sánchez', '87654324', 'pass2424', 'Av. Estrella 2400', '20123456724',  'Notificaciones Inactivas', 'carolina.sanchez@example.com', '994445566', 'Activo', 'JUR124', 'DES424', 'Sánchez EIRL', 1, 0, 4,32);
+(21, 'Diego', 'Navarro', '87654321', 'pass2121', 'Calle Verde 2100', '20123456721',  'Notificaciones Activas', 'diego.navarro@example.com', '991112233', 'Activo', 'JUR121', 'DES421', 'Navarro SAC', 0, 0, 4,29,4,'1991-09-12'),
+(22, 'Mónica', 'Zambrano', '87654322', 'pass2222', 'Av. Sol 2200', '20123456722',  'Notificaciones Inactivas', 'monica.zambrano@example.com', '992223344', 'Inactivo', 'JUR122', 'DES422', 'Zambrano EIRL', 1,0, 4,30,4,NULL),
+(23, 'Javier', 'Cárdenas', '87654323', 'pass2323', 'Calle Luna 2300', '20123456723',  'Notificaciones Activas', 'javier.cardenas@example.com', '993334455', 'Activo', 'JUR123', 'DES423', 'Cárdenas SAC', 0,0, 4,31,4,NULL),
+(24, 'Carolina', 'Sánchez', '87654324', 'pass2424', 'Av. Estrella 2400', '20123456724',  'Notificaciones Inactivas', 'carolina.sanchez@example.com', '994445566', 'Activo', 'JUR124', 'DES424', 'Sánchez EIRL', 1, 0, 4,32,4,NULL);
+
 
 
 -- -----------------------------------------------------
--- Table `DB_GRUPO2`.`ordenes`
+-- Table `db_grupo2`.`ordenes`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `DB_GRUPO2`.`ordenes` (
+CREATE TABLE IF NOT EXISTS `db_grupo2`.`ordenes` (
   `idordenes` INT NOT NULL AUTO_INCREMENT,
   `estadoOrdenes` VARCHAR(45) NOT NULL,
   `fechaArribo` DATE NOT NULL,
@@ -274,7 +284,7 @@ CREATE TABLE IF NOT EXISTS `DB_GRUPO2`.`ordenes` (
   INDEX `fk_ordenes_usuario1_idx` (`usuario_idusuario` ASC) VISIBLE,
   CONSTRAINT `fk_ordenes_usuario1`
     FOREIGN KEY (`usuario_idusuario`)
-    REFERENCES `DB_GRUPO2`.`usuario` (`idusuario`))
+    REFERENCES `db_grupo2`.`usuario` (`idusuario`))
 ENGINE = InnoDB
 AUTO_INCREMENT = 11
 DEFAULT CHARACTER SET = utf8mb3;
@@ -292,11 +302,10 @@ VALUES
 (10, 'Completada', '2024-10-01', 10);
 
 
-
 -- -----------------------------------------------------
--- Table `DB_GRUPO2`.`producto`
+-- Table `db_grupo2`.`producto`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `DB_GRUPO2`.`producto` (
+CREATE TABLE IF NOT EXISTS `db_grupo2`.`producto` (
   `idproducto` INT NOT NULL AUTO_INCREMENT,
   `nombreProducto` VARCHAR(100) NOT NULL,
   `categoria` VARCHAR(45) NOT NULL,
@@ -310,7 +319,7 @@ CREATE TABLE IF NOT EXISTS `DB_GRUPO2`.`producto` (
   INDEX `fk_productos_ordenes1_idx` (`ordenes_idordenes` ASC) VISIBLE,
   CONSTRAINT `fk_productos_ordenes1`
     FOREIGN KEY (`ordenes_idordenes`)
-    REFERENCES `DB_GRUPO2`.`ordenes` (`idordenes`))
+    REFERENCES `db_grupo2`.`ordenes` (`idordenes`))
 ENGINE = InnoDB
 AUTO_INCREMENT = 11
 DEFAULT CHARACTER SET = utf8mb3;
@@ -329,9 +338,9 @@ VALUES
 
 
 -- -----------------------------------------------------
--- Table `DB_GRUPO2`.`fotos`
+-- Table `db_grupo2`.`fotos`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `DB_GRUPO2`.`fotos` (
+CREATE TABLE IF NOT EXISTS `db_grupo2`.`fotos` (
   `idfotos` INT NOT NULL AUTO_INCREMENT,
   `foto1` BLOB NOT NULL,
   `productos_idproductos` INT NOT NULL,
@@ -339,15 +348,15 @@ CREATE TABLE IF NOT EXISTS `DB_GRUPO2`.`fotos` (
   INDEX `fk_fotos_productos1_idx` (`productos_idproductos` ASC) VISIBLE,
   CONSTRAINT `fk_fotos_productos1`
     FOREIGN KEY (`productos_idproductos`)
-    REFERENCES `DB_GRUPO2`.`producto` (`idproducto`))
+    REFERENCES `db_grupo2`.`producto` (`idproducto`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
 
 
 -- -----------------------------------------------------
--- Table `DB_GRUPO2`.`pagos`
+-- Table `db_grupo2`.`pagos`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `DB_GRUPO2`.`pagos` (
+CREATE TABLE IF NOT EXISTS `db_grupo2`.`pagos` (
   `idpagos` INT NOT NULL AUTO_INCREMENT,
   `monto` DOUBLE NOT NULL,
   `numeroTarjeta` DATE NOT NULL,
@@ -362,18 +371,18 @@ CREATE TABLE IF NOT EXISTS `DB_GRUPO2`.`pagos` (
   INDEX `fk_pagos_usuario1_idx` (`usuario_idusuario` ASC) VISIBLE,
   CONSTRAINT `fk_pagos_ordenes1`
     FOREIGN KEY (`ordenes_idordenes`)
-    REFERENCES `DB_GRUPO2`.`ordenes` (`idordenes`),
+    REFERENCES `db_grupo2`.`ordenes` (`idordenes`),
   CONSTRAINT `fk_pagos_usuario1`
     FOREIGN KEY (`usuario_idusuario`)
-    REFERENCES `DB_GRUPO2`.`usuario` (`idusuario`))
+    REFERENCES `db_grupo2`.`usuario` (`idusuario`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
 
 
 -- -----------------------------------------------------
--- Table `DB_GRUPO2`.`proveedor`
+-- Table `db_grupo2`.`proveedor`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `DB_GRUPO2`.`proveedor` (
+CREATE TABLE IF NOT EXISTS `db_grupo2`.`proveedor` (
   `idproveedor` INT NOT NULL AUTO_INCREMENT,
   `nombreTienda` VARCHAR(45) NOT NULL,
   `nombreProveedor` VARCHAR(45) NOT NULL,
@@ -382,16 +391,13 @@ CREATE TABLE IF NOT EXISTS `DB_GRUPO2`.`proveedor` (
   `correo` VARCHAR(45) NOT NULL,
   `zona_idzona1` INT NOT NULL,
   `fotoProveedor` BLOB NULL DEFAULT NULL,
-  
   PRIMARY KEY (`idproveedor`),
   UNIQUE INDEX `dni_UNIQUE` (`dni` ASC) VISIBLE,
   UNIQUE INDEX `ruc_UNIQUE` (`ruc` ASC) VISIBLE,
   INDEX `fk_proveedor_zona2_idx` (`zona_idzona1` ASC) VISIBLE,
   CONSTRAINT `fk_proveedor_zona2`
     FOREIGN KEY (`zona_idzona1`)
-    REFERENCES `DB_GRUPO2`.`zona` (`idzona`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    REFERENCES `db_grupo2`.`zona` (`idzona`))
 ENGINE = InnoDB
 AUTO_INCREMENT = 11
 DEFAULT CHARACTER SET = utf8mb3;
@@ -410,9 +416,9 @@ VALUES
 
 
 -- -----------------------------------------------------
--- Table `DB_GRUPO2`.`producto_has_proveedor`
+-- Table `db_grupo2`.`producto_has_proveedor`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `DB_GRUPO2`.`producto_has_proveedor` (
+CREATE TABLE IF NOT EXISTS `db_grupo2`.`producto_has_proveedor` (
   `producto_idproducto` INT NOT NULL,
   `proveedor_idproveedor` INT NOT NULL,
   PRIMARY KEY (`producto_idproducto`, `proveedor_idproveedor`),
@@ -420,10 +426,10 @@ CREATE TABLE IF NOT EXISTS `DB_GRUPO2`.`producto_has_proveedor` (
   INDEX `fk_producto_has_proveedor_producto1_idx` (`producto_idproducto` ASC) VISIBLE,
   CONSTRAINT `fk_producto_has_proveedor_producto1`
     FOREIGN KEY (`producto_idproducto`)
-    REFERENCES `DB_GRUPO2`.`producto` (`idproducto`),
+    REFERENCES `db_grupo2`.`producto` (`idproducto`),
   CONSTRAINT `fk_producto_has_proveedor_proveedor1`
     FOREIGN KEY (`proveedor_idproveedor`)
-    REFERENCES `DB_GRUPO2`.`proveedor` (`idproveedor`))
+    REFERENCES `db_grupo2`.`proveedor` (`idproveedor`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
 INSERT INTO `DB_GRUPO2`.`producto_has_proveedor` 
@@ -439,9 +445,9 @@ INSERT INTO `DB_GRUPO2`.`producto_has_proveedor`
 
 
 -- -----------------------------------------------------
--- Table `DB_GRUPO2`.`productos_has_usuario`
+-- Table `db_grupo2`.`productos_has_usuario`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `DB_GRUPO2`.`productos_has_usuario` (
+CREATE TABLE IF NOT EXISTS `db_grupo2`.`productos_has_usuario` (
   `productos_idproductos` INT NOT NULL,
   `usuario_idusuario` INT NOT NULL,
   PRIMARY KEY (`productos_idproductos`, `usuario_idusuario`),
@@ -449,10 +455,10 @@ CREATE TABLE IF NOT EXISTS `DB_GRUPO2`.`productos_has_usuario` (
   INDEX `fk_productos_has_usuario_productos1_idx` (`productos_idproductos` ASC) VISIBLE,
   CONSTRAINT `fk_productos_has_usuario_productos1`
     FOREIGN KEY (`productos_idproductos`)
-    REFERENCES `DB_GRUPO2`.`producto` (`idproducto`),
+    REFERENCES `db_grupo2`.`producto` (`idproducto`),
   CONSTRAINT `fk_productos_has_usuario_usuario1`
     FOREIGN KEY (`usuario_idusuario`)
-    REFERENCES `DB_GRUPO2`.`usuario` (`idusuario`))
+    REFERENCES `db_grupo2`.`usuario` (`idusuario`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
 INSERT INTO `DB_GRUPO2`.`productos_has_usuario` 
@@ -469,9 +475,9 @@ INSERT INTO `DB_GRUPO2`.`productos_has_usuario`
 
 
 -- -----------------------------------------------------
--- Table `DB_GRUPO2`.`reposicionproductos`
+-- Table `db_grupo2`.`reposicionproductos`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `DB_GRUPO2`.`reposicionproductos` (
+CREATE TABLE IF NOT EXISTS `db_grupo2`.`reposicionproductos` (
   `idreposicionProductos` INT NOT NULL AUTO_INCREMENT,
   `cantidad` INT NOT NULL,
   `fechaSolicitud` DATE NOT NULL,
@@ -480,9 +486,9 @@ CREATE TABLE IF NOT EXISTS `DB_GRUPO2`.`reposicionproductos` (
   INDEX `fk_reposicionProductos_productos1_idx` (`productos_idproductos` ASC) VISIBLE,
   CONSTRAINT `fk_reposicionProductos_productos1`
     FOREIGN KEY (`productos_idproductos`)
-    REFERENCES `DB_GRUPO2`.`producto` (`idproducto`))
+    REFERENCES `db_grupo2`.`producto` (`idproducto`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 8
+AUTO_INCREMENT = 15
 DEFAULT CHARACTER SET = utf8mb3;
 INSERT INTO `DB_GRUPO2`.`reposicionProductos` 
 (`cantidad`, `fechaSolicitud`, `productos_idproductos`) VALUES
@@ -496,9 +502,9 @@ INSERT INTO `DB_GRUPO2`.`reposicionProductos`
 
 
 -- -----------------------------------------------------
--- Table `DB_GRUPO2`.`resenias`
+-- Table `db_grupo2`.`resenias`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `DB_GRUPO2`.`resenias` (
+CREATE TABLE IF NOT EXISTS `db_grupo2`.`resenias` (
   `idresenias` INT NOT NULL AUTO_INCREMENT,
   `descripcion` VARCHAR(500) NOT NULL,
   `calidad` VARCHAR(45) NOT NULL,
@@ -516,14 +522,12 @@ CREATE TABLE IF NOT EXISTS `DB_GRUPO2`.`resenias` (
   INDEX `fk_resenias_usuario1_idx` (`usuario_idusuario` ASC) VISIBLE,
   CONSTRAINT `fk_resenias_productos1`
     FOREIGN KEY (`productos_idproductos`)
-    REFERENCES `DB_GRUPO2`.`producto` (`idproducto`),
+    REFERENCES `db_grupo2`.`producto` (`idproducto`),
   CONSTRAINT `fk_resenias_usuario1`
     FOREIGN KEY (`usuario_idusuario`)
-    REFERENCES `DB_GRUPO2`.`usuario` (`idusuario`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    REFERENCES `db_grupo2`.`usuario` (`idusuario`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 6
+AUTO_INCREMENT = 11
 DEFAULT CHARACTER SET = utf8mb3;
 INSERT INTO `DB_GRUPO2`.`resenias` (`descripcion`, `calidad`, `rapidez`, `puntuacion`, `foto`, `respuesta`, `productos_idproductos`, `tituloForo`, `descripcionForo`,`usuario_idusuario`,`tipoPublicacion`) VALUES
 ('Excelente producto, lo recomendaría a todos.', 'Alta', 'Rápida', 5, NULL, 'Gracias por tu comentario!', 1, 'Recomendación de Producto A', 'Me encantó el Producto A, superó mis expectativas.',29,'Foro'),
@@ -534,21 +538,21 @@ INSERT INTO `DB_GRUPO2`.`resenias` (`descripcion`, `calidad`, `rapidez`, `puntua
 
 
 -- -----------------------------------------------------
--- Table `DB_GRUPO2`.`respuestas`
+-- Table `db_grupo2`.`respuestas`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `DB_GRUPO2`.`respuestas` (
+CREATE TABLE IF NOT EXISTS `db_grupo2`.`respuestas` (
   `resenias_idresenias` INT NOT NULL,
   `usuario_idusuario` INT NOT NULL,
-  `respuestas` VARCHAR(45) NULL,
+  `respuestas` VARCHAR(45) NULL DEFAULT NULL,
   PRIMARY KEY (`resenias_idresenias`, `usuario_idusuario`),
   INDEX `fk_resenias_has_usuario_usuario1_idx` (`usuario_idusuario` ASC) VISIBLE,
   INDEX `fk_resenias_has_usuario_resenias1_idx` (`resenias_idresenias` ASC) VISIBLE,
   CONSTRAINT `fk_resenias_has_usuario_resenias1`
     FOREIGN KEY (`resenias_idresenias`)
-    REFERENCES `DB_GRUPO2`.`resenias` (`idresenias`),
+    REFERENCES `db_grupo2`.`resenias` (`idresenias`),
   CONSTRAINT `fk_resenias_has_usuario_usuario1`
     FOREIGN KEY (`usuario_idusuario`)
-    REFERENCES `DB_GRUPO2`.`usuario` (`idusuario`))
+    REFERENCES `db_grupo2`.`usuario` (`idusuario`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
 
