@@ -282,12 +282,13 @@
                 <td th:text="${agente.proveedor.nombreTienda}"></td>
                 <td th:text="${agente.codigoDespachador.estado}"></td>
                 <td>
-                  <button class="btn btn-sm btn-primary">
+                  <a href="/superadmin/editar_agente" class="btn btn-sm btn-primary">
                     <i class="bx bx-edit-alt"></i>
-                  </button>
-                  <button class="btn btn-sm btn-danger">
+                  </a>
+                  <a href="/ruta-eliminar" class="btn btn-sm btn-danger">
                     <i class="bx bx-trash"></i>
-                  </button>
+                  </a>
+
                 </td>
               </tr>
               <!-- Más filas de ejemplo... -->
