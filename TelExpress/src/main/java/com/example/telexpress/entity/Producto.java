@@ -38,6 +38,10 @@ public class Producto {
     @Column(name = "cantidadtotal")
     private int cantidadTotal;
 
+
+    @Column(name = "cantidadComprada")
+    private int cantidadComprada;
+
     @ManyToMany
     @JoinTable(
             name = "producto_has_proveedor",

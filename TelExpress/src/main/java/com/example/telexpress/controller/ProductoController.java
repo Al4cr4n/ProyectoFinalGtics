@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.Comparator;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -41,8 +43,16 @@ public class ProductoController {
 
     @GetMapping({"/producto/listaTop", "/superadmin/dashboard_superadmin", "/superadmin/producto/listaTop"})
     public String listarTopProductos(Model model) {
+        // Obtiene la lista de productos desde el repositorio
+        List<Producto> listaTop = productoRepository.findAll();
 
-        model.addAttribute("listaTop", productoRepository.findAll());
+        // Ordena la lista por cantidad comprada en orden descendente
+        listaTop.sort(Comparator.comparing(Producto::getCantidadComprada).reversed());
+
+        // Añade la lista ordenada al modelo
+        model.addAttribute("listaTop", listaTop);
+
+        // Devuelve la vista correspondiente
         return "SuperAdmin/dashboard_superadmin";
     }
 
