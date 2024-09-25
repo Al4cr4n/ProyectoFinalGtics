@@ -12,5 +12,5 @@ public class Rol {
     @Column(name="idRoles")
     private Integer id;
 
-    private String nombrerol;
+    private String rol;
 }

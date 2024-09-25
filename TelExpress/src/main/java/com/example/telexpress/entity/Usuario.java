@@ -30,7 +30,7 @@ public class Usuario {
     private String ruc;
 
     @ManyToOne
-    @JoinColumn(name= "roles_idRoles")
+    @JoinColumn(name= "idroles")
     private Rol rol;
 
     @ManyToOne
@@ -38,6 +38,6 @@ public class Usuario {
     private Distrito distrito;
 
     @ManyToOne
-    @JoinColumn(name="zona_idzona", nullable = false)
+    @JoinColumn(name="idzona", nullable = false)
     private Zona zona;
 }
