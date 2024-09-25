@@ -18,5 +18,4 @@ public class Zona{
     @Column(name = "nombrezona")
     private String nombre;
 
-
 }
