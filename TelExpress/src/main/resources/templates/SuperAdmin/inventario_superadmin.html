@@ -315,11 +315,13 @@
                       <td th:text="${info.index + 1}"></td>
                       <td th:text="${producto.nombreProducto}"></td>
                       <td th:text="${producto.categoria}"></td>
-                      <td th:text="${producto.cantDisponible}"></td>
+                      <td th:text="${producto.cantidadDisponible}"></td>
                       <td th:text="${producto.descripcion}"></td>
                       <td th:text="${producto.precio}"></td>
                       <td th:text="${producto.costoEnvio}"></td>
 
+                      <td ></td>
+                      <td ></td>
                       <td><button class="btn btn-sm btn-primary"  th:href="@{'/producto/editar?id=' + ${producto.idProducto}}"><i class="bx bx-edit-alt"></i></button>
 
 

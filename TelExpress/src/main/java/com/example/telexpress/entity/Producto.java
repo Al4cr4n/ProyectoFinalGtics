@@ -15,14 +15,14 @@ public class Producto {
     @Column(name = "idproducto")
     private int idProducto;
 
-    @Column(name = "nombreProducto")
+    @Column(name = "nombreproducto")
     private String nombreProducto;
 
     @Column(name = "categoria")
     private String categoria;
 
-    @Column(name = "cantDisponible")
-    private int cantDisponible;
+    @Column(name = "cantidaddisponible")
+    private int cantidadDisponible;
 
     @Column(name = "descripcion")
     private String descripcion;
@@ -30,11 +30,11 @@ public class Producto {
     @Column(name = "precio")
     private Double precio;
 
-    @Column(name = "costoEnvio")
+    @Column(name = "costoenvio")
     private Double costoEnvio;
 
-    @Column(name = "cantidadTotal")
-    private int cantTotal;
+    @Column(name = "cantidadtotal")
+    private int cantidadTotal;
 
 
 }
