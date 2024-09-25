@@ -277,15 +277,16 @@
                     <form id="formRegistro" method="post" th:action="@{/producto/guardar}">
                         <div class="row mb-3">
                             <!-- Nombre del producto -->
+
                             <div class="col-md-6">
-                                <label for="nombreProducto" class="form-label">Nombre del producto:</label>
-                                <input type="text" class="form-control" id="nombreProducto" placeholder="Ingrese el nombre del producto">
+                                <label for="nombreProducto" class="form-label">Nombre del Producto</label>
+                                <input type="text" class="form-control" name="nombreProducto" id="nombreProducto" placeholder="Ingrese el nombre del producto">
                             </div>
 
                             <!-- Cantidad disponible -->
                             <div class="col-md-6">
                                 <label for="cantidadDisponible" class="form-label">Cantidad disponible:</label>
-                                <input type="number" class="form-control" id="cantidadDisponible" placeholder="Ingrese la cantidad disponible">
+                                <input type="number" class="form-control" name="cantidadDisponible" id = "cantidadDisponible" placeholder="Ingrese la cantidad disponible">
                             </div>
                         </div>
 
@@ -293,13 +294,13 @@
                             <!-- Precio -->
                             <div class="col-md-6">
                                 <label for="precio" class="form-label">Precio:</label>
-                                <input type="number" class="form-control" id="precio" placeholder="Ingrese el precio">
+                                <input type="number" class="form-control" name="precio" id="precio" placeholder="Ingrese el precio">
                             </div>
 
                             <!-- Costo de envío -->
                             <div class="col-md-6">
                                 <label for="costoEnvio" class="form-label">Costo de envío:</label>
-                                <input type="number" class="form-control" id="costoEnvio" placeholder="Ingrese el costo de envío">
+                                <input type="number" class="form-control" id="costoEnvio" name="costoEnvio" placeholder="Ingrese el costo de envío">
                             </div>
                         </div>
 
@@ -307,36 +308,50 @@
                             <!-- Nombre del Proveedor -->
                             <div class="col-md-6">
                                 <label for="nombreProveedor" class="form-label">Nombre del Proveedor:</label>
-                                <select class="form-select" name = "nombreProveedor" id="nombreProveedor">
+                                <select class="form-select" name="proveedor.idProveedor" id="nombreProveedor">
+                                    <option value="">Selecciona un proveedor</option>
                                     <option th:each="proveedor: ${listaProveedores}"
-                                            th:text="${proveedor.nombreProveedor}" th:value="${proveedor.idProveedor}">Selecciona un proveedor</option>
+                                            th:value="${proveedor.idProveedor}"
+                                            th:data-zona="${proveedor.zona.nombre}"
+                                            th:text="${proveedor.nombreProveedor}">
+                                    </option>
                                 </select>
                             </div>
 
                             <!-- Categoría -->
                             <div class="col-md-6">
                                 <label for="categoria" class="form-label">Categoría:</label>
-                                <input type="text" class="form-control" id="categoria" placeholder="Ingrese la categoría">
+                                <input type="text" class="form-control" id="categoria" name="categoria" placeholder="Ingrese la categoría">
                             </div>
                         </div>
 
                         <div class="row mb-3">
                             <!-- Zona -->
+                            <!-- Zona (automáticamente asignada al seleccionar el proveedor) -->
                             <div class="col-md-6">
-                                <label for="zonaProducto" class="form-label">Zona:</label>
-                                <input type="text" class="form-control" id="zonaProducto" placeholder="Ingrese la zona">
+                                <label for="zonaProducto" class="form-label">Zona Asignada:</label>
+                                <input type="text" class="form-control" id="zonaProducto" placeholder="Zona asignada" disabled>
                             </div>
 
                             <!-- Descripción -->
                             <div class="col-md-6">
                                 <label for="descripcion" class="form-label">Descripción:</label>
-                                <textarea class="form-control" id="descripcion" rows="3" placeholder="Ingrese la descripción"></textarea>
+                                <textarea class="form-control" id="descripcion" name="descripcion" rows="3" placeholder="Ingrese la descripción"></textarea>
                             </div>
                         </div>
 
-                        <!-- Botón de registrar -->
+                        <!-- Botón de registrar
                         <div class="text-center">
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmModal">Registrar</button>
+                        </div>
+
+                        <div class="text-center my-3">
+                            <a class="btn btn-danger" th:href="@{/producto/lista}">Cancelar</a>
+                        </div>-->
+
+                        <div class="text-center d-flex justify-content-center my-3">
+                            <button type="button" class="btn btn-primary mx-2" data-bs-toggle="modal" data-bs-target="#confirmModal">Registrar</button>
+                            <a class="btn btn-danger mx-2" th:href="@{/producto/lista}">Cancelar</a>
                         </div>
                     </form>
                 </div>
@@ -353,8 +368,8 @@
                                 ¿Estás seguro del registro de un nuevo producto?
                             </div>
                             <div class="modal-footer">
-                                <a th:href="@{/producto/lista}" class="btn btn-danger">Cancelar</a>
-                                <button type="submit" class="btn btn-primary">Confirmar</button>
+                                <a th:href="@{/producto/nuevo}" class="btn btn-danger">Cancelar</a>
+                                <button type="submit" class="btn btn-primary" form="formRegistro">Confirmar</button>
                             </div>
                         </div>
                     </div>
@@ -364,10 +379,15 @@
                 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
                 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
 
+                <!-- Script para actualizar la zona asignada -->
                 <script>
-                    document.getElementById('confirmarRegistro').addEventListener('click', function () {
-                        // Aquí puedes realizar el envío de los datos o hacer otras acciones
-                        document.getElementById('formRegistro').submit(); // Envía el formulario
+                    document.getElementById('nombreProveedor').addEventListener('change', function () {
+                        const selectedProveedor = this.options[this.selectedIndex];
+                        const zonaProducto = document.getElementById('zonaProducto');
+                        const zona = selectedProveedor.getAttribute('data-zona');
+
+                        // Actualiza el campo de zona
+                        zonaProducto.value = zona ? zona : 'Sin zona asignada';
                     });
                 </script>
 

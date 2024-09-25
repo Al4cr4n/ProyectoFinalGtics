@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @Entity
@@ -35,6 +37,14 @@ public class Producto {
 
     @Column(name = "cantidadtotal")
     private int cantidadTotal;
+
+    @ManyToMany
+    @JoinTable(
+            name = "producto_has_proveedor",
+            joinColumns = @JoinColumn(name = "producto_idproducto"),
+            inverseJoinColumns = @JoinColumn(name = "proveedor_idproveedor")
+    )
+    private List<Proveedor> proveedores;
 
 
 }

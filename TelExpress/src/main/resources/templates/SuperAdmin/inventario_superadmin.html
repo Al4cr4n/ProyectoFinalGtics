@@ -302,11 +302,8 @@
                       <th>Nombre</th>
                       <th>Categoría</th>
                       <th>Cantidad</th>
-                      <th>Descripción</th>
                       <th>Precio</th>
                       <th>Costo de envío</th>
-                      <th>Proveedor</th>
-                      <th>Zona</th>
                       <th>Acciones</th>
                     </tr>
                     </thead>
@@ -316,13 +313,9 @@
                       <td th:text="${producto.nombreProducto}"></td>
                       <td th:text="${producto.categoria}"></td>
                       <td th:text="${producto.cantidadDisponible}"></td>
-                      <td th:text="${producto.descripcion}"></td>
                       <td th:text="${producto.precio}"></td>
                       <td th:text="${producto.costoEnvio}"></td>
-                      <td ></td>
-                      <td ></td>
                       <td><button class="btn btn-sm btn-primary"  th:href="@{'/producto/editar?id=' + ${producto.idProducto}}"><i class="bx bx-edit-alt"></i></button>
-
 
                         <button class="btn btn-sm btn-danger" th:href="@{'/producto/borrar?id=' + ${producto.idProducto}}"><i class="bx bx-trash"></i></button>
                       </td>
@@ -335,13 +328,9 @@
 
                 <!-- Botón "Crear Nuevo" -->
                 <div class="text-center my-3">
-                  <button class="btn btn-primary" onclick="window.location.href = '[[@{/producto/nuevo}]]';">Crear Nuevo</button>
+                  <a class="btn btn-primary" th:href="@{/producto/nuevo}">Crear Nuevo</a>
                 </div>
 
-                <!-- Botón "Crear Nuevo"
-                <div class="text-center my-3">
-                  <a href="@{/producto/nuevo}" class="btn btn-primary">Crear Nuevo</a>
-                </div>-->
 
 
                 <!-- Paginación -->

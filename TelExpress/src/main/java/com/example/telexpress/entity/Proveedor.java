@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @Entity
@@ -31,7 +33,9 @@ public class Proveedor {
     private String correo;
 
     @ManyToOne
-    @JoinColumn(name = "zona_idzona1")
+    @JoinColumn(name = "idzona")
     private Zona zona;
 
+    @ManyToMany(mappedBy = "proveedores")
+    private List<Producto> productos;
 }
