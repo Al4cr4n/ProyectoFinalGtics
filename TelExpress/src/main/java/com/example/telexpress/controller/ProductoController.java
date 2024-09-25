@@ -22,7 +22,7 @@ public class ProductoController {
 
     }
 
-    @GetMapping({"/producto/lista"})
+    @GetMapping({"/producto/lista", "inventario_superadmin"})
     public String listarProductos(Model model) {
 
         model.addAttribute("lista", productoRepository.findAll());

@@ -27,12 +27,6 @@ public class SuperAdminController {
         return "SuperAdmin/dashboard_superadmin";
     }
 
-    @GetMapping("/inventario_superadmin")
-    public String inventarioSuperadmin() {
-
-
-        return "SuperAdmin/inventario_superadmin";
-    }
 
     @GetMapping("/inventario_registrar_producto")
     public String inventarioRegistrarSuperadmin() {
