@@ -2,6 +2,7 @@ package com.example.telexpress.controller;
 
 import com.example.telexpress.entity.Producto;
 import com.example.telexpress.repository.ProductoRepository;
+import com.example.telexpress.repository.ProveedorRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,10 +16,12 @@ import java.util.Optional;
 public class ProductoController {
 
     final ProductoRepository productoRepository;
-
-    public ProductoController(ProductoRepository productoRepository) {
+    final ProveedorRepository proveedorRepository;
+    public ProductoController(ProductoRepository productoRepository,
+                              ProveedorRepository proveedorRepository) {
 
         this.productoRepository = productoRepository;
+        this.proveedorRepository = proveedorRepository;
 
     }
 
@@ -31,7 +34,7 @@ public class ProductoController {
 
     @GetMapping("/producto/nuevo")
     public String nuevoProductoFrm(Model model) {
-        //model.addAttribute("listaPuestos",jobRepository.findAll());
+        model.addAttribute("listaProveedores",proveedorRepository.findAll());
         //model.addAttribute("listaDepartamentos", departmentRepository.findAll());
         return "SuperAdmin/inventario_registrar_producto";
     }

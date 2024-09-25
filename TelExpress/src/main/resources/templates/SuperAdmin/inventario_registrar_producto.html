@@ -274,7 +274,7 @@
                     <h4 class="mb-4">Registrar Producto</h4>
 
                     <!-- Formulario -->
-                    <form id="formRegistro">
+                    <form id="formRegistro" method="post" th:action="@{/producto/guardar}">
                         <div class="row mb-3">
                             <!-- Nombre del producto -->
                             <div class="col-md-6">
@@ -292,8 +292,8 @@
                         <div class="row mb-3">
                             <!-- Precio -->
                             <div class="col-md-6">
-                                <label for="precioProducto" class="form-label">Precio:</label>
-                                <input type="number" class="form-control" id="precioProducto" placeholder="Ingrese el precio">
+                                <label for="precio" class="form-label">Precio:</label>
+                                <input type="number" class="form-control" id="precio" placeholder="Ingrese el precio">
                             </div>
 
                             <!-- Costo de envío -->
@@ -307,18 +307,16 @@
                             <!-- Nombre del Proveedor -->
                             <div class="col-md-6">
                                 <label for="nombreProveedor" class="form-label">Nombre del Proveedor:</label>
-                                <select class="form-select" id="nombreProveedor">
-                                    <option selected>Seleccione un proveedor</option>
-                                    <option value="1">Proveedor 1</option>
-                                    <option value="2">Proveedor 2</option>
-                                    <option value="3">Proveedor 3</option>
+                                <select class="form-select" name = "nombreProveedor" id="nombreProveedor">
+                                    <option th:each="proveedor: ${listaProveedores}"
+                                            th:text="${proveedor.nombreProveedor}" th:value="${proveedor.idProveedor}">Selecciona un proveedor</option>
                                 </select>
                             </div>
 
                             <!-- Categoría -->
                             <div class="col-md-6">
-                                <label for="categoriaProducto" class="form-label">Categoría:</label>
-                                <input type="text" class="form-control" id="categoriaProducto" placeholder="Ingrese la categoría">
+                                <label for="categoria" class="form-label">Categoría:</label>
+                                <input type="text" class="form-control" id="categoria" placeholder="Ingrese la categoría">
                             </div>
                         </div>
 
@@ -331,8 +329,8 @@
 
                             <!-- Descripción -->
                             <div class="col-md-6">
-                                <label for="descripcionProducto" class="form-label">Descripción:</label>
-                                <textarea class="form-control" id="descripcionProducto" rows="3" placeholder="Ingrese la descripción"></textarea>
+                                <label for="descripcion" class="form-label">Descripción:</label>
+                                <textarea class="form-control" id="descripcion" rows="3" placeholder="Ingrese la descripción"></textarea>
                             </div>
                         </div>
 
@@ -355,8 +353,8 @@
                                 ¿Estás seguro del registro de un nuevo producto?
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-                                <button type="button" class="btn btn-primary" id="confirmarRegistro">Confirmar</button>
+                                <a th:href="@{/producto/lista}" class="btn btn-danger">Cancelar</a>
+                                <button type="submit" class="btn btn-primary">Confirmar</button>
                             </div>
                         </div>
                     </div>

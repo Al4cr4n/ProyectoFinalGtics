@@ -15,10 +15,10 @@ public class Proveedor {
     @Column(name = "idproveedor")
     private int idProveedor;
 
-    @Column(name = "nombreTienda")
+    @Column(name = "nombretienda")
     private String nombreTienda;
 
-    @Column(name = "nombreProveedor")
+    @Column(name = "nombreproveedor")
     private String nombreProveedor;
 
     @Column(name = "dni")

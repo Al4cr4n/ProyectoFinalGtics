@@ -15,7 +15,7 @@ public class Zona {
     @Column(name = "idzona")
     private int idZona;
 
-    @Column(name = "nombreZona")
+    @Column(name = "nombrezona")
     private int nombre;
 
 }
