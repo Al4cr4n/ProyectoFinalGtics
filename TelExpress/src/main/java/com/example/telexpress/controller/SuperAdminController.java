@@ -64,6 +64,13 @@ public class SuperAdminController {
         return "SuperAdmin/gestion_usuarios";
     }
 
+    @GetMapping("/modificar_usuario")
+    public String modificarUsuarioSuperadmin() {
+
+
+        return "SuperAdmin/modificar_usuario";
+    }
+
     @GetMapping("/gestion_agentes")
     public String gestionAgentesSuperadmin() {
 
