@@ -311,111 +311,32 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <!-- Producto A (ya existente) -->
-                    <tr>
-                      <td>1</td>
-                      <td>Producto A</td>
-                      <td>Categoría 1</td>
-                      <td>50</td>
-                      <td>Descripción A</td>
-                      <td>$100</td>
-                      <td>$10</td>
-                      <td>Proveedor 1</td>
-                      <td>Zona 1</td>
-                      <td>
-                        <button class="btn btn-sm btn-primary">
-                          <i class="bx bx-edit-alt"></i>
-                        </button>
-                        <button class="btn btn-sm btn-danger">
-                          <i class="bx bx-trash"></i>
-                        </button>
+                    <tr th:each="producto, info : ${lista}">
+                      <td th:text="${info.index + 1}"></td>
+                      <td th:text="${producto.nombreProducto}"></td>
+                      <td th:text="${producto.categoria}"></td>
+                      <td th:text="${producto.cantDisponible}"></td>
+                      <td th:text="${producto.descripcion}"></td>
+                      <td th:text="${producto.precio}"></td>
+                      <td th:text="${producto.costoEnvio}"></td>
+
+                      <td><button class="btn btn-sm btn-primary"  th:href="@{'/shipper/edit?id=' + ${shipper.shipperId}}"><i class="bx bx-edit-alt"></i></button>
+
+
+                        <button class="btn btn-sm btn-danger" th:href="@{'/shipper/delete?id=' + ${shipper.shipperId}}"><i class="bx bx-trash"></i></button>
                       </td>
                     </tr>
+                    <!-- Producto A (ya existente) -->
 
                     <!-- Producto B -->
-                    <tr>
-                      <td>2</td>
-                      <td>Producto B</td>
-                      <td>Categoría 2</td>
-                      <td>30</td>
-                      <td>Descripción B</td>
-                      <td>$150</td>
-                      <td>$12</td>
-                      <td>Proveedor 2</td>
-                      <td>Zona 2</td>
-                      <td>
-                        <button class="btn btn-sm btn-primary">
-                          <i class="bx bx-edit-alt"></i>
-                        </button>
-                        <button class="btn btn-sm btn-danger">
-                          <i class="bx bx-trash"></i>
-                        </button>
-                      </td>
-                    </tr>
+
 
                     <!-- Producto C -->
-                    <tr>
-                      <td>3</td>
-                      <td>Producto C</td>
-                      <td>Categoría 3</td>
-                      <td>70</td>
-                      <td>Descripción C</td>
-                      <td>$200</td>
-                      <td>$15</td>
-                      <td>Proveedor 3</td>
-                      <td>Zona 3</td>
-                      <td>
-                        <button class="btn btn-sm btn-primary">
-                          <i class="bx bx-edit-alt"></i>
-                        </button>
-                        <button class="btn btn-sm btn-danger">
-                          <i class="bx bx-trash"></i>
-                        </button>
-                      </td>
-                    </tr>
+
 
                     <!-- Producto D -->
-                    <tr>
-                      <td>4</td>
-                      <td>Producto D</td>
-                      <td>Categoría 4</td>
-                      <td>20</td>
-                      <td>Descripción D</td>
-                      <td>$80</td>
-                      <td>$8</td>
-                      <td>Proveedor 4</td>
-                      <td>Zona 4</td>
-                      <td>
-                        <button class="btn btn-sm btn-primary">
-                          <i class="bx bx-edit-alt"></i>
-                        </button>
-                        <button class="btn btn-sm btn-danger">
-                          <i class="bx bx-trash"></i>
-                        </button>
-                      </td>
-                    </tr>
-
 
                     <!-- Producto E -->
-                    <tr>
-                      <td>4</td>
-                      <td>Producto E</td>
-                      <td>Categoría 5</td>
-                      <td>268</td>
-                      <td>Descripción E</td>
-                      <td>$200</td>
-                      <td>$10</td>
-                      <td>Proveedor 5</td>
-                      <td>Zona 5</td>
-                      <td>
-                        <button class="btn btn-sm btn-primary">
-                          <i class="bx bx-edit-alt"></i>
-                        </button>
-                        <button class="btn btn-sm btn-danger">
-                          <i class="bx bx-trash"></i>
-                        </button>
-                      </td>
-                    </tr>
                     </tbody>
 
                   </table>
