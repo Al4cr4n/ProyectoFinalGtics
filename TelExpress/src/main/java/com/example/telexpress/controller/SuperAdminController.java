@@ -84,6 +84,13 @@ public class SuperAdminController {
         return "SuperAdmin/rol_agente_solicitudes";
     }
 
+    @GetMapping("/solicitud_agente")
+    public String solicitudAgenteSuperadmin() {
+
+
+        return "SuperAdmin/solicitud_agente";
+    }
+
 
 
 }
