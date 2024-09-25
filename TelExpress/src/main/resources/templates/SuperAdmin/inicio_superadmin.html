@@ -310,8 +310,64 @@
 
 
           <div class="row">
+            <div class="col-12 col-lg-12 mb-4">
+              <div class="card">
+                <h5 class="card-header">Usuarios</h5>
+                <div class="table-responsive text-nowrap">
+                  <table class="table">
+                    <thead class="table-light">
+                    <tr>
+                      <th>Nombre</th>
+                      <th>Apellido</th>
+                      <th>Correo</th>
+                      <th>DNI</th>
+                      <th>Dirección</th>
+                      <th>Acciones</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <!-- Aquí se insertarán los datos de los usuarios dinámicamente desde el backend -->
+                    <tr th:each="usuario : ${listaUsuario}">
+                      <td th:text="${usuario.nombre}"></td>
+                      <td th:text="${usuario.apellido}"></td>
+                      <td th:text="${usuario.correo}"></td>
+                      <td th:text="${usuario.dni}"></td>
+                      <td th:text="${usuario.direccion}"></td>
+                      <td>
+                        <div class="dropdown">
+                          <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                            <i class="bx bx-dots-vertical-rounded"></i>
+                          </button>
+                          <div class="dropdown-menu">
+                            <a class="dropdown-item" th:href="@{'/superadmin/editar/' + ${usuario.idusuario}}">
+                              <i class="bx bx-edit-alt me-1"></i> Editar
+                            </a>
+                            <a class="dropdown-item" th:href="@{'/superadmin/eliminar/' + ${usuario.idusuario}}">
+                              <i class="bx bx-trash me-1"></i> Eliminar
+                            </a>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <br>
+              <div>
+                <nav aria-label="Page navigation example">
+                  <ul class="pagination justify-content-center">
+                    <!-- Generar la paginación dinámicamente -->
+                    <li th:each="pagina : ${paginas}" class="page-item">
+                      <a class="page-link" th:text="${pagina.numero}" th:href="@{'/usuarios?page=' + ${pagina.numero}}"></a>
+                    </li>
+                  </ul>
+                </nav>
+              </div>
+            </div>
 
-            <!-- Tabla 1 -->
+
+            <!-- Tabla 1
             <div class="col-12 col-lg-12 order-2 order-md-3 order-lg-2 mb-4">
               <div class="card">
                 <h5 class="card-header">Usuarios</h5>
@@ -328,7 +384,7 @@
                     </tr>
                     </thead>
                     <tbody id="userTable" class="table-border-bottom-0">
-                    <!-- Aquí se insertarán los datos de los usuarios dinámicamente -->
+                     Aquí se insertarán los datos de los usuarios dinámicamente
                     </tbody>
                   </table>
                 </div>
@@ -337,7 +393,7 @@
               <div>
                 <nav aria-label="Page navigation example">
                   <ul class="pagination justify-content-center" id="pagination">
-                    <!-- Aquí se generará dinámicamente la paginación -->
+                     Aquí se generará dinámicamente la paginación
                   </ul>
                 </nav>
               </div>
@@ -468,10 +524,7 @@
               // Mostrar la primera página al cargar
               changePage(1);
             </script>
-
-
-
-            <!--/ Tabla 1 -->
+            / Tabla 1 -->
 
             <!-- Tabla 2 -->
             <div class="col-12 col-lg-12 order-2 order-md-3 order-lg-2 mb-4">
