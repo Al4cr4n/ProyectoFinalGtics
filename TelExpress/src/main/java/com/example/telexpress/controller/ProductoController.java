@@ -41,20 +41,6 @@ public class ProductoController {
         return "SuperAdmin/inventario_superadmin";
     }
 
-    @GetMapping({"/producto/listaTop", "/superadmin/dashboard_superadmin", "/superadmin/producto/listaTop"})
-    public String listarTopProductos(Model model) {
-        // Obtiene la lista de productos desde el repositorio
-        List<Producto> listaTop = productoRepository.findAll();
-
-        // Ordena la lista por cantidad comprada en orden descendente
-        listaTop.sort(Comparator.comparing(Producto::getCantidadComprada).reversed());
-
-        // Añade la lista ordenada al modelo
-        model.addAttribute("listaTop", listaTop);
-
-        // Devuelve la vista correspondiente
-        return "SuperAdmin/dashboard_superadmin";
-    }
 
     @GetMapping("/producto/nuevo")
     public String nuevoProductoFrm(Model model) {

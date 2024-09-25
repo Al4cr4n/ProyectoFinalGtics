@@ -215,7 +215,7 @@ public class SuperAdminController {
         return "SuperAdmin/solicitud_agente";
     }
 
-    @GetMapping({ "/superadmin/dashboard_superadmin"})
+    @GetMapping({ "/dashboard_superadmin"})
     public String listasDashboard(Model model) {
         List<Producto> listaTop = productoRepository.findAll();
         listaTop.sort(Comparator.comparing(Producto::getCantidadComprada).reversed());

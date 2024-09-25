@@ -1,17 +1,5 @@
 <!DOCTYPE html>
 
-<!-- =========================================================
-* Sneat - Bootstrap 5 HTML Admin Template - Pro | v1.0.0
-==============================================================
-
-* Product Page: https://themeselection.com/products/sneat-bootstrap-html-admin-template/
-* Created by: ThemeSelection
-* License: You must have a valid license purchased in order to legally use the theme for your project.
-* Copyright ThemeSelection (https://themeselection.com)
-
-=========================================================
- -->
-<!-- beautify ignore:start -->
 <html
         lang="en"
         class="light-style layout-menu-fixed"
@@ -408,18 +396,17 @@
                                 <div class="col-md-6 col-lg-4">
 
                                     <!-- Usuarios -->
-                                    <div class=" order-1 ">
+                                    <div class="order-1">
                                         <div class="card h-100">
                                             <div class="card-header d-flex align-items-center justify-content-between pb-0">
                                                 <div class="card-title mb-0">
                                                     <h5 class="m-0 me-2">Usuarios</h5>
                                                 </div>
-
                                             </div>
                                             <div class="card-body">
                                                 <div class="d-flex justify-content-between align-items-center mb-3">
                                                     <div class="d-flex flex-column align-items-center gap-1">
-                                                        <h2 class="mb-2">8,258</h2>
+                                                        <h2 class="mb-2" th:text="${totalUsuarios}"></h2>
                                                         <span>Usuarios Totales</span>
                                                     </div>
                                                     <div id="orderStatisticsChart"></div>
@@ -427,45 +414,46 @@
                                                 <ul class="p-0 m-0">
                                                     <li class="d-flex mb-4 pb-1">
                                                         <div class="avatar flex-shrink-0 me-3">
-                                        <span class="avatar-initial rounded bg-label-success">
-                                            <i class="bx bx-check-circle"></i>
-                                        </span>
+                        <span class="avatar-initial rounded bg-label-success">
+                            <i class="bx bx-check-circle"></i>
+                        </span>
                                                         </div>
                                                         <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
                                                             <div class="me-2">
                                                                 <h6 class="mb-0">Activos</h6>
                                                             </div>
                                                             <div class="user-progress">
-                                                                <small class="fw-semibold">6.1k</small>
+                                                                <small class="fw-semibold" th:text="${usuariosActivos}"></small>
                                                             </div>
                                                         </div>
                                                     </li>
                                                     <li class="d-flex mb-4 pb-1">
                                                         <div class="avatar flex-shrink-0 me-3">
-                                                            <span class="avatar-initial rounded bg-label-info"><i
-                                                                    class="bx bx-minus-circle"></i></span>
+                        <span class="avatar-initial rounded bg-label-info">
+                            <i class="bx bx-minus-circle"></i>
+                        </span>
                                                         </div>
                                                         <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
                                                             <div class="me-2">
                                                                 <h6 class="mb-0">Inactivos</h6>
                                                             </div>
                                                             <div class="user-progress">
-                                                                <small class="fw-semibold">1.6k</small>
+                                                                <small class="fw-semibold" th:text="${usuariosInactivos}"></small>
                                                             </div>
                                                         </div>
                                                     </li>
                                                     <li class="d-flex mb-4 pb-1">
                                                         <div class="avatar flex-shrink-0 me-3">
-                                        <span class="avatar-initial rounded bg-label-danger">
-                                            <i class="bx bx-x-circle"></i>
-                                        </span>
+                        <span class="avatar-initial rounded bg-label-danger">
+                            <i class="bx bx-x-circle"></i>
+                        </span>
                                                         </div>
                                                         <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
                                                             <div class="me-2">
                                                                 <h6 class="mb-0">Baneados</h6>
                                                             </div>
                                                             <div class="user-progress">
-                                                                <small class="fw-semibold">413</small>
+                                                                <small class="fw-semibold" th:text="${usuariosBaneados}"></small>
                                                             </div>
                                                         </div>
                                                     </li>
@@ -473,6 +461,7 @@
                                             </div>
                                         </div>
                                     </div>
+
                                     <!--/ Usuarios -->
 
                                     <!-- Agentes -->
