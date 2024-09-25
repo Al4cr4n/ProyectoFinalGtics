@@ -274,7 +274,8 @@
           <h4 class="mb-4">Editar Producto</h4>
 
           <!-- Formulario -->
-          <form id="formRegistro">
+          <form id="formRegistro" method="post" th:action="@{'/producto/guardar'}" th:object="${producto}">
+            <input th:field="*{producto.idProducto}" name="id" type="hidden"/>
             <div class="row mb-3">
               <!-- Nombre del producto -->
               <div class="col-md-6">
@@ -352,7 +353,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
-                ¿Estás seguro del registro de un nuevo producto?
+                El produto se actualizará
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>

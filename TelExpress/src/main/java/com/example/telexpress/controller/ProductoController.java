@@ -48,6 +48,7 @@ public class ProductoController {
 
     @GetMapping("/producto/nuevo")
     public String nuevoProductoFrm(Model model) {
+        model.addAttribute("producto", new Producto());
         model.addAttribute("listaProveedores",proveedorRepository.findAll());
         //model.addAttribute("listaDepartamentos", departmentRepository.findAll());
         model.addAttribute("listaZona", zonaRepository.findAll());
@@ -68,8 +69,8 @@ public class ProductoController {
         if (optProduct.isPresent()) {
             Producto producto = optProduct.get();
             model.addAttribute("producto", producto);
-            //model.addAttribute("listaCategorias",categoryRepository.findAll());
-            //model.addAttribute("listaProveedores",supplierRepository.findAll());
+            model.addAttribute("listaProveedores", proveedorRepository.findAll());
+            model.addAttribute("listaZona", zonaRepository.findAll());
             return "SuperAdmin/editarProducto";
         } else {
             return "redirect:/producto/lista";
