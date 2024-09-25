@@ -40,4 +40,8 @@ public class Usuario {
     @ManyToOne
     @JoinColumn(name="idzona", nullable = false)
     private Zona zona;
+
+    @ManyToOne
+    @JoinColumn(name= "idproveedor", nullable = false)
+    private Proveedor proveedor;
 }
