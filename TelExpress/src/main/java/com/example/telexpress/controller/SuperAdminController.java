@@ -165,9 +165,9 @@ public class SuperAdminController {
     }
 
     @GetMapping("/gestion_agentes")
-    public String gestionAgentesSuperadmin() {
-
-
+    public String listar_agentes(Model model) {
+        List<Usuario> lista_agentes = adminRepository.buscarAgentePorRol();
+        model.addAttribute("lista_agentes",lista_agentes);
         return "SuperAdmin/gestion_agentes";
     }
     @GetMapping("/rol_agente_solicitudes")

@@ -14,12 +14,12 @@ public interface AdminRepository extends JpaRepository<Usuario,Integer>{
             nativeQuery= true)
     List<Usuario> buscarUsuarioPorRol(Integer idRol);
 
-    /*Query para obtener a todos los agentes por su id_rol=3(agente)
+    //Query para obtener a todos los agentes por su id_rol=3(agente)
     @Query(value = "select * from usuario where roles_idRoles= 3",
             nativeQuery= true)
     List<Usuario> buscarAgentePorRol();
 
-    Query para obtener a todos los coordis por su id_rol=2()
+    /*Query para obtener a todos los coordis por su id_rol=2()
     @Query(value = "select * from usuario where roles_idRoles= 2",
             nativeQuery= true)
     List<Usuario> buscarCoordiPorRol();*/
