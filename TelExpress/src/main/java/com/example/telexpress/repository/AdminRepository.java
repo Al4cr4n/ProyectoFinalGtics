@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public interface AdminRepository extends JpaRepository<Usuario,Integer>{
     /*Query para obtener a todos los usuarios por su id_rol=4(usuario final)*/
-    @Query(value = "select * from usuario where roles_idRoles like %?1%",
+    @Query(value = "select * from usuario where roles_idRoles = ?1",
             nativeQuery= true)
     List<Usuario> buscarUsuarioPorRol(Integer idRol);
 

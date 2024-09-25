@@ -2,6 +2,7 @@ package com.example.telexpress.controller;
 
 import com.example.telexpress.entity.Usuario;
 import com.example.telexpress.repository.AdminRepository;
+import com.example.telexpress.repository.ZonaRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,8 +18,9 @@ import java.util.List;
 public class SuperAdminController {
 
     final AdminRepository adminRepository;
-    public SuperAdminController(AdminRepository adminRepository){
-        this.adminRepository=adminRepository;
+    final ZonaRepository zonaRepository;
+    public SuperAdminController(AdminRepository adminRepository, ZonaRepository zonaRepository){
+        this.adminRepository=adminRepository; this.zonaRepository=zonaRepository;
     }
 
 
@@ -33,9 +35,14 @@ public class SuperAdminController {
 
     @GetMapping("inicio_superadmin")
     public String inicioSuperadmin(Model model){
-        model.addAttribute("listaUsuario",adminRepository.buscarUsuarioPorRol(4));
+        List<Usuario> usuarios = adminRepository.buscarUsuarioPorRol(4);
+        System.out.println("Usuarios: " + usuarios);
+        model.addAttribute("listaUsuario", usuarios);
+        model.addAttribute("listaAgente",adminRepository.buscarUsuarioPorRol(3));
+        model.addAttribute("listaCoordi",adminRepository.buscarUsuarioPorRol(2));
         /*model.addAttribute("listaAgente",adminRepository.buscarAgentePorRol(3));
         model.addAttribute("listaCoordinador",adminRepository.buscarCoordiPorRol(2));*/
+
         return "SuperAdmin/inicio_superadmin";
     }
 

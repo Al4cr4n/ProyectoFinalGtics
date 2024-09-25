@@ -2,6 +2,9 @@ package com.example.telexpress.entity;
 import jakarta.persistence.*;
 import lombok.Setter;
 import lombok.Getter;
+
+import java.time.LocalDate;
+
 @Getter
 @Setter
 @Entity
@@ -12,12 +15,17 @@ public class Usuario {
     @Column(name="idusuario")
     private Integer id;
 
+    @Column(nullable = false)
     private String nombre;
     private String apellido;
     private String correo;
     private String direccion;
     private String dni;
     private String telefono;
+    private String contrasena;
+
+    @Column(name = "fecha_nacimiento", nullable = false)
+    private LocalDate fechanacimiento;
 
     private String ruc;
 
@@ -26,8 +34,10 @@ public class Usuario {
     private Rol rol;
 
     @ManyToOne
-    @JoinColumn(name="distritos_iddistritos")
+    @JoinColumn(name="distritos_iddistritos", nullable = true)
     private Distrito distrito;
 
-
+    @ManyToOne
+    @JoinColumn(name="zona_idzona", nullable = false)
+    private Zona zona;
 }

@@ -239,7 +239,7 @@ VALUES
 -- --2400 usuarios finales como máximo -- --
 -- -- -- 600 usuarios por zona -- -- --
 -- -- -- norte -- -- --
-(7, 'Raúl', 'Torres', '87654307', 'pass777', 'Calle Nube 700', '20123456707',  'Notificaciones Inactivas', 'raul.torres@example.com', '967890123', 'Activo', 'JUR107', 'DES407', 'Torres SAC', 1, 0, 4,3),
+(7, 'Raúl', 'Torrusuarioes', '87654307', 'pass777', 'Calle Nube 700', '20123456707',  'Notificaciones Inactivas', 'raul.torres@example.com', '967890123', 'Activo', 'JUR107', 'DES407', 'Torres SAC', 1, 0, 4,3),
 (10, 'Lucía', 'Mendoza', '87654310', 'pass1010', 'Av. Viento 1000', '20123456710',  'Notificaciones Activas', 'lucia.mendoza@example.com', '990123456', 'Activo', 'JUR110', 'DES410', 'Mendoza EIRL', 1,0, 4,4),
 (11, 'Ana', 'Rojas', '87654311', 'pass1111', 'Calle Fuego 1100', '20123456711',  'Notificaciones Inactivas', 'ana.rojas@example.com', '991234567', 'Activo', 'JUR111', 'DES411', 'Rojas SAC', 1, 0, 4,5),
 (14, 'Andrés', 'Guzmán', '87654314', 'pass1414', 'Av. Relámpago 1400', '20123456714',  'Notificaciones Inactivas', 'andres.guzman@example.com', '994567890', 'Inactivo', 'JUR114', 'DES414', 'Guzmán EIRL', 0, 0, 4,6),

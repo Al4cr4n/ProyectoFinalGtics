@@ -326,6 +326,10 @@
                     </tr>
                     </thead>
                     <tbody>
+                    <!-- Verificación si la lista está vacía -->
+                    <tr th:if="${#lists.isEmpty(listaUsuario)}">
+                      <td colspan="6">No hay usuarios disponibles.</td>
+                    </tr>
                     <!-- Aquí se insertarán los datos de los usuarios dinámicamente desde el backend -->
                     <tr th:each="usuario : ${listaUsuario}">
                       <td th:text="${usuario.nombre}"></td>
@@ -339,10 +343,10 @@
                             <i class="bx bx-dots-vertical-rounded"></i>
                           </button>
                           <div class="dropdown-menu">
-                            <a class="dropdown-item" th:href="@{'/superadmin/editar/' + ${usuario.idusuario}}">
+                            <a class="dropdown-item" th:href="@{'/superadmin/editar/' + ${usuario.id}}">
                               <i class="bx bx-edit-alt me-1"></i> Editar
                             </a>
-                            <a class="dropdown-item" th:href="@{'/superadmin/eliminar/' + ${usuario.idusuario}}">
+                            <a class="dropdown-item" th:href="@{'/superadmin/eliminar/' + ${usuario.id}}">
                               <i class="bx bx-trash me-1"></i> Eliminar
                             </a>
                           </div>
