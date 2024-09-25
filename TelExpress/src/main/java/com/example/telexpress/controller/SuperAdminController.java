@@ -1,6 +1,7 @@
 package com.example.telexpress.controller;
 
 import com.example.telexpress.entity.Usuario;
+import com.example.telexpress.entity.Zona;
 import com.example.telexpress.repository.AdminRepository;
 import com.example.telexpress.repository.ZonaRepository;
 import org.springframework.stereotype.Controller;
@@ -114,16 +115,38 @@ public class SuperAdminController {
 
 
     @GetMapping("/gestion_coordinadores")
-    public String gestionCoordinadoresSuperadmin() {
+    public String gestionCoordinadoresSuperadmin(Model model) {
+        List<Usuario> listazonal = adminRepository.buscarUsuarioPorRol(2);
+        for(Usuario cz : listazonal){
+            System.out.println("Zonal ID: " + cz.getId());
+        }
+        model.addAttribute("coordinadores",listazonal);
 
 
         return "SuperAdmin/gestion_coordinadores";
     }
 
     @GetMapping("/coordinador_zonal_formulario")
-    public String CoordinadorZonalFormularioSuperadmin() {
+    public String CoordinadorZonalFormularioSuperadmin(Model model, @RequestParam("id") Integer id) {
+        Optional<Usuario> coordinador = adminRepository.findById(id);
+        if (coordinador.isPresent()) {
+            Usuario user = coordinador.get();
+            model.addAttribute("coordinadorzonal", user);
+            List<Zona> zonas = zonaRepository.findAll();
+            model.addAttribute("zonas",zonas);
 
+            return "SuperAdmin/coordinador_zonal_formulario";
+        } else {
+            return "redirect:SuperAdmin/gestion_coordinadores";
+        }
 
+    }
+
+    @GetMapping("/new")
+    public String crearnuevocoordi(Model model){
+        List<Zona> zonas = zonaRepository.findAll();
+        model.addAttribute("zonas", zonas);
+        model.addAttribute("coordinadorzonal", new Usuario());
         return "SuperAdmin/coordinador_zonal_formulario";
     }
 

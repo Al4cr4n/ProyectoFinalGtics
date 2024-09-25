@@ -275,18 +275,19 @@
                     <h4 class="mb-4">Registrar Coordinador Zonal</h4>
 
                     <!-- Formulario -->
-                    <form id="formRegistro">
-                        <div class="row mb-3">
+                    <form id="formRegistro" method="post" th:action="@{/gestion-zonal/update}" th:object="${coordinadorzonal}">
+                    <input type="hidden" th:if="${idusuario != null}" th:field="*{coordinadorzonal.idusuario}" name="id"/>
+                    <div class="row mb-3">
                             <!-- Nombre -->
                             <div class="col-md-6">
                                 <label for="nombreCoordinador" class="form-label">Nombre:</label>
-                                <input type="text" class="form-control" id="nombreCoordinador" placeholder="Ingrese el nombre">
+                                <input type="text" class="form-control" id="nombreCoordinador" placeholder="Ingrese el nombre" th:field="*{nombre}">
                             </div>
 
                             <!-- Apellido -->
                             <div class="col-md-6">
                                 <label for="apellidoCoordinador" class="form-label">Apellido:</label>
-                                <input type="text" class="form-control" id="apellidoCoordinador" placeholder="Ingrese el apellido">
+                                <input type="text" class="form-control" id="apellidoCoordinador" placeholder="Ingrese el apellido" th:field="*{apellido}">
                             </div>
                         </div>
 
@@ -294,13 +295,13 @@
                             <!-- DNI -->
                             <div class="col-md-6">
                                 <label for="dniCoordinador" class="form-label">DNI:</label>
-                                <input type="text" class="form-control" id="dniCoordinador" placeholder="Ingrese el DNI">
+                                <input type="text" class="form-control" id="dniCoordinador" placeholder="Ingrese el DNI" th:field="*{dni}">
                             </div>
 
                             <!-- Teléfono -->
                             <div class="col-md-6">
                                 <label for="telefonoCoordinador" class="form-label">Teléfono:</label>
-                                <input type="text" class="form-control" id="telefonoCoordinador" placeholder="Ingrese el teléfono">
+                                <input type="text" class="form-control" id="telefonoCoordinador" placeholder="Ingrese el teléfono" th:field="*{telefono}">
                             </div>
                         </div>
 
@@ -308,13 +309,17 @@
                             <!-- Correo -->
                             <div class="col-md-6">
                                 <label for="correoCoordinador" class="form-label">Correo:</label>
-                                <input type="email" class="form-control" id="correoCoordinador" placeholder="Ingrese el correo">
+                                <input type="email" class="form-control" id="correoCoordinador" placeholder="Ingrese el correo" th:field="*{correo}">
                             </div>
 
                             <!-- Zona -->
                             <div class="col-md-6">
                                 <label for="zonaCoordinador" class="form-label">Zona:</label>
-                                <input type="text" class="form-control" id="zonaCoordinador" placeholder="Ingrese la zona">
+                                <select class="form-control" id="zonaCoordinador" th:field="*{zona.idzona}">
+                                    <option th:each="zona : ${zonas}" th:value="${zona.id}" th:text="${zona.nombre}"></option>
+                                    <option escoger uno></option>
+                                </select>
+
                             </div>
                         </div>
 

@@ -13,7 +13,7 @@ public class Zona {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idzona")
-    private Integer idZona;
+    private Integer idzona;
 
     @Column(name = "nombrezona")
     private int nombre;
