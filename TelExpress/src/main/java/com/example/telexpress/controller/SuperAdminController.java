@@ -17,7 +17,7 @@ import java.util.List;
 public class SuperAdminController {
 
     final AdminRepository adminRepository;
-    public AdminRepository(AdminRepository adminRepository){
+    public SuperAdminController(AdminRepository adminRepository){
         this.adminRepository=adminRepository;
     }
 
@@ -39,20 +39,29 @@ public class SuperAdminController {
         return "SuperAdmin/inicio_superadmin";
     }
 
-    /*USUARIO EDITAR Y BORRAR*/
+    /*USUARIO EDITAR, GUARDAR Y BORRAR*/
 
     @GetMapping("/editar")
     public String editarUsuario(Model model, @RequestParam("id") int id){
+
         Optional<Usuario> optUsuario = adminRepository.findById(id);
         if (optUsuario.isPresent()){
             Usuario usuario = optUsuario.get();
-            model.addAttribute("usuario", usuario);
+            model.addAttribute("usuarios", usuario);
 
-            return "SuperAdmin/editarUsuario";
+            return "SuperAdmin/editar_usuario";
         }else{
             return "redirect:/superadmin";
         }
     }
+
+    @PostMapping("/guardar")
+    public String guardarUsuario(Usuario usuario, RedirectAttributes attr) {
+        adminRepository.save(usuario);
+        return "redirect:/superadmin";
+    }
+
+
 
     @GetMapping("/eliminar")
     public String borrarUsuario(Model model,
