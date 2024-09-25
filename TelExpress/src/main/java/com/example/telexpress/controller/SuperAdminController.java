@@ -41,6 +41,13 @@ public class SuperAdminController {
         return "SuperAdmin/inventario_registrar_producto";
     }
 
+    @GetMapping("/inventario_editar_producto")
+    public String inventarioEditarSuperadmin() {
+
+
+        return "SuperAdmin/inventario_editar_producto";
+    }
+
 
 
     @GetMapping("/gestion_coordinadores")
