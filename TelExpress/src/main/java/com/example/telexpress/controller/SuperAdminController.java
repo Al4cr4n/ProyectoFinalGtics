@@ -1,10 +1,25 @@
 package com.example.telexpress.controller;
 
+import com.example.telexpress.entity.Usuario;
+import com.example.telexpress.repository.AdminRepository;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.Optional;
+import java.util.List;
 @Controller
+@RequestMapping("/superadmin")
 public class SuperAdminController {
+
+    final AdminRepository adminRepository;
+    public AdminRepository(AdminRepository adminRepository){
+        this.adminRepository=adminRepository;
+    }
 
 
 
@@ -14,11 +29,49 @@ public class SuperAdminController {
         return "SuperAdmin/inicio_superadmin";
     }
 
-    @GetMapping("inicio_superadmin")
-    public String inicioSuperadmin(){
+    /*METODO DE TODAS LAS LISTAS DE LA VISTA PRINCIPAL*/
 
+    @GetMapping("inicio_superadmin")
+    public String inicioSuperadmin(Model model){
+        model.addAttribute("listaUsuario",adminRepository.buscarUsuarioPorRol());
+        model.addAttribute("listaAgente",adminRepository.buscarAgentePorRol());
+        model.addAttribute("listaCoordinador",adminRepository.buscarCoordiPorRol());
         return "SuperAdmin/inicio_superadmin";
     }
+
+    /*USUARIO EDITAR Y BORRAR*/
+
+    @GetMapping("/editar")
+    public String editarUsuario(Model model, @RequestParam("id") int id){
+        Optional<Usuario> optUsuario = adminRepository.findById(id);
+        if (optUsuario.isPresent()){
+            Usuario usuario = optUsuario.get();
+            model.addAttribute("usuario", usuario);
+
+            return "SuperAdmin/editarUsuario";
+        }else{
+            return "redirect:/superadmin";
+        }
+    }
+
+    @GetMapping("/eliminar")
+    public String borrarUsuario(Model model,
+                                @RequestParam("id") int id,
+                                RedirectAttributes attr) {
+
+        Optional<Usuario> optUsuario = adminRepository.findById(id);
+
+        if (optUsuario.isPresent()) {
+            adminRepository.deleteById(id);
+        }
+        return "redirect:/superadmin";
+
+    }
+
+
+
+
+
 
     @GetMapping("/dashboard_superadmin")
     public String dashboardSuperadmin() {
