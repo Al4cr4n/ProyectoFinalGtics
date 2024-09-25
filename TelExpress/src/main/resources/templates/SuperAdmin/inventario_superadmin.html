@@ -320,23 +320,13 @@
                       <td th:text="${producto.precio}"></td>
                       <td th:text="${producto.costoEnvio}"></td>
 
-                      <td><button class="btn btn-sm btn-primary"  th:href="@{'/shipper/edit?id=' + ${shipper.shipperId}}"><i class="bx bx-edit-alt"></i></button>
+                      <td><button class="btn btn-sm btn-primary"  th:href="@{'/producto/editar?id=' + ${producto.idProducto}}"><i class="bx bx-edit-alt"></i></button>
 
 
-                        <button class="btn btn-sm btn-danger" th:href="@{'/shipper/delete?id=' + ${shipper.shipperId}}"><i class="bx bx-trash"></i></button>
+                        <button class="btn btn-sm btn-danger" th:href="@{'/producto/borrar?id=' + ${producto.idProducto}}"><i class="bx bx-trash"></i></button>
                       </td>
                     </tr>
-                    <!-- Producto A (ya existente) -->
 
-                    <!-- Producto B -->
-
-
-                    <!-- Producto C -->
-
-
-                    <!-- Producto D -->
-
-                    <!-- Producto E -->
                     </tbody>
 
                   </table>
@@ -344,8 +334,13 @@
 
                 <!-- Botón "Crear Nuevo" -->
                 <div class="text-center my-3">
-                  <button class="btn btn-primary" onclick="window.location.href='/inventario_registrar_producto';">Crear Nuevo</button>
+                  <button class="btn btn-primary" onclick="window.location.href = '[[@{/producto/nuevo}]]';">Crear Nuevo</button>
                 </div>
+
+                <!-- Botón "Crear Nuevo"
+                <div class="text-center my-3">
+                  <a href="@{/producto/nuevo}" class="btn btn-primary">Crear Nuevo</a>
+                </div>-->
 
 
                 <!-- Paginación -->
