@@ -316,7 +316,7 @@
                             <div class="col-md-6">
                                 <label for="zonaCoordinador" class="form-label">Zona:</label>
                                 <select class="form-control" id="zonaCoordinador" th:field="*{zona.idzona}">
-                                    <option th:each="zona : ${zonas}" th:value="${zona.id}" th:text="${zona.nombre}"></option>
+                                    <option th:each="zona : ${zonas}" th:value="${zona.idzona}" th:text="${zona.nombre}"></option>
                                     <option escoger uno></option>
                                 </select>
 

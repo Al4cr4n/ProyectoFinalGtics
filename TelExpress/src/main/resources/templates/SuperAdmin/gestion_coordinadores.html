@@ -308,9 +308,9 @@
                 <td th:text="${usuario.zona.nombre}"></td>
                 <td th:text="${usuario.fechanacimiento}"></td>
                 <td>
-                  <a th:href="@{/editarzonal(id =${usuario.id})}" class="btn btn-sm btn-primary">
+                  <a th:href="@{/superadmin/coordinador_zonal_formulario(id =${usuario.id})}" class="btn btn-sm btn-primary">
                     <i class="bx bx-edit-alt"></i></a>
-                  <button th:onclick="'/deletecoordi('+ $(usuario.id} +')'" class="btn btn-sm btn-danger">
+                  <button th:onclick="'/superadmin/deletecoordi('+ $(usuario.id} +')'" class="btn btn-sm btn-danger">
                     <i class="bx bx-trash"></i></button>
                 </td>
               </tr>
