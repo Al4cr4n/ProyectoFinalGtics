@@ -5,16 +5,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class HomeController {
-    @GetMapping("")
-    public String index(){
 
-        return "SuperAdmin/inicio_superadmin";
+    @GetMapping("Login")
+    public String login(){
+
+        return "Sistema/Login";
     }
 
-    @GetMapping("/dashboard_superadmin")
-    public String dashboardSuperadmin() {
+    @GetMapping("cambio_contraseña")
+    public String cambioContrasena(){
 
-
-        return "SuperAdmin/dashboard_superadmin";
+        return "Sistema/cambio_contraseña";
     }
+
 }
