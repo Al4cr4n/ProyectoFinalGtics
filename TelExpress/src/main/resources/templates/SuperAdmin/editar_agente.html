@@ -1,33 +1,12 @@
 <!DOCTYPE html>
-
-<!-- =========================================================
-* Sneat - Bootstrap 5 HTML Admin Template - Pro | v1.0.0
-==============================================================
-
-* Product Page: https://themeselection.com/products/sneat-bootstrap-html-admin-template/
-* Created by: ThemeSelection
-* License: You must have a valid license purchased in order to legally use the theme for your project.
-* Copyright ThemeSelection (https://themeselection.com)
-
-=========================================================
- -->
-<!-- beautify ignore:start -->
-<html
-        lang="en"
-        class="light-style layout-menu-fixed"
-        dir="ltr"
-        data-theme="theme-default"
-        data-assets-path="../../assets/"
-        data-template="vertical-menu-template-free"
-        xmlns:th="http://www.thymeleaf.org">
+<html lang="en" class="light-style layout-menu-fixed" dir="ltr" data-theme="theme-default">
 <head>
-  <meta charset="utf-8" />
-  <meta
-          name="viewport"
-          content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
-  />
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
-  <title>Editar Usuario</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+  <title>Plantilla</title>
 
   <meta name="description" content="" />
 
@@ -37,10 +16,7 @@
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-          href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
-          rel="stylesheet"
-  />
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet" />
 
   <!-- Icons. Uncomment required icon fonts -->
   <link rel="stylesheet" href="/assets/vendor/fonts/boxicons.css" />
@@ -52,29 +28,20 @@
 
   <!-- Vendors CSS -->
   <link rel="stylesheet" href="/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
-
   <link rel="stylesheet" href="/assets/vendor/libs/apex-charts/apex-charts.css" />
-
-  <!-- Page CSS -->
 
   <!-- Helpers -->
   <script src="/assets/vendor/js/helpers.js"></script>
-
-  <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
-  <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
   <script src="/assets/js/config.js"></script>
-
   <!--TelExpress fuente de letra-->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-
 </head>
-
 <body>
 <!-- Layout wrapper -->
 <div class="layout-wrapper layout-content-navbar">
   <div class="layout-container">
     <!-- Menu -->
+
     <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
       <!-- Contenedor para la imagen centrada -->
       <div style="text-align: center;">
@@ -96,7 +63,7 @@
 
       <ul class="menu-inner py-1">
         <!-- Dashboard -->
-        <li class="menu-item active">
+        <li class="menu-item">
           <a href="/superadmin/inicio_superadmin" class="menu-link">
             <i class="menu-icon tf-icons bx bx-home-circle"></i>
             <div data-i18n="Inicio">Inicio</div>
@@ -109,7 +76,7 @@
             <div data-i18n="Dashboard">Dashboard</div>
           </a>
         </li>
-        <li class="menu-item">
+        <li class="menu-item active">
           <a href="/superadmin/inventario_superadmin" class="menu-link">
             <i class="menu-icon tf-icons bx bx-package"></i>
             <div data-i18n="Inventario">Inventario</div>
@@ -152,7 +119,7 @@
     </aside>
     <!-- / Menu -->
 
-    <!-- Layout container -->
+    <!-- Contenido principal -->
     <div class="layout-page">
       <!-- Navbar -->
 
@@ -301,114 +268,125 @@
       </nav>
 
       <!-- / Navbar -->
-      <!--Este es el contenedor principal-->
-      <div class="container-xxl flex-grow-1 container-p-y">
+      <div class="content-wrapper">
+        <div class="container-xxl flex-grow-1 container-p-y">
+          <!-- Título -->
+          <h4 class="mb-4">Editar Producto</h4>
 
-        <h4 style="font-family: 'Poppins', sans-serif; color: #7367F0; font-weight: bold; padding-top: 1rem; padding-bottom: 1rem; margin-bottom: 1rem; text-align: center; font-size: 40px;">
-          Editar Usuario
-        </h4>
-        <div class="card">
-          <div class="card-body">
-            <div class="card-body">
-              <!--Account-->
-              <form method="post" th:action="@{/superadmin/guardar}" th:object="${usuario}">
-                <input th:field="*{id}" name="id" type="hidden"/>
-                <div class="row">
-                  <div class="mb-3 col-md-6">
-                    <label class="form-label">Nombre</label>
-                    <input class="form-control" type="text" th:field="*{usuario.nombre}" />
-                  </div>
-                  <div class="mb-3 col-md-6">
-                    <label class="form-label">Apellido</label>
-                    <input class="form-control" type="text" th:field="*{usuario.apellido}" />
-                  </div>
-                  <div class="mb-3 col-md-6">
-                    <label class="form-label">DNI</label>
-                    <input class="form-control" type="text" th:field="*{usuario.dni}" />
-                  </div>
-                  <div class="mb-3 col-md-6">
-                    <label class="form-label">Teléfono</label>
-                    <input class="form-control" type="text" th:field="*{usuario.direccion}" />
-                  </div>
-                  <div class="mb-3 col-md-6">
-                    <label class="form-label">Correo</label>
-                    <input class="form-control" type="text" th:field="*{usuario.correo}" />
-                  </div>
+          <!-- Formulario -->
+          <form id="formRegistro" method="post" th:action="@{'/producto/guardar'}" th:object="${producto}">
+            <input th:field="*{producto.idProducto}" name="id" type="hidden"/>
+            <div class="row mb-3">
+              <!-- Nombre del producto -->
+              <div class="col-md-6">
+                <label for="nombreProducto" class="form-label">Nombre del producto:</label>
+                <input type="text" class="form-control" id="nombreProducto" placeholder="Ingrese el nombre del producto">
+              </div>
 
-                </div>
+              <!-- Cantidad disponible -->
+              <div class="col-md-6">
+                <label for="cantidadDisponible" class="form-label">Cantidad disponible:</label>
+                <input type="number" class="form-control" id="cantidadDisponible" placeholder="Ingrese la cantidad disponible">
+              </div>
+            </div>
 
-                <!-- Botón para guardar los cambios -->
-                <div class="text-center">
-                  <button type="submit" class="btn btn-primary">Guardar cambios</button>
-                </div>
-              </form>
+            <div class="row mb-3">
+              <!-- Precio -->
+              <div class="col-md-6">
+                <label for="precioProducto" class="form-label">Precio:</label>
+                <input type="number" class="form-control" id="precioProducto" placeholder="Ingrese el precio">
+              </div>
+
+              <!-- Costo de envío -->
+              <div class="col-md-6">
+                <label for="costoEnvio" class="form-label">Costo de envío:</label>
+                <input type="number" class="form-control" id="costoEnvio" placeholder="Ingrese el costo de envío">
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <!-- Nombre del Proveedor -->
+              <div class="col-md-6">
+                <label for="nombreProveedor" class="form-label">Nombre del Proveedor:</label>
+                <select class="form-select" id="nombreProveedor">
+                  <option selected>Seleccione un proveedor</option>
+                  <option value="1">Proveedor 1</option>
+                  <option value="2">Proveedor 2</option>
+                  <option value="3">Proveedor 3</option>
+                </select>
+              </div>
+
+              <!-- Categoría -->
+              <div class="col-md-6">
+                <label for="categoriaProducto" class="form-label">Categoría:</label>
+                <input type="text" class="form-control" id="categoriaProducto" placeholder="Ingrese la categoría">
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <!-- Zona -->
+              <div class="col-md-6">
+                <label for="zonaProducto" class="form-label">Zona:</label>
+                <input type="text" class="form-control" id="zonaProducto" placeholder="Ingrese la zona">
+              </div>
+
+              <!-- Descripción -->
+              <div class="col-md-6">
+                <label for="descripcionProducto" class="form-label">Descripción:</label>
+                <textarea class="form-control" id="descripcionProducto" rows="3" placeholder="Ingrese la descripción"></textarea>
+              </div>
+            </div>
+
+            <!-- Botón de editar -->
+            <div class="text-center">
+              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmModal">Guardar Cambios</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Modal de Confirmación -->
+        <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="confirmModalLabel">Confirmar solicitud</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                El produto se actualizará
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" id="confirmarRegistro">Confirmar</button>
+              </div>
             </div>
           </div>
         </div>
 
-      </div>
-    </div>
-    <!-- Content wrapper -->
+        <!-- Bootstrap JS and dependencies (Popper.js and Bootstrap JS) -->
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
 
-  </div>
-  <!-- / Layout page -->
-</div>
-
-<!-- Overlay -->
-<div class="layout-overlay layout-menu-toggle"></div>
-</div>
-<!-- / Layout wrapper -->
+        <script>
+          document.getElementById('confirmarRegistro').addEventListener('click', function () {
+            // Aquí puedes realizar el envío de los datos o hacer otras acciones
+            document.getElementById('formRegistro').submit(); // Envía el formulario
+          });
+        </script>
 
 
-<!-- Modal de Confirmación -->
-<div class="modal fade" id="modalConfirmarSolicitud" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="modalCenterTitle" style="font-family: 'Poppins', sans-serif; font-size: 20px; text-align: center;">Confirmar solicitud</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <hr class="my-4 " />
-      <div class="modal-body">
-        <div class="row">
-          <div class="col mb-3">
-            <label>¿Estás seguro de la creación de un nuevo agente de compra?</label>
-          </div>
-        </div>
-      </div>
-      <div class="modal-footer justify-content-center mx-2">
-        <a href="crearagente_zonal.html" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</a>
-        <a href="listaagente_zonal.html" class="btn btn-primary">Confirmar</a>
       </div>
     </div>
   </div>
 </div>
-
-
-
-
-
 
 <!-- Core JS -->
-<!-- build:js assets/vendor/js/core.js -->
 <script src="/assets/vendor/libs/jquery/jquery.js"></script>
 <script src="/assets/vendor/libs/popper/popper.js"></script>
 <script src="/assets/vendor/js/bootstrap.js"></script>
 <script src="/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
-
 <script src="/assets/vendor/js/menu.js"></script>
-<!-- endbuild -->
-
-<!-- Vendors JS -->
 <script src="/assets/vendor/libs/apex-charts/apexcharts.js"></script>
-
-<!-- Main JS -->
 <script src="/assets/js/main.js"></script>
-
-<!-- Page JS -->
-<script src="/assets/js/dashboards-analytics.js"></script>
-
-<!-- Place this tag in your head or just before your close body tag. -->
-<script async defer src="https://buttons.github.io/buttons.js"></script>
 </body>
 </html>
