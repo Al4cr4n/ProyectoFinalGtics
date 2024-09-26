@@ -288,6 +288,17 @@
       <!-- / Navbar -->
       <div class="content-wrapper">
         <div class="container-xxl flex-grow-1 container-p-y">
+          <div class="container mt-4">
+            <!-- Mensaje de éxito -->
+            <div th:if="${success}" class="alert alert-success" role="alert">
+              <span th:text="${success}"></span>
+            </div>
+
+            <!-- Mensaje de error -->
+            <div th:if="${error}" class="alert alert-danger" role="alert">
+              <span th:text="${error}"></span>
+            </div>
+          </div>
 
           <!-- Tabla de productos -->
           <div class="row">

@@ -1,10 +1,13 @@
 package com.example.telexpress.controller;
 
 import com.example.telexpress.entity.Producto;
+import com.example.telexpress.entity.ProductoUsuario;
 import com.example.telexpress.entity.Zona;
 import com.example.telexpress.repository.ProductoRepository;
+import com.example.telexpress.repository.ProductoUsuarioRepository;
 import com.example.telexpress.repository.ProveedorRepository;
 import com.example.telexpress.repository.ZonaRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,13 +26,17 @@ public class ProductoController {
     final ProductoRepository productoRepository;
     final ProveedorRepository proveedorRepository;
     final ZonaRepository zonaRepository;
+
+    final ProductoUsuarioRepository productoUsuarioRepository;
     public ProductoController(ProductoRepository productoRepository,
                               ProveedorRepository proveedorRepository,
-                              ZonaRepository zonaRepository) {
+                              ZonaRepository zonaRepository,
+                              ProductoUsuarioRepository productoUsuarioRepository) {
 
         this.productoRepository = productoRepository;
         this.proveedorRepository = proveedorRepository;
         this.zonaRepository = zonaRepository;
+        this.productoUsuarioRepository = productoUsuarioRepository;
 
     }
 
@@ -76,15 +83,42 @@ public class ProductoController {
     @GetMapping("/producto/borrar")
     public String borrarProducto(Model model,
                                  @RequestParam("id") int id,
-                                 RedirectAttributes attr) {
+                                 RedirectAttributes attr){
 
-        Optional<Producto> optProduct = productoRepository.findById(id);
+        //Optional<Producto> optProduct = productoRepository.findById(id);
+        //if (optProduct.isPresent()) {
+        //  productoRepository.deleteById(id);
+        //}
+        //return "redirect:/producto/lista";
+        try {
+            Optional<Producto> optProduct = productoRepository.findById(id);
 
-        if (optProduct.isPresent()) {
-            productoRepository.deleteById(id);
+            if (optProduct.isPresent()) {
+                Producto producto = optProduct.get();
+
+                // Verifica si el producto está relacionado con un usuario
+                List<ProductoUsuario> relaciones = productoUsuarioRepository.findByProducto_IdProducto(producto.getIdProducto());
+
+                if (relaciones.isEmpty()) {
+                    // Si no hay relaciones, puedes eliminar el producto
+                    productoRepository.deleteById(id);
+                    attr.addFlashAttribute("success", "Producto eliminado exitosamente.");
+                } else {
+                    // Si hay relaciones, muestra un mensaje al usuario
+                    attr.addFlashAttribute("error", "No se puede eliminar el producto porque está relacionado con usuarios.");
+                }
+            } else {
+                attr.addFlashAttribute("error", "Producto no encontrado.");
+            }
+        } catch (EntityNotFoundException ex) {
+            // Capturamos la excepción si el Usuario no es encontrado
+            attr.addFlashAttribute("error", "No se pudo encontrar el usuario relacionado con el producto.");
+        } catch (Exception ex) {
+            // Capturamos cualquier otra excepción inesperada
+            attr.addFlashAttribute("error", "Ocurrió un error al intentar eliminar el producto.");
+            ex.printStackTrace();  // Esto es útil para depurar, pero puedes eliminarlo en producción
         }
         return "redirect:/producto/lista";
-
     }
 
 }
