@@ -1,5 +1,6 @@
 package com.example.telexpress.repository;
 
+import com.example.telexpress.entity.Rol;
 import
         com.example.telexpress.entity.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,4 +12,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
     // Contar usuarios por estado
     long countByEstadoUsuario(String estadoUsuario);
+    long countByRol_Id(Long id);
+
+
 }

@@ -231,11 +231,13 @@ public class SuperAdminController {
         long usuariosActivos = usuarioRepository.countByEstadoUsuario("Activo");
         long usuariosInactivos = usuarioRepository.countByEstadoUsuario("Inactivo");
         long usuariosBaneados = usuarioRepository.countByEstadoUsuario("Baneado");
+        long usuariosAgentes = usuarioRepository.countByRol_Id(3L);
 
         model.addAttribute("totalUsuarios", totalUsuarios);
         model.addAttribute("usuariosActivos", usuariosActivos);
         model.addAttribute("usuariosInactivos", usuariosInactivos);
         model.addAttribute("usuariosBaneados", usuariosBaneados);
+        model.addAttribute("usuariosAgentes", usuariosAgentes);
         return "SuperAdmin/dashboard_superadmin";
     }
 
