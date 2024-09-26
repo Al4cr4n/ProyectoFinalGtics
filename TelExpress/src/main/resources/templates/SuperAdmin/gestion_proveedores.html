@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
-  <title>Plantilla</title>
+  <title>Gestión de Proveedores</title>
 
   <meta name="description" content="" />
 
@@ -102,7 +102,7 @@
             <div data-i18n="Gestión de Roles">Gestión de Roles</div>
           </a>
           <ul class="menu-sub">
-            <li class="menu-item active">
+            <li class="menu-item ">
               <a href="/superadmin/gestion_coordinadores" class="menu-link">
                 <div data-i18n="Coordinador Zonal">Coordinador Zonal</div>
               </a>
@@ -117,7 +117,7 @@
                 <div data-i18n="Usuario">Usuario</div>
               </a>
             </li>
-            <li class="menu-item">
+            <li class="menu-item active">
               <a href="/superadmin/gestion_proveedores" class="menu-link">
                 <div data-i18n="Usuario">Proveedores</div>
               </a>
@@ -284,38 +284,34 @@
       <!-- Content wrapper -->
       <div class="content-wrapper">
         <div class="container-xxl flex-grow-1 container-p-y">
-          <!-- Tabla Coordinadores Zonales -->
-          <h5 class="mb-4">Coordinadores Zonales</h5>
+          <!-- Tabla Proveedores -->
+          <h5 class="mb-4">Proveedores</h5>
           <div class="table-responsive text-nowrap">
-            <table class="table table-striped" id="coordinadoresTable">
+            <table class="table table-striped" id="proveedoresTable">
               <thead class="table-light">
               <tr>
                 <th>N°</th>
-                <th>Nombre</th>
-                <th>Apellido</th>
+                <th>Proveedor</th>
+                <th>Tienda</th>
                 <th>DNI</th>
-                <th>Teléfono</th>
                 <th>Correo</th>
-                <th>Zona</th>
-                <th>Fecha de Nacimiento</th>
+                <th>RUC</th>
                 <th>Acciones</th>
               </tr>
               </thead>
               <tbody>
-              <!-- Aquí van las filas con los coordinadores -->
-              <tr th:each="usuario : ${coordinadores}">
-                <td>1</td>
-                <td th:text="${usuario.nombre}"></td>
-                <td th:text="${usuario.apellido}"></td>
-                <td th:text="${usuario.dni}"></td>
-                <td th:text="${usuario.telefono}"></td>
-                <td th:text="${usuario.correo}"></td>
-                <td th:text="${usuario.zona.nombre}"></td>
-                <td th:text="${usuario.fechanacimiento}"></td>
+              <!-- Aquí van las filas con los proveedores -->
+              <tr th:each="proveedor, info : ${listaProveedores}">
+                <td>${info.index + 1}</td>
+                <td th:text="${proveedor.nombreProveedor}"></td>
+                <td th:text="${proveedor.nombreTienda}"></td>
+                <td th:text="${proveedor.dni}"></td>
+                <td th:text="${proveedor.correo}"></td>
+                <td th:text="${proveedor.ruc}"></td>
                 <td>
-                  <a th:href="@{/superadmin/coordinador_zonal_formulario(id =${usuario.id})}" class="btn btn-sm btn-primary">
+                  <a  class="btn btn-sm btn-primary">
                     <i class="bx bx-edit-alt"></i></a>
-                  <button th:onclick="'/superadmin/deletecoordi('+ $(usuario.id} +')'" class="btn btn-sm btn-danger">
+                  <button  class="btn btn-sm btn-danger">
                     <i class="bx bx-trash"></i></button>
                 </td>
               </tr>
@@ -397,3 +393,4 @@
 <script async defer src="https://buttons.github.io/buttons.js"></script>
 </body>
 </html>
+>

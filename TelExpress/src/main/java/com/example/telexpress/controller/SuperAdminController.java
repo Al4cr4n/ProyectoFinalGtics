@@ -1,13 +1,13 @@
 package com.example.telexpress.controller;
 
 import com.example.telexpress.entity.Producto;
+import com.example.telexpress.entity.ProductoUsuario;
 import com.example.telexpress.entity.Usuario;
 import com.example.telexpress.entity.Zona;
-import com.example.telexpress.repository.AdminRepository;
-import com.example.telexpress.repository.ZonaRepository;
-import com.example.telexpress.repository.UsuarioRepository;
-import com.example.telexpress.repository.ProductoRepository;
+import com.example.telexpress.entity.Proveedor;
+import com.example.telexpress.repository.*;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,9 +27,13 @@ public class SuperAdminController {
     final ZonaRepository zonaRepository;
     final ProductoRepository productoRepository;
     final UsuarioRepository usuarioRepository;
-    public SuperAdminController(AdminRepository adminRepository, ZonaRepository zonaRepository, ProductoRepository productoRepository, UsuarioRepository usuarioRepository) {
+    final ProveedorRepository proveedorRepository;
+    public SuperAdminController(AdminRepository adminRepository, ZonaRepository zonaRepository,
+                                ProductoRepository productoRepository, UsuarioRepository usuarioRepository,
+                                ProveedorRepository proveedorRepository) {
         this.adminRepository=adminRepository; this.zonaRepository=zonaRepository;
         this.productoRepository=productoRepository; this.usuarioRepository=usuarioRepository;
+        this.proveedorRepository=proveedorRepository;
     }
 
 
@@ -240,6 +244,23 @@ public class SuperAdminController {
         model.addAttribute("usuariosAgentes", usuariosAgentes);
         return "SuperAdmin/dashboard_superadmin";
     }
+
+
+    //Proveedores
+
+    @GetMapping({"superadmin/proveedor/lista", "/superadmin/gestion_proveedores"})
+    public String listarProveedores(Model model) {
+        List<Proveedor> listaProveedores = proveedorRepository.findAll();
+        model.addAttribute("listaProveedores", listaProveedores);
+
+
+        return "SuperAdmin/gestion_proveedores";
+    }
+
+
+
+
+
 
 
 
