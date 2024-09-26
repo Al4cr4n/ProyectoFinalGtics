@@ -50,5 +50,4 @@ public class Producto {
     )
     private List<Proveedor> proveedores;
 
-
 }

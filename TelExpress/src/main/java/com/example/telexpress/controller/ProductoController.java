@@ -67,7 +67,7 @@ public class ProductoController {
             model.addAttribute("producto", producto);
             model.addAttribute("listaProveedores", proveedorRepository.findAll());
             model.addAttribute("listaZona", zonaRepository.findAll());
-            return "SuperAdmin/editarProducto";
+            return "SuperAdmin/inventario_editar_producto";
         } else {
             return "redirect:/producto/lista";
         }

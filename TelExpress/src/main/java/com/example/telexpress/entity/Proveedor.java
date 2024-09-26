@@ -39,4 +39,6 @@ public class Proveedor {
     @ManyToMany(mappedBy = "proveedores")
     private List<Producto> productos;
 
+
+
 }
