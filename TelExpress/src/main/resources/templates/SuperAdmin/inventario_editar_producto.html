@@ -305,10 +305,10 @@
             </div>
 
             <div class="row mb-3">
-              <!-- Nombre del Proveedor -->
+              <!-- Nombre del Proveedor-->
               <div class="col-md-6">
                 <label class="form-label">Nombre del Proveedor:</label>
-                <select class="form-select" th:field="*{proveedores}">
+                <select class="form-select" th:field="*{proveedores}" disabled>
                   <option th:each="proveedor : ${listaProveedores}"
                           th:value="${proveedor.idProveedor}"
                           th:text="${proveedor.nombreProveedor}"></option>
@@ -323,10 +323,10 @@
             </div>
 
             <div class="row mb-3">
-              <!-- Zona -->
+              <!-- Zona-->
               <div class="col-md-6">
                 <label class="form-label">Zona Asignada:</label>
-                <select class="form-select" th:field="*{proveedores}">
+                <select class="form-select" th:field="*{proveedores}" disabled>
                   <option th:each="zona : ${listaZona}"
                           th:value="${zona.idzona}"
                           th:text="${zona.nombre}">
@@ -335,16 +335,19 @@
               </div>
 
 
-              <!-- Descripción -->
+              <!-- Descripción  -->
               <div class="col-md-6">
                 <label class="form-label">Descripción:</label>
                 <input th:field="*{descripcion}" type="text" class="form-control">
               </div>
+
             </div>
 
             <!-- Botón de editar -->
             <div class="text-center">
               <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmModal">Guardar Cambios</button>
+              <a th:href="@{/producto/lista}" class="btn btn-danger">Cancelar</a>
+
             </div>
           </form>
         </div>

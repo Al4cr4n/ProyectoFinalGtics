@@ -115,7 +115,7 @@ public class ProductoController {
             attr.addFlashAttribute("error", "No se pudo encontrar el usuario relacionado con el producto.");
         } catch (Exception ex) {
             // Capturamos cualquier otra excepción inesperada
-            attr.addFlashAttribute("error", "Ocurrió un error al intentar eliminar el producto.");
+            attr.addFlashAttribute("error", "No se puede eliminar el producto, debido a que ha sido comprado por algun usuario y/o proveedor.");
             ex.printStackTrace();  // Esto es útil para depurar, pero puedes eliminarlo en producción
         }
         return "redirect:/producto/lista";
