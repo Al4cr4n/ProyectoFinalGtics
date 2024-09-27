@@ -270,7 +270,7 @@
                 <th>Apellido</th>
                 <th>DNI</th>
                 <th>Correo</th>
-                <th>Dirección</th>
+
                 <th>Iniciar Sesión</th>
                 <th>Acciones</th>
               </tr>
@@ -283,7 +283,6 @@
                 <td th:text="${usuario.apellido}"></td>
                 <td th:text="${usuario.dni}"></td>
                 <td th:text="${usuario.correo}"></td>
-                <td th:text="${usuario.direccion}"></td>
                 <td><button class="btn btn-sm btn-secondary">Ingresar</button></td>
                 <td>
                   <a class="btn btn-sm btn-primary" th:href="@{'/superadmin/editar?id=' + ${usuario.id}}">
