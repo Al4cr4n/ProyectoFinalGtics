@@ -61,6 +61,15 @@ public class SuperAdminController {
 
         return "SuperAdmin/inicio_superadmin";
     }
+    /*busquedas en pagina inicial*/
+    @GetMapping("/buscador/buscarusuarios")
+    public String busquedauserInicio(Usuario usuario, @RequestParam("searchTerm") String searchTerm, Model model){
+        List<Usuario> listauser = adminRepository.searchByNameOrDni(searchTerm);
+        model.addAttribute("listaUsuario", listauser);
+        model.addAttribute("listaAgente",adminRepository.buscarUsuarioPorRol(3));
+        model.addAttribute("listaCoordi",adminRepository.buscarUsuarioPorRol(2));
+        return "SuperAdmin/inicio_superadmin";
+    }
 
     /*USUARIO EDITAR, GUARDAR Y BORRAR*/
 
