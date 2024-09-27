@@ -230,20 +230,20 @@
           <h4 class="mb-4">Editar Agente</h4>
 
           <!-- Form -->
-          <form method="post" th:action="@{/superadmin/actualizar_agentes}">
+          <form id="formRegistro" method="post" th:action="@{/superadmin/actualizar_agentes}">
             <input th:field="*{agente.id}" name="id" type="hidden"/>
 
             <div class="row mb-3">
-              <!-- Nombre -->
+              <!-- Nombre del producto -->
               <div class="col-md-6">
-                <label class="form-label">Nombre:</label>
-                <input th:field="*{agente.nombre}" type="nombre" class="form-control">
+                <label class="form-label">Nombre </label>
+                <input th:field="*{agente.nombre}" type="text" class="form-control">
               </div>
 
               <!-- Apellido -->
               <div class="col-md-6">
                 <label class="form-label">Apellido:</label>
-                <input th:field="*{agente.apellido}" type="apellido" class="form-control">
+                <input th:field="*{agente.apellido}" type="text" class="form-control">
               </div>
             </div>
 
@@ -251,13 +251,13 @@
               <!-- Teléfono -->
               <div class="col-md-6">
                 <label class="form-label">Teléfono:</label>
-                <input th:field="*{agente.telefono}" type="telefono" class="form-control">
+                <input th:field="*{agente.telefono}" type="text" class="form-control">
               </div>
 
               <!-- Nombre de tienda -->
-              <div class="col-md-6">
+              <div class="col-md-6" th:if="${agente.proveedor != null}">
                 <label class="form-label">Nombre de tienda:</label>
-                <input th:field="*{agente.proveedor.nombreTienda}" type="nombreTienda" class="form-control">
+                <input th:field="*{agente.proveedor.nombreTienda}" type="text" class="form-control">
               </div>
             </div>
 
@@ -274,6 +274,7 @@
                 <input th:field="*{agente.ruc}" type="text" class="form-control" readonly>
               </div>
             </div>
+
 
             <!-- Botón para guardar cambios -->
             <div class="text-center">
