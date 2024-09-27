@@ -365,4 +365,22 @@ public class SuperAdminController {
 
         return "Superadmin/gestion_proveedores";
     }
+
+    @GetMapping("/proveedor/filtrar")
+    public String filtrarPorZona(@RequestParam(value = "zona", required = false) Integer idzona, Model model) {
+        List<Proveedor> listaProveedores;
+
+        if (idzona == null || idzona == 0) {
+            // Si no se selecciona ninguna zona, retorna todos los proveedores
+            listaProveedores = proveedorRepository.findAll();
+        } else {
+            // Si se selecciona una zona, realiza la búsqueda filtrando por el ID de la zona
+            listaProveedores = proveedorRepository.findByZona_Idzona(idzona);
+        }
+
+        model.addAttribute("listaProveedores", listaProveedores);
+        model.addAttribute("listaZona", zonaRepository.findAll());  // Cargar zonas nuevamente para el select
+        model.addAttribute("zonaSeleccionada", idzona);  // Esto asegura que el valor seleccionado se manteng
+        return "Superadmin/gestion_proveedores";
+    }
 }
