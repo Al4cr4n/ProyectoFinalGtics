@@ -43,10 +43,13 @@ public class Usuario {
     private Zona zona;
 
     @ManyToOne
-    @JoinColumn(name= "idproveedor", nullable = false)
+    @JoinColumn(name= "idproveedor", nullable = true)
     private Proveedor proveedor;
 
     @OneToOne
-    @JoinColumn(name="idcodigoDespachador", nullable = false)
+    @JoinColumn(name="idcodigoDespachador", nullable = true)
     private CodigoDespachador codigoDespachador;
+
+    @Column(nullable = false)
+    private Integer isBan = 0; // Inicializa con 0 por defecto
 }

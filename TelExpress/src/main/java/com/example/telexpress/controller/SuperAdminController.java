@@ -6,6 +6,7 @@ import com.example.telexpress.entity.Usuario;
 import com.example.telexpress.entity.Zona;
 import com.example.telexpress.entity.Proveedor;
 import com.example.telexpress.entity.Ordenes;
+import com.example.telexpress.entity.Rol;
 import com.example.telexpress.repository.*;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -150,13 +151,19 @@ public class SuperAdminController {
     public String crearnuevocoordi(Model model){
         List<Zona> zonas = zonaRepository.findAll();
         model.addAttribute("zonas", zonas);
-        model.addAttribute("coordinadorzonal", new Usuario());
+        model.addAttribute("coordinadorzonal", new Usuario()); //creacion
         return "SuperAdmin/coordinador_zonal_formulario";
     }
 
     /* para actualizar datos de coodinador zonal*/
     @PostMapping("/update")
-    public String actualizardatoscoordi(Usuario usuario, @RequestParam("zonaid") Integer zonaid) {
+    public String actualizardatoscoordi(Usuario usuario, @RequestParam("zona.idzona") Integer zonaid) {
+
+        // Asignar el rol de Coordinador (idroles = 2)
+        Rol rolCoordinador = new Rol();
+        rolCoordinador.setId(2); // Asegúrate de que el método setId exista en la clase Rol
+
+        usuario.setRol(rolCoordinador); // Asignar el rol al usuario
 
         Zona zona = zonaRepository.findById(zonaid).orElse(null);
         if (zona != null) {

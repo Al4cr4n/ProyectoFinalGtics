@@ -284,7 +284,7 @@
                     <h4 class="mb-4">Registrar Coordinador Zonal</h4>
 
                     <!-- Formulario -->
-                    <form id="formRegistro" method="post" th:action="@{/superadmin/update}" th:object="${coordinadorzonal}">
+                    <form id="formRegistro" method="post" th:action="${coordinadorzonal.id != null ? '/superadmin/update' : '/superadmin/update'}" th:object="${coordinadorzonal}">
                     <input type="hidden" th:if="${id != null}" th:field="*{id}" name="id"/>
                     <div class="row mb-3">
                             <!-- Nombre -->
@@ -325,6 +325,7 @@
                             <div class="col-md-6">
                                 <label for="zonaCoordinador" class="form-label">Zona:</label>
                                 <select class="form-control" id="zonaCoordinador" th:field="*{zona.idzona}">
+                                    <option value="" disabled selected>Escoger una zona</option>
                                     <option th:each="zona : ${zonas}" th:value="${zona.idzona}" th:text="${zona.nombre}"></option>
                                     <!--<option escoger uno></option>-->
                                 </select>
@@ -349,6 +350,13 @@
                         <!-- Botón de registrar -->
                         <div class="text-center">
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmModal">Registrar</button>
+                        </div>
+                        <!-- Botones -->
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary">
+                                <span th:text="${coordinadorzonal.id != null ? 'Modificar' : 'Registrar'}"></span>
+                            </button>
+                            <a th:href="@{/superadmin/gestion_coordinadores}" class="btn btn-secondary">Cancelar</a>
                         </div>
                     </form>
                 </div>
