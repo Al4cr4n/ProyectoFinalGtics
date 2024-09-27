@@ -306,7 +306,7 @@ public class SuperAdminController {
             model.addAttribute("listaZona", zonaRepository.findAll());
             return "SuperAdmin/proveedor_editar";
         } else {
-            return "redirect:/proveedor/lista";
+            return "redirect:/superadmin/proveedor/lista";
         }
     }
     @PostMapping("/proveedor/guardar")
