@@ -201,9 +201,16 @@ public class SuperAdminController {
     }
 
     @GetMapping("/editar_agentes")
-    public String editar_agentes(Model model) {
+    public String editar_agentes(Model model, @RequestParam("id") Integer id) {
+        Optional<Usuario> optionalUsuario = adminRepository.findById(id);
 
-        return "SuperAdmin/editar_agente";
+        if (optionalUsuario.isPresent()) {
+            Usuario agente = optionalUsuario.get();
+            model.addAttribute("agente", agente);
+            return "SuperAdmin/editar_agente";
+        } else {
+            return "SuperAdmin/gestion_agentes";
+        }
     }
 
 
