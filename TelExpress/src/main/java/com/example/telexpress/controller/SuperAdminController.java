@@ -362,7 +362,6 @@ public class SuperAdminController {
         List<Proveedor> listaProveedor = proveedorRepository.findByNombreProveedorContaining(searchField);
         System.out.println("Resultados encontrados: " + listaProveedor.size());
         model.addAttribute("listaProveedores", listaProveedor);
-
         return "Superadmin/gestion_proveedores";
     }
 
