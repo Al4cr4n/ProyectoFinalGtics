@@ -18,6 +18,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.Comparator;
 import java.util.Optional;
 import java.util.List;
+import java.time.format.DateTimeFormatter;
+
 @Controller
 @RequestMapping("/superadmin")
 public class SuperAdminController {
@@ -137,6 +139,12 @@ public class SuperAdminController {
         Optional<Usuario> coordinador = adminRepository.findById(id);
         if (coordinador.isPresent()) {
             Usuario user = coordinador.get();
+
+            if (user.getFechanacimiento() != null) {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                String formattedDate = user.getFechanacimiento().format(formatter);
+                model.addAttribute("formattedDate", formattedDate);  // Agregar fecha formateada al modelo
+            }
             model.addAttribute("coordinadorzonal", user);
             List<Zona> zonas = zonaRepository.findAll();
             model.addAttribute("zonas",zonas);

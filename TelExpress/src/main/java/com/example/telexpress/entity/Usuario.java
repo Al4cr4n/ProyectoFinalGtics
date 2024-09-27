@@ -4,6 +4,7 @@ import lombok.Setter;
 import lombok.Getter;
 
 import java.time.LocalDate;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Getter
 @Setter
@@ -26,6 +27,7 @@ public class Usuario {
     private String estadoUsuario;
 
     @Column(name = "fechanacim", nullable = false)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate fechanacimiento;
 
     private String ruc;

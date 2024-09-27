@@ -281,7 +281,10 @@
             <div class="content-wrapper">
                 <div class="container-xxl flex-grow-1 container-p-y">
                     <!-- Título -->
-                    <h4 class="mb-4">Registrar Coordinador Zonal</h4>
+                    <!--<h4 class="mb-4">Registrar Coordinador Zonal</h4>-->
+                    <!-- Título -->
+                    <h4 class="mb-4" th:text="${coordinadorzonal.id != null ? 'Detalle de Información del Coordinador Zonal' : 'Registrar Coordinador Zonal'}"></h4>
+
 
                     <!-- Formulario -->
                     <form id="formRegistro" method="post" th:action="${coordinadorzonal.id != null ? '/superadmin/update' : '/superadmin/update'}" th:object="${coordinadorzonal}">
@@ -337,23 +340,31 @@
                             <!-- Fecha de Nacimiento -->
                             <div class="col-md-6">
                                 <label for="fechaNacimientoCoordinador" class="form-label">Fecha de Nacimiento:</label>
-                                <input type="date" class="form-control" id="fechaNacimientoCoordinador" th:field="*{fechanacimiento}">
+                                <input type="date" class="form-control"
+                                       id="fechaNacimientoCoordinador" th:field="*{fechanacimiento}"
+                                       th:value="${formattedDate}"/>
                             </div>
+                            <!--<p th:text="${coordinadorzonal.fechanacimiento}"></p>-->
+
 
                             <!-- Contraseña Temporal -->
                             <div class="col-md-6">
                                 <label for="contrasenaTemporal" class="form-label">Contraseña Temporal:</label>
-                                <input type="password" class="form-control" id="contrasenaTemporal" placeholder="Ingrese una contraseña temporal" th:field="*{contrasena}">
+                                <input type="password" class="form-control"
+                                       id="contrasenaTemporal"  th:field="*{contrasena}"
+                                       th:placeholder="${coordinadorzonal.id != null ? '********' : 'Ingrese una contraseña temporal'}"
+                                       th:value="${coordinadorzonal.id != null ? '********' : ''}"
+                                       th:readonly="${coordinadorzonal.id != null}"/>
                             </div>
                         </div>
 
                         <!-- Botón de registrar -->
-                        <div class="text-center">
+                        <!--<div class="text-center">
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmModal">Registrar</button>
-                        </div>
+                        </div>-->
                         <!-- Botones -->
                         <div class="text-center">
-                            <button type="submit" class="btn btn-primary">
+                            <button type="submit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmModal">
                                 <span th:text="${coordinadorzonal.id != null ? 'Modificar' : 'Registrar'}"></span>
                             </button>
                             <a th:href="@{/superadmin/gestion_coordinadores}" class="btn btn-secondary">Cancelar</a>
