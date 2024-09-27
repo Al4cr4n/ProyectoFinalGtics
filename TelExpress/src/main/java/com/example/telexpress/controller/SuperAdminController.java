@@ -233,11 +233,11 @@ public class SuperAdminController {
 
     @GetMapping({ "/dashboard_superadmin"})
     public String listasDashboard(Model model) {
+
         List<Producto> listaTop = productoRepository.findAll();
         listaTop.sort(Comparator.comparing(Producto::getCantidadComprada).reversed());
 
         model.addAttribute("listaTop", listaTop);
-
         // Devuelve la vista correspondiente
 
 
@@ -254,6 +254,32 @@ public class SuperAdminController {
         long ordenesEnAduanas = ordenesRepository.countByEstadoOrdenes("EN ADUANAS");
         long ordenesEnRuta = ordenesRepository.countByEstadoOrdenes("EN RUTA");
         long ordenesRecibido = ordenesRepository.countByEstadoOrdenes("RECIBIDO");
+        long ordenesEnero = ordenesRepository.countByMesCreacion("Enero");
+        long ordenesFebrero = ordenesRepository.countByMesCreacion("Febrero");
+        long ordenesMarzo = ordenesRepository.countByMesCreacion("Marzo");
+        long ordenesAbril = ordenesRepository.countByMesCreacion("Abril");
+        long ordenesMayo = ordenesRepository.countByMesCreacion("Mayo");
+        long ordenesJunio = ordenesRepository.countByMesCreacion("Junio");
+        long ordenesJulio = ordenesRepository.countByMesCreacion("Julio");
+        long ordenesAgosto = ordenesRepository.countByMesCreacion("Agosto");
+        long ordenesSeptiembre = ordenesRepository.countByMesCreacion("Septiembre");
+        long ordenesOctubre = ordenesRepository.countByMesCreacion("Octubre");
+        long ordenesNoviembre = ordenesRepository.countByMesCreacion("Noviembre");
+        long ordenesDiciembre = ordenesRepository.countByMesCreacion("Diciembre");
+
+
+        model.addAttribute("ordenesEnero", ordenesEnero);
+        model.addAttribute("ordenesFebrero", ordenesFebrero);
+        model.addAttribute("ordenesMarzo", ordenesMarzo);
+        model.addAttribute("ordenesAbril", ordenesAbril);
+        model.addAttribute("ordenesMayo", ordenesMayo);
+        model.addAttribute("ordenesJunio", ordenesJunio);
+        model.addAttribute("ordenesJulio", ordenesJulio);
+        model.addAttribute("ordenesAgosto", ordenesAgosto);
+        model.addAttribute("ordenesSeptiembre", ordenesSeptiembre);
+        model.addAttribute("ordenesOctubre", ordenesOctubre);
+        model.addAttribute("ordenesNoviembre", ordenesNoviembre);
+        model.addAttribute("ordenesDiciembre", ordenesDiciembre);
 
 
         model.addAttribute("ordenesCreado", ordenesCreado);

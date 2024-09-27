@@ -9,5 +9,6 @@ public interface OrdenesRepository extends JpaRepository<Ordenes, Integer> {
 
     // Contar órdenes por estado
     long countByEstadoOrdenes(String estado);
+    long countByMesCreacion(String mesCreacion);
 
 }
