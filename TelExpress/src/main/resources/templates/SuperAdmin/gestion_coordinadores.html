@@ -1,5 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" class="light-style layout-menu-fixed" dir="ltr" data-theme="theme-default" data-assets-path="../../assets/" data-template="vertical-menu-template-free">
+<html lang="en"
+      class="light-style layout-menu-fixed"
+      dir="ltr" data-theme="theme-default"
+      data-assets-path="/assets/"
+      data-template="vertical-menu-template-free"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
@@ -313,10 +318,11 @@
                 <td th:text="${usuario.zona.nombre}"></td>
                 <td th:text="${usuario.fechanacimiento}"></td>
                 <td>
-                  <a th:href="@{/superadmin/coordinador_zonal_formulario(id =${usuario.id})}" class="btn btn-sm btn-primary">
+                  <a th:href="@{/coordinador_zonal_form(id =${usuario.id})}" class="btn btn-sm btn-primary">
                     <i class="bx bx-edit-alt"></i></a>
-                  <button th:onclick="'/superadmin/deletecoordi('+ $(usuario.id} +')'" class="btn btn-sm btn-danger">
-                    <i class="bx bx-trash"></i></button>
+                  <a th:href="@{/superadmin/deletecoordi(id=${usuario.id})}" class="btn btn-sm btn-danger">
+                    <i class="bx bx-trash"></i></a>
+
                 </td>
               </tr>
               <!-- Puedes agregar más filas aquí -->
