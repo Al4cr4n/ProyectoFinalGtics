@@ -11,5 +11,6 @@ import java.util.List;
 @Repository
 public interface ProveedorRepository extends JpaRepository<Proveedor, Integer> {
     List<Proveedor> findByNombreProveedorContaining(String nombre);
+    List<Proveedor> findByZona_Idzona(Integer idzona);
     long countByEstadoProveedor(String estado);
 }
