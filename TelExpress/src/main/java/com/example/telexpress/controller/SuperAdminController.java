@@ -273,8 +273,9 @@ public class SuperAdminController {
     /* para actualizar datos de agente*/
     @PostMapping("/actualizar_agentes")
     public String actualizar_agentes(Usuario agente, RedirectAttributes attr) {
+
         adminRepository.save(agente);
-        return "redirect:/superadmin/gestion_agentes";
+        return "redirect:/SuperAdmin/gestion_agentes";
     }
 
 

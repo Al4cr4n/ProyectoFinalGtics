@@ -255,7 +255,7 @@
               </div>
 
               <!-- Nombre de tienda -->
-              <div class="col-md-6" th:if="${agente.proveedor != null}">
+              <div class="col-md-6" th:if="${agente.proveedor.nombreTienda != null}">
                 <label class="form-label">Nombre de tienda:</label>
                 <input th:field="*{agente.proveedor.nombreTienda}" type="text" class="form-control">
               </div>
@@ -274,7 +274,6 @@
                 <input th:field="*{agente.ruc}" type="text" class="form-control" readonly>
               </div>
             </div>
-
 
             <!-- Botón para guardar cambios -->
             <div class="text-center">
