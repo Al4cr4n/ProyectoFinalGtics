@@ -336,13 +336,13 @@
                             <!-- Fecha de Nacimiento -->
                             <div class="col-md-6">
                                 <label for="fechaNacimientoCoordinador" class="form-label">Fecha de Nacimiento:</label>
-                                <input type="date" class="form-control" id="fechaNacimientoCoordinador">
+                                <input type="date" class="form-control" id="fechaNacimientoCoordinador" th:field="*{fechanacimiento}">
                             </div>
 
                             <!-- Contraseña Temporal -->
                             <div class="col-md-6">
                                 <label for="contrasenaTemporal" class="form-label">Contraseña Temporal:</label>
-                                <input type="password" class="form-control" id="contrasenaTemporal" placeholder="Ingrese una contraseña temporal">
+                                <input type="password" class="form-control" id="contrasenaTemporal" placeholder="Ingrese una contraseña temporal" th:field="*{contrasena}">
                             </div>
                         </div>
 
