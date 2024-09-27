@@ -287,13 +287,13 @@
                 <td th:text="${agente.proveedor.nombreTienda}"></td>
                 <td th:text="${agente.codigoDespachador.estado}"></td>
                 <td>
-                  <a href="/superadmin/editar_agentes" class="btn btn-sm btn-primary">
+                  <a class="btn btn-sm btn-primary" th:href="@{'/editar_agentes?id=' + ${agente.id}}">
                     <i class="bx bx-edit-alt"></i>
                   </a>
                   <!-- Botón para eliminar -->
-                  <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#confirmModal">
+                  <a class="btn btn-sm btn-danger" th:href="@{'/editar_agentes?id=' + ${agente.id}}">
                     <i class="bx bx-trash"></i>
-                  </button>
+                  </a>
                 </td>
               </tr>
               </tbody>

@@ -230,20 +230,20 @@
           <h4 class="mb-4">Editar Agente</h4>
 
           <!-- Form -->
-          <form id="formRegistro" method="post">
-            <input name="id" type="hidden"/>
+          <form method="post" th:action="@{'/editar_agentes/guardar'}">
+            <input th:field="*{agente.id}" name="id" type="hidden"/>
 
             <div class="row mb-3">
               <!-- Nombre -->
               <div class="col-md-6">
                 <label class="form-label">Nombre:</label>
-                <input type="text" class="form-control">
+                <input th:field="*{agente.nombre}" type="nombre" class="form-control">
               </div>
 
               <!-- Apellido -->
               <div class="col-md-6">
                 <label class="form-label">Apellido:</label>
-                <input type="text" class="form-control">
+                <input th:field="*{agente.apellido}" type="apellido" class="form-control">
               </div>
             </div>
 
@@ -251,28 +251,29 @@
               <!-- Teléfono -->
               <div class="col-md-6">
                 <label class="form-label">Teléfono:</label>
-                <input type="number" class="form-control">
+                <input th:field="*{agente.telefono}" type="telefono" class="form-control">
               </div>
 
               <!-- Nombre de tienda -->
               <div class="col-md-6">
                 <label class="form-label">Nombre de tienda:</label>
-                <input type="text" class="form-control">
+                <input th:field="*{agente.proveedor.nombreTienda}" type="nombreTienda" class="form-control">
               </div>
             </div>
 
             <div class="row mb-3">
-              <!-- DNI -->
-              <div class="col-md-6">
+              <!-- Condicional para mostrar el campo DNI solo si el agente tiene DNI -->
+              <div class="col-md-6" th:if="${agente.dni != null}">
                 <label class="form-label">DNI:</label>
-                <input type="number" class="form-control" maxlength="8">
+                <input th:field="*{agente.dni}" type="text" class="form-control">
               </div>
 
-              <!-- RUC -->
-              <div class="col-md-6">
+              <!-- Condicional para mostrar el campo RUC solo si el agente tiene RUC -->
+              <div class="col-md-6" th:if="${agente.ruc != null}">
                 <label class="form-label">RUC:</label>
-                <input type="number" class="form-control" maxlength="11">
+                <input th:field="*{agente.ruc}" type="text" class="form-control">
               </div>
+
             </div>
 
             <!-- Botón para guardar cambios -->
