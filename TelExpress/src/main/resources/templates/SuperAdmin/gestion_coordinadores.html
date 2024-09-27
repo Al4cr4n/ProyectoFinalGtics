@@ -308,12 +308,12 @@
           <h5 class="mb-4">Coordinadores Zonales</h5>
           <div class="card" style="padding: 0.8rem;">
             <div class="card-header">
-              <!-- Search bar with button (only visual) -->
-              <div class="p-3 d-flex">
-                <input type="text" id="searchInput" class="form-control me-2" placeholder="Buscar por nombre o apellido...">
-                <button id="searchBtn" class="btn btn-primary">Buscar</button>
-              </div>
-            </div>
+              <form action="/superadmin/buscadorcoordinador" method="get" class="mb-3">
+                <div class="input-group">
+                  <input type="text" name="searchTerm" class="form-control" placeholder="Buscar por nombre, apellido o DNI" th:value="${searchTerm}" />
+                  <button type="submit" class="btn btn-primary">Buscar</button>
+                </div>
+              </form>
           <div class="table-responsive text-nowrap">
             <table class="table table-striped" id="coordinadoresTable">
               <thead class="table-light">

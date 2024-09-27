@@ -24,12 +24,11 @@ public interface AdminRepository extends JpaRepository<Usuario,Integer>{
             nativeQuery= true)
     List<Usuario> buscarCoordiPorRol();*/
 
-    @Query(value = "SELECT * FROM usuario WHERE "
-            + "LOWER(nombre) LIKE LOWER(CONCAT('%', :searchTerm, '%')) OR "
-            + "LOWER(apellido) LIKE LOWER(CONCAT('%', :searchTerm, '%')) OR "
-            + "dni LIKE CONCAT('%', :searchTerm, '%')",
-            nativeQuery = true)
+    @Query(value = "SELECT * FROM usuario WHERE nombre LIKE CONCAT('%', :searchTerm, '%') OR "
+            + "apellido LIKE CONCAT('%', :searchTerm, '%') OR "
+            + "dni LIKE CONCAT('%', :searchTerm, '%')", nativeQuery = true)
     List<Usuario> searchByNameOrDni(@Param("searchTerm") String searchTerm);
+
 
 
 
