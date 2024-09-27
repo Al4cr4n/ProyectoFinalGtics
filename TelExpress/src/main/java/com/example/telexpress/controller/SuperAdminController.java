@@ -193,6 +193,13 @@ public class SuperAdminController {
         return "redirect:/superadmin/gestion_coordinadores";
     }
     
+    @GetMapping("/buscadorcoordinador")
+    public String buscador_coordinador_zonal(Usuario usuario, @RequestParam("searchTerm") String  searchTerm, Model model){
+
+        List<Usuario> listazonal = adminRepository.searchByNameOrDni(searchTerm);
+        model.addAttribute("coordinadores", listazonal);
+        return "SuperAdmin/gestion_coordinadores";
+    }
     @GetMapping("/gestion_usuarios")
     public String gestionUsuariosSuperadmin(Model model) {
         List<Usuario> listaUsuario= adminRepository.buscarUsuarioPorRol(4);
