@@ -75,7 +75,7 @@
             <div>Dashboard</div>
           </a>
         </li>
-        <li class="menu-item active">
+        <li class="menu-item">
           <a href="/superadmin/inventario_superadmin" class="menu-link">
             <i class="menu-icon tf-icons bx bx-package"></i>
             <div>Inventario</div>
@@ -85,7 +85,7 @@
         <li class="menu-header small text-uppercase">
           <span class="menu-header-text">Páginas</span>
         </li>
-        <li class="menu-item">
+        <li class="menu-item active">
           <a href="javascript:void(0);" class="menu-link menu-toggle">
             <i class="menu-icon tf-icons bx bx-dock-top"></i>
             <div>Gestión de Roles</div>
@@ -104,11 +104,6 @@
             <li class="menu-item">
               <a href="/superadmin/gestion_usuarios" class="menu-link">
                 <div>Usuario</div>
-              </a>
-            </li>
-            <li class="menu-item">
-              <a href="/superadmin/gestion_proveedores" class="menu-link">
-                <div data-i18n="Usuario">Proveedores</div>
               </a>
             </li>
           </ul>
@@ -232,78 +227,60 @@
       <div class="content-wrapper">
         <div class="container-xxl flex-grow-1 container-p-y">
           <!-- Title -->
-          <h4 class="mb-4">Editar Producto</h4>
+          <h4 class="mb-4">Editar Agente</h4>
 
           <!-- Form -->
           <form id="formRegistro" method="post">
             <input name="id" type="hidden"/>
+
             <div class="row mb-3">
-              <!-- Product Name -->
+              <!-- Nombre -->
               <div class="col-md-6">
-                <label class="form-label">Nombre del Producto</label>
+                <label class="form-label">Nombre:</label>
                 <input type="text" class="form-control">
               </div>
 
-              <!-- Available Quantity -->
+              <!-- Apellido -->
               <div class="col-md-6">
-                <label class="form-label">Cantidad disponible:</label>
-                <input type="number" class="form-control">
-              </div>
-            </div>
-
-            <div class="row mb-3">
-              <!-- Price -->
-              <div class="col-md-6">
-                <label class="form-label">Precio:</label>
-                <input type="number" class="form-control">
-              </div>
-
-              <!-- Shipping Cost -->
-              <div class="col-md-6">
-                <label class="form-label">Costo de envío:</label>
-                <input type="number" class="form-control">
-              </div>
-            </div>
-
-            <div class="row mb-3">
-              <!-- Provider Name -->
-              <div class="col-md-6">
-                <label class="form-label">Nombre del Proveedor:</label>
-                <select class="form-select">
-                  <option>Proveedor 1</option>
-                  <option>Proveedor 2</option>
-                </select>
-              </div>
-
-              <!-- Category -->
-              <div class="col-md-6">
-                <label class="form-label">Categoría:</label>
+                <label class="form-label">Apellido:</label>
                 <input type="text" class="form-control">
               </div>
             </div>
 
             <div class="row mb-3">
-              <!-- Zone -->
+              <!-- Teléfono -->
               <div class="col-md-6">
-                <label class="form-label">Zona Asignada:</label>
-                <select class="form-select">
-                  <option>Zona 1</option>
-                  <option>Zona 2</option>
-                </select>
+                <label class="form-label">Teléfono:</label>
+                <input type="number" class="form-control">
               </div>
 
-              <!-- Description -->
+              <!-- Nombre de tienda -->
               <div class="col-md-6">
-                <label class="form-label">Descripción:</label>
+                <label class="form-label">Nombre de tienda:</label>
                 <input type="text" class="form-control">
               </div>
             </div>
 
-            <!-- Edit Button -->
+            <div class="row mb-3">
+              <!-- DNI -->
+              <div class="col-md-6">
+                <label class="form-label">DNI:</label>
+                <input type="number" class="form-control" maxlength="8">
+              </div>
+
+              <!-- RUC -->
+              <div class="col-md-6">
+                <label class="form-label">RUC:</label>
+                <input type="number" class="form-control" maxlength="11">
+              </div>
+            </div>
+
+            <!-- Botón para guardar cambios -->
             <div class="text-center">
               <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmModal">Guardar Cambios</button>
             </div>
           </form>
+          <!--FORM-->
         </div>
 
         <!-- Confirmation Modal -->
