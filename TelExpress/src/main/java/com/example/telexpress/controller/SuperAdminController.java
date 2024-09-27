@@ -192,7 +192,7 @@ public class SuperAdminController {
         }
         return "redirect:/superadmin/gestion_coordinadores";
     }
-    
+
     @GetMapping("/buscadorcoordinador")
     public String buscador_coordinador_zonal(Usuario usuario, @RequestParam("searchTerm") String  searchTerm, Model model){
 
