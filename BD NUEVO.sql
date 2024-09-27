@@ -150,26 +150,67 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `ordenes`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
+
 CREATE TABLE `ordenes` (
   `idordenes` int NOT NULL AUTO_INCREMENT,
   `estadoOrdenes` varchar(45) NOT NULL,
   `fechaArribo` date NOT NULL,
   `usuario_idusuario` int NOT NULL,
-  PRIMARY KEY (`idordenes`,`usuario_idusuario`),
+  `mesCreacion` varchar(20) NOT NULL,  
+  PRIMARY KEY (`idordenes`, `usuario_idusuario`),
   KEY `fk_ordenes_usuario1_idx` (`usuario_idusuario`),
   CONSTRAINT `fk_ordenes_usuario1` FOREIGN KEY (`usuario_idusuario`) REFERENCES `usuario` (`idusuario`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb3;
+
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `ordenes`
+-- Insertando datos en `ordenes`
 --
 
 LOCK TABLES `ordenes` WRITE;
 /*!40000 ALTER TABLE `ordenes` DISABLE KEYS */;
-INSERT INTO `ordenes` VALUES (1,'Pendiente','2024-09-22',1),(2,'En Proceso','2024-09-23',2),(3,'Completada','2024-09-24',3),(4,'Cancelada','2024-09-25',4),(5,'Pendiente','2024-09-26',5),(6,'Completada','2024-09-27',6),(7,'En Proceso','2024-09-28',7),(8,'Cancelada','2024-09-29',8),(9,'Pendiente','2024-09-30',9),(10,'Completada','2024-10-01',10);
+
+INSERT INTO `ordenes` (idordenes, estadoOrdenes, fechaArribo, usuario_idusuario, mesCreacion) VALUES 
+(1, 'CREADO', '2024-09-22', 1, 'Enero'),
+(2, 'CREADO', '2024-09-23', 2, 'Febrero'),
+(3, 'CREADO', '2024-09-24', 3, 'Marzo'),
+(4, 'CREADO', '2024-09-25', 4, 'Abril'),
+
+(5, 'EN VALIDACIÓN', '2024-09-26', 5, 'Mayo'),
+(6, 'EN VALIDACIÓN', '2024-09-27', 6, 'Junio'),
+(7, 'EN VALIDACIÓN', '2024-09-28', 7, 'Julio'),
+(8, 'EN VALIDACIÓN', '2024-09-29', 8, 'Agosto'),
+
+(9, 'EN PROCESO', '2024-09-30', 9, 'Septiembre'),
+(10, 'EN PROCESO', '2024-10-01', 10, 'Octubre'),
+(11, 'EN PROCESO', '2024-10-02', 11, 'Noviembre'),
+(12, 'EN PROCESO', '2024-10-03', 12, 'Diciembre'),
+
+(13, 'ARRIBO AL PAÍS', '2024-10-04', 13, 'Enero'),
+(14, 'ARRIBO AL PAÍS', '2024-10-05', 14, 'Febrero'),
+(15, 'ARRIBO AL PAÍS', '2024-10-06', 15, 'Marzo'),
+(16, 'ARRIBO AL PAÍS', '2024-10-07', 16, 'Abril'),
+
+(17, 'EN ADUANAS', '2024-10-08', 17, 'Mayo'),
+(18, 'EN ADUANAS', '2024-10-09', 18, 'Junio'),
+(19, 'EN ADUANAS', '2024-10-10', 19, 'Julio'),
+(20, 'EN ADUANAS', '2024-10-11', 20, 'Agosto'),
+
+(21, 'EN RUTA', '2024-10-12', 21, 'Septiembre'),
+(22, 'EN RUTA', '2024-10-13', 22, 'Octubre'),
+(23, 'EN RUTA', '2024-10-14', 23, 'Noviembre'),
+(24, 'EN RUTA', '2024-10-15', 24, 'Diciembre'),
+
+(25, 'RECIBIDO', '2024-10-16', 25, 'Enero'),
+(26, 'RECIBIDO', '2024-10-17', 26, 'Febrero'),
+(27, 'RECIBIDO', '2024-10-18', 27, 'Marzo'),
+(28, 'RECIBIDO', '2024-10-19', 28, 'Abril');
+
 /*!40000 ALTER TABLE `ordenes` ENABLE KEYS */;
 UNLOCK TABLES;
+
+
 
 --
 -- Table structure for table `pagos`

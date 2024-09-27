@@ -5,6 +5,7 @@ import com.example.telexpress.entity.ProductoUsuario;
 import com.example.telexpress.entity.Usuario;
 import com.example.telexpress.entity.Zona;
 import com.example.telexpress.entity.Proveedor;
+import com.example.telexpress.entity.Ordenes;
 import com.example.telexpress.repository.*;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -28,12 +29,14 @@ public class SuperAdminController {
     final ProductoRepository productoRepository;
     final UsuarioRepository usuarioRepository;
     final ProveedorRepository proveedorRepository;
+    final OrdenesRepository ordenesRepository;
+
     public SuperAdminController(AdminRepository adminRepository, ZonaRepository zonaRepository,
                                 ProductoRepository productoRepository, UsuarioRepository usuarioRepository,
-                                ProveedorRepository proveedorRepository) {
+                                ProveedorRepository proveedorRepository, OrdenesRepository ordenesRepository) {
         this.adminRepository=adminRepository; this.zonaRepository=zonaRepository;
         this.productoRepository=productoRepository; this.usuarioRepository=usuarioRepository;
-        this.proveedorRepository=proveedorRepository;
+        this.proveedorRepository=proveedorRepository; this.ordenesRepository=ordenesRepository;
     }
 
 
@@ -244,7 +247,22 @@ public class SuperAdminController {
         long usuariosBaneados = usuarioRepository.countByEstadoUsuario("Baneado");
         long usuariosAgentes = usuarioRepository.countByRol_Id(3L);
         long proveedoresBaneados = proveedorRepository.countByEstadoProveedor("baneado");
+        long ordenesCreado = ordenesRepository.countByEstadoOrdenes("CREADO");
+        long ordenesEnValidacion = ordenesRepository.countByEstadoOrdenes("EN VALIDACIÓN");
+        long ordenesEnProceso = ordenesRepository.countByEstadoOrdenes("EN PROCESO");
+        long ordenesArriboAlPais = ordenesRepository.countByEstadoOrdenes("ARRIBO AL PAÍS");
+        long ordenesEnAduanas = ordenesRepository.countByEstadoOrdenes("EN ADUANAS");
+        long ordenesEnRuta = ordenesRepository.countByEstadoOrdenes("EN RUTA");
+        long ordenesRecibido = ordenesRepository.countByEstadoOrdenes("RECIBIDO");
 
+
+        model.addAttribute("ordenesCreado", ordenesCreado);
+        model.addAttribute("ordenesEnValidacion", ordenesEnValidacion);
+        model.addAttribute("ordenesEnProceso", ordenesEnProceso);
+        model.addAttribute("ordenesArriboAlPais", ordenesArriboAlPais);
+        model.addAttribute("ordenesEnAduanas", ordenesEnAduanas);
+        model.addAttribute("ordenesEnRuta", ordenesEnRuta);
+        model.addAttribute("ordenesRecibido", ordenesRecibido);
         model.addAttribute("proveedoresBaneados", proveedoresBaneados);
         model.addAttribute("totalUsuarios", totalUsuarios);
         model.addAttribute("usuariosActivos", usuariosActivos);

@@ -331,58 +331,37 @@
                                                                         <tr>
                                                                             <th>Estado</th>
                                                                             <th>Cantidad</th>
-
                                                                         </tr>
                                                                         </thead>
                                                                         <tbody>
-
                                                                         <tr>
-                                                                            <td><span
-                                                                                    class="badge bg-label-warning me-1">Creado</span>
-                                                                            </td>
-                                                                            <td>345</td>
+                                                                            <td><span class="badge bg-label-warning me-1">Creado</span></td>
+                                                                            <td th:text="${ordenesCreado}"></td>
                                                                         </tr>
-
                                                                         <tr>
-                                                                            <td><span
-                                                                                    class="badge bg-label-danger me-1">En Validación</span>
-                                                                            </td>
-                                                                            <td>234</td>
+                                                                            <td><span class="badge bg-label-danger me-1">En Validación</span></td>
+                                                                            <td th:text="${ordenesEnValidacion}"></td>
                                                                         </tr>
-
                                                                         <tr>
-                                                                            <td><span
-                                                                                    class="badge bg-label-primary me-1">En Proceso</span>
-                                                                            </td>
-                                                                            <td>266</td>
+                                                                            <td><span class="badge bg-label-primary me-1">En Proceso</span></td>
+                                                                            <td th:text="${ordenesEnProceso}"></td>
                                                                         </tr>
-
                                                                         <tr>
-                                                                            <td><span class="badge bg-label-dark me-1">Arribo al País</span>
-                                                                            </td>
-                                                                            <td>346</td>
+                                                                            <td><span class="badge bg-label-dark me-1">Arribo al País</span></td>
+                                                                            <td th:text="${ordenesArriboAlPais}"></td>
                                                                         </tr>
-
                                                                         <tr>
-                                                                            <td><span
-                                                                                    class="badge bg-label-secondary me-1">En Aduanas</span>
-                                                                            </td>
-                                                                            <td>765</td>
+                                                                            <td><span class="badge bg-label-secondary me-1">En Aduanas</span></td>
+                                                                            <td th:text="${ordenesEnAduanas}"></td>
                                                                         </tr>
-
                                                                         <tr>
-                                                                            <td><span class="badge bg-label-info me-1">En Ruta</span>
-                                                                            </td>
-                                                                            <td>342</td>
+                                                                            <td><span class="badge bg-label-info me-1">En Ruta</span></td>
+                                                                            <td th:text="${ordenesEnRuta}"></td>
                                                                         </tr>
-
                                                                         <tr>
-                                                                            <td><span
-                                                                                    class="badge bg-label-success me-1">Recibido</span>
-                                                                            </td>
-                                                                            <td>1078</td>
+                                                                            <td><span class="badge bg-label-success me-1">Recibido</span></td>
+                                                                            <td th:text="${ordenesRecibido}"></td>
                                                                         </tr>
-
                                                                         </tbody>
                                                                     </table>
                                                                 </div>
