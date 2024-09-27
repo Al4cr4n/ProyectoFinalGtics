@@ -79,11 +79,44 @@ public class SuperAdminController {
         }
     }
 
-    @PostMapping("/guardar_usuario")
+    /*@PostMapping("/guardar_usuario")
     public String guardarUsuario(Usuario usuario, RedirectAttributes attr) {
+
+
         adminRepository.save(usuario);
         return "redirect:/superadmin/gestion_usuarios";
+    }*/
+    @PostMapping("/guardar_usuario")
+    public String guardarUsuario(Usuario usuarioActualizado, RedirectAttributes attr) {
+        if (usuarioActualizado.getId() != null) { // Si es una edición
+            Optional<Usuario> optUsuarioExistente = adminRepository.findById(usuarioActualizado.getId());
+
+            if (optUsuarioExistente.isPresent()) {
+                Usuario usuarioExistente = optUsuarioExistente.get();
+
+                // Actualizar solo los campos modificados
+                usuarioExistente.setNombre(usuarioActualizado.getNombre());
+                usuarioExistente.setApellido(usuarioActualizado.getApellido());
+                usuarioExistente.setDni(usuarioActualizado.getDni());
+                usuarioExistente.setDireccion(usuarioActualizado.getDireccion());
+                usuarioExistente.setCorreo(usuarioActualizado.getCorreo());
+                usuarioExistente.setTelefono(usuarioActualizado.getTelefono());
+
+                // Mantener los campos que no se modifican en el formulario
+                // Por ejemplo, mantener la zona o contraseña si no se cambian
+                if (usuarioActualizado.getZona() != null) {
+                    usuarioExistente.setZona(usuarioActualizado.getZona());
+                }
+
+                adminRepository.save(usuarioExistente);
+            }
+        } else { // Si es un nuevo registro
+            adminRepository.save(usuarioActualizado);
+        }
+
+        return "redirect:/superadmin/gestion_usuarios";
     }
+
 
 
 

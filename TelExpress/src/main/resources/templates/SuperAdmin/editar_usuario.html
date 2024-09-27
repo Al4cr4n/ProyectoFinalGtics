@@ -78,7 +78,7 @@
                         <div data-i18n="Dashboard">Dashboard</div>
                     </a>
                 </li>
-                <li class="menu-item active">
+                <li class="menu-item ">
                     <a href="/superadmin/inventario_superadmin" class="menu-link">
                         <i class="menu-icon tf-icons bx bx-package"></i>
                         <div data-i18n="Inventario">Inventario</div>
@@ -90,7 +90,7 @@
                 <li class="menu-header small text-uppercase">
                     <span class="menu-header-text">Páginas</span>
                 </li>
-                <li class="menu-item">
+                <li class="menu-item active">
                     <a href="javascript:void(0);" class="menu-link menu-toggle">
                         <i class="menu-icon tf-icons bx bx-dock-top"></i>
                         <div data-i18n="Gestión de Roles">Gestión de Roles</div>
@@ -106,7 +106,7 @@
                                 <div data-i18n="Agente">Agente</div>
                             </a>
                         </li>
-                        <li class="menu-item">
+                        <li class="menu-item active">
                             <a href="/superadmin/gestion_usuarios" class="menu-link">
                                 <div data-i18n="Usuario">Usuario</div>
                             </a>
@@ -282,7 +282,7 @@
 
                     <!-- Formulario -->
                     <form id="formRegistro" method="post" th:action="@{/superadmin/guardar_usuario}" th:object="${usuarios}">
-                        <input th:field="*{id}" name="id" type="hidden"/>
+                        <input th:field="*{id}" name="id"  type="hidden"/>
                         <div class="row mb-3">
                             <!-- Nombre  -->
                             <div class="col-md-6">
@@ -311,11 +311,25 @@
                             </div>
                         </div>
 
+                        <div class="row mb-3">
+                            <!-- Correo-->
+                            <div class="col-md-6">
+                                <label class="form-label">Correo:</label>
+                                <input th:field="*{correo}" type="text" class="form-control">
+                            </div>
+                            <!-- Telefono -->
+                            <div class="col-md-6">
+                                <label class="form-label">Telefono:</label>
+                                <input th:field="*{telefono}" type="text" class="form-control">
+                            </div>
+
+                        </div>
+
 
 
                         <div class="row mb-3">
                             <!-- Zona-->
-                            <div class="col-md-6">
+                            <div class="">
                                 <label class="form-label">Zona:</label>
                                 <select class="form-select" th:field="*{zona}" disabled>
                                     <option th:each="zona : ${listaZona}"
@@ -325,12 +339,6 @@
                                 </select>
                             </div>
 
-
-                            <!-- Telefono -->
-                            <div class="col-md-6">
-                                <label class="form-label">Telefono:</label>
-                                <input th:field="*{telefono}" type="text" class="form-control">
-                            </div>
 
                         </div>
 
