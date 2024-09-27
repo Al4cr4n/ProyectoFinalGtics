@@ -64,8 +64,8 @@ public class SuperAdminController {
 
     /*USUARIO EDITAR, GUARDAR Y BORRAR*/
 
-    @GetMapping("/editar")
-    public String editarUsuario(Model model, @RequestParam("id") int id){
+    @GetMapping("/editar/{id}")
+    public String editarUsuario(Model model, @PathVariable("id") Integer id){
 
         Optional<Usuario> optUsuario = adminRepository.findById(id);
         if (optUsuario.isPresent()){

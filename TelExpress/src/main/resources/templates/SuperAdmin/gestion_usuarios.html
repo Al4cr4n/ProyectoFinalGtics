@@ -285,7 +285,10 @@
                 <td th:text="${usuario.correo}"></td>
                 <td><button class="btn btn-sm btn-secondary">Ingresar</button></td>
                 <td>
-                  <a class="btn btn-sm btn-primary" th:href="@{'/superadmin/editar?id=' + ${usuario.id}}">
+                  <a class="btn btn-sm btn-primary" th:href="@{/superadmin/editar/{id}(id=${usuario.id})}">
+                    <i class="bx bx-edit-alt"></i>
+                  </a>
+                  <a th:href="@{/superadmin/editar/{id}(id=${usuario.id})}" class="btn btn-sm btn-primary">
                     <i class="bx bx-edit-alt"></i>
                   </a>
                   <a class="btn btn-sm btn-danger" th:href="@{'/eliminar?id=' + ${usuario.id}}">
