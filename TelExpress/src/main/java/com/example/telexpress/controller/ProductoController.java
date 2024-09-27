@@ -130,4 +130,20 @@ public class ProductoController {
 
         return "Superadmin/inventario_superadmin";
     }
+
+    @GetMapping("/producto/filtro")
+    public String filtrarProductos(@RequestParam(value = "order", required = false, defaultValue = "asc") String order, Model model) {
+        List<Producto> listaProductos;
+
+        // Verificar si el filtro es ascendente o descendente
+        if (order.equals("desc")) {
+            listaProductos = productoRepository.findAllByOrderByPrecioDesc();
+        } else {
+            listaProductos = productoRepository.findAllByOrderByPrecioAsc();
+        }
+
+        model.addAttribute("lista", listaProductos);
+        model.addAttribute("order", order); // Pasar el tipo de orden actual a la vista
+        return "SuperAdmin/inventario_superadmin"; // Cambiar esto según tu vista real
+    }
 }

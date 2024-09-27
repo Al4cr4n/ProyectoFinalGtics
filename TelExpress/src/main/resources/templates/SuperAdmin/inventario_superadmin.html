@@ -313,6 +313,16 @@
             </div>
           </form>
 
+          <form action="/producto/filtro" method="GET" class="mb-4">
+            <div class="input-group w-50 mb-3">
+              <label for="order" class="input-group-text">Ordenar por precio:</label>
+              <select id="order" name="order" class="form-select" onchange="this.form.submit()">
+                <option th:value="asc" th:selected="${order == 'asc'}">Menor a mayor</option>
+                <option th:value="desc" th:selected="${order == 'desc'}">Mayor a menor</option>
+              </select>
+            </div>
+          </form>
+
           <!-- Tabla de productos -->
           <div class="row">
             <div class="col-12 col-lg-12 mb-4">
