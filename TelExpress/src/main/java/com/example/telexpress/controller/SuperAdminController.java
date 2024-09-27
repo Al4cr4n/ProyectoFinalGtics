@@ -248,11 +248,11 @@ public class SuperAdminController {
 
     //Proveedores
 
-    @GetMapping({"superadmin/proveedor/lista", "/superadmin/gestion_proveedores"})
+    @GetMapping({"/proveedor/lista", "/gestion_proveedores"})
     public String listarProveedores(Model model) {
         List<Proveedor> listaProveedores = proveedorRepository.findAll();
         model.addAttribute("listaProveedores", listaProveedores);
-
+        model.addAttribute("listaZona", zonaRepository.findAll());
 
         return "SuperAdmin/gestion_proveedores";
     }
