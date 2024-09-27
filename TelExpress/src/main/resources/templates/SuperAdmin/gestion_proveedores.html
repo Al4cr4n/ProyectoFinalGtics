@@ -294,7 +294,7 @@
                 <th>Proveedor</th>
                 <th>Tienda</th>
                 <th>DNI</th>
-                <th>Correo</th>
+                <th>Zona</th>
                 <th>RUC</th>
                 <th>Acciones</th>
               </tr>
@@ -302,11 +302,11 @@
               <tbody>
               <!-- Aquí van las filas con los proveedores -->
               <tr th:each="proveedor, info : ${listaProveedores}">
-                <td>${info.index + 1}</td>
+                <td th:text="${info.index + 1}"></td>
                 <td th:text="${proveedor.nombreProveedor}"></td>
                 <td th:text="${proveedor.nombreTienda}"></td>
                 <td th:text="${proveedor.dni}"></td>
-                <td th:text="${proveedor.correo}"></td>
+                <td th:text="${proveedor.zona.nombre}"></td>
                 <td th:text="${proveedor.ruc}"></td>
                 <td>
                   <a  class="btn btn-sm btn-primary">
