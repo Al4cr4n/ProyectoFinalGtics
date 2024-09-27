@@ -134,7 +134,7 @@ public class SuperAdminController {
         return "SuperAdmin/gestion_coordinadores";
     }
 /*para gestionar coordinador zonal*/
-    @GetMapping("/coordinador_zonal_formulario")
+    @GetMapping("/coordinador_zonal_formu")
     public String CoordinadorZonalFormularioSuperadmin(Model model, @RequestParam("id") Integer id) {
         Optional<Usuario> coordinador = adminRepository.findById(id);
         if (coordinador.isPresent()) {
@@ -145,7 +145,7 @@ public class SuperAdminController {
 
             return "SuperAdmin/coordinador_zonal_formulario";
         } else {
-            return "redirect:SuperAdmin/gestion_coordinadores";
+            return "redirect:superadmin/gestion_coordinadores";
         }
 
     }
