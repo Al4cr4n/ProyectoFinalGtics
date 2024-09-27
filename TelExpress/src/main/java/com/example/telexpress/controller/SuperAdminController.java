@@ -265,7 +265,11 @@ public class SuperAdminController {
         listaTop.sort(Comparator.comparing(Producto::getCantidadComprada).reversed());
 
         model.addAttribute("listaTop", listaTop);
-        // Devuelve la vista correspondiente
+
+        if (listaTop.size() > 10) {
+            listaTop = listaTop.subList(0, 10);
+        }
+
 
 
         long totalUsuarios = usuarioRepository.count();

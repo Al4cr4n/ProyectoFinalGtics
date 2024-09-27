@@ -54,6 +54,8 @@
     <script src="/assets/js/config.js"></script>
     <!--TelExpress fuente de letra-->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
 </head>
 <body>
 <!-- Layout wrapper -->
@@ -318,7 +320,7 @@
                                                 <div class="tab-pane fade show active" id="navs-tabs-line-card-income"
                                                      role="tabpanel">
 
-                                                    <div id="incomeChart"></div>
+                                                    <div id="ordenesChart"></div>
                                                     <div class="d-flex justify-content-center pt-4 gap-2">
 
                                                         <div>
@@ -628,5 +630,120 @@
 
 <!-- Place this tag in your head or just before your close body tag. -->
 <script async defer src="https://buttons.github.io/buttons.js"></script>
+<script>
+    // Ordenes Chart - Area chart
+    const ordenesChartEl = document.querySelector('#ordenesChart'),
+        ordenesChartConfig = {
+
+            series: [
+                {
+                    name: 'Cantidad',
+                    data: [ '', 530, 322, 540, 296, 435, 529]
+
+                    /*data: [
+
+                        '',
+                        [[${ordenesEnero}]],
+                        [[${ordenesFebrero}]],
+                        [[${ordenesMarzo}]],
+                        [[${ordenesAbril}]],
+                        [[${ordenesMayo}]],
+                        [[${ordenesJunio}]],
+                        [[${ordenesJulio}]]
+                    ]*/
+                }
+            ],
+            chart: {
+                height: 200,
+                parentHeightOffset: 0,
+                parentWidthOffset: 0,
+                toolbar: {
+                    show: false
+                },
+                type: 'area'
+            },
+            dataLabels: {
+                enabled: false
+            },
+            stroke: {
+                width: 2,
+                curve: 'smooth'
+            },
+            legend: {
+                show: false
+            },
+            markers: {
+                size: 6,
+                colors: 'transparent',
+                strokeColors: 'transparent',
+                strokeWidth: 4,
+                discrete: [
+                    {
+                        fillColor: '#fff',
+                        seriesIndex: 0,
+                        dataPointIndex: 7,
+                        strokeColor: '#7367f0',
+                        strokeWidth: 2,
+                        size: 6,
+                        radius: 8
+                    }
+                ],
+                hover: {
+                    size: 7
+                }
+            },
+            colors: ['#7367f0'],
+            fill: {
+                type: 'gradient',
+                gradient: {
+                    shade: 'light',
+                    shadeIntensity: 0.6,
+                    opacityFrom: 0.5,
+                    opacityTo: 0.25,
+                    stops: [0, 95, 100]
+                }
+            },
+            grid: {
+                borderColor: '#ebebeb',
+                strokeDashArray: 3,
+                padding: {
+                    top: -20,
+                    bottom: -8,
+                    left: -10,
+                    right: 8
+                }
+            },
+            xaxis: {
+                categories: ['', 'Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul'],
+                axisBorder: {
+                    show: false
+                },
+                axisTicks: {
+                    show: false
+                },
+                labels: {
+                    show: true,
+                    style: {
+                        fontSize: '13px',
+                        colors: '#aab2bd'
+                    }
+                }
+            },
+            yaxis: {
+                labels: {
+                    show: false
+                },
+                min: 0,
+                max: 700,
+                tickAmount: 5
+            }
+        };
+
+    if (ordenesChartEl !== undefined && ordenesChartEl !== null) {
+        const ordenesChart = new ApexCharts(ordenesChartEl, ordenesChartConfig);
+        ordenesChart.render();
+    }
+</script>
+
 </body>
 </html>
