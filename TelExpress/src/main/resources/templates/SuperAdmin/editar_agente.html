@@ -265,16 +265,16 @@
               <!-- Condicional para mostrar el campo DNI solo si el agente tiene DNI -->
               <div class="col-md-6" th:if="${agente.dni != null}">
                 <label class="form-label">DNI:</label>
-                <input th:field="*{agente.dni}" type="text" class="form-control">
+                <input th:field="*{agente.dni}" type="text" class="form-control" readonly>
               </div>
 
               <!-- Condicional para mostrar el campo RUC solo si el agente tiene RUC -->
               <div class="col-md-6" th:if="${agente.ruc != null}">
                 <label class="form-label">RUC:</label>
-                <input th:field="*{agente.ruc}" type="text" class="form-control">
+                <input th:field="*{agente.ruc}" type="text" class="form-control" readonly>
               </div>
-
             </div>
+
 
             <!-- Botón para guardar cambios -->
             <div class="text-center">
