@@ -4,7 +4,7 @@ import com.example.telexpress.entity.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
-
+import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 @Repository
@@ -23,6 +23,14 @@ public interface AdminRepository extends JpaRepository<Usuario,Integer>{
     @Query(value = "select * from usuario where roles_idRoles= 2",
             nativeQuery= true)
     List<Usuario> buscarCoordiPorRol();*/
+
+    @Query(value = "SELECT * FROM usuario WHERE "
+            + "LOWER(nombre) LIKE LOWER(CONCAT('%', :searchTerm, '%')) OR "
+            + "LOWER(apellido) LIKE LOWER(CONCAT('%', :searchTerm, '%')) OR "
+            + "dni LIKE CONCAT('%', :searchTerm, '%')",
+            nativeQuery = true)
+    List<Usuario> searchByNameOrDni(@Param("searchTerm") String searchTerm);
+
 
 
 }

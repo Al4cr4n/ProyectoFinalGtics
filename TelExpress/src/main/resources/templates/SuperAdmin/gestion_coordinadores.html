@@ -45,6 +45,21 @@
   <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
   <!-- DataTables JS -->
   <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+  <!--stylos personalizados-->
+  <style>
+    .dataTables_wrapper .dataTables_paginate {
+      text-align: center; /* Centra el paginado */
+      margin-top: 20px;  /* Añade margen superior */
+    }
+    .dataTables_wrapper .dataTables_paginate .paginate_button {
+      padding: 0.5em 1em;
+      border-radius: 4px;
+      border: 1px solid #ddd;
+      background: #f5f5f5;
+      color: #8A9BAE;
+    }
+
+  </style>
 
 
 </head>
@@ -291,6 +306,14 @@
         <div class="container-xxl flex-grow-1 container-p-y">
           <!-- Tabla Coordinadores Zonales -->
           <h5 class="mb-4">Coordinadores Zonales</h5>
+          <div class="card" style="padding: 0.8rem;">
+            <div class="card-header">
+              <!-- Search bar with button (only visual) -->
+              <div class="p-3 d-flex">
+                <input type="text" id="searchInput" class="form-control me-2" placeholder="Buscar por nombre o apellido...">
+                <button id="searchBtn" class="btn btn-primary">Buscar</button>
+              </div>
+            </div>
           <div class="table-responsive text-nowrap">
             <table class="table table-striped" id="coordinadoresTable">
               <thead class="table-light">
@@ -308,8 +331,8 @@
               </thead>
               <tbody>
               <!-- Aquí van las filas con los coordinadores -->
-              <tr th:each="usuario : ${coordinadores}">
-                <td>1</td>
+              <tr th:each="usuario,info : ${coordinadores}">
+                <td th:text="${info.index + 1}"></td>
                 <td th:text="${usuario.nombre}"></td>
                 <td th:text="${usuario.apellido}"></td>
                 <td th:text="${usuario.dni}"></td>
@@ -331,20 +354,13 @@
               </tbody>
             </table>
           </div>
+          </div>
 
           <!-- Botón "Crear Nuevo" -->
           <div class="text-center my-3">
             <a class="btn btn-primary" th:href="@{/superadmin/new}">Crear Nuevo</a>
           </div>
 
-          <!-- Paginación -->
-          <!--<nav aria-label="Page navigation">
-            <ul class="pagination justify-content-center">
-              <li class="page-item"><a class="page-link" href="#">1</a></li>
-              <li class="page-item"><a class="page-link" href="#">2</a></li>
-              <li class="page-item"><a class="page-link" href="#">3</a></li>
-            </ul>
-          </nav>-->
         </div>
         <!-- Content backdrop -->
         <div class="content-backdrop fade"></div>
@@ -360,7 +376,7 @@
 
 
 <!--script para la tabla-->
-<script>
+<!--<script>
   $(document).ready(function() {
     $('#coordinadoresTable').DataTable({
       "paging": true, //Activa la paginaci[on
@@ -386,6 +402,27 @@
       }
     });
   });
+</script>-->
+
+<script>
+  $(document).ready(function() {
+    $('#coordinadoresTable').DataTable({
+      "pagingType": "full_numbers", // Esto muestra los números de página completos
+      "pageLength":8,
+      "language": {
+        "paginate": {
+          "first": "",
+          "last": "",
+          "next": ">>",
+          "previous": "<<"
+        }
+      },
+      "paging": true,      // Activa la paginación
+      "searching": false,  // Desactiva el buscador
+      "info": false        // Oculta la información de "Showing"
+
+    });
+  });
 </script>
 
 
@@ -403,5 +440,8 @@
 
 <!-- Place this tag in your head or just before your close body tag. -->
 <script async defer src="https://buttons.github.io/buttons.js"></script>
+<!-- DataTables JS -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
 </body>
 </html>
