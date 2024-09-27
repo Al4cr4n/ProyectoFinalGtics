@@ -179,8 +179,10 @@ public class SuperAdminController {
         Optional <Usuario> coordi = adminRepository.findById(id);
         if (coordi.isPresent()){
             adminRepository.deleteById(id);
+        }else {
+            System.out.println("No se encontró el coordinador con ID: " + id);
         }
-        return "redirect:SuperAdmin/gestion_coordinadores";
+        return "redirect:/superadmin/gestion_coordinadores";
     }
 
     @GetMapping("/gestion_usuarios")
