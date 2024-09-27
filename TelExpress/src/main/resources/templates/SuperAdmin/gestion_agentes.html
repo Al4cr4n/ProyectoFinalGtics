@@ -290,13 +290,12 @@
                   <a href="/superadmin/editar_agentes" class="btn btn-sm btn-primary">
                     <i class="bx bx-edit-alt"></i>
                   </a>
-                  <a href="/ruta-eliminar" class="btn btn-sm btn-danger">
+                  <!-- Botón para eliminar -->
+                  <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#confirmModal">
                     <i class="bx bx-trash"></i>
-                  </a>
-
+                  </button>
                 </td>
               </tr>
-              <!-- Más filas de ejemplo... -->
               </tbody>
             </table>
           </div>
@@ -313,6 +312,25 @@
             </ul>
           </nav>
         </div>
+        <!-- Confirmation Modal -->
+        <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="confirmModalLabel">Confirmar eliminación</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                Se eliminará el agente. ¿Estás seguro?
+              </div>
+              <div class="modal-footer">
+                <a href="/gestion_agentes" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</a>
+                <button type="button" class="btn btn-primary" id="confirmarEliminar">Confirmar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Fin del modal de confirmación -->
         <!-- Content backdrop -->
         <div class="content-backdrop fade"></div>
       </div>
@@ -323,8 +341,17 @@
   <!-- Overlay -->
   <div class="layout-overlay layout-menu-toggle"></div>
 </div>
+
+
 <!-- / Layout wrapper -->
 <!-- Core JS -->
+<script>
+  document.getElementById('confirmarEliminar').addEventListener('click', function () {
+    // Aquí agregas la lógica para eliminar el agente y luego redireccionar
+    window.location.href = '/gestion_agentes';
+  });
+</script>
+
 <script src="/assets/vendor/libs/jquery/jquery.js"></script>
 <script src="/assets/vendor/libs/popper/popper.js"></script>
 <script src="/assets/vendor/js/bootstrap.js"></script>
