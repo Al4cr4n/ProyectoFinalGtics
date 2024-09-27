@@ -71,7 +71,7 @@
 
     /* Estilo para el paginado */
     /*.dataTables_wrapper .dataTables_paginate {
-      text-align: center; /* Centra el paginado */
+      text-align: center; /* Centra el paginado
       margin-top: 1.5rem;  /* Añade margen superior *
     }
 
@@ -374,6 +374,7 @@
                   <button type="submit" class="btn btn-primary">Buscar</button>
                 </div>
               </form>
+              </div>
           <div class="table-responsive text-nowrap">
             <table class="table table-striped" id="coordinadoresTable" style="margin-top: 20px;">
               <thead class="table-light">
@@ -382,7 +383,6 @@
                 <th>Nombre</th>
                 <th>Apellido</th>
                 <th>DNI</th>
-                <th>Teléfono</th>
                 <th>Correo</th>
                 <th>Zona</th>
                 <th>Fecha de Nacimiento</th>
@@ -396,7 +396,6 @@
                 <td th:text="${usuario.nombre}"></td>
                 <td th:text="${usuario.apellido}"></td>
                 <td th:text="${usuario.dni}"></td>
-                <td th:text="${usuario.telefono}"></td>
                 <td th:text="${usuario.correo}"></td>
                 <td th:text="${usuario.zona.nombre}"></td>
                 <td th:text="${usuario.fechanacimiento}"></td>

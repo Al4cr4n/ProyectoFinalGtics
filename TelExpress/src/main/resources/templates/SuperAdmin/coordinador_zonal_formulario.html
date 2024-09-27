@@ -346,7 +346,6 @@
                             </div>
                             <!--<p th:text="${coordinadorzonal.fechanacimiento}"></p>-->
 
-
                             <!-- Contraseña Temporal -->
                             <div class="col-md-6">
                                 <label for="contrasenaTemporal" class="form-label">Contraseña Temporal:</label>
@@ -364,7 +363,7 @@
                         </div>-->
                         <!-- Botones -->
                         <div class="text-center">
-                            <button type="submit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmModal">
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmModal">
                                 <span th:text="${coordinadorzonal.id != null ? 'Modificar' : 'Registrar'}"></span>
                             </button>
                             <a th:href="@{/superadmin/gestion_coordinadores}" class="btn btn-secondary">Cancelar</a>
@@ -391,16 +390,21 @@
                     </div>
                 </div>
 
+                <script>
+                    document.getElementById('confirmarRegistro').addEventListener('click', function () {
+                        // Obtiene el formulario
+                        const form = document.getElementById('formRegistro');
+
+                        // Envía el formulario
+                        form.submit();
+                    });
+                </script>
+
+
                 <!-- Bootstrap JS and dependencies (Popper.js and Bootstrap JS) -->
                 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
                 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
 
-                <script>
-                    document.getElementById('confirmarRegistro').addEventListener('click', function () {
-                        // Aquí puedes realizar el envío de los datos o hacer otras acciones
-                        document.getElementById('formRegistro').submit(); // Envía el formulario
-                    });
-                </script>
             </div>
         </div>
     </div>

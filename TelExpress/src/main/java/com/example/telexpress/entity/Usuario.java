@@ -26,7 +26,7 @@ public class Usuario {
     private String contrasena;
     private String estadoUsuario;
 
-    @Column(name = "fechanacim", nullable = false)
+    @Column(name = "fechanacim", nullable = true)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate fechanacimiento;
 
