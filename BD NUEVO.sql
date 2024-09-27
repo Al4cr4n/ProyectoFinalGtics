@@ -440,7 +440,7 @@ CREATE TABLE `resenias` (
   `productos_idproductos` int NOT NULL,
   `tituloForo` varchar(200) DEFAULT NULL,
   `descripcionForo` varchar(200) DEFAULT NULL,
-  `usuario_idusuario` int NOT NULL,
+  `usuario_idusuario` int NULL,
   `tipoPublicacion` varchar(45) NOT NULL,
   PRIMARY KEY (`idresenias`),
   KEY `fk_resenias_productos1_idx` (`productos_idproductos`),

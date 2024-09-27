@@ -71,6 +71,7 @@ public class SuperAdminController {
         if (optUsuario.isPresent()){
             Usuario usuario = optUsuario.get();
             model.addAttribute("usuarios", usuario);
+            model.addAttribute("listaZona", zonaRepository.findAll());
 
             return "SuperAdmin/editar_usuario";
         }else{
