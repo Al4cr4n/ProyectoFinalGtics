@@ -230,7 +230,7 @@
           <h4 class="mb-4">Editar Agente</h4>
 
           <!-- Form -->
-          <form method="post" th:action="@{'/editar_agentes/guardar'}">
+          <form method="post" th:action="@{/superadmin/actualizar_agentes}">
             <input th:field="*{agente.id}" name="id" type="hidden"/>
 
             <div class="row mb-3">
@@ -275,7 +275,6 @@
               </div>
             </div>
 
-
             <!-- Botón para guardar cambios -->
             <div class="text-center">
               <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmModal">Guardar Cambios</button>
@@ -296,7 +295,7 @@
                 El agente se actualizará
               </div>
               <div class="modal-footer">
-                <a href="/gestion_agentes" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</a>
+                <a th:href="@{'/superadmin/gestion_agentes'}" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</a>
                 <button type="button" class="btn btn-primary" id="confirmarRegistro">Confirmar</button>
               </div>
             </div>
@@ -309,8 +308,7 @@
 
         <script>
           document.getElementById('confirmarRegistro').addEventListener('click', function () {
-            // Here you can add functionality to submit the form or other actions
-            document.getElementById('formRegistro').submit(); // Submit the form
+            document.getElementById('formRegistro').submit(); // Envía el formulario
           });
         </script>
 
