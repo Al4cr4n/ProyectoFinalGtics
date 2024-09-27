@@ -120,5 +120,14 @@ public class ProductoController {
         }
         return "redirect:/producto/lista";
     }
+    @GetMapping("/producto/buscar")
+    public String buscarProducto(@RequestParam("searchField") String searchField,
+                                      Model model) {
 
+        List<Producto> listaProductos = productoRepository.buscarPorNombreOCategoria(searchField);
+        System.out.println("Resultados encontrados: " + listaProductos.size());
+        model.addAttribute("lista", listaProductos);
+
+        return "Superadmin/inventario_superadmin";
+    }
 }

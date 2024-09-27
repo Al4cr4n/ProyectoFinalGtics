@@ -305,6 +305,14 @@
             </div>
           </div>
 
+          <!-- Formulario de búsqueda -->
+          <form action="/producto/buscar" method="GET" class="mb-4">
+            <div class="input-group">
+              <input type="text" name="searchField" class="form-control" placeholder="Buscar producto o categoría" th:value="${searchField}" />
+              <button class="btn btn-primary" type="submit">Buscar</button>
+            </div>
+          </form>
+
           <!-- Tabla de productos -->
           <div class="row">
             <div class="col-12 col-lg-12 mb-4">
