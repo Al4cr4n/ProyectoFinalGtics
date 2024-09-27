@@ -71,14 +71,14 @@ public class SuperAdminController {
 
             return "SuperAdmin/editar_usuario";
         }else{
-            return "redirect:/superadmin";
+            return "redirect:/superadmin/gestion_usuarios";
         }
     }
 
-    @PostMapping("/guardar")
+    @PostMapping("/guardar_usuario")
     public String guardarUsuario(Usuario usuario, RedirectAttributes attr) {
         adminRepository.save(usuario);
-        return "redirect:/superadmin";
+        return "redirect:/superadmin/gestion_usuarios";
     }
 
 

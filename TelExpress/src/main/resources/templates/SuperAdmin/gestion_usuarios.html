@@ -286,10 +286,12 @@
                 <td th:text="${usuario.direccion}"></td>
                 <td><button class="btn btn-sm btn-secondary">Ingresar</button></td>
                 <td>
-                  <button class="btn btn-sm btn-primary" onclick="window.location.href='/editar_usuario'">
+                  <a class="btn btn-sm btn-primary" th:href="@{'/superadmin/editar?id=' + ${usuario.id}}">
                     <i class="bx bx-edit-alt"></i>
-                  </button>
-                  <button class="btn btn-sm btn-danger"><i class="bx bx-trash"></i></button>
+                  </a>
+                  <a class="btn btn-sm btn-danger" th:href="@{'/eliminar?id=' + ${usuario.id}}">
+                    <i class="bx bx-trash"></i>
+                  </a>
                 </td>
               </tr>
               <!-- Más filas de ejemplo... -->
