@@ -257,12 +257,34 @@ public class SuperAdminController {
         return "SuperAdmin/gestion_proveedores";
     }
 
+    @GetMapping("/proveedor/nuevo")
+    public String nuevoProveedor(Model model){
+        model.addAttribute("proveedor", new Proveedor());
+        model.addAttribute("listaZona", zonaRepository.findAll());
 
+        return "SuperAdmin/proveedor_registrar";
+    }
 
+    @GetMapping("/proveedor/editar")
+    public String editarProveedor(Model model, @RequestParam("id") int id) {
 
+        Optional<Proveedor> optProovedor = proveedorRepository.findById(id);
 
+        if (optProovedor.isPresent()) {
+            Proveedor proveedor = optProovedor.get();
 
-
-
+            model.addAttribute("proveedor", proveedor);
+            //model.addAttribute("listaProveedores", proveedorRepository.findAll());
+            model.addAttribute("listaZona", zonaRepository.findAll());
+            return "SuperAdmin/proveedor_editar";
+        } else {
+            return "redirect:/proveedor/lista";
+        }
+    }
+    @PostMapping("/proveedor/guardar")
+    public String guardarProveedor(Proveedor proveedor, RedirectAttributes attr) {
+        proveedorRepository.save(proveedor);
+        return "redirect:/proveedor/lista";
+    }
 
 }
