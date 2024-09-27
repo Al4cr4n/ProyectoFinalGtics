@@ -328,4 +328,15 @@ public class SuperAdminController {
         return "redirect:/superadmin/proveedor/lista";
 
     }
+
+    @GetMapping("/proveedor/buscar")
+    public String buscarProveedor(@RequestParam("searchField") String searchField,
+                                 Model model) {
+
+        List<Proveedor> listaProveedor = proveedorRepository.findByNombreProveedorContaining(searchField);
+        System.out.println("Resultados encontrados: " + listaProveedor.size());
+        model.addAttribute("lista", listaProveedor);
+
+        return "Superadmin/gestion_proveedores";
+    }
 }
