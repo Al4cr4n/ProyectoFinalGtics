@@ -251,6 +251,7 @@ public class SuperAdminController {
     @GetMapping({"/proveedor/lista", "/gestion_proveedores"})
     public String listarProveedores(Model model) {
         List<Proveedor> listaProveedores = proveedorRepository.findAll();
+        //model.addAttribute("lista", proveedorRepository.findAll());
         model.addAttribute("listaProveedores", listaProveedores);
         model.addAttribute("listaZona", zonaRepository.findAll());
 
