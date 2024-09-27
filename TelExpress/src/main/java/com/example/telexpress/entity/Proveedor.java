@@ -32,6 +32,9 @@ public class Proveedor {
     @Column(name = "correo")
     private String correo;
 
+    @Column(name = "estadoProveedor")
+    private String estadoProveedor;
+
     @ManyToOne
     @JoinColumn(name = "idzona")
     private Zona zona;

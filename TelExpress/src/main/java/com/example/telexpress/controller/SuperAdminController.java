@@ -243,7 +243,9 @@ public class SuperAdminController {
         long usuariosInactivos = usuarioRepository.countByEstadoUsuario("Inactivo");
         long usuariosBaneados = usuarioRepository.countByEstadoUsuario("Baneado");
         long usuariosAgentes = usuarioRepository.countByRol_Id(3L);
+        long proveedoresBaneados = proveedorRepository.countByEstadoProveedor("baneado");
 
+        model.addAttribute("proveedoresBaneados", proveedoresBaneados);
         model.addAttribute("totalUsuarios", totalUsuarios);
         model.addAttribute("usuariosActivos", usuariosActivos);
         model.addAttribute("usuariosInactivos", usuariosInactivos);
