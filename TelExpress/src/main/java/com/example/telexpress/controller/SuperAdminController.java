@@ -11,10 +11,7 @@ import com.example.telexpress.repository.*;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Comparator;
@@ -134,8 +131,8 @@ public class SuperAdminController {
         return "SuperAdmin/gestion_coordinadores";
     }
 /*para gestionar coordinador zonal*/
-    @GetMapping("/coordinador_zonal_formu")
-    public String CoordinadorZonalFormularioSuperadmin(Model model, @RequestParam("id") Integer id) {
+    @GetMapping("/coordinador_zonal_formu/{id}")
+    public String CoordinadorZonalFormularioSuperadmin(Model model, @PathVariable("id") Integer id) {
         Optional<Usuario> coordinador = adminRepository.findById(id);
         if (coordinador.isPresent()) {
             Usuario user = coordinador.get();
@@ -145,9 +142,8 @@ public class SuperAdminController {
 
             return "SuperAdmin/coordinador_zonal_formulario";
         } else {
-            return "redirect:superadmin/gestion_coordinadores";
+            return "redirect:/superadmin/gestion_coordinadores";
         }
-
     }
 /*para gestionar coordinador zonal*/
     @GetMapping("/new")
@@ -167,7 +163,7 @@ public class SuperAdminController {
             usuario.setZona(zona); // Asignar la zona seleccionada al usuario
         }
         adminRepository.save(usuario);
-        return "redirect:SuperAdmin/gestion_coordinadores";
+        return "redirect:/superadmin/gestion_coordinadores";
     }
 
     /*para gestionar coordinador zonal*/
