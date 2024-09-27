@@ -282,7 +282,15 @@ public class SuperAdminController {
     /* para actualizar datos de agente*/
     @PostMapping("/actualizar_agentes")
     public String actualizar_agentes(Usuario agente, RedirectAttributes attr) {
+        // Verificar si el proveedor ya está en la base de datos
+        Proveedor proveedor = agente.getProveedor();
 
+        if (proveedor != null && proveedor.getIdProveedor() == null) {
+            // Guardar el proveedor si aún no ha sido persistido
+            proveedorRepository.save(proveedor);
+        }
+
+        // Ahora guarda el usuario (agente) después de haber persistido el proveedor
         adminRepository.save(agente);
         return "redirect:/SuperAdmin/gestion_agentes";
     }
