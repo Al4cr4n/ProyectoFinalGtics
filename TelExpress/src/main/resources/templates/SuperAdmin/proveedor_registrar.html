@@ -279,7 +279,7 @@
                     <h4 class="mb-4">Registrar Nuevo Proveedor</h4>
 
                     <!-- Formulario -->
-                    <form id="formRegistro" method="post" th:action="@{/proveedor/guardar}">
+                    <form id="formRegistro" method="post" th:action="@{/superadmin/proveedor/guardar}">
                         <div class="row mb-3">
                             <!-- Nombre del producto -->
 
@@ -318,7 +318,7 @@
                             <!-- Nombre del Proveedor -->
                             <div class="col-md-6">
                                 <label for="nombreZona" class="form-label">Zona:</label>
-                                <select class="form-select" name="zona.idZona" id="nombreZona">
+                                <select class="form-select" name="zona.idzona" id="nombreZona">
                                     <option value="">Seleccione una Zona</option>
                                     <option th:each="zona: ${listaZona}"
                                             th:value="${zona.idzona}"

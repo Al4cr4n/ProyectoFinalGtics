@@ -285,7 +285,20 @@ public class SuperAdminController {
     @PostMapping("/proveedor/guardar")
     public String guardarProveedor(Proveedor proveedor, RedirectAttributes attr) {
         proveedorRepository.save(proveedor);
-        return "redirect:/proveedor/lista";
+        return "redirect:/superadmin/proveedor/lista";
     }
+    @GetMapping("/proveedor/borrar")
+    public String borrarProveedor(Model model,
+                                  @RequestParam("id") int id,
+                                  RedirectAttributes attr) {
 
+        Optional<Proveedor> optProduct = proveedorRepository.findById(id);
+
+
+        if (optProduct.isPresent()) {
+            proveedorRepository.deleteById(id);
+        }
+        return "redirect:/superadmin/proveedor/lista";
+
+    }
 }
