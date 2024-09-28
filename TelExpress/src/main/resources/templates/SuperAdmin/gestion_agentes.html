@@ -291,10 +291,7 @@
                     <i class="bx bx-edit-alt"></i>
                   </a>
                   <!-- Botón para eliminar -->
-                  <a class="btn btn-sm btn-danger" href="javascript:void(0);"
-                     data-bs-toggle="modal"
-                     data-bs-target="#confirmModal"
-                     th:data-id="${agente.id}">
+                  <a class="btn btn-sm btn-danger" th:href="@{'/superadmin/borrar_agentes?id=' + ${agente.id}}">
                     <i class="bx bx-trash"></i>
                   </a>
 
@@ -316,7 +313,7 @@
             </ul>
           </nav>
         </div>
-        <!-- Modal de confirmación -->
+        <!-- Modal de confirmación
         <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -333,7 +330,7 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
         <!-- Content backdrop -->
         <div class="content-backdrop fade"></div>
       </div>
