@@ -174,9 +174,9 @@ public class SuperAdminController {
                     attr.addFlashAttribute("success", "Usuario eliminado exitosamente.");
                 } else {
                     // Si hay órdenes relacionadas, eliminar las órdenes antes de eliminar el usuario
-                    ordenesRepository.deleteAll(ordenes);
-                    adminRepository.deleteById(id);
-                    attr.addFlashAttribute("success", "Usuario y sus órdenes eliminados exitosamente.");
+                    //ordenesRepository.deleteAll(ordenes);
+                    //adminRepository.deleteById(id);
+                    attr.addFlashAttribute("error", "Error al eliminar. El usuario cuenta con ordenes pendientes");
                 }
             } else {
                 attr.addFlashAttribute("error", "Usuario no encontrado.");
