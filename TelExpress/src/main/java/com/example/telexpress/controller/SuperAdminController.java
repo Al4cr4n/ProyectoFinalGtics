@@ -130,6 +130,41 @@ public class SuperAdminController {
         return "redirect:/superadmin/inicio_superadmin";
     }
 
+    /* ELIMINAR EN LA segunda TABLA DE INICIO */
+    @GetMapping("/borraragente_sa")
+    public String borrarAgenteInicioSA(Model model,
+                                       @RequestParam("id") int id,
+                                       RedirectAttributes attraa) {
+
+        try{
+            Optional<Usuario> optUser = adminRepository.findById(id);
+
+            if (optUser.isPresent()) {
+                Usuario usuario = optUser.get();
+
+                // Verificar si el usuario está relacionado con órdenes
+                List<Ordenes> ordenes = ordenesRepository.findByUsuarioId(id);
+
+                if (ordenes.isEmpty()) {
+                    // Si no hay relaciones, eliminar el usuario
+                    adminRepository.deleteById(id);
+                    attraa.addFlashAttribute("success", "Usuario eliminado exitosamente.");
+                } else {
+                    // Si hay órdenes relacionadas, eliminar las órdenes antes de eliminar el usuario
+                    //ordenesRepository.deleteAll(ordenes);
+                    //adminRepository.deleteById(id);
+                    attraa.addFlashAttribute("error", "Error al eliminar. El usuario cuenta con ordenes pendientes");
+                }
+            } else {
+                attraa.addFlashAttribute("error", "Usuario no encontrado.");
+            }
+        } catch (Exception ex) {
+            attraa.addFlashAttribute("error", "No se puede eliminar al usuario debido a que tiene relaciones.");
+            ex.printStackTrace();
+        }
+        return "redirect:/superadmin/inicio_superadmin";
+    }
+
 
     /*USUARIO EDITAR, GUARDAR Y BORRAR*/
 
