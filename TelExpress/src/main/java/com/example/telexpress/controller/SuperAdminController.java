@@ -251,7 +251,33 @@ public class SuperAdminController {
 
     /* para actualizar datos de coodinador zonal*/
     @PostMapping("/update")
-    public String actualizardatoscoordi(Usuario usuario, @RequestParam("zona.idzona") Integer zonaid) {
+    public String actualizardatoscoordi(Usuario usuario, @RequestParam("zona.idzona") Integer zonaid, RedirectAttributes rttbtsp) {
+
+        // Verificar si el DNI, correo o número telefónico ya existen
+        Optional<Usuario> usuarioConMismoDni = adminRepository.findByDni(usuario.getDni());
+        Optional<Usuario> usuarioConMismoCorreo = adminRepository.findByCorreo(usuario.getCorreo());
+        Optional<Usuario> usuarioConMismoTelefono = adminRepository.findByTelefono(usuario.getTelefono());
+
+        // Verificar si el DNI ya está en uso por otro usuario
+        if (usuarioConMismoDni.isPresent() && !usuarioConMismoDni.get().getId().equals(usuario.getId())) {
+            rttbtsp.addFlashAttribute("mensaje", "El DNI ya está registrado en otro usuario.");
+            rttbtsp.addFlashAttribute("tipoMensaje", "danger");
+            return "redirect:/superadmin/gestion_coordinadores";
+        }
+
+        // Verificar si el correo ya está en uso por otro usuario
+        if (usuarioConMismoCorreo.isPresent() && !usuarioConMismoCorreo.get().getId().equals(usuario.getId())) {
+            rttbtsp.addFlashAttribute("mensaje", "El correo ya está registrado en otro usuario.");
+            rttbtsp.addFlashAttribute("tipoMensaje", "danger");
+            return "redirect:/superadmin/gestion_coordinadores";
+        }
+
+        // Verificar si el número telefónico ya está en uso por otro usuario
+        if (usuarioConMismoTelefono.isPresent() && !usuarioConMismoTelefono.get().getId().equals(usuario.getId())) {
+            rttbtsp.addFlashAttribute("mensaje", "El número telefónico ya está registrado en otro usuario.");
+            rttbtsp.addFlashAttribute("tipoMensaje", "danger");
+            return "redirect:/superadmin/gestion_coordinadores";
+        }
 
         // Asignar el rol de Coordinador (idroles = 2)
         Rol rolCoordinador = new Rol();
@@ -264,6 +290,10 @@ public class SuperAdminController {
             usuario.setZona(zona); // Asignar la zona seleccionada al usuario
         }
         adminRepository.save(usuario);
+
+        // Mensaje de éxito
+        rttbtsp.addFlashAttribute("mensaje", "Los datos del coordinador fueron actualizados con éxito.");
+        rttbtsp.addFlashAttribute("tipoMensaje", "success");
         return "redirect:/superadmin/gestion_coordinadores";
     }
 
