@@ -325,7 +325,7 @@ public class SuperAdminController {
         if (agente.isPresent()){
             adminRepository.deleteById(id);
         }else {
-            System.out.println("No se encontró el coordinador con ID: " + id);
+            System.out.println("No se encontró el agente con ID: " + id);
         }
         return "redirect:/superadmin/gestion_agentes";
     }
