@@ -513,6 +513,7 @@ public class SuperAdminController {
     /*para borrar agente*/
     @GetMapping("/borrar_agentes")
     public String borrar_agentes(Model model, @RequestParam("id") int id, RedirectAttributes attr) {
+        System.out.println("Eliminando agente con ID: " + id);
         try {
             // Buscar al agente por ID
             Optional<Usuario> optAgente = adminRepository.findById(id);
