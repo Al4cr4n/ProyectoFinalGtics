@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 
-
 <html
         lang="en"
         class="light-style layout-menu-fixed"
@@ -8,6 +7,8 @@
         data-theme="theme-default"
         data-assets-path="/assets/"
         data-template="vertical-menu-template-free"
+        xmlns:th="http://www.thymeleaf.org"
+
 >
 <head>
   <meta charset="utf-8" />
@@ -64,11 +65,11 @@
     <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
       <!-- Contenedor para la imagen centrada -->
       <div style="text-align: center;">
-        <img src="logo.png" alt="Imagen" style="width: 150px; margin-bottom: -70px; margin-top: -20px">
+        <img src=/assets/img/icons/unicons/logo.png" alt="Imagen" style="width: 150px; margin-bottom: -70px; margin-top: -20px">
       </div>
 
       <div class="app-brand demo" style="text-align: center;">
-        <a href="inicio_agente.html" class="app-brand-link">
+        <a href="/agente/inicio_agente" class="app-brand-link">
           <span class="app-brand-text demo menu-text fw-bolder" style="font-family: 'Poppins', sans-serif; color: #7367F0; padding-left: 15px;">TelExpress</span>
         </a>
 
@@ -83,21 +84,21 @@
       <ul class="menu-inner py-1">
         <!-- Dashboard -->
         <li class="menu-item active">
-          <a href="inicio_agente.html" class="menu-link">
+          <a href="/agente/inicio_agente" class="menu-link">
             <i class="menu-icon tf-icons bx bx-home-circle"></i>
             <div data-i18n="Inicio">Inicio</div>
           </a>
         </li>
 
         <li class="menu-item">
-          <a href="usuarios_agente.html" class="menu-link">
+          <a href="/agente/usuarios_agente" class="menu-link">
             <i class="menu-icon tf-icons bx bx-user"></i>
             <div data-i18n="ListaDeUsuarios">Lista de usuarios</div>
           </a>
         </li>
 
         <li class="menu-item">
-            <a href="chat_agente.html" class="menu-link">
+            <a href="/agente/chat_agente" class="menu-link">
               <i class="menu-icon tf-icons bx bx-chat"></i>
               <div data-i18n="Chats">Chats</div>
             </a>
@@ -114,27 +115,27 @@
           </a>
           <ul class="menu-sub">
             <li class="menu-item">
-              <a href="ordenes_agente.html" class="menu-link">
+              <a href="/agente/ordenes_agente" class="menu-link">
                 <div data-i18n="TodasLasOrdenes">Todas las órdenes</div>
               </a>
             </li>
             <li class="menu-item">
-              <a href="ordenes_sin_asignar.html" class="menu-link">
+              <a href="/agente/ordenes_sin_asignar" class="menu-link">
                 <div data-i18n="OrdenesSinAsignar">Órdenes sin asignar</div>
               </a>
             </li>
             <li class="menu-item">
-              <a href="ordenes_pendientes.html" class="menu-link">
+              <a href="/agente/ordenes_pendientes" class="menu-link">
                 <div data-i18n="OrdenesPendientes">Órdenes pendientes</div>
               </a>
             </li>
             <li class="menu-item">
-                <a href="ordenes_en_progreso.html" class="menu-link">
+                <a href="/agente/ordenes_en_progreso" class="menu-link">
                   <div data-i18n="OrdenesEnProgreso">Órdenes en progreso</div>
                 </a>
             </li>
             <li class="menu-item">
-              <a href="ordenes_resueltas.html" class="menu-link">
+              <a href="/agente/ordenes_resueltas" class="menu-link">
                 <div data-i18n="OrdenesResueltas">Órdenes resueltas</div>
               </a>
             </li>
@@ -144,7 +145,7 @@
         </li>
 
         <li class="menu-item">
-            <a href="usuarios_baneados.html" class="menu-link">
+            <a href="/agente/usuarios_baneados" class="menu-link">
               <i class="menu-icon tf-icons bx bx-block"></i>
               <div data-i18n="UsuariosBaneados">Usuarios baneados</div>
             </a>
@@ -251,7 +252,7 @@
               </a>
               <ul class="dropdown-menu dropdown-menu-end">
                 <li>
-                  <a class="dropdown-item" href="perfil_agente.html">
+                  <a class="dropdown-item" href="/agente/perfil_agente">
                     <div class="d-flex">
                       <div class="flex-shrink-0 me-3">
                         <div class="avatar avatar-online">
@@ -270,7 +271,7 @@
                   <div class="dropdown-divider"></div>
                 </li>
                 <li>
-                  <a class="dropdown-item" href="cambio_contra_agente.html">
+                  <a class="dropdown-item" href="/agente/cambio_contra_agente">
                     <i class="bx bx-user me-2"></i>
                     <span class="align-middle">Cambio de Contraseña</span>
                   </a>
@@ -281,7 +282,7 @@
                   <div class="dropdown-divider"></div>
                 </li>
                 <li>
-                  <a class="dropdown-item" href="../Sistema/Login.html">
+                  <a class="dropdown-item" href="/Login">
                     <i class="bx bx-power-off me-2"></i>
                     <span class="align-middle">Cerrar Sesión</span>
                   </a>
