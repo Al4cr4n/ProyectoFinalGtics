@@ -129,19 +129,40 @@ public class SuperAdminController {
 
 
 
-    @GetMapping("/eliminar")
+    @GetMapping("/eliminar/{id}")
     public String borrarUsuario(Model model,
-                                @RequestParam("id") int id,
+                                @PathVariable("id") int id,
                                 RedirectAttributes attr) {
 
-        Optional<Usuario> optUsuario = adminRepository.findById(id);
+        try {
+            Optional<Usuario> optUser = adminRepository.findById(id);
 
-        if (optUsuario.isPresent()) {
-            adminRepository.deleteById(id);
+            if (optUser.isPresent()) {
+                Usuario usuario = optUser.get();
+
+                // Verificar si el usuario está relacionado con órdenes
+                List<Ordenes> ordenes = ordenesRepository.findByUsuarioId(id);
+
+                if (ordenes.isEmpty()) {
+                    // Si no hay relaciones, eliminar el usuario
+                    adminRepository.deleteById(id);
+                    attr.addFlashAttribute("success", "Usuario eliminado exitosamente.");
+                } else {
+                    // Si hay órdenes relacionadas, eliminar las órdenes antes de eliminar el usuario
+                    ordenesRepository.deleteAll(ordenes);
+                    adminRepository.deleteById(id);
+                    attr.addFlashAttribute("success", "Usuario y sus órdenes eliminados exitosamente.");
+                }
+            } else {
+                attr.addFlashAttribute("error", "Usuario no encontrado.");
+            }
+        } catch (Exception ex) {
+            attr.addFlashAttribute("error", "No se puede eliminar al usuario debido a que tiene relaciones.");
+            ex.printStackTrace();
         }
-        return "redirect:/superadmin";
-
+        return "redirect:/superadmin/gestion_usuarios";
     }
+
 
 
 

@@ -326,6 +326,18 @@
       <!-- Content wrapper -->
       <div class="content-wrapper">
         <div class="container-xxl flex-grow-1 container-p-y">
+          <div class="container mt-4">
+            <!-- Mensaje de éxito -->
+            <div th:if="${success}" class="alert alert-success" role="alert">
+              <span th:text="${success}"></span>
+            </div>
+
+            <!-- Mensaje de error -->
+            <div th:if="${error}" class="alert alert-danger" role="alert">
+              <span th:text="${error}"></span>
+            </div>
+          </div>
+
           <h5 class="mb-4">Usuarios</h5>
           <div class="table-responsive text-nowrap">
             <table class="table table-striped" id="usuariosTable" style="margin-top: 20px;">
@@ -354,7 +366,7 @@
                   <a class="btn btn-sm btn-primary" th:href="@{/superadmin/editar/{id}(id=${usuario.id})}">
                     <i class="bx bx-edit-alt"></i>
                   </a>
-                  <a class="btn btn-sm btn-danger" th:href="@{'/eliminar?id=' + ${usuario.id}}">
+                  <a class="btn btn-sm btn-danger" th:href="@{/superadmin/eliminar/{id}(id=${usuario.id})}">
                     <i class="bx bx-trash"></i>
                   </a>
                 </td>
@@ -364,13 +376,7 @@
             </table>
           </div>
           <!-- Paginación -->
-          <nav aria-label="Page navigation">
-            <ul class="pagination justify-content-end">
-              <li class="page-item"><a class="page-link" href="#">1</a></li>
-              <li class="page-item"><a class="page-link" href="#">2</a></li>
-              <li class="page-item"><a class="page-link" href="#">3</a></li>
-            </ul>
-          </nav>
+
         </div>
         <!-- Content backdrop -->
         <div class="content-backdrop fade"></div>
