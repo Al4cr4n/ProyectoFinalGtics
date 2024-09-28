@@ -378,9 +378,18 @@
             </div>
           </div>
 
+          <div th:if="${mensaje}" class="alert" th:class="'alert alert-' + ${tipoMensaje}">
+            <span th:text="${mensaje}"></span>
+          </div>
+
+
 
           <div class="card" style="padding: 0.8rem;">
             <div class="card-header">
+              <!-- Botón "Crear Nuevo" -->
+              <div class="text-center my-3">
+                <a class="btn btn-primary" th:href="@{/superadmin/new}">Crear Nuevo</a>
+              </div>
               <form action="/superadmin/buscadorcoordinador" method="get" class="mb-3">
                 <div class="input-group">
                   <input type="text" name="searchTerm" class="form-control" placeholder="Buscar por nombre, apellido o DNI" th:value="${searchTerm}" />
@@ -428,10 +437,7 @@
           </div>
           </div>
 
-          <!-- Botón "Crear Nuevo" -->
-          <div class="text-center my-3">
-            <a class="btn btn-primary" th:href="@{/superadmin/new}">Crear Nuevo</a>
-          </div>
+
 
         </div>
         <!-- Content backdrop -->

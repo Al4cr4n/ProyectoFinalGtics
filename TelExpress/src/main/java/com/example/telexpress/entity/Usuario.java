@@ -57,6 +57,6 @@ public class Usuario {
     @Column(nullable = false)
     private Integer isBan = 0; // Inicializa con 0 por defecto
 
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.REMOVE, orphanRemoval = true)
-    private List<Ordenes> ordenes;
+    /*@OneToMany(mappedBy = "usuario", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<Ordenes> ordenes;*/
 }

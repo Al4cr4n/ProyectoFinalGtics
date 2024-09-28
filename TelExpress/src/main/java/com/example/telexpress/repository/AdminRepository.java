@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.data.repository.query.Param;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface AdminRepository extends JpaRepository<Usuario,Integer>{
@@ -32,6 +33,16 @@ public interface AdminRepository extends JpaRepository<Usuario,Integer>{
     // busqueda por nombre, apellido o DNI entre los usuarios con rol (rolid)
     @Query("SELECT u FROM Usuario u WHERE u.rol.id = :rolId AND (u.nombre LIKE %:searchTerm% OR u.apellido LIKE %:searchTerm% OR u.dni LIKE %:searchTerm%)")
     List<Usuario> searchByNameOrDniAndRol(@Param("searchTerm") String searchTerm, @Param("rolId") int rolId);
+
+
+    // Método para buscar un usuario por DNI
+    Optional<Usuario> findByDni(String dni);
+
+    // Método para buscar un usuario por correo
+    Optional<Usuario> findByCorreo(String correo);
+
+    // Método para buscar un usuario por teléfono
+    Optional<Usuario> findByTelefono(String telefono);
 
 
 
