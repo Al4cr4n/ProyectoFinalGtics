@@ -76,7 +76,7 @@
                         <div data-i18n="Dashboard">Dashboard</div>
                     </a>
                 </li>
-                <li class="menu-item active">
+                <li class="menu-item ">
                     <a href="/superadmin/inventario_superadmin" class="menu-link">
                         <i class="menu-icon tf-icons bx bx-package"></i>
                         <div data-i18n="Inventario">Inventario</div>
@@ -88,7 +88,7 @@
                 <li class="menu-header small text-uppercase">
                     <span class="menu-header-text">Páginas</span>
                 </li>
-                <li class="menu-item">
+                <li class="menu-item active" >
                     <a href="javascript:void(0);" class="menu-link menu-toggle">
                         <i class="menu-icon tf-icons bx bx-dock-top"></i>
                         <div data-i18n="Gestión de Roles">Gestión de Roles</div>
@@ -104,7 +104,7 @@
                                 <div data-i18n="Agente">Agente</div>
                             </a>
                         </li>
-                        <li class="menu-item">
+                        <li class="menu-item active">
                             <a href="/superadmin/gestion_usuarios" class="menu-link">
                                 <div data-i18n="Usuario">Usuario</div>
                             </a>
@@ -279,7 +279,7 @@
                     <h4 class="mb-4">Registrar Nuevo usuario</h4>
 
                     <!-- Formulario -->
-                    <form id="formRegistro" method="post" th:action="@{/superadmin/guardar}">
+                    <form id="formRegistro" method="post" th:action="@{/superadmin/guardar_usuario}">
                         <div class="row mb-3">
                             <!-- Nombre del usuario-->
 
@@ -304,7 +304,7 @@
 
                             <!-- DIRECCION  -->
                             <div class="col-md-6">
-                                <label for="direccion" class="form-label">Costo de envío:</label>
+                                <label for="direccion" class="form-label">Direccion:</label>
                                 <input type="text" class="form-control" id="direccion" name="direccion" placeholder="Ingrese la direccion" >
                             </div>
                         </div>
@@ -323,15 +323,19 @@
                             </div>
                         </div>
 
-                        <!--<div class="row mb-3">
+                        <div class="row mb-3">
 
 
                             <div class="col-md-6">
                                 <label for="zona" class="form-label">Zona:</label>
-                                <input type="text" class="form-control" id="zona" placeholder="Ingresa la zona ">
+                                <select class=" form-select" name="zona" id="zona">
+                                    <option th:each="zona :${listaZona}"
+                                            th:text="${zona.nombre}" th:value="${zona.id}">
+                                    </option>
+                                </select>
                             </div>
 
-                        </div>-->
+                        </div>
 
                         <!-- Botón de registrar
                         <div class="text-center">
