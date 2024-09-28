@@ -94,8 +94,6 @@ public class SuperAdminController {
         return "SuperAdmin/inicio_superadmin";
     }
 
-
-
     /*USUARIO EDITAR, GUARDAR Y BORRAR*/
 
     @GetMapping("/editar/{id}")
