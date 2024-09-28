@@ -656,9 +656,9 @@
               <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
                   <h5 class="mb-0">Agentes</h5>
-                  <form action="/superadmin/buscadorcoordinador" method="get" class="d-flex mb-0">
+                  <form action="/superadmin/buscador/buscaragentes" method="get" class="d-flex mb-0">
                     <div class="input-group">
-                      <input type="text" name="searchTerm" class="form-control" placeholder="Buscar por nombre, apellido o DNI" th:value="${searchTerm}" />
+                      <input type="text" name="searchTermAgente" class="form-control" placeholder="Buscar por nombre, apellido o DNI" th:value="${searchTermAgente}" />
                       <button type="submit" class="btn btn-primary">Buscar</button>
                     </div>
                   </form>
@@ -761,9 +761,9 @@
               <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
                   <h5 class="mb-0">Coordinadores Zonales</h5>
-                  <form action="/superadmin/buscadorcoordinador" method="get" class="d-flex mb-0">
+                  <form action="/superadmin/buscador/buscaragentes" method="get" class="d-flex mb-0">
                     <div class="input-group">
-                      <input type="text" name="searchTerm" class="form-control" placeholder="Buscar por nombre, apellido o DNI" th:value="${searchTerm}" />
+                      <input type="text" name="searchTermZonal" class="form-control" placeholder="Buscar por nombre, apellido o DNI" th:value="${searchTermZonal}" />
                       <button type="submit" class="btn btn-primary">Buscar</button>
                     </div>
                   </form>
@@ -788,7 +788,7 @@
                       <td th:text="${coordi.telefono}"></td>
                       <td th:text="${coordi.dni}"></td>
                       <td th:text="${coordi.correo}"></td>
-                      <td th:text="${coordi.zona}"></td>
+                      <td th:text="${coordi.zona.nombre}"></td>
 
                       <td>
                         <div class="dropdown">
