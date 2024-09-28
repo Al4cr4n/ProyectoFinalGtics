@@ -366,6 +366,19 @@
         <div class="container-xxl flex-grow-1 container-p-y">
           <!-- Tabla Coordinadores Zonales -->
           <h5 class="mb-4">Coordinadores Zonales</h5>
+          <div class="container mt-4">
+            <!-- Mensaje de éxito -->
+            <div th:if="${success}" class="alert alert-success" role="alert">
+              <span th:text="${success}"></span>
+            </div>
+
+            <!-- Mensaje de error -->
+            <div th:if="${error}" class="alert alert-danger" role="alert">
+              <span th:text="${error}"></span>
+            </div>
+          </div>
+
+
           <div class="card" style="padding: 0.8rem;">
             <div class="card-header">
               <form action="/superadmin/buscadorcoordinador" method="get" class="mb-3">

@@ -268,7 +268,7 @@ public class SuperAdminController {
     }
 
     /*para gestionar coordinador zonal*/
-    @GetMapping("/deletecoordi")
+   /* @GetMapping("/deletecoordi")
     public String eliminarcoordi(Model model, @RequestParam("id") Integer id){
         Optional <Usuario> coordi = adminRepository.findById(id);
         if (coordi.isPresent()){
@@ -277,7 +277,55 @@ public class SuperAdminController {
             System.out.println("No se encontró el coordinador con ID: " + id);
         }
         return "redirect:/superadmin/gestion_coordinadores";
+    }*/
+   /* @GetMapping("/deletecoordi")
+    public String eliminarCoordi(@RequestParam("id") Integer id, Model model) {
+        Optional<Usuario> coordi = adminRepository.findById(id);
+        if (coordi.isPresent()) {
+            try {
+                adminRepository.deleteById(id);  // Este método ya eliminará también las órdenes si configuras cascada
+                System.out.println("Coordinador y sus órdenes eliminados correctamente.");
+            } catch (Exception e) {
+                System.out.println("Error al eliminar el coordinador con ID: " + id + ". " + e.getMessage());
+            }
+        } else {
+            System.out.println("No se encontró el coordinador con ID: " + id);
+        }
+        return "redirect:/superadmin/gestion_coordinadores";
+    }*/
+    @GetMapping("/deletecoordi")
+    public String eliminarCoordi(Model model,@RequestParam("id") Integer id, RedirectAttributes attrbt) {
+        try {
+            Optional<Usuario> optUser = adminRepository.findById(id);
+
+            if (optUser.isPresent()) {
+                Usuario usuario = optUser.get();
+
+                // Verificar si el usuario está relacionado con órdenes
+                List<Ordenes> ordenes = ordenesRepository.findByUsuarioId(id);
+
+                if (ordenes.isEmpty()) {
+                    // Si no hay relaciones, eliminar el usuario
+                    adminRepository.deleteById(id);
+                    attrbt.addFlashAttribute("success", "Coordinador zonal eliminado exitosamente.");
+                } else {
+                    // Si hay órdenes relacionadas, eliminar las órdenes antes de eliminar el usuario
+                    ordenesRepository.deleteAll(ordenes);
+                    adminRepository.deleteById(id);
+                    attrbt.addFlashAttribute("success", "Usuario y sus órdenes eliminados exitosamente.");
+                }
+            } else {
+                attrbt.addFlashAttribute("error", "Usuario no encontrado.");
+            }
+        } catch (Exception ex) {
+            attrbt.addFlashAttribute("error", "No se puede eliminar al coordinador debido tiene procesos no finalizados.");
+            ex.printStackTrace();
+        }
+        return "redirect:/superadmin/gestion_coordinadores";
     }
+
+
+
 
     @GetMapping("/buscadorcoordinador")
     public String buscador_coordinador_zonal(Usuario usuario, @RequestParam("searchTerm") String  searchTerm, Model model){
