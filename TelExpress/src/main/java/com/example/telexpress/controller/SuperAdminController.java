@@ -62,14 +62,39 @@ public class SuperAdminController {
         return "SuperAdmin/inicio_superadmin";
     }
     /*busquedas en pagina inicial*/
+
     @GetMapping("/buscador/buscarusuarios")
     public String busquedauserInicio(Usuario usuario, @RequestParam("searchTerm") String searchTerm, Model model){
-        List<Usuario> listauser = adminRepository.searchByNameOrDni(searchTerm);
+        int rolId = 4;  // El rol de "usuarios" es 4
+        List<Usuario> listauser = adminRepository.searchByNameOrDniAndRol(searchTerm, rolId);
+        //List<Usuario> listauser = adminRepository.searchByNameOrDni(searchTerm);
         model.addAttribute("listaUsuario", listauser);
         model.addAttribute("listaAgente",adminRepository.buscarUsuarioPorRol(3));
         model.addAttribute("listaCoordi",adminRepository.buscarUsuarioPorRol(2));
         return "SuperAdmin/inicio_superadmin";
     }
+    /* AGENTES  */
+    @GetMapping("/buscador/buscaragentes")
+    public String busquedaAgentes(@RequestParam("searchTermAgente") String searchTermAgente, Model model){
+        int rolId = 3;  // El rol de "usuarios" es 4
+        List<Usuario> listaAgentes = adminRepository.searchByNameOrDniAndRol(searchTermAgente, rolId);
+        model.addAttribute("listaUsuario", adminRepository.buscarUsuarioPorRol(4));
+        model.addAttribute("listaAgente", listaAgentes);
+        model.addAttribute("listaCoordi", adminRepository.buscarUsuarioPorRol(2));
+        return "SuperAdmin/inicio_superadmin";
+    }
+    /* COORDINADOR ZONAL */
+    @GetMapping("/buscador/buscarcoordis")
+    public String busquedaZonales(@RequestParam("searchTermZonal") String searchTermZonal, Model model){
+        int rolId = 2;  // El rol de "usuarios" es 4
+        List<Usuario> listazonales = adminRepository.searchByNameOrDniAndRol(searchTermZonal, rolId);
+        model.addAttribute("listaUsuario", adminRepository.buscarUsuarioPorRol(4));
+        model.addAttribute("listaAgente", adminRepository.buscarUsuarioPorRol(3));
+        model.addAttribute("listaCoordi", listazonales);
+        return "SuperAdmin/inicio_superadmin";
+    }
+
+
 
     /*USUARIO EDITAR, GUARDAR Y BORRAR*/
 
@@ -259,8 +284,9 @@ public class SuperAdminController {
 
     @GetMapping("/buscadorcoordinador")
     public String buscador_coordinador_zonal(Usuario usuario, @RequestParam("searchTerm") String  searchTerm, Model model){
-
-        List<Usuario> listazonal = adminRepository.searchByNameOrDni(searchTerm);
+        int rolId = 2;  // El rol de "usuarios" es 4
+        List<Usuario> listazonal = adminRepository.searchByNameOrDniAndRol(searchTerm, rolId);
+        //List<Usuario> listazonal = adminRepository.searchByNameOrDni(searchTerm);
         model.addAttribute("coordinadores", listazonal);
         return "SuperAdmin/gestion_coordinadores";
     }

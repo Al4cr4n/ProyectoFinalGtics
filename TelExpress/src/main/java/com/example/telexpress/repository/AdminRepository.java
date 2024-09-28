@@ -29,6 +29,11 @@ public interface AdminRepository extends JpaRepository<Usuario,Integer>{
             + "dni LIKE CONCAT('%', :searchTerm, '%')", nativeQuery = true)
     List<Usuario> searchByNameOrDni(@Param("searchTerm") String searchTerm);
 
+    // busqueda por nombre, apellido o DNI entre los usuarios con rol (rolid)
+    @Query("SELECT u FROM Usuario u WHERE u.rol.id = :rolId AND (u.nombre LIKE %:searchTerm% OR u.apellido LIKE %:searchTerm% OR u.dni LIKE %:searchTerm%)")
+    List<Usuario> searchByNameOrDniAndRol(@Param("searchTerm") String searchTerm, @Param("rolId") int rolId);
+
+
 
 
 
