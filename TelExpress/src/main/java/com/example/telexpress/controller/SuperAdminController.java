@@ -367,17 +367,32 @@ public class SuperAdminController {
 
     /*para borrar agente*/
     @GetMapping("/borrar_agentes")
-    public String borrar_agentes(Model model, @RequestParam("id") Integer id){
-        Optional <Usuario> agente = adminRepository.findById(id);
-        if (agente.isPresent()){
-            adminRepository.deleteById(id);
-        }else {
-            System.out.println("No se encontró el agente con ID: " + id);
+    public String borrar_agentes(Model model, @RequestParam("id") Integer id, RedirectAttributes attr) {
+        try {
+            Optional<Usuario> agente = adminRepository.findById(id);
+
+            if (agente.isPresent()) {
+                // Buscar todas las órdenes asociadas al agente
+                List<Ordenes> ordenesAgente = ordenesRepository.findByUsuarioId(id);
+
+                // Eliminar todas las órdenes asociadas al agente
+                if (!ordenesAgente.isEmpty()) {
+                    ordenesRepository.deleteAll(ordenesAgente);
+                }
+
+                // Luego de eliminar las órdenes, eliminar el agente
+                adminRepository.deleteById(id);
+
+                attr.addFlashAttribute("success", "Agente y sus órdenes asociadas eliminados exitosamente.");
+            } else {
+                attr.addFlashAttribute("error", "No se encontró el agente con ID: " + id);
+            }
+        } catch (Exception ex) {
+            attr.addFlashAttribute("error", "Error al eliminar el agente: " + ex.getMessage());
+            ex.printStackTrace();
         }
         return "redirect:/superadmin/gestion_agentes";
     }
-
-
 
 
     @GetMapping("/rol_agente_solicitudes")
