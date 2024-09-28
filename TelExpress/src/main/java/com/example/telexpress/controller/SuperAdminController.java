@@ -281,19 +281,43 @@ public class SuperAdminController {
 
     /* para actualizar datos de agente*/
     @PostMapping("/actualizar_agentes")
-    public String actualizar_agentes(Usuario agente, RedirectAttributes attr) {
-        // Verificar si el proveedor ya está en la base de datos
-        Proveedor proveedor = agente.getProveedor();
+    public String actualizar_agentes(Usuario agenteActualizado, RedirectAttributes attr) {
+        if (agenteActualizado.getId() != null) { // Si es una edición
+            Optional<Usuario> optAgenteExistente = adminRepository.findById(agenteActualizado.getId());
 
-        if (proveedor != null && proveedor.getIdProveedor() == null) {
-            // Guardar el proveedor si aún no ha sido persistido
-            proveedorRepository.save(proveedor);
+            if (optAgenteExistente.isPresent()) {
+                Usuario agenteExistente = optAgenteExistente.get();
+
+                // Actualizar solo los campos modificados desde el formulario
+                agenteExistente.setNombre(agenteActualizado.getNombre());
+                agenteExistente.setApellido(agenteActualizado.getApellido());
+                agenteExistente.setTelefono(agenteActualizado.getTelefono());
+
+                // Actualizar el nombre de la tienda del proveedor, si existe un proveedor asociado
+                if (agenteActualizado.getProveedor() != null && agenteActualizado.getProveedor().getNombreTienda() != null) {
+                    Proveedor proveedorExistente = agenteExistente.getProveedor();
+
+                    if (proveedorExistente != null) {
+                        proveedorExistente.setNombreTienda(agenteActualizado.getProveedor().getNombreTienda());
+                        proveedorRepository.save(proveedorExistente); // Guardar cambios en el proveedor
+                    }
+                }
+
+                // Si la zona ha sido modificada, actualizarla
+                if (agenteActualizado.getZona() != null) {
+                    agenteExistente.setZona(agenteActualizado.getZona());
+                }
+
+                // Guardar los cambios del agente
+                adminRepository.save(agenteExistente);
+            }
+        } else { // Si es un nuevo registro
+            adminRepository.save(agenteActualizado);
         }
 
-        // Ahora guarda el usuario (agente) después de haber persistido el proveedor
-        adminRepository.save(agente);
-        return "redirect:/SuperAdmin/gestion_agentes";
+        return "redirect:/superadmin/gestion_agentes";
     }
+
 
 
     @GetMapping("/rol_agente_solicitudes")
