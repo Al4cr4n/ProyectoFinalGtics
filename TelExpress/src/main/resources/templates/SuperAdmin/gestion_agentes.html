@@ -291,11 +291,10 @@
                     <i class="bx bx-edit-alt"></i>
                   </a>
                   <!-- Botón para eliminar -->
-                  <!-- Botón para eliminar en cada fila -->
                   <a class="btn btn-sm btn-danger" href="javascript:void(0);"
                      data-bs-toggle="modal"
                      data-bs-target="#confirmModal"
-                     data-id="${agente.id}">
+                     data-id="[[${agente.id}]]">
                     <i class="bx bx-trash"></i>
                   </a>
                 </td>
@@ -361,7 +360,7 @@
   // Confirmar la eliminación y redirigir al método del controlador
   document.getElementById('confirmarEliminar').addEventListener('click', function () {
     if (agenteId) {
-      window.location.href = '/superadmin/borrar_agentes?id=' + agenteId;
+      window.location.href = '/superadmin/borrar_agentes?id=' + encodeURIComponent(agenteId);
     }
   });
 </script>
