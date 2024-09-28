@@ -41,6 +41,67 @@
   <!-- DataTables JS -->
   <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 
+  <!-- DataTables CSS -->
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+  <!-- DataTables JS -->
+  <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+  <style>
+
+    /* Centrar la paginación en DataTables */
+    .dataTables_wrapper .dataTables_paginate {
+      display: flex; /* Usar flexbox para centrar */
+      justify-content: center; /* Centrar horizontalmente */
+      margin-top: 1.5rem; /* Añade margen superior */
+      margin-left: auto; /* Asegura que se centre */
+      margin-right: auto; /* Asegura que se centre */
+    }
+
+    /* Estilo para el paginado */
+    /*.dataTables_wrapper .dataTables_paginate {
+      text-align: center; /* Centra el paginado */
+
+
+    /* Estilo de los botones de paginación */
+    .dataTables_wrapper .dataTables_paginate .paginate_button {
+      padding: 0.5em 1em;
+      border-radius: 4px;
+      border: 1px solid #ddd;
+      background: #f5f5f5;
+      color: #89a9cc;
+    }
+    /*Estilo para la tabla */
+    .table {
+      border-collapse: collapse; /* Para que los bordes se fusionen*/
+    }
+
+
+    /* Sin bordes en las cabeceras */
+    .table th {
+      border: none; /* Sin borde en la cabecera */
+    }
+
+    /* Solo mostrar borde inferior en las celdas */
+    .table td {
+      border: none; /* Sin borde en los lados */
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1); /* Solo borde inferior para filas */
+      padding: 0.5rem; /* Espaciado interno para las celdas */
+      text-align: left; /* Alinea el contenido de las celdas a la izquierda */
+    }
+
+    table {
+      border-collapse: separate; /* Evita que las celdas estén pegadas entre sí */
+      border-spacing: 0 10px; /* Espaciado entre las filas */
+    }
+    /* Ocultar el buscador, el texto "Showing" y el selector de longitud */
+    .dataTables_wrapper .dataTables_filter,
+    .dataTables_wrapper .dataTables_info,
+    .dataTables_wrapper .dataTables_length {
+      display: none;
+    }
+
+  </style>
+
+
 
 </head>
 <body>
@@ -411,6 +472,34 @@
 
 <!-- Place this tag in your head or just before your close body tag. -->
 <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+<!-- DataTables JS -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+
+<script>
+  $(document).ready(function() {
+    $('#proveedoresTable').DataTable({
+      "pagingType": "full_numbers", // Esto muestra los números de página completos
+      "pageLength":8,
+      "infoEmpty": "No hay usuarios disponibles",
+      "language": {
+        "paginate": {
+          "first": "",
+          "last": "",
+          "next": ">>",
+          "previous": "<<"
+        }
+      },
+      "paging": true,      // Activa la paginación
+      "searching": false,  // Desactiva el buscador
+      "info": false        // Oculta la información de "Showing"
+
+    });
+  });
+</script>
+
+
 </body>
 </html>
 >
