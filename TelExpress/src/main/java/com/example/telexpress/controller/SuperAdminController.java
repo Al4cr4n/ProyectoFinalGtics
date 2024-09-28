@@ -412,33 +412,38 @@ public class SuperAdminController {
 
     /*para borrar agente*/
     @GetMapping("/borrar_agentes")
-    public String borrar_agentes(Model model, @RequestParam("id") Integer id, RedirectAttributes attr) {
+    public String borrar_agentes(Model model, @RequestParam("id") int id, RedirectAttributes attr) {
         try {
-            Optional<Usuario> agente = adminRepository.findById(id);
+            // Buscar al agente por ID
+            Optional<Usuario> optAgente = adminRepository.findById(id);
 
-            if (agente.isPresent()) {
+            if (optAgente.isPresent()) {
+                Usuario agente = optAgente.get();
+
                 // Buscar todas las órdenes asociadas al agente
                 List<Ordenes> ordenesAgente = ordenesRepository.findByUsuarioId(id);
 
-                // Eliminar todas las órdenes asociadas al agente
-                if (!ordenesAgente.isEmpty()) {
-                    ordenesRepository.deleteAll(ordenesAgente);
+                if (ordenesAgente.isEmpty()) {
+                    // Si no hay órdenes, puedes eliminar al agente
+                    adminRepository.deleteById(id);
+                    attr.addFlashAttribute("success", "Agente eliminado exitosamente.");
+                } else {
+                    // Si hay órdenes, mostrar un mensaje de error sin eliminar
+                    attr.addFlashAttribute("error", "No se puede eliminar el agente porque tiene órdenes pendientes.");
                 }
-
-                // Luego de eliminar las órdenes, eliminar el agente
-                adminRepository.deleteById(id);
-
-                attr.addFlashAttribute("success", "Agente y sus órdenes asociadas eliminados exitosamente.");
             } else {
-                attr.addFlashAttribute("error", "No se encontró el agente con ID: " + id);
+                attr.addFlashAttribute("error", "Agente no encontrado.");
             }
+        } catch (EntityNotFoundException ex) {
+            // Excepción si no se encuentra al agente
+            attr.addFlashAttribute("error", "No se pudo encontrar el agente con el ID especificado.");
         } catch (Exception ex) {
-            attr.addFlashAttribute("error", "Error al eliminar el agente: " + ex.getMessage());
-            ex.printStackTrace();
+            // Manejo de otras excepciones inesperadas
+            attr.addFlashAttribute("error", "No se puede eliminar el agente debido a un error inesperado.");
+            ex.printStackTrace();  // Útil para depuración, elimínalo en producción
         }
         return "redirect:/superadmin/gestion_agentes";
     }
-
 
     @GetMapping("/rol_agente_solicitudes")
     public String rolAgenteSolicitudesSuperadmin() {
