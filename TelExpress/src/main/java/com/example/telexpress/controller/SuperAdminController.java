@@ -318,6 +318,19 @@ public class SuperAdminController {
         return "redirect:/superadmin/gestion_agentes";
     }
 
+    /*para borrar agente*/
+    @GetMapping("/borrar_agentes")
+    public String borrar_agentes(Model model, @RequestParam("id") Integer id){
+        Optional <Usuario> agente = adminRepository.findById(id);
+        if (agente.isPresent()){
+            adminRepository.deleteById(id);
+        }else {
+            System.out.println("No se encontró el coordinador con ID: " + id);
+        }
+        return "redirect:/superadmin/gestion_agentes";
+    }
+
+
 
 
     @GetMapping("/rol_agente_solicitudes")
