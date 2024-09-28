@@ -191,7 +191,7 @@ public class SuperAdminController {
     @GetMapping("/nuevo_usuario")
     public String nuevoUsuario(Model model){
         model.addAttribute("listaZona", zonaRepository.findAll());
-        return "Superadmin/crear_usuario";
+        return "redirect:/superadmin/crear_usuario";
     }
 
     @GetMapping("/inventario_registrar_producto")
