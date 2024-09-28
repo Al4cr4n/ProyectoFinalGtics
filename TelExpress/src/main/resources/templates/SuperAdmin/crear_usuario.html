@@ -76,7 +76,7 @@
                         <div data-i18n="Dashboard">Dashboard</div>
                     </a>
                 </li>
-                <li class="menu-item active">
+                <li class="menu-item ">
                     <a href="/superadmin/inventario_superadmin" class="menu-link">
                         <i class="menu-icon tf-icons bx bx-package"></i>
                         <div data-i18n="Inventario">Inventario</div>
@@ -88,7 +88,7 @@
                 <li class="menu-header small text-uppercase">
                     <span class="menu-header-text">Páginas</span>
                 </li>
-                <li class="menu-item">
+                <li class="menu-item active">
                     <a href="javascript:void(0);" class="menu-link menu-toggle">
                         <i class="menu-icon tf-icons bx bx-dock-top"></i>
                         <div data-i18n="Gestión de Roles">Gestión de Roles</div>
@@ -104,7 +104,7 @@
                                 <div data-i18n="Agente">Agente</div>
                             </a>
                         </li>
-                        <li class="menu-item">
+                        <li class="menu-item active">
                             <a href="/superadmin/gestion_usuarios" class="menu-link">
                                 <div data-i18n="Usuario">Usuario</div>
                             </a>
@@ -279,7 +279,7 @@
                     <h4 class="mb-4">Registrar Nuevo usuario</h4>
 
                     <!-- Formulario -->
-                    <form id="formRegistro" method="post" th:action="@{/superadmin/guardar}">
+                    <form id="formRegistro" method="post" th:action="@{/superadmin/guardar_usuario}">
                         <div class="row mb-3">
                             <!-- Nombre del usuario-->
 
@@ -299,12 +299,12 @@
                             <!-- DNI -->
                             <div class="col-md-6">
                                 <label for="dni" class="form-label">DNI:</label>
-                                <input type="number" class="form-control" name="dni" id="dni" placeholder="Ingrese el DNI" >
+                                <input type="text" class="form-control" name="dni" id="dni" placeholder="Ingrese el DNI" >
                             </div>
 
                             <!-- DIRECCION  -->
                             <div class="col-md-6">
-                                <label for="direccion" class="form-label">Costo de envío:</label>
+                                <label for="direccion" class="form-label">Direccion:</label>
                                 <input type="text" class="form-control" id="direccion" name="direccion" placeholder="Ingrese la direccion" >
                             </div>
                         </div>
@@ -322,6 +322,16 @@
                                 <input type="text" class="form-control" id="telefono" name="telefono" placeholder="Ingrese el telefono">
                             </div>
                         </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="zona" class="form-label">Zona:</label>
+                                <select class="form-select" id="zona" name="zona" th:field="*{zona}">
+                                    <option th:each="zona : ${listaZona}" th:value="${zona.idzona}" th:text="${zona.nombre}"></option>
+                                </select>
+                            </div>
+                        </div>
+
+
 
                         <!--<div class="row mb-3">
 
@@ -333,14 +343,7 @@
 
                         </div>-->
 
-                        <!-- Botón de registrar
-                        <div class="text-center">
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmModal">Registrar</button>
-                        </div>
 
-                        <div class="text-center my-3">
-                            <a class="btn btn-danger" th:href="@{/producto/lista}">Cancelar</a>
-                        </div>-->
 
                         <div class="text-center d-flex justify-content-center my-3">
                             <button type="button" class="btn btn-primary mx-2" data-bs-toggle="modal" data-bs-target="#confirmModal">Registrar</button>
@@ -358,7 +361,7 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                ¿Estás seguro del registro de un nuevo producto?
+                                ¿Estás seguro del registro de un nuevo usuario?
                             </div>
                             <div class="modal-footer">
                                 <a th:href="@{/superadmin/nuevo_usuario}" class="btn btn-danger">Cancelar</a>

@@ -486,7 +486,7 @@ public class SuperAdminController {
                 Usuario agente = optAgente.get();
 
                 // Buscar todas las órdenes asociadas al agente
-                List<Ordenes> ordenesAgente = ordenesRepository.findByUsuarioId(id);
+                List<Ordenes> ordenesAgente = ordenesRepository.findByUsuarioId(agente.getId());
 
                 if (ordenesAgente.isEmpty()) {
                     // Si no hay órdenes, puedes eliminar al agente
