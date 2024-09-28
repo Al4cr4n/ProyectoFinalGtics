@@ -291,7 +291,11 @@
                     <i class="bx bx-edit-alt"></i>
                   </a>
                   <!-- Botón para eliminar -->
-                  <a class="btn btn-sm btn-danger" th:href="@{'/superadmin/borrar_agentes?id='+ ${agente.id}}">
+                  <!-- Botón para eliminar en cada fila -->
+                  <a class="btn btn-sm btn-danger" href="javascript:void(0);"
+                     data-bs-toggle="modal"
+                     data-bs-target="#confirmModal"
+                     data-id="${agente.id}">
                     <i class="bx bx-trash"></i>
                   </a>
                 </td>
@@ -312,7 +316,7 @@
             </ul>
           </nav>
         </div>
-        <!-- Confirmation Modal -->
+        <!-- Modal de confirmación -->
         <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -321,16 +325,15 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
-                Se eliminará el agente. ¿Estás seguro?
+                ¿Estás seguro de que deseas eliminar este agente?
               </div>
               <div class="modal-footer">
-                <a href="/gestion_agentes" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</a>
-                <button type="button" class="btn btn-primary" id="confirmarEliminar">Confirmar</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-danger" id="confirmarEliminar">Eliminar</button>
               </div>
             </div>
           </div>
         </div>
-        <!-- Fin del modal de confirmación -->
         <!-- Content backdrop -->
         <div class="content-backdrop fade"></div>
       </div>
@@ -346,9 +349,20 @@
 <!-- / Layout wrapper -->
 <!-- Core JS -->
 <script>
+  let agenteId;
+
+  // Capturar el id del agente al hacer clic en el botón de eliminar
+  document.querySelectorAll('[data-bs-target="#confirmModal"]').forEach(button => {
+    button.addEventListener('click', function () {
+      agenteId = this.getAttribute('data-id');
+    });
+  });
+
+  // Confirmar la eliminación y redirigir al método del controlador
   document.getElementById('confirmarEliminar').addEventListener('click', function () {
-    // Aquí agregas la lógica para eliminar el agente y luego redireccionar
-    window.location.href = '/gestion_agentes';
+    if (agenteId) {
+      window.location.href = '/superadmin/borrar_agentes?id=' + agenteId;
+    }
   });
 </script>
 
