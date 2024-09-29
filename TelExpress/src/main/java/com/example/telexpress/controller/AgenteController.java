@@ -41,11 +41,7 @@ public class AgenteController {
 
 
 
-    @GetMapping("")
-    public String index(){
 
-        return "Agente/inicio_agente";
-    }
 
     @GetMapping("/inicio_agente")
     public String inicioAgente() {
