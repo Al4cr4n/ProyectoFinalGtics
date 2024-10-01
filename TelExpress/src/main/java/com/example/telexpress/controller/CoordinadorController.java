@@ -24,8 +24,7 @@ public class CoordinadorController {
 
     public CoordinadorController(AdminRepository adminRepository, ZonaRepository zonaRepository,
                                 ProductoRepository productoRepository, UsuarioRepository usuarioRepository,
-                                ProveedorRepository proveedorRepository, OrdenesRepository ordenesRepository,
-                                 AgenteRepository
+                                ProveedorRepository proveedorRepository, OrdenesRepository ordenesRepository
     ) {
         this.adminRepository=adminRepository; this.zonaRepository=zonaRepository;
         this.productoRepository=productoRepository; this.usuarioRepository=usuarioRepository;
