@@ -31,12 +31,13 @@
 
     /* Centrar la paginación en DataTables */
     .dataTables_wrapper .dataTables_paginate {
-      display: flex; /* Usar flexbox para centrar */
-      justify-content: center; /* Centrar horizontalmente */
-      margin-top: 1.5rem; /* Añade margen superior */
-      margin-left: auto; /* Asegura que se centre */
-      margin-right: auto; /* Asegura que se centre */
+      display: flex;
+      justify-content: center;
+      margin-top: 1.5rem;
+      margin-left: auto;
+      margin-right: auto;
     }
+
 
     /* Estilo para el paginado */
     /*.dataTables_wrapper .dataTables_paginate {
@@ -56,7 +57,7 @@
     .table {
       border-collapse: collapse; /* Para que los bordes se fusionen*/
     }
-    
+
 
     /* Sin bordes en las cabeceras */
     .table th {
@@ -326,6 +327,9 @@
       <!-- Content wrapper -->
       <div class="content-wrapper">
         <div class="container-xxl flex-grow-1 container-p-y">
+
+          <!-- Tabla de Usuarios -->
+          <h5 class="mb-4">Usuarios finales</h5>
           <div class="container mt-4">
             <!-- Mensaje de éxito -->
             <div th:if="${success}" class="alert alert-success" role="alert">
@@ -338,49 +342,65 @@
             </div>
           </div>
 
-          <h5 class="mb-4">Usuarios</h5>
-          <!-- Botón "Crear Nuevo" -->
-          <div class="text-center my-3">
-            <a class="btn btn-primary" th:href="@{/superadmin/nuevo_usuario}">Crear Nuevo</a>
-          </div>
-          <div class="table-responsive text-nowrap">
-            <table class="table table-striped" id="usuariosTable" style="margin-top: 20px;">
-              <thead class="table-light">
-              <tr>
-                <th>N°</th>
-                <th>Nombre</th>
-                <th>Apellido</th>
-                <th>DNI</th>
-                <th>Correo</th>
+          <div class="card" style="padding: 0.8rem;">
+            <!-- Botón "Crear Nuevo" -->
+            <div class="text-end my-3">
+              <a class="btn btn-primary" th:href="@{/superadmin/nuevo_usuario}">Crear Nuevo</a>
+            </div>
 
-                <th>Iniciar Sesión</th>
-                <th>Acciones</th>
-              </tr>
-              </thead>
-              <tbody>
-              <!-- Ejemplo de filas de la tabla -->
-              <tr th:each="usuario, info: ${listaUsuario}">
-                <td th:text="${info.index + 1}"></td>
-                <td th:text="${usuario.nombre}"></td>
-                <td th:text="${usuario.apellido}"></td>
-                <td th:text="${usuario.dni}"></td>
-                <td th:text="${usuario.correo}"></td>
-                <td><button class="btn btn-sm btn-secondary">Ingresar</button></td>
-                <td>
-                  <a class="btn btn-sm btn-primary" th:href="@{/superadmin/editar/{id}(id=${usuario.id})}">
-                    <i class="bx bx-edit-alt"></i>
-                  </a>
-                  <a class="btn btn-sm btn-danger" th:href="@{/superadmin/eliminar/{id}(id=${usuario.id})}">
-                    <i class="bx bx-trash"></i>
-                  </a>
-                </td>
-              </tr>
-              <!-- Más filas de ejemplo... -->
-              </tbody>
-            </table>
-          </div>
-          <!-- Paginación -->
+            <!---------------------------------------------------- NUEVA TABLA ------------------------------------------------------------>
+            <!--- BUSCADOR||FILTRO||LIMPIAR FILTRO---->
+            <div class="filter-container">
 
+              <div class="input-group">
+                <input type="text" id="customSearch" name="customSearch" class="form-control" placeholder="Buscar por nombre o apellido" />
+                <button id="btnBuscar" class="btn btn-primary">Buscar</button>
+                <button id="btnLimpiar" class="btn btn-outline-primary">Limpiar Filtros</button>
+              </div>
+
+
+            </div>
+
+            <!--- TABLA   ---->
+
+            <div class="table-responsive text-nowrap">
+              <table class="table table-striped" id="usuariosTable" style="margin-top: 20px;">
+                <thead class="table-light">
+                <tr>
+                  <th>N°</th>
+                  <th>Nombre</th>
+                  <th>Apellido</th>
+                  <th>DNI</th>
+                  <th>Correo</th>
+
+                  <th>Iniciar Sesión</th>
+                  <th>Acciones</th>
+                </tr>
+                </thead>
+                <tbody>
+                <!-- Ejemplo de filas de la tabla -->
+                <tr th:each="usuario, info: ${listaUsuario}">
+                  <td th:text="${info.index + 1}"></td>
+                  <td th:text="${usuario.nombre}"></td>
+                  <td th:text="${usuario.apellido}"></td>
+                  <td th:text="${usuario.dni}"></td>
+                  <td th:text="${usuario.correo}"></td>
+                  <td><button class="btn btn-sm btn-secondary">Ingresar</button></td>
+                  <td>
+                    <a class="btn btn-sm btn-primary" th:href="@{/superadmin/editar/{id}(id=${usuario.id})}">
+                      <i class="bx bx-edit-alt"></i>
+                    </a>
+                    <a class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#confirmModal" th:attr="data-id=${usuario.id}">
+                      <i class="bx bx-trash"></i>
+                    </a>
+                  </td>
+                </tr>
+                <!-- Más filas de ejemplo... -->
+                </tbody>
+              </table>
+            </div>
+            <!----------------------------------------------------FIN NUEVA TABLA --------------------------------------------------------->
+          </div>
         </div>
         <!-- Content backdrop -->
         <div class="content-backdrop fade"></div>
@@ -393,6 +413,25 @@
   <div class="layout-overlay layout-menu-toggle"></div>
 </div>
 <!-- / Layout wrapper -->
+
+<!-- Modal de Confirmación -->
+<div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="confirmModalLabel">Confirmar eliminación</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        ¿Estás seguro de eliminar al usuario?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <a id="confirmDelete" class="btn btn-primary">Confirmar</a>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- Core JS -->
 <script src="/assets/vendor/libs/jquery/jquery.js"></script>
@@ -416,24 +455,49 @@
 
 <script>
   $(document).ready(function() {
-    $('#usuariosTable').DataTable({
-      "pagingType": "full_numbers", // Esto muestra los números de página completos
-      "pageLength":8,
-      "infoEmpty": "No hay usuarios disponibles",
+    var table = $('#usuariosTable').DataTable({
+      "pageLength": 5,
+      "lengthChange": false,
       "language": {
+        "emptyTable": "No hay registros disponibles",
+        "zeroRecords": "No se encontraron registros coincidentes",
+        "infoEmpty": "Mostrando 0 a 0 de 0 entradas",
+        "search": "Buscar:",
         "paginate": {
-          "first": "",
-          "last": "",
-          "next": ">>",
-          "previous": "<<"
-        }
-      },
-      "paging": true,      // Activa la paginación
-      "searching": false,  // Desactiva el buscador
-      "info": false        // Oculta la información de "Showing"
+          "first": "Primero",
+          "last": "Último",
+          "next": "Siguiente",
+          "previous": "Anterior"
+        },
+        "info": "Mostrando de _START_ a _END_ de _TOTAL_ entradas",
+        "infoFiltered": "(filtrado de _MAX_ entradas totales)"
+      }
+    });
 
+    // Evento para el botón Buscar
+    $('#btnBuscar').on('click', function() {
+      var searchValue = $('#customSearch').val();
+      table.search(searchValue).draw();  // Realiza la búsqueda
+    });
+
+    // Evento para el botón Limpiar Filtros
+    $('#btnLimpiar').on('click', function() {
+      $('#customSearch').val('');  // Limpia el campo de búsqueda
+      table.search('').draw();     // Resetea la tabla
     });
   });
+
+  $(document).ready(function() {
+    $('#confirmModal').on('show.bs.modal', function(event) {
+      var button = $(event.relatedTarget);  // Botón que disparó el modal
+      var userId = button.data('id');       // Extraer el ID del atributo data-id
+      console.log(userId);                  // Verificar el ID en la consola
+
+      var deleteUrl = '/superadmin/eliminar/' + userId; // URL de eliminación con el ID
+      $('#confirmDelete').attr('href', deleteUrl);      // Asignar la URL al botón de confirmación
+    });
+  });
+
 </script>
 </body>
 </html>
