@@ -260,6 +260,13 @@
       <div class="content-wrapper">
         <div class="container-xxl flex-grow-1 container-p-y">
           <h5 class="mb-4">Agentes</h5>
+          <form action="/superadmin/agente/buscar" method="GET" class="mb-4">
+            <div class="input-group">
+              <input type="text" name="searchTermAgente2" class="form-control" placeholder="Buscar agente por nombre o apellido" th:value="${searchTermAgente2}" />
+              <button class="btn btn-primary" type="submit">Buscar</button>
+            </div>
+          </form>
+
           <div class="table-responsive text-nowrap">
             <table class="table table-striped">
               <thead class="table-light">

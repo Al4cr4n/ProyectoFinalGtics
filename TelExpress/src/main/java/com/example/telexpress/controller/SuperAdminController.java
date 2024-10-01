@@ -31,12 +31,15 @@ public class SuperAdminController {
     final ProveedorRepository proveedorRepository;
     final OrdenesRepository ordenesRepository;
 
+
     public SuperAdminController(AdminRepository adminRepository, ZonaRepository zonaRepository,
                                 ProductoRepository productoRepository, UsuarioRepository usuarioRepository,
-                                ProveedorRepository proveedorRepository, OrdenesRepository ordenesRepository) {
+                                ProveedorRepository proveedorRepository, OrdenesRepository ordenesRepository
+                                ) {
         this.adminRepository=adminRepository; this.zonaRepository=zonaRepository;
         this.productoRepository=productoRepository; this.usuarioRepository=usuarioRepository;
         this.proveedorRepository=proveedorRepository; this.ordenesRepository=ordenesRepository;
+
     }
 
 
@@ -544,6 +547,17 @@ public class SuperAdminController {
             ex.printStackTrace();  // Útil para depuración, elimínalo en producción
         }
         return "redirect:/superadmin/gestion_agentes";
+    }
+
+    @GetMapping("/agente/buscar")
+    public String busquedaAgentes2(@RequestParam("searchTermAgente2") String searchTermAgente2, Model model){
+        int rolId = 3;  // El rol de "usuarios" es 4
+        List<Usuario> lista_agentes = adminRepository.searchByNameOrDniAndRol(searchTermAgente2, rolId);
+        model.addAttribute("listaUsuario", adminRepository.buscarUsuarioPorRol(4));
+        System.out.println("Resultados encontrados: " + lista_agentes.size());
+        model.addAttribute("lista_agentes", lista_agentes);
+        model.addAttribute("listaCoordi", adminRepository.buscarUsuarioPorRol(2));
+        return "SuperAdmin/gestion_agentes";
     }
 
     @GetMapping("/rol_agente_solicitudes")
