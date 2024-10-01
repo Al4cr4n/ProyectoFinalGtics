@@ -181,8 +181,8 @@ public class SuperAdminController {
         Optional<Usuario> optUsuario = adminRepository.findById(id);
         if (optUsuario.isPresent()){
             Usuario usuario = optUsuario.get();
-            model.addAttribute("usuarios", usuario);
-            model.addAttribute("listaDistritos", distritoRepository.findAll());
+            model.addAttribute("usuario", usuario);
+            model.addAttribute("distritos", distritoRepository.findAll());
 
             return "SuperAdmin/editar_usuario";
         }else{
@@ -190,46 +190,60 @@ public class SuperAdminController {
         }
     }
 
-    /*@PostMapping("/guardar_usuario")
-    public String guardarUsuario(Usuario usuario, RedirectAttributes attr) {
+    @GetMapping("/crear_usuario")
+    public String guardarUsuario(Model model, RedirectAttributes attr) {
+        List<Distrito> distritos = distritoRepository.findAll();
+        model.addAttribute("distritos",distritos);
+        model.addAttribute("usuario",new Usuario());
 
-
-        adminRepository.save(usuario);
-        return "redirect:/superadmin/gestion_usuarios";
-    }*/
+        return "SuperAdmin/editar_usuario";
+    }
     @PostMapping("/guardar_usuario")
-    public String guardarUsuario(Usuario usuarioActualizado, RedirectAttributes attr) {
-        if (usuarioActualizado.getId() != null) { // Si es una edición
-            Optional<Usuario> optUsuarioExistente = adminRepository.findById(usuarioActualizado.getId());
+    public String guardarUsuario(Usuario usuario, RedirectAttributes attr,@RequestParam("distrito.id") Integer iddist ) {
+        // Verificar si el DNI, correo o número telefónico ya existen
+        Optional<Usuario> usuarioConMismoDni = adminRepository.findByDni(usuario.getDni());
+        Optional<Usuario> usuarioConMismoCorreo = adminRepository.findByCorreo(usuario.getCorreo());
+        Optional<Usuario> usuarioConMismoTelefono = adminRepository.findByTelefono(usuario.getTelefono());
 
-            if (optUsuarioExistente.isPresent()) {
-                Usuario usuarioExistente = optUsuarioExistente.get();
+        // Verificar si el DNI ya está en uso por otro usuario
+        if (usuarioConMismoDni.isPresent() && !usuarioConMismoDni.get().getId().equals(usuario.getId())) {
+            attr.addFlashAttribute("mensaje", "El DNI ya está registrado en otro usuario.");
+            attr.addFlashAttribute("tipoMensaje", "danger");
+            return "redirect:/superadmin/gestion_coordinadores";
+        }
 
-                // Actualizar solo los campos modificados
-                usuarioExistente.setNombre(usuarioActualizado.getNombre());
-                usuarioExistente.setApellido(usuarioActualizado.getApellido());
-                usuarioExistente.setDni(usuarioActualizado.getDni());
-                usuarioExistente.setDireccion(usuarioActualizado.getDireccion());
-                usuarioExistente.setCorreo(usuarioActualizado.getCorreo());
-                usuarioExistente.setTelefono(usuarioActualizado.getTelefono());
+        // Verificar si el correo ya está en uso por otro usuario
+        if (usuarioConMismoCorreo.isPresent() && !usuarioConMismoCorreo.get().getId().equals(usuario.getId())) {
+            attr.addFlashAttribute("mensaje", "El correo ya está registrado en otro usuario.");
+            attr.addFlashAttribute("tipoMensaje", "danger");
+            return "redirect:/superadmin/gestion_coordinadores";
+        }
 
-                // Mantener los campos que no se modifican en el formulario
-                // Por ejemplo, mantener el distrito o contraseña si no se cambian
-                if (usuarioActualizado.getDistrito() != null) {
-                    usuarioExistente.setDistrito(usuarioActualizado.getDistrito());
-                }
+        // Verificar si el número telefónico ya está en uso por otro usuario
+        if (usuarioConMismoTelefono.isPresent() && !usuarioConMismoTelefono.get().getId().equals(usuario.getId())) {
+            attr.addFlashAttribute("mensaje", "El número telefónico ya está registrado en otro usuario.");
+            attr.addFlashAttribute("tipoMensaje", "danger");
+            return "redirect:/superadmin/gestion_coordinadores";
+        }
 
-                adminRepository.save(usuarioExistente);
-            }
-        } else { // Si es un nuevo registro
+
             // Asignar el rol de usuario (idroles = 4)
             Rol rolusuario = new Rol();
             rolusuario.setId(4); // se ingresa el id del rol usuario
 
-            usuarioActualizado.setRol(rolusuario); // se le asigna a este nuevo usuario el rol
+            usuario.setRol(rolusuario); // se le asigna a este nuevo usuario el rol
+            Distrito distrito = distritoRepository.findById(iddist).orElse(null);
+            if(distrito!= null){
+                usuario.setDistrito(distrito);
+            }
 
-            adminRepository.save(usuarioActualizado);
-        }
+            // Asignar la zona basada en el distrito seleccionado
+            Zona zona = distrito.getZona(); // Obtener la zona desde el distrito
+            usuario.setZona(zona); // Asignar la zona al usuario
+
+            adminRepository.save(usuario);
+            attr.addFlashAttribute("success", "Usuario guardado correctamente.");
+
 
         return "redirect:/superadmin/gestion_usuarios";
     }
