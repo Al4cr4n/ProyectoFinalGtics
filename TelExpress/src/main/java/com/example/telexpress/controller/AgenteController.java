@@ -30,13 +30,16 @@ public class AgenteController {
     final UsuarioRepository usuarioRepository;
     final ProveedorRepository proveedorRepository;
     final OrdenesRepository ordenesRepository;
+    final ContrasenaAgenteRespository contrasenaAgenteRespository;
 
     public AgenteController(AdminRepository adminRepository, ZonaRepository zonaRepository,
                                 ProductoRepository productoRepository, UsuarioRepository usuarioRepository,
-                                ProveedorRepository proveedorRepository, OrdenesRepository ordenesRepository) {
+                                ProveedorRepository proveedorRepository, OrdenesRepository ordenesRepository,ContrasenaAgenteRespository contrasenaAgenteRespository) {
+
         this.adminRepository=adminRepository; this.zonaRepository=zonaRepository;
         this.productoRepository=productoRepository; this.usuarioRepository=usuarioRepository;
         this.proveedorRepository=proveedorRepository; this.ordenesRepository=ordenesRepository;
+        this.contrasenaAgenteRespository=contrasenaAgenteRespository;
     }
 
 
@@ -51,9 +54,16 @@ public class AgenteController {
     }
 
     @GetMapping("/cambio_contra_agente")
-    public String cambioContraAgente() {
+    public String cambioContraAgente( Model model) {
+        int id =4;
+        String passw = contrasenaAgenteRespository.findcontrasena(id);
+        model.addAttribute("passw", passw);
+        return "Agente/cambio_contra_agente";
+    }
+    @PostMapping("/cambio_contra_agente")
+    public String ActualizarContraAgente( @RequestParam("id") int id){
 
-
+        contrasenaAgenteRespository.updatecontrasena(id);
         return "Agente/cambio_contra_agente";
     }
 
