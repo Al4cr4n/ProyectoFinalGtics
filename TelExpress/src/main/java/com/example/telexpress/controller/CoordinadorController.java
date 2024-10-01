@@ -31,4 +31,65 @@ public class CoordinadorController {
         this.proveedorRepository=proveedorRepository; this.ordenesRepository=ordenesRepository;
 
     }
+
+    @GetMapping({"/inicio_coordinador_zonal",""})
+    public String inicioCoordinadorZonal() {
+
+
+        return "CoordinadorZonal/inicio_coordinador_zonal";
+    }
+
+    @GetMapping("/crearagente_zonal")
+    public String crearAgenteCoordinadorZonal() {
+
+
+        return "CoordinadorZonal/crearagente_zonal";
+    }
+
+
+    @GetMapping({"/dashboard_zonal"})
+    public String dashboardCoordinadorZonal() {
+
+
+        return "CoordinadorZonal/dashboard_zonal";
+    }
+
+    @GetMapping({"/dashboard2_zonal"})
+    public String dashboard2CoordinadorZonal() {
+
+
+        return "CoordinadorZonal/dashboard2_zonal";
+    }
+
+
+    @GetMapping({"/importacion_zonal"})
+    public String importacionCoordinadorZonal() {
+
+
+        return "CoordinadorZonal/importacion_zonal";
+    }
+
+    @GetMapping({"/listaagente_zonal"})
+    public String listaAgenteCoordinadorZonal() {
+
+
+        return "CoordinadorZonal/listaagente_zonal";
+    }
+
+    @GetMapping({"/perfilagente_zonal"})
+    public String perfilAgenteCoordinadorZonal() {
+
+
+        return "CoordinadorZonal/perfilagente_zonal";
+    }
+
+    @GetMapping({"/productos_zonal"})
+    public String productosCoordinadorZonal() {
+
+
+        return "CoordinadorZonal/productos_zonal";
+    }
+
+
+
 }
