@@ -344,10 +344,13 @@
 
                         <!-- Botón de editar -->
                         <div class="text-center">
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmModal">Guardar Cambios</button>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmModal">
+                                <span th:text="${usuarios.id != null ? 'Guardar Cambios' : 'Registrar'}"></span>
+                            </button>
                             <a th:href="@{/superadmin/gestion_usuarios}" class="btn btn-danger">Cancelar</a>
 
                         </div>
+
                     </form>
                 </div>
 

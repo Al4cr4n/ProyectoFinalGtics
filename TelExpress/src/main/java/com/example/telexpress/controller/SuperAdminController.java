@@ -8,6 +8,7 @@ import com.example.telexpress.entity.Proveedor;
 import com.example.telexpress.entity.Ordenes;
 import com.example.telexpress.entity.Rol;
 import com.example.telexpress.repository.*;
+import com.example.telexpress.entity.Distrito;
 
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Controller;
@@ -30,15 +31,18 @@ public class SuperAdminController {
     final UsuarioRepository usuarioRepository;
     final ProveedorRepository proveedorRepository;
     final OrdenesRepository ordenesRepository;
+    final DistritoRepository distritoRepository;
 
 
     public SuperAdminController(AdminRepository adminRepository, ZonaRepository zonaRepository,
                                 ProductoRepository productoRepository, UsuarioRepository usuarioRepository,
-                                ProveedorRepository proveedorRepository, OrdenesRepository ordenesRepository
+                                ProveedorRepository proveedorRepository, OrdenesRepository ordenesRepository,
+                                DistritoRepository distritoRepository
                                 ) {
         this.adminRepository=adminRepository; this.zonaRepository=zonaRepository;
         this.productoRepository=productoRepository; this.usuarioRepository=usuarioRepository;
         this.proveedorRepository=proveedorRepository; this.ordenesRepository=ordenesRepository;
+        this.distritoRepository=distritoRepository;
 
     }
 
@@ -178,7 +182,7 @@ public class SuperAdminController {
         if (optUsuario.isPresent()){
             Usuario usuario = optUsuario.get();
             model.addAttribute("usuarios", usuario);
-            model.addAttribute("listaZona", zonaRepository.findAll());
+            model.addAttribute("listaDistritos", distritoRepository.findAll());
 
             return "SuperAdmin/editar_usuario";
         }else{
@@ -210,14 +214,20 @@ public class SuperAdminController {
                 usuarioExistente.setTelefono(usuarioActualizado.getTelefono());
 
                 // Mantener los campos que no se modifican en el formulario
-                // Por ejemplo, mantener la zona o contraseña si no se cambian
-                if (usuarioActualizado.getZona() != null) {
-                    usuarioExistente.setZona(usuarioActualizado.getZona());
+                // Por ejemplo, mantener el distrito o contraseña si no se cambian
+                if (usuarioActualizado.getDistrito() != null) {
+                    usuarioExistente.setDistrito(usuarioActualizado.getDistrito());
                 }
 
                 adminRepository.save(usuarioExistente);
             }
         } else { // Si es un nuevo registro
+            // Asignar el rol de usuario (idroles = 4)
+            Rol rolusuario = new Rol();
+            rolusuario.setId(4); // se ingresa el id del rol usuario
+
+            usuarioActualizado.setRol(rolusuario); // se le asigna a este nuevo usuario el rol
+
             adminRepository.save(usuarioActualizado);
         }
 
