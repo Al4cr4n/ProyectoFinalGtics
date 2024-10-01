@@ -390,87 +390,36 @@
                     <div class="card-body">
                         <!--Contenedor flex de dashboard -->
                         <div class="row">
+
                             <!-- Top 10 productos más vendidos -->
                             <div class="col-md-8">
                                 <div class="card mb-4">
                                     <h5 class="card-header" style="font-family: 'Poppins', sans-serif;">Top 10 productos más vendidos</h5>
                                     <div class="card-body">
                                         <div class="demo-vertical-spacing demo-only-element">
-                                            <!-- Producto 1 -->
-                                            <h6 style="margin-bottom: 5px;">Producto 1: Auriculares</h6>
-                                            <div class="progress">
-                                                <div class="progress-bar" role="progressbar" style="width: 20%; background-color: #f1948a" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
-                                            </div>
-                                            <p class="text-muted" style="font-size: 12px;">20% vendidos</p>
+                                            <!-- Iterar sobre la lista de productos -->
+                                            <div th:each="producto, iterStat : ${listaTop}">
+                                                <!-- Mostrar el nombre del producto -->
+                                                <h6 style="margin-bottom: 5px;">Producto [[${iterStat.index + 1}]]: [[${producto.nombreProducto}]]</h6>
 
-                                            <!-- Producto 2 -->
-                                            <h6 style="margin-bottom: 5px;">Producto 2: Teléfono móvil</h6>
-                                            <div class="progress">
-                                                <div class="progress-bar bg-secondary" role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                                                <!-- Barra de progreso -->
+                                                <div class="progress">
+                                                    <!-- Progresión escalada basada en el producto más comprado -->
+                                                    <div class="progress-bar" role="progressbar"
+                                                         th:style="'width: ' + (${producto.cantidadComprada} * 100 / ${listaTop[0].cantidadComprada}) + '%; background-color: ' + ${colores[iterStat.index]}"
+                                                         th:aria-valuenow="${producto.cantidadComprada}" aria-valuemin="0" aria-valuemax="${listaTop[0].cantidadComprada}"></div>
+                                                </div>
+                                                <!-- Mostrar cantidad comprada en lugar del porcentaje -->
+                                                <span th:text="${producto.cantidadComprada} + ' comprados'"></span>
                                             </div>
-                                            <p class="text-muted" style="font-size: 12px;">30% vendidos</p>
-
-                                            <!-- Producto 3 -->
-                                            <h6 style="margin-bottom: 5px;">Producto 3: Tablet</h6>
-                                            <div class="progress">
-                                                <div class="progress-bar" role="progressbar" style="width: 40%; background-color: #67c9c2;" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
-                                            </div>
-                                            <p class="text-muted" style="font-size: 12px;">40% vendidos</p>
-
-                                            <!-- Producto 4 -->
-                                            <h6 style="margin-bottom: 5px;">Producto 4: Ordenador portátil</h6>
-                                            <div class="progress">
-                                                <div class="progress-bar" role="progressbar" style="width: 75%; background-color: #f5a9d0" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                                            </div>
-                                            <p class="text-muted" style="font-size: 12px;">75% vendidos</p>
-
-                                            <!-- Producto 5 -->
-                                            <h6 style="margin-bottom: 5px;">Producto 5: Cámara</h6>
-                                            <div class="progress">
-                                                <div class="progress-bar bg-warning" role="progressbar" style="width: 60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
-                                            </div>
-                                            <p class="text-muted" style="font-size: 12px;">60% vendidos</p>
-
-                                            <!-- Producto 6 -->
-                                            <h6 style="margin-bottom: 5px;">Producto 6: Impresora</h6>
-                                            <div class="progress">
-                                                <div class="progress-bar bg-info" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                                            </div>
-                                            <p class="text-muted" style="font-size: 12px;">50% vendidos</p>
-
-                                            <!-- Producto 7 -->
-                                            <h6 style="margin-bottom: 5px;">Producto 7: Smartwatch</h6>
-                                            <div class="progress">
-                                                <div class="progress-bar bg-dark" role="progressbar" style="width: 85%" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
-                                            </div>
-                                            <p class="text-muted" style="font-size: 12px;">85% vendidos</p>
-
-                                            <!-- Producto 8 -->
-                                            <h6 style="margin-bottom: 5px;">Producto 8: Televisor</h6>
-                                            <div class="progress">
-                                                <div class="progress-bar" role="progressbar" style="width: 45%; background-color: #C39BD3;" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100"></div>
-                                            </div>
-                                            <p class="text-muted" style="font-size: 12px;">45% vendidos</p>
-
-                                            <!-- Producto 9 -->
-                                            <h6 style="margin-bottom: 5px;">Producto 9: Consola de videojuegos</h6>
-                                            <div class="progress">
-                                                <div class="progress-bar" role="progressbar" style="width: 55%; background-color: #7FB3D5;" aria-valuenow="55" aria-valuemin="0" aria-valuemax="100"></div>
-                                            </div>
-                                            <p class="text-muted" style="font-size: 12px;">55% vendidos</p>
-
-                                            <!-- Producto 10 -->
-                                            <h6 style="margin-bottom: 5px;">Producto 10: Cámara de seguridad</h6>
-                                            <div class="progress">
-                                                <div class="progress-bar" role="progressbar" style="width: 90%; background-color: #76D7C4;" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
-                                            </div>
-                                            <p class="text-muted" style="font-size: 12px;">90% vendidos</p>
-
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <!--/ Top 10 productos más vendidos -->
+
+
+
 
 
                             <!-- Usuarios activos y Contenedor nuevo -->

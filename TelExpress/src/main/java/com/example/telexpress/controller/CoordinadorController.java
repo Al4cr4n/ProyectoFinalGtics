@@ -6,6 +6,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Optional;
 import java.util.List;
@@ -48,7 +50,35 @@ public class CoordinadorController {
 
 
     @GetMapping({"/dashboard_zonal"})
-    public String dashboardCoordinadorZonal() {
+    public String dashboardCoordinadorZonal(Model model) {
+
+        List<Producto> listaTop = productoRepository.findAll();
+        List<Producto> listaStock = productoRepository.findAll();
+        listaTop.sort(Comparator.comparing(Producto::getCantidadComprada).reversed());
+        listaStock.sort(Comparator.comparing(Producto::getCantidadTotal).reversed());
+
+        model.addAttribute("listaTop", listaTop);
+        model.addAttribute("listaStock", listaStock);
+
+        if (listaTop.size() > 10) {
+            listaTop = listaTop.subList(0, 10);
+        }
+
+        List<String> colores = Arrays.asList(
+                "#f1948a",
+                "#6c757d",
+                "#67c9c2",
+                "#f5a9d0",
+                "#ffc107",
+                "#17a2b8",
+                "#343a40",
+                "#C39BD3",
+                "#7FB3D5",
+                "#76D7C4"
+        );
+        model.addAttribute("colores", colores);
+
+
 
 
         return "CoordinadorZonal/dashboard_zonal";
