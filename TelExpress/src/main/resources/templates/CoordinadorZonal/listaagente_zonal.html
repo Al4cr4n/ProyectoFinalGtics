@@ -335,50 +335,11 @@
                                     </tr>
                                     </thead>
                                     <tbody class="table-border-bottom-0">
-                                    <tr>
-                                        <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>1</strong></td>
-                                        <td>Albert </td>
-                                        <td>Cook</td>
-                                        <td>albert.cook@gmail.com</td>
-                                        <td>
-                                            <a href="/coordinador/perfilagente_zonal" class="btn p-0" style="background-color: #E9967A; padding: 10px; border-radius: 5px;">
-                                                <i class="bx bx-search-alt" style="font-size: 1.5rem; color: white; padding:7px"></i> <!-- Ícono de lupa -->
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td><i class="fab fa-react fa-lg text-info me-3"></i> <strong>2</strong></td>
-                                        <td>Barry</td>
-                                        <td>Hunter</td>
-                                        <td>barry.hunter@gmail.com</span></td>
-                                        <td>
-                                            <a href="/coordinador/perfilagente_zonal" class="btn p-0" style="background-color: #E9967A; padding: 10px; border-radius: 5px;">
-                                                <i class="bx bx-search-alt" style="font-size: 1.5rem; color: white; padding:7px"></i> <!-- Ícono de lupa -->
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td><i class="fab fa-vuejs fa-lg text-success me-3"></i> <strong>3</strong></td>
-                                        <td>Trevor</td>
-                                        <td>
-                                            Baker
-                                        </td>
-                                        <td>trevor.baker@gmail.com</span></td>
-                                        <td>
-                                            <a href="/coordinador/perfilagente_zonal" class="btn p-0" style="background-color: #E9967A; padding: 10px; border-radius: 5px;">
-                                                <i class="bx bx-search-alt" style="font-size: 1.5rem; color: white; padding:7px"></i> <!-- Ícono de lupa -->
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <i class="fab fa-bootstrap fa-lg text-primary me-3"></i> <strong>4</strong>
-                                        </td>
-                                        <td>Jerry</td>
-                                        <td>
-                                            Milton
-                                        </td>
-                                        <td>jerry.milton@gmail.com</td>
+                                    <tr th:each="agente, info: ${lista_agentes}">
+                                        <td th:text="${info.index + 1}"></td>
+                                        <td th:text="${agente.nombre}"></td>
+                                        <td th:text="${agente.apellido}"></td>
+                                        <td th:text="${agente.correo}"></td>
                                         <td>
                                             <a href="/coordinador/perfilagente_zonal" class="btn p-0" style="background-color: #E9967A; padding: 10px; border-radius: 5px;">
                                                 <i class="bx bx-search-alt" style="font-size: 1.5rem; color: white; padding:7px"></i> <!-- Ícono de lupa -->

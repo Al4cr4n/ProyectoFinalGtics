@@ -100,8 +100,9 @@ public class CoordinadorController {
     }
 
     @GetMapping({"/listaagente_zonal"})
-    public String listaAgenteCoordinadorZonal() {
-
+    public String listaAgenteCoordinadorZonal(Model model) {
+        List<Usuario> lista_agentes = adminRepository.buscarAgentePorRol();
+        model.addAttribute("lista_agentes",lista_agentes);
 
         return "CoordinadorZonal/listaagente_zonal";
     }
