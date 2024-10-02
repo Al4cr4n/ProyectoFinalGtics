@@ -330,6 +330,9 @@
                     ¡La solicitud de reposición se ha realizado con éxito!
                   </div>
 
+
+                <!-- Tabla de productos 2-->
+
                 <div class="card">
                     <div class="table-responsive text-nowrap mx-3">
                         <table class="table" id="miTable" style="margin-top: 20px;">
@@ -344,48 +347,18 @@
                             </tr>
                             </thead>
                             <tbody class="table-border-bottom-0">
-                            <tr>
-                                <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>1</strong></td>
-                                <td>Cuaderno</td>
-                                <td>Educacion </td>
-                                <td>34</td>
+                            <tr th:each="producto, iter : ${producto}">
+                                <td><strong th:text="${iter.count}"></strong></td>
+                                <td th:text="${producto.nombreProducto}"></td>
+                                <td th:text="${producto.categoria}"></td>
+                                <td th:text="${producto.cantidadDisponible}"></td>
                                 <td>
                                     <button
                                             type="button"
                                             class="btn btn-primary"
                                             data-bs-toggle="modal"
                                             data-bs-target="#modalCenter"
-                                            style="background-color: #00b1cc; border-color: #00C8E5;"
-                                    >
-                                        Solicitar
-                                    </button>
-                                    </button>
-                                </td>
-                                <td>
-                                    <button
-                                            type="button"
-                                            class="btn btn-outline-secondary"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#fechaModal"
-                                    >
-                                    <img src="/assets/img/icons/unicons/editarcalendario.png" alt="Imagen Modal" style="width: 24px; height: 24px;">
-                                
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><i class="fab fa-react fa-lg text-info me-3"></i> <strong>2</strong></td>
-                                <td>Polo</td>
-                                <td>Educacion </td>
-                                <td>34</td>
-                                <td>
-                                    <button
-                                            type="button"
-                                            class="btn btn-primary"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#modalCenter"
-                                            style="background-color: #00b1cc; border-color: #00C8E5;"
-                                    >
+                                            style="background-color: #00b1cc; border-color: #00C8E5;">
                                         Solicitar
                                     </button>
                                 </td>
@@ -394,65 +367,8 @@
                                             type="button"
                                             class="btn btn-outline-secondary"
                                             data-bs-toggle="modal"
-                                            data-bs-target="#fechaModal"
-                                    >
-                                    <img src="/assets/img/icons/unicons/editarcalendario.png" alt="Imagen Modal" style="width: 24px; height: 24px;">
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><i class="fab fa-vuejs fa-lg text-success me-3"></i> <strong>3</strong></td>
-                                <td>Celular</td>
-                                <td>Tecnología </td>
-                                <td>56</td>
-                                <td>
-                                    <button
-                                            type="button"
-                                            class="btn btn-primary"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#modalCenter"
-                                            style="background-color: #00b1cc; border-color: #00C8E5;"
-                                    >
-                                        Solicitar
-                                    </button>
-                                </td>
-                                <td>
-                                    <button
-                                            type="button"
-                                            class="btn btn-outline-secondary"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#fechaModal"
-                                    >
-                                    <img src="/assets/img/icons/unicons/editarcalendario.png" alt="Imagen Modal" style="width: 24px; height: 24px;">
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <i class="fab fa-bootstrap fa-lg text-primary me-3"></i> <strong>4</strong>
-                                </td>
-                                <td>Pelota de futbol</td>
-                                <td>Deporte</td>
-                                <td>55</td>
-                                <td>
-                                    <button
-                                            type="button"
-                                            class="btn btn-primary"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#modalCenter"
-                                            style="background-color: #00b1cc; border-color: #00C8E5;"
-                                    >
-                                        Solicitar
-                                    </button>
-                                </td>
-                                <td>
-                                    <button
-                                            type="button"
-                                            class="btn btn-outline-secondary"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#fechaModal"
-                                    >
-                                    <img src="/assets/img/icons/unicons/editarcalendario.png" alt="Imagen Modal" style="width: 24px; height: 24px;">
+                                            data-bs-target="#fechaModal">
+                                        <img src="/assets/img/icons/unicons/editarcalendario.png" alt="Imagen Modal" style="width: 24px; height: 24px;">
                                     </button>
                                 </td>
                             </tr>
@@ -473,7 +389,7 @@
     $(document).ready(function() {
         $('#miTable').DataTable({
             "pagingType": "full_numbers", // Esto muestra los números de página completos
-            "pageLength":3,
+            "pageLength":10,
             "language": {
                 "paginate": {
                     "first": "",
@@ -496,125 +412,126 @@
 </div>
 <!-- / Layout wrapper -->
 
- <!-- Modal solicitar-->
- <div class="modal fade" id="modalCenter" tabindex="-1" aria-hidden="true">
+<!-- Modal solicitar-->
+<div class="modal fade" id="modalCenter" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="modalCenterTitle" style="font-family: 'Poppins', sans-serif; font-size: 20px; text-align: center;">Solicitar reposición al Administrador</h5>
-            <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          ></button>
-        </div>
-        <hr class="my-4 " />
-        <div class="modal-body">
-          <div class="row">
-            <div class="col mb-3">
-              <label >Sea enviará una notificación o un email para la reposición del producto: Cuaderno</label>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalCenterTitle" style="font-family: 'Poppins', sans-serif; font-size: 20px; text-align: center;">Solicitar reposición al Administrador</h5>
+                <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                ></button>
             </div>
-          </div>
+            <hr class="my-4 " />
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col mb-3">
+                        <label >Sea enviará una notificación o un email para la reposición del producto: Cuaderno</label>
+                    </div>
+                </div>
 
+            </div>
+            <div class="modal-footer justify-content-center mx-2">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+                    Cancelar
+                </button>
+                <button type="button" class="btn btn-primary" id="solicitar-btn">Solicitar</button>
+            </div>
         </div>
-        <div class="modal-footer justify-content-center mx-2">
-          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
-            Cancelar
-          </button>
-          <button type="button" class="btn btn-primary" id="solicitar-btn">Solicitar</button>
-        </div>
-      </div>
     </div>
-  </div>
-  <script>
+</div>
+<script>
     document.getElementById('solicitar-btn').addEventListener('click', function() {
-      // Lógica de la solicitud (simulada con un console.log)
-      console.log('Solicitud realizada con éxito');
+        // Lógica de la solicitud (simulada con un console.log)
+        console.log('Solicitud realizada con éxito');
 
-      // Cerrar el modal
-      let modal = bootstrap.Modal.getInstance(document.getElementById('modalCenter'));
-      modal.hide();
+        // Cerrar el modal
+        let modal = bootstrap.Modal.getInstance(document.getElementById('modalCenter'));
+        modal.hide();
 
-      // Mostrar el banner de éxito
-      let successBanner = document.getElementById('success-banner');
-      successBanner.style.display = 'block';
+        // Mostrar el banner de éxito
+        let successBanner = document.getElementById('success-banner');
+        successBanner.style.display = 'block';
 
-      // Ocultar el banner automáticamente después de 5 segundos
-      setTimeout(function() {
-        successBanner.style.display = 'none';
-      }, 3000); // 3000 ms = 3 segundos
+        // Ocultar el banner automáticamente después de 5 segundos
+        setTimeout(function() {
+            successBanner.style.display = 'none';
+        }, 3000); // 3000 ms = 3 segundos
     });
-  </script>
+</script>
 
-  <!-- Modal fecha arribo -->
-  <div class="modal fade" id="fechaModal" tabindex="-1" aria-hidden="true">
+<!-- Modal fecha arribo -->
+<div class="modal fade" id="fechaModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="modalCenterTitle">Fecha de descarga</h5>
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          ></button>
-        </div>
-        <hr class="my-4">
-        <div class="modal-body">
-          <div class="row ">
-            <div class="col-md-6">
-                <div class="mb-3">
-                <label for="nameWithTitle" class="form-label ">Producto:</label>
-                </div>
-                <div class="mb-3">
-                    <label for="emailWithTitle" class="form-label ">Categoria:</label>
-                </div>
-                <div class="mb-3">
-                    <label for="dobWithTitle" class="form-label ">Fecha de arribo:</label>
-                </div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalCenterTitle">Fecha de descarga</h5>
+                <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                ></button>
             </div>
-            <div class="col-md-6">
-                <div class="mb-3">
-                    <input
-                      type="text"
-                      id="nameWithTitle"
-                      class="form-control"
-                      placeholder="Cuaderno"
-                      readonly
-                    />
+            <hr class="my-4">
+            <div class="modal-body">
+                <div class="row ">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="nameWithTitle" class="form-label ">Producto:</label>
+                        </div>
+                        <div class="mb-3">
+                            <label for="emailWithTitle" class="form-label ">Categoria:</label>
+                        </div>
+                        <div class="mb-3">
+                            <label for="dobWithTitle" class="form-label ">Fecha de arribo:</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <input
+                                    type="text"
+                                    id="nameWithTitle"
+                                    class="form-control"
+                                    placeholder="Cuaderno"
+                                    readonly
+                            />
+                        </div>
+                        <div class="mb-3">
+                            <input
+                                    type="text"
+                                    id="emailWithTitle"
+                                    class="form-control"
+                                    placeholder="Educativo"
+                                    readonly
+                            />
+                        </div>
+                        <div class="mb-3">
+                            <input
+                                    type="date"
+                                    id="dobWithTitle"
+                                    class="form-control"
+                                    placeholder="DD / MM / YY"
+                            />
+                        </div>
+                    </div>
                 </div>
-                <div class="mb-3">
-                    <input
-                      type="text"
-                      id="emailWithTitle"
-                      class="form-control"
-                      placeholder="Educativo"
-                      readonly
-                    />
-                </div>
-                <div class="mb-3">
-                    <input
-                      type="date"
-                      id="dobWithTitle"
-                      class="form-control"
-                      placeholder="DD / MM / YY"
-                    />
-                </div>
-            </div>
-          </div>
 
 
+            </div>
+            <div class="modal-footer justify-content-center mx-2">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+                    Cancelar
+                </button>
+                <button type="button" class="btn btn-primary" id="duardar-btn" data-bs-dismiss="modal">Guardar</button>
+            </div>
         </div>
-        <div class="modal-footer justify-content-center mx-2">
-            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
-              Cancelar
-            </button>
-            <button type="button" class="btn btn-primary" id="duardar-btn" data-bs-dismiss="modal">Guardar</button>
-          </div>
-      </div>
     </div>
-  </div>
+</div>
+
 
 
 

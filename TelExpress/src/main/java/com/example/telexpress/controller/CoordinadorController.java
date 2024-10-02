@@ -1,7 +1,6 @@
 package com.example.telexpress.controller;
 import com.example.telexpress.entity.*;
 import com.example.telexpress.repository.*;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -11,7 +10,6 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Optional;
 import java.util.List;
-import java.time.format.DateTimeFormatter;
 
 @Controller
 @RequestMapping("/coordinador")
@@ -75,12 +73,9 @@ public class CoordinadorController {
     public String dashboardCoordinadorZonal(Model model) {
 
         List<Producto> listaTop = productoRepository.findAll();
-        List<Producto> listaStock = productoRepository.findAll();
         listaTop.sort(Comparator.comparing(Producto::getCantidadComprada).reversed());
-        listaStock.sort(Comparator.comparing(Producto::getCantidadTotal).reversed());
-
         model.addAttribute("listaTop", listaTop);
-        model.addAttribute("listaStock", listaStock);
+
 
         if (listaTop.size() > 10) {
             listaTop = listaTop.subList(0, 10);
@@ -143,7 +138,10 @@ public class CoordinadorController {
     }
 
     @GetMapping({"/productos_zonal"})
-    public String productosCoordinadorZonal() {
+    public String productosCoordinadorZonal(Model model) {
+        List<Producto> producto = productoRepository.findAll();
+        producto.sort(Comparator.comparing(Producto::getCantidadTotal).reversed());
+        model.addAttribute("producto", producto);
 
 
         return "CoordinadorZonal/productos_zonal";
