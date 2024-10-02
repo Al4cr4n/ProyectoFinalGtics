@@ -314,58 +314,95 @@
                 <div class="card">
                     <div class="card-body">
                         <!--FORMULARIO-->
-                        <form id="formCrearAgente">
+                        <form id="formCrearAgente" method="post" th:action="@{/coordinador/crearagente_zonal}">
                             <div class="row">
-                                
+                                <input th:field="*{agente.id}" name="id" type="hidden"/>
                                     <div class="mb-3 row">
-                                        <label class="form-label col-md-2" for="basic-nombre">Nombre:</label>
+                                        <label class="form-label col-md-2">Nombre:</label>
                                         <div class="col-md-10">
-                                        <input type="text" class="form-control " id="basic-nombre" placeholder="Ingresa el nombre"
-                                        required/>
+                                            <input th:field="*{agente.nombre}" type="text" class="form-control " id="basic-nombre" placeholder="Ingresa el nombre" required/>
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
-                                        <label class="form-label col-md-2" for="basic-dni">DNI:</label>
+                                        <label class="form-label col-md-2">Apellido:</label>
                                         <div class="col-md-10">
-                                        <input 
-                                        type="text" 
-                                        class="form-control "
-                                        id="basic-dni"
-                                        placeholder="Ingresa el DNI"
-                                        maxlength="8"
-                                        pattern="\d{8}"
-                                        oninput="this.value = this.value.replace(/\D/g, '')"
-                                        required/>
+                                            <input th:field="*{agente.apellido}" type="text" class="form-control" id="basic-apellido" placeholder="Ingresa el apellido" required/>
                                         </div>
                                     </div>
-                                        <!--div id="dniHelp" class="form-text text-danger" style="display:none;">Ingreso de datos incorrecto</div>
-
-                                    </div>
-                                    <script>
-                                        document.getElementById('basic-dni').addEventListener('input', function() {
-                                            var input = this;
-                                            var helpText = document.getElementById('dniHelp');
-                                            var isValid = input.checkValidity();
-                                            
-                                            if (!isValid) {
-                                                helpText.style.display = 'block';
-                                            } else {
-                                                helpText.style.display = 'none';
-                                            }
-                                        });
-                                        </script-->
                                     <div class="mb-3 row">
-                                        <label class="form-label col-md-2" for="basic-correo">Correo electrónico:</label>
+                                        <label class="form-label col-md-2">Correo electrónico:</label>
                                         <div class="col-md-10">
-                                        <input type="text" class="form-control" id="basic-correo" placeholder="Ingresa el email" 
+                                        <input th:field="*{agente.correo}" type="text" class="form-control" id="basic-correo" placeholder="Ingresa el email"
                                         pattern="[a-zA-Z0-9._%+-]+@"
                                         required />
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
-                                        <label class="form-label col-md-2" for="basic-ruc">RUC:</label>
+                                        <label class="form-label col-md-2">Contraseña:</label>
                                         <div class="col-md-10">
-                                        <input type="text"  class="form-control"    id="basic-ruc" 
+                                            <input th:field="*{agente.contrasena}"
+                                                   type="password"
+                                                   class="form-control"
+                                                   id="basic-password"
+                                                   placeholder="Ingresa la contraseña"
+                                                   pattern="^(?=.*[A-Za-z])(?=.*\\d)(?=.*[!@#$%^&*()_+\\-=\\[\\]{};':&quot;\\\\|,.&lt;&gt;\\/\\?]).{8,16}$"
+                                                   title="La contraseña debe tener al menos 1 número, 2 caracteres especiales, 1 letra, y una longitud entre 8 y 16 caracteres."
+                                                   minlength="8"
+                                                   maxlength="16"
+                                                   required />
+                                            <div class="invalid-feedback">
+                                                La contraseña debe tener al menos 1 número, 2 caracteres especiales, 1 letra, y una longitud entre 8 y 16 caracteres.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3 row">
+                                        <label class="form-label col-md-2">Repetir Contraseña:</label>
+                                        <div class="col-md-10">
+                                            <input type="password"
+                                                   class="form-control"
+                                                   id="basic-password-confirm"
+                                                   placeholder="Repite la contraseña"
+                                                   minlength="8"
+                                                   maxlength="16"
+                                                   required />
+                                            <div class="invalid-feedback">
+                                                Las contraseñas no coinciden.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3 row">
+                                        <label class="form-label col-md-2">DNI:</label>
+                                        <div class="col-md-10">
+                                            <input th:field="*{agente.dni}"
+                                                   type="text"
+                                                   class="form-control "
+                                                   id="basic-dni"
+                                                   placeholder="Ingresa el DNI"
+                                                   maxlength="8"
+                                                   pattern="\d{8}"
+                                                   oninput="this.value = this.value.replace(/\D/g, '')"
+                                                   required/>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3 row ">
+                                        <label class="form-label col-md-2">Telefono:</label>
+                                        <div class="col-md-10">
+                                            <input th:field="*{agente.telefono}" type="text" class="form-control" id="basic-telefono" placeholder="Ingresa el número telefónico"
+                                                   maxlength="11"
+                                                   oninput="this.value = this.value.replace(/\D/g, '')"
+                                                   required/>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3 row">
+                                        <label class="form-label col-md-2">Código despachador:</label>
+                                        <div class="col-md-10">
+                                            <input th:field="*{agente.codigoDespachador.codigoDespachador}" type="text" class="form-control" id="basic-codigo-despachador" placeholder="Ingresa el código despachador" required/>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3 row">
+                                        <label class="form-label col-md-2">RUC:</label>
+                                        <div class="col-md-10">
+                                        <input th:field="*{agente.ruc}" type="text"  class="form-control"    id="basic-ruc"
                                         placeholder="Ingresa el RUC" 
                                         maxlength="11"
                                         pattern="\d{11}"
@@ -374,80 +411,105 @@
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
-                                        <label class="form-label col-md-2" for="basic-direccion">Dirección:</label>
+                                        <label class="form-label col-md-2">Razón Social :</label>
                                         <div class="col-md-10">
-                                        <input type="text" class="form-control" id="basic-direccion" placeholder="Ingresa la dirección" required/>
+                                            <input th:field="*{agente.razonSocial}" type="text" class="form-control" id="basic-razon-social" placeholder="Ingrese la razón social" required/>
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
-                                        <label class="form-label col-md-2" for="basic-codigo-jurisdiccion">Código de jurisdicción:</label>
+                                        <label class="form-label col-md-2">Dirección:</label>
                                         <div class="col-md-10">
-                                            <input type="text" class="form-control" id="basic-codigo-jurisdiccion" placeholder="Ingresa el código de jurisdicción" required/>
-                                        </div>
-                                    </div>
-
-                                    <div class="mb-3 row">
-                                        <label class="form-label col-md-2" for="basic-apellido">Apellido:</label>
-                                        <div class="col-md-10">
-                                        <input type="text" class="form-control" id="basic-apellido" placeholder="Ingresa el apellido" required/>
-                                        </div>
-                                    </div>
-                                    <div class="mb-3 row ">
-                                        <label class="form-label col-md-2" for="basic-telefono">Telefono:</label>
-                                        <div class="col-md-10">
-                                        <input type="text" class="form-control" id="basic-telefono" placeholder="Ingresa el número telefónico"
-                                        maxlength="11"
-                                        oninput="this.value = this.value.replace(/\D/g, '')"
-                                        required/>
+                                        <input th:field="*{agente.direccion}" type="text" class="form-control" id="basic-direccion" placeholder="Ingresa la dirección" required/>
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
-                                        <label class="form-label col-md-2" for="basic-codigo-despachador">Código despachador:</label>
+                                        <label class="form-label col-md-2">Distrito:</label>
                                         <div class="col-md-10">
-                                        <input type="text" class="form-control" id="basic-codigo-despachador" placeholder="Ingresa el código despachador" required/>
+                                            <select class="form-control form-select" th:field="*{distrito.nombredistrito}" required>
+                                                <option disabled selected hidden>Seleccione un distrito</option>
+                                                <option value="ancon">Ancon</option>
+                                                <option value="santa rosa">Santa Rosa</option>
+                                                <option value="carabayllo">Carabayllo</option>
+                                                <option value="puente piedra">Puente Piedra</option>
+                                                <option value="comas">Comas</option>
+                                                <option value="los olivos">Los Olivos</option>
+                                                <option value="san martin de porres">San Martin de Porres</option>
+                                                <option value="independencia">Independencia</option>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
-                                        <label class="form-label col-md-2" for="basic-razon-social">Razón Social :</label>
+                                        <label class="form-label col-md-2">Código de jurisdicción:</label>
                                         <div class="col-md-10">
-                                        <input type="text" class="form-control" id="basic-razon-social" placeholder="Ingrese la razón social" required/>
+                                            <input th:field="*{agente.codigoJurisdiccion}" type="text" class="form-control" id="basic-codigo-jurisdiccion" placeholder="Ingresa el código de jurisdicción" required/>
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
-                                        <label class="form-label col-md-2" for="basic-distrito">Distrito:</label>
+                                        <label class="form-label col-md-2">Zona:</label>
                                         <div class="col-md-10">
-                                        <select type="text" class="form-control form-select" id="basic-distrito" required>
-                                            <option disabled selected hidden>Seleccione un distrito</option>
-                                            <option value="ancon">Ancon</option>
-                                            <option value="santa rosa">Santa Rosa</option>
-                                            <option value="carabayllo">Carabayllo</option>
-                                            <option value="puente piedra">Puente Piedra</option>
-                                            <option value="comas">Comas</option>
-                                            <option value="los olivos">Los Olivos</option>
-                                            <option value="san martin de porres">San Martin de Porres </option>
-                                            <option value="Independencia"> Independencia</option>
-                                        </select>
+                                            <input type="text" class="form-control" id="basic-zona" placeholder="Norte" value="Norte"readonly required style="background: linear-gradient(#ffffff75,#d8d8d885,#ffffff);"/>
                                         </div>
                                     </div>
-                                    <div class="mb-3 row">
-                                        <label class="form-label col-md-2" for="basic-zona">Zona:</label>
-                                        <div class="col-md-10">
-                                        <input type="text" class="form-control" id="basic-zona" placeholder="Norte" value="Norte"readonly required style="background: linear-gradient(#ffffff75,#d8d8d885,#ffffff);"/>
-                                        </div>
-                                    </div>
-                            
-                                
                             </div>
                             <!-- BOTON DE CREAR AGENTE -->
                             <div class="text-center mt-3">
-                                <button type="submit" class="btn btn-primary " style="background-color: #e89b85; border-color: #e89b85; font-size: 17px; font-family: 'Poppins', sans-serif;">Enviar</button>
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmModal" style="background-color: #e89b85; border-color: #e89b85; font-size: 17px; font-family: 'Poppins', sans-serif;">Enviar</button>
+                                <a th:href="@{/coordinador/listaagente_zonal}" class="btn btn-danger">Cancelar</a>
                                 <div id="errorMessages" class="text-danger mt-2" style="display: none;"></div>
                             </div>
                             <!--/ BOTON DE CREAR AGENTE -->
                         </form>
                         <!--FORMULARIO-->
-                        
                     </div>
+
+                    <!-- Confirmation Modal -->
+                    <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="confirmModalLabel">Confirmar solicitud</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    Se creará el agente
+                                </div>
+                                <div class="modal-footer">
+                                    <a th:href="@{'/coordinador/listaagente_zonal'}" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</a>
+                                    <button type="button" class="btn btn-primary" id="confirmarRegistro">Confirmar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bootstrap JS and dependencies (Popper.js and Bootstrap JS) -->
+                    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+                    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
+
+                    <script>
+                        document.getElementById('confirmarRegistro').addEventListener('click', function () {
+                            document.getElementById('formRegistro').submit(); // Envía el formulario
+                        });
+                    </script>
+
+                    <!-- Script para validar que las contraseñas coincidan -->
+                    <script>
+                        document.getElementById('formCrearAgente').addEventListener('submit', function(event) {
+                            // Obtener los valores de los campos de contraseña
+                            var password = document.getElementById('basic-password').value;
+                            var confirmPassword = document.getElementById('basic-password-confirm').value;
+
+                            // Validar que las contraseñas coincidan
+                            if (password !== confirmPassword) {
+                                event.preventDefault(); // Evita el envío del formulario
+                                document.getElementById('basic-password-confirm').classList.add('is-invalid'); // Mostrar error
+                                document.getElementById('errorMessages').textContent = 'Las contraseñas no coinciden.';
+                                document.getElementById('errorMessages').style.display = 'block';
+                            } else {
+                                document.getElementById('basic-password-confirm').classList.remove('is-invalid'); // Quitar error
+                            }
+                        });
+                    </script>
+
                 </div>
             </div>
         </div>

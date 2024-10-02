@@ -43,10 +43,31 @@ public class CoordinadorController {
     }
 
     @GetMapping("/crearagente_zonal")
-    public String crearAgenteCoordinadorZonal() {
+    public String crearAgenteCoordinadorZonal(Model model) {
+        model.addAttribute("agente", new Usuario()); // Inicializa un objeto Usuario para el formulario
+        return "CoordinadorZonal/crearagente_zonal"; // Muestra la vista del formulario
+    }
 
+    @PostMapping("/crearagente_zonal")
+    public String guardarAgente(@ModelAttribute("agente") Usuario agenteNuevo, RedirectAttributes attr) {
 
-        return "CoordinadorZonal/crearagente_zonal";
+        if (agenteNuevo.getId() == null) { // Verificar si es un nuevo agente
+            // Si el agente tiene un proveedor asociado, se guarda el proveedor
+            if (agenteNuevo.getProveedor() != null && agenteNuevo.getProveedor().getNombreTienda() != null) {
+                proveedorRepository.save(agenteNuevo.getProveedor());
+            }
+
+            // Asignar la zona "Norte" por defecto, ya que no la modificas en el formulario
+            Zona zonaNorte = new Zona();
+            zonaNorte.setIdzona(1); // Aquí debes usar el ID correspondiente para la zona Norte en la base de datos
+            agenteNuevo.setZona(zonaNorte);
+
+            // Guardar el nuevo agente
+            adminRepository.save(agenteNuevo);
+            attr.addFlashAttribute("successMessage", "Agente creado exitosamente.");
+        }
+
+        return "redirect:/coordinador/listaagente_zonal"; // Redireccionar a la lista de agentes después de guardar
     }
 
 
