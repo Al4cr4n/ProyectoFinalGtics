@@ -314,77 +314,69 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="card-body">
-                            <!--Account-->
-                            <form id="formAccountSettings" method="POST" onsubmit="return false">
+                            <!--FORM-->
+                            <form id="formAccountSettings" method="post" onsubmit="return false" th:action="@{/coordinador/perfilagente_zonal}">
                                 <div class="row">
+                                    <input th:field="*{agente.id}" name="id" type="hidden"/>
+                                    <!--NOMBRE-->
                                     <div class="mb-3 col-md-6">
-                                        <label for="firstName" class="form-label">Nombre</label>
-                                        <input
-                                                class="form-control"
-                                                type="text"
-                                                id="firstName"
-                                                name="firstName"
-                                                value="Albert"
-                                                readonly
-                                        />
+                                        <label class="form-label">Nombre</label>
+                                        <input th:field="*{agente.nombre}" type="text" class="form-control" readonly>
                                     </div>
+                                    <!--APELLIDO-->
                                     <div class="mb-3 col-md-6">
-                                        <label for="lastName" class="form-label">Apellido</label>
-                                        <input class="form-control" type="text" name="lastName" id="lastName" value="Cook" readonly />
+                                        <label class="form-label">Apellido</label>
+                                        <input th:field="*{agente.apellido}" type="text" class="form-control" readonly>
                                     </div>
+                                    <!--DNI-->
                                     <div class="mb-3 col-md-6">
-                                        <label for="dni" class="form-label">DNI</label>
-                                        <input class="form-control" type="text" name="dni" id="dni" value="71202481" readonly />
+                                        <label class="form-label">DNI</label>
+                                        <input th:field="*{agente.dni}" type="text" class="form-control" readonly>
                                     </div>
+                                    <!--TELEFONO-->
                                     <div class="mb-3 col-md-6">
-                                        <label for="phoneNumber" class="form-label">Teléfono</label>
-                                        <input class="form-control" type="text" name="phoneNumber" id="phoneNumber" value="966934322" readonly />
+                                        <label class="form-label">Teléfono</label>
+                                        <input th:field="*{agente.telefono}" type="text" class="form-control" readonly>
                                     </div>
+                                    <!--CORREO-->
                                     <div class="mb-3 col-md-6">
-                                        <label for="email" class="form-label">Correo</label>
-                                        <input
-                                                class="form-control"
-                                                type="text"
-                                                id="email"
-                                                name="email"
-                                                value="albert.cook@gmail.com"
-                                                readonly
-                                        />
+                                        <label class="form-label">Correo</label>
+                                        <input th:field="*{agente.telefono}" type="text" class="form-control" readonly>
                                     </div>
+                                    <!--CODIGO DESPECHADOR-->
                                     <div class="mb-3 col-md-6">
-                                        <label for="organization" class="form-label">Código despachador</label>
-                                        <input
-                                                type="text"
-                                                class="form-control"
-                                                id="organization"
-                                                name="organization"
-                                                value="O8CDS8"
-                                                readonly
-                                        />
+                                        <label class="form-label">Código despachador</label>
+                                        <input th:field="*{agente.codigoDespachador.codigoDespachador}" type="text" class="form-control" readonly>
                                     </div>
+                                    <!--RUC-->
                                     <div class="mb-3 col-md-6">
-                                        <label for="ruc" class="form-label">RUC</label>
-                                        <input class="form-control" type="text" name="ruc" id="ruc" value="1712024819" readonly />
+                                        <label class="form-label">RUC</label>
+                                        <input th:field="*{agente.ruc}" type="text" class="form-control" readonly>
                                     </div>
+                                    <!--RAZON SOCIAL-->
                                     <div class="mb-3 col-md-6">
-                                        <label for="razonSocial" class="form-label">Razón Social</label>
-                                        <input class="form-control" type="text" name="razonSocial" id="razonSocial" value="Ingresa razón social" readonly />
+                                        <label class="form-label">Razón Social</label>
+                                        <input th:field="*{agente.razonSocial}" type="text" class="form-control" readonly>
                                     </div>
+                                    <!--DIRECCIÓN-->
                                     <div class="mb-3 col-md-6">
-                                        <label for="address" class="form-label">Dirección</label>
-                                        <input type="text" class="form-control" id="address" name="address" value="Av. Lima 123" readonly />
+                                        <label class="form-label">Dirección</label>
+                                        <input th:field="*{agente.direccion}" type="text" class="form-control" readonly>
                                     </div>
+                                    <!--DISTRITO-->
                                     <div class="mb-3 col-md-6">
-                                        <label for="district" class="form-label">Distrito</label>
-                                        <input type="text" class="form-control" id="district" name="district" value="Los Olivos" readonly />
+                                        <label class="form-label">Distrito</label>
+                                        <input th:field="*{agente.distrito.nombredistrito}" type="text" class="form-control" readonly>
                                     </div>
+                                    <!--CODIGO DE JURISDICCIÓN-->
                                     <div class="mb-3 col-md-6">
-                                        <label for="jurisdiction" class="form-label">Código de jurisdicción</label>
-                                        <input type="text" class="form-control" id="jurisdiction" name="jurisdiction" value="EW1313" readonly />
+                                        <label class="form-label">Código de jurisdicción</label>
+                                        <input th:field="*{agente.codigoJurisdiccion}" type="text" class="form-control" readonly>
                                     </div>
+                                    <!--ZONA-->
                                     <div class="mb-3 col-md-6">
-                                        <label for="zone" class="form-label">Zona</label>
-                                        <input type="text" class="form-control" id="zone" name="zone" value="Norte" readonly />
+                                        <label class="form-label">Zona</label>
+                                        <input th:field="*{agente.zona.nombre}" type="text" class="form-control" readonly>
                                     </div>
                                 </div>
                             </form>

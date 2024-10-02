@@ -108,10 +108,16 @@ public class CoordinadorController {
     }
 
     @GetMapping({"/perfilagente_zonal"})
-    public String perfilAgenteCoordinadorZonal() {
+    public String perfilAgenteCoordinadorZonal(Model model, @RequestParam("id") Integer id) {
+        Optional<Usuario> optionalUsuario = adminRepository.findById(id);
 
-
-        return "CoordinadorZonal/perfilagente_zonal";
+        if (optionalUsuario.isPresent()) {
+            Usuario agente = optionalUsuario.get();
+            model.addAttribute("agente", agente);
+            return "CoordinadorZonal/perfilagente_zonal";
+        } else {
+            return "CoordinadorZonal/listaagente_zonal";
+        }
     }
 
     @GetMapping({"/productos_zonal"})

@@ -27,6 +27,8 @@ public class Usuario {
     private String telefono;
     private String contrasena;
     private String estadoUsuario;
+    private String razonSocial;
+    private String codigoJurisdiccion;
 
     @Column(name = "fechanacim", nullable = true)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
