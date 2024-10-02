@@ -1,6 +1,4 @@
 <!DOCTYPE html>
-
-
 <html
         lang="en"
         class="light-style layout-menu-fixed"
@@ -115,7 +113,7 @@
           </a>
           <ul class="menu-sub">
             <li class="menu-item">
-              <a href="/agente/ordenes_agente" class="menu-link">
+              <a href="/agente/ordenes" class="menu-link">
                 <div data-i18n="TodasLasOrdenes">Todas las órdenes</div>
               </a>
             </li>
@@ -139,8 +137,6 @@
                 <div data-i18n="OrdenesResueltas">Órdenes resueltas</div>
               </a>
             </li>
-
-
           </ul>
         </li>
 
@@ -150,8 +146,6 @@
             <div data-i18n="UsuariosBaneados">Usuarios baneados</div>
           </a>
         </li>
-
-
       </ul>
     </aside>
     <!-- / Menu -->
@@ -302,6 +296,19 @@
           <div class="row">
             <div class="col-12 col-lg-12 mb-4">
               <div class="card">
+                <div class="p-3 d-flex">
+                  <form th:action="@{/agente/ordenes_en_progreso}" method="get" class="d-flex w-100">
+                    <input type="text" name="search" class="form-control me-2 search-bar" placeholder="Buscar por nombre o apellido o estado..."
+                           th:value="${search}">
+                    <button type="submit" class="btn btn-primary">Buscar</button>
+                  </form>
+                </div>
+
+                <!-- Mostrar mensaje de error si no se encuentran resultados -->
+                <div th:if="${errorMessage}" class="alert alert-danger" role="alert">
+                  <span th:text="${errorMessage}"></span>
+                </div>
+
                 <h5 class="card-header">Órdenes en Progreso</h5>
                 <div class="table-responsive text-nowrap">
                   <table class="table table-striped">
@@ -309,130 +316,36 @@
                     <tr>
                       <th>N°</th>
                       <th>Cliente</th>
-                      <th>Moneda</th>
-                      <th>Total</th>
-                      <th>Método de Envío</th>
+                      <th>Apellido</th>
+                      <th>Dirección</th>
                       <th>Estado</th>
                       <th>Fecha</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <!-- Orden 1 -->
-                    <tr>
-                      <td>1</td>
-                      <td>Cliente A</td>
-                      <td>USD</td>
-                      <td>$150</td>
-                      <td>Aéreo</td>
+                    <tr th:each="orden : ${ordenes}">
+                      <td th:text="${orden.idOrdenes}"></td>
+                      <td th:text="${orden.usuario != null ? orden.usuario.nombre : 'Usuario no disponible'}"></td>
+                      <td th:text="${orden.usuario != null ? orden.usuario.apellido : 'Usuario no disponible'}"></td>
+                      <td th:text="${orden.usuario != null ? orden.usuario.direccion : 'Dirección no disponible'}"></td>
                       <td>
-                        <span class="badge bg-label-primary">En Proceso</span>
+                        <span th:text="${orden.estadoOrdenes}"
+                              th:classappend="'badge ' +
+                                (${orden.estadoOrdenes == 'EN PROCESO'} ? 'bg-label-primary' :
+                                (${orden.estadoOrdenes == 'ARRIBO AL PAÍS'} ? 'bg-label-dark' :
+                                (${orden.estadoOrdenes == 'EN ADUANAS'} ? 'bg-label-secondary' :
+                                'bg-label-info')))">
+                        </span>
                       </td>
-                      <td>2024-09-01</td>
-                    </tr>
-                    <!-- Orden 2 -->
-                    <tr>
-                      <td>2</td>
-                      <td>Cliente B</td>
-                      <td>EUR</td>
-                      <td>€200</td>
-                      <td>Marítimo</td>
-                      <td><span class="badge bg-label-dark">Arribo al País</span></td>
-                      <td>2024-08-30</td>
-                    </tr>
 
-                    <!-- Orden 3 -->
-                    <tr>
-                      <td>3</td>
-                      <td>Cliente C</td>
-                      <td>MXN</td>
-                      <td>$5000</td>
-                      <td>Terrestre</td>
-                      <td><span class="badge bg-label-primary">En Proceso</span></td>
-                      <td>2024-09-02</td>
-                    </tr>
-
-                    <!-- Orden 4 -->
-                    <tr>
-                      <td>4</td>
-                      <td>Cliente D</td>
-                      <td>USD</td>
-                      <td>$800</td>
-                      <td>Aéreo</td>
-                      <td><span class="badge bg-label-dark">Arribo al País</span></td>
-                      <td>2024-09-03</td>
-                    </tr>
-
-                    <!-- Orden 5 -->
-                    <tr>
-                      <td>5</td>
-                      <td>Cliente E</td>
-                      <td>EUR</td>
-                      <td>€300</td>
-                      <td>Marítimo</td>
-                      <td><span class="badge bg-label-secondary">En Aduanas</span></td>
-                      <td>2024-08-29</td>
-                    </tr>
-
-                    <!-- Orden 6 -->
-                    <tr>
-                      <td>6</td>
-                      <td>Cliente F</td>
-                      <td>MXN</td>
-                      <td>$7000</td>
-                      <td>Terrestre</td>
-                      <td><span class="badge bg-label-info">En Ruta</span></td>
-                      <td>2024-09-04</td>
-                    </tr>
-
-                    <!-- Orden 7 -->
-                    <tr>
-                      <td>7</td>
-                      <td>Cliente G</td>
-                      <td>USD</td>
-                      <td>$600</td>
-                      <td>Aéreo</td>
-                      <td><span class="badge bg-label-primary">En Proceso</span></td>
-                      <td>2024-09-05</td>
-                    </tr>
-
-                    <!-- Orden 8 -->
-                    <tr>
-                      <td>8</td>
-                      <td>Cliente H</td>
-                      <td>EUR</td>
-                      <td>€450</td>
-                      <td>Marítimo</td>
-                      <td><span class="badge bg-label-dark">Arribo al País</span></td>
-                      <td>2024-09-06</td>
-                    </tr>
-
-                    <!-- Orden 9 -->
-                    <tr>
-                      <td>9</td>
-                      <td>Cliente I</td>
-                      <td>MXN</td>
-                      <td>$4000</td>
-                      <td>Terrestre</td>
-                      <td><span class="badge bg-label-primary">En Proceso</span></td>
-                      <td>2024-09-07</td>
-                    </tr>
-
-                    <!-- Orden 10 -->
-                    <tr>
-                      <td>10</td>
-                      <td>Cliente J</td>
-                      <td>USD</td>
-                      <td>$1200</td>
-                      <td>Aéreo</td>
-                      <td><span class="badge bg-label-info">En Ruta</span></td>
-                      <td>2024-09-08</td>
+                      <td th:text="${#dates.format(orden.fechaArribo, 'yyyy-MM-dd')}"></td>
                     </tr>
                     </tbody>
+
+
                   </table>
+
                 </div>
-
-
-
 
                 <!-- Paginación -->
                 <nav aria-label="Page navigation">
@@ -458,8 +371,6 @@
   <div class="layout-overlay layout-menu-toggle"></div>
 </div>
 <!-- / Layout wrapper -->
-
-
 
 <!-- Core JS -->
 <!-- build:js assets/vendor/js/core.js -->

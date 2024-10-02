@@ -6,7 +6,7 @@
         class="light-style layout-menu-fixed"
         dir="ltr"
         data-theme="theme-default"
-        data-assets-path="/assets/"
+        data-assets-path="../../assets/"
         data-template="vertical-menu-template-free"
 >
 <head>
@@ -21,7 +21,7 @@
     <meta name="description" content="" />
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="/assets/img/favicon/favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="../../assets/img/favicon/favicon.ico" />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -32,26 +32,26 @@
     />
 
     <!-- Icons. Uncomment required icon fonts -->
-    <link rel="stylesheet" href="/assets/vendor/fonts/boxicons.css" />
+    <link rel="stylesheet" href="../../assets/vendor/fonts/boxicons.css" />
 
     <!-- Core CSS -->
-    <link rel="stylesheet" href="/assets/vendor/css/core.css" class="template-customizer-core-css" />
-    <link rel="stylesheet" href="/assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
-    <link rel="stylesheet" href="/assets/css/demo.css" />
+    <link rel="stylesheet" href="../../assets/vendor/css/core.css" class="template-customizer-core-css" />
+    <link rel="stylesheet" href="../../assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
+    <link rel="stylesheet" href="../../assets/css/demo.css" />
 
     <!-- Vendors CSS -->
-    <link rel="stylesheet" href="/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+    <link rel="stylesheet" href="../../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
 
-    <link rel="stylesheet" href="/assets/vendor/libs/apex-charts/apex-charts.css" />
+    <link rel="stylesheet" href="../../assets/vendor/libs/apex-charts/apex-charts.css" />
 
     <!-- Page CSS -->
 
     <!-- Helpers -->
-    <script src="/assets/vendor/js/helpers.js"></script>
+    <script src="../../assets/vendor/js/helpers.js"></script>
 
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
-    <script src="/assets/js/config.js"></script>
+    <script src="../../assets/js/config.js"></script>
 </head>
 <body>
 <!-- Layout wrapper -->
@@ -66,7 +66,7 @@
             </div>
 
             <div class="app-brand demo" style="text-align: center;">
-                <a href="/agente/inicio_agente" class="app-brand-link">
+                <a href="inicio_agente.html" class="app-brand-link">
                     <span class="app-brand-text demo menu-text fw-bolder" style="font-family: 'Poppins', sans-serif; color: #7367F0; padding-left: 15px;">TelExpress</span>
                 </a>
 
@@ -81,7 +81,7 @@
             <ul class="menu-inner py-1">
                 <!-- Dashboard -->
                 <li class="menu-item ">
-                    <a href="/agente/inicio_agente" class="menu-link">
+                    <a href="inicio_agente.html" class="menu-link">
                         <i class="menu-icon tf-icons bx bx-home-circle"></i>
                         <div data-i18n="Inicio">Inicio</div>
                     </a>
@@ -95,7 +95,7 @@
                 </li>
 
                 <li class="menu-item">
-                    <a href="/agente/chat_agente" class="menu-link">
+                    <a href="chat_agente.html" class="menu-link">
                         <i class="menu-icon tf-icons bx bx-chat"></i>
                         <div data-i18n="Chats">Chats</div>
                     </a>
@@ -112,7 +112,7 @@
                     </a>
                     <ul class="menu-sub">
                         <li class="menu-item">
-                            <a href="/agente/ordenes_agente" class="menu-link">
+                            <a href="/agente/ordenes" class="menu-link">
                                 <div data-i18n="TodasLasOrdenes">Todas las órdenes</div>
                             </a>
                         </li>
@@ -244,7 +244,7 @@
                         <li class="nav-item navbar-dropdown dropdown-user dropdown">
                             <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                                 <div class="avatar avatar-online">
-                                    <img src="/assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                                    <img src="../../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
                                 </div>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end">
@@ -253,7 +253,7 @@
                                         <div class="d-flex">
                                             <div class="flex-shrink-0 me-3">
                                                 <div class="avatar avatar-online">
-                                                    <img src="/assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                                                    <img src="../../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
                                                 </div>
                                             </div>
                                             <div class="flex-grow-1">
@@ -267,7 +267,7 @@
                                     <div class="dropdown-divider"></div>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="/agente/cambio_contra_agente">
+                                    <a class="dropdown-item" href="../Sistema/cambio_contraseña.html">
                                         <i class="bx bx-user me-2"></i>
                                         <span class="align-middle">Cambio de Contraseña</span>
                                     </a>
@@ -278,7 +278,7 @@
                                     <div class="dropdown-divider"></div>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="/Login">
+                                    <a class="dropdown-item" href="../Sistema/Login.html">
                                         <i class="bx bx-power-off me-2"></i>
                                         <span class="align-middle">Cerrar Sesión</span>
                                     </a>
@@ -300,6 +300,18 @@
                     <div class="row">
                         <div class="col-12 col-lg-12 mb-4">
                             <div class="card">
+                                <!-- Formulario de búsqueda -->
+                                <div class="p-3 d-flex">
+                                    <form th:action="@{/agente/ordenes_sin_asignar}" method="get" class="d-flex w-100">
+                                        <input type="text" name="search" class="form-control me-2 search-bar" placeholder="Buscar por nombre o apellido..."
+                                               th:value="${search}">
+                                        <button type="submit" class="btn btn-primary">Buscar</button>
+                                    </form>
+                                </div>
+                                <!-- Mostrar mensaje de error si no se encuentran resultados -->
+                                <div th:if="${errorMessage}" class="alert alert-danger" role="alert">
+                                    <span th:text="${errorMessage}"></span>
+                                </div>
                                 <h5 class="card-header">Órdenes sin Asignar</h5>
                                 <div class="table-responsive text-nowrap">
                                     <table class="table table-striped">
@@ -307,125 +319,25 @@
                                         <tr>
                                             <th>N°</th>
                                             <th>Cliente</th>
-                                            <th>Moneda</th>
-                                            <th>Total</th>
-                                            <th>Método de Envío</th>
+                                            <th>Apellido</th>
+                                            <th>Dirección</th>
                                             <th>Estado</th>
                                             <th>Fecha</th>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <!-- Orden 1 -->
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Cliente A</td>
-                                            <td>USD</td>
-                                            <td>$150</td>
-                                            <td>Aéreo</td>
-                                            <td>
-                                                <span class="badge bg-label-warning">Creado</span>
-                                            </td>
-                                            <td>2024-09-01</td>
-                                        </tr>
-                                        <!-- Orden 2 -->
-                                        <tr>
-                                            <td>2</td>
-                                            <td>Cliente B</td>
-                                            <td>EUR</td>
-                                            <td>€200</td>
-                                            <td>Marítimo</td>
-                                            <td><span class="badge bg-label-warning">Creado</span></td>
-                                            <td>2024-08-30</td>
-                                        </tr>
-
-                                        <!-- Orden 3 -->
-                                        <tr>
-                                            <td>3</td>
-                                            <td>Cliente C</td>
-                                            <td>MXN</td>
-                                            <td>$5000</td>
-                                            <td>Terrestre</td>
-                                            <td><span class="badge bg-label-warning">Creado</span></td>
-                                            <td>2024-09-02</td>
-                                        </tr>
-
-                                        <!-- Orden 4 -->
-                                        <tr>
-                                            <td>4</td>
-                                            <td>Cliente D</td>
-                                            <td>USD</td>
-                                            <td>$800</td>
-                                            <td>Aéreo</td>
-                                            <td><span class="badge bg-label-warning">Creado</span></td>
-                                            <td>2024-09-03</td>
-                                        </tr>
-
-                                        <!-- Orden 5 -->
-                                        <tr>
-                                            <td>5</td>
-                                            <td>Cliente E</td>
-                                            <td>EUR</td>
-                                            <td>€300</td>
-                                            <td>Marítimo</td>
-                                            <td><span class="badge bg-label-warning">Creado</span></td>
-                                            <td>2024-08-29</td>
-                                        </tr>
-
-                                        <!-- Orden 6 -->
-                                        <tr>
-                                            <td>6</td>
-                                            <td>Cliente F</td>
-                                            <td>MXN</td>
-                                            <td>$7000</td>
-                                            <td>Terrestre</td>
-                                            <td><span class="badge bg-label-warning">Creado</span></td>
-                                            <td>2024-09-04</td>
-                                        </tr>
-
-                                        <!-- Orden 7 -->
-                                        <tr>
-                                            <td>7</td>
-                                            <td>Cliente G</td>
-                                            <td>USD</td>
-                                            <td>$600</td>
-                                            <td>Aéreo</td>
-                                            <td><span class="badge bg-label-warning">Creado</span></td>
-                                            <td>2024-09-05</td>
-                                        </tr>
-
-                                        <!-- Orden 8 -->
-                                        <tr>
-                                            <td>8</td>
-                                            <td>Cliente H</td>
-                                            <td>EUR</td>
-                                            <td>€450</td>
-                                            <td>Marítimo</td>
-                                            <td><span class="badge bg-label-warning">Creado</span></td>
-                                            <td>2024-09-06</td>
-                                        </tr>
-
-                                        <!-- Orden 9 -->
-                                        <tr>
-                                            <td>9</td>
-                                            <td>Cliente I</td>
-                                            <td>MXN</td>
-                                            <td>$4000</td>
-                                            <td>Terrestre</td>
-                                            <td><span class="badge bg-label-warning">Creado</span></td>
-                                            <td>2024-09-07</td>
-                                        </tr>
-
-                                        <!-- Orden 10 -->
-                                        <tr>
-                                            <td>10</td>
-                                            <td>Cliente J</td>
-                                            <td>USD</td>
-                                            <td>$1200</td>
-                                            <td>Aéreo</td>
-                                            <td><span class="badge bg-label-warning">Creado</span></td>
-                                            <td>2024-09-08</td>
+                                        <tr th:each="orden : ${ordenes}">
+                                            <td th:text="${orden.idOrdenes}"></td>
+                                            <td th:text="${orden.usuario != null ? orden.usuario.nombre : 'Usuario no disponible'}"></td>
+                                            <td th:text="${orden.usuario != null ? orden.usuario.apellido : 'Usuario no disponible'}"></td>
+                                            <td th:text="${orden.usuario != null ? orden.usuario.direccion : 'Dirección no disponible'}"></td>
+                                            <td><span class="badge bg-label-warning" th:text="${orden.estadoOrdenes}"></span></td>
+                                            <td th:text="${#dates.format(orden.fechaArribo, 'yyyy-MM-dd')}"></td>
                                         </tr>
                                         </tbody>
+
+
+
                                     </table>
                                 </div>
 
@@ -463,22 +375,22 @@
 
 <!-- Core JS -->
 <!-- build:js assets/vendor/js/core.js -->
-<script src="/assets/vendor/libs/jquery/jquery.js"></script>
-<script src="/assets/vendor/libs/popper/popper.js"></script>
-<script src="/assets/vendor/js/bootstrap.js"></script>
-<script src="/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+<script src="../../assets/vendor/libs/jquery/jquery.js"></script>
+<script src="../../assets/vendor/libs/popper/popper.js"></script>
+<script src="../../assets/vendor/js/bootstrap.js"></script>
+<script src="../../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
 
-<script src="/assets/vendor/js/menu.js"></script>
+<script src="../../assets/vendor/js/menu.js"></script>
 <!-- endbuild -->
 
 <!-- Vendors JS -->
-<script src="/assets/vendor/libs/apex-charts/apexcharts.js"></script>
+<script src="../../assets/vendor/libs/apex-charts/apexcharts.js"></script>
 
 <!-- Main JS -->
-<script src="/assets/js/main.js"></script>
+<script src="../../assets/js/main.js"></script>
 
 <!-- Page JS -->
-<script src="/assets/js/dashboards-analytics.js"></script>
+<script src="../../assets/js/dashboards-analytics.js"></script>
 
 <!-- Place this tag in your head or just before your close body tag. -->
 <script async defer src="https://buttons.github.io/buttons.js"></script>

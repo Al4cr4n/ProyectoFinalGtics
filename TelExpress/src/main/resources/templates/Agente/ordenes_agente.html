@@ -1,113 +1,94 @@
 <!DOCTYPE html>
-
-
-<html
-        lang="en"
-        class="light-style layout-menu-fixed"
-        dir="ltr"
-        data-theme="theme-default"
-        data-assets-path="/assets/"
-        data-template="vertical-menu-template-free"
->
+<html lang="en" class="light-style layout-menu-fixed" dir="ltr" data-theme="theme-default"
+      data-assets-path="../../assets/" data-template="vertical-menu-template-free">
 <head>
-    <meta charset="utf-8" />
-    <meta
-            name="viewport"
-            content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
-    />
-
+    <style>
+        .table td {
+            white-space: nowrap; /* Evita que el texto se divida en varias líneas */
+            text-overflow: ellipsis; /* Corta el texto con puntos suspensivos si es muy largo */
+            overflow: hidden; /* Oculta el texto desbordante */
+        }
+    </style>
+    <meta charset="utf-8"/>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"/>
     <title>Órdenes Agente</title>
-
-    <meta name="description" content="" />
+    <meta name="description" content=""/>
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="/assets/img/favicon/favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="../../assets/img/favicon/favicon.ico"/>
 
     <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
     <link
             href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
-            rel="stylesheet"
-    />
+            rel="stylesheet"/>
 
-    <!-- Icons. Uncomment required icon fonts -->
-    <link rel="stylesheet" href="/assets/vendor/fonts/boxicons.css" />
+    <!-- Icons -->
+    <link rel="stylesheet" href="../../assets/vendor/fonts/boxicons.css"/>
 
     <!-- Core CSS -->
-    <link rel="stylesheet" href="/assets/vendor/css/core.css" class="template-customizer-core-css" />
-    <link rel="stylesheet" href="/assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
-    <link rel="stylesheet" href="/assets/css/demo.css" />
+    <link rel="stylesheet" href="../../assets/vendor/css/core.css" class="template-customizer-core-css"/>
+    <link rel="stylesheet" href="../../assets/vendor/css/theme-default.css" class="template-customizer-theme-css"/>
+    <link rel="stylesheet" href="../../assets/css/demo.css"/>
 
     <!-- Vendors CSS -->
-    <link rel="stylesheet" href="/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
-
-    <link rel="stylesheet" href="/assets/vendor/libs/apex-charts/apex-charts.css" />
-
-    <!-- Page CSS -->
+    <link rel="stylesheet" href="../../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css"/>
+    <link rel="stylesheet" href="../../assets/vendor/libs/apex-charts/apex-charts.css"/>
 
     <!-- Helpers -->
-    <script src="/assets/vendor/js/helpers.js"></script>
-
-    <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
-    <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
-    <script src="/assets/js/config.js"></script>
+    <script src="../../assets/vendor/js/helpers.js"></script>
+    <script src="../../assets/js/config.js"></script>
     <!--TelExpress fuente de letra-->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-
+    <style>
+        .search-bar {
+            width: 100%; /* Ajusta el tamaño a tus necesidades */
+        }
+    </style>
 </head>
 <body>
-<!-- Layout wrapper -->
 <div class="layout-wrapper layout-content-navbar">
     <div class="layout-container">
         <!-- Menu -->
-
         <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
-            <!-- Contenedor para la imagen centrada -->
             <div style="text-align: center;">
-                <img src="logo.png" alt="Imagen" style="width: 150px; margin-bottom: -70px; margin-top: -20px">
+                <img src="/static/logo.png" alt="Imagen" style="width: 150px; margin-bottom: -70px; margin-top: -20px">
             </div>
 
             <div class="app-brand demo" style="text-align: center;">
-                <a href="/agente/inicio_agente" class="app-brand-link">
-                    <span class="app-brand-text demo menu-text fw-bolder" style="font-family: 'Poppins', sans-serif; color: #7367F0; padding-left: 15px;">TelExpress</span>
+                <a href="inicio_agente.html" class="app-brand-link">
+                    <span class="app-brand-text demo menu-text fw-bolder"
+                          style="font-family: 'Poppins', sans-serif; color: #7367F0; padding-left: 15px;">TelExpress</span>
                 </a>
-
                 <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
                     <i class="bx bx-chevron-left bx-sm align-middle"></i>
                 </a>
             </div>
 
-
             <div class="menu-inner-shadow"></div>
 
             <ul class="menu-inner py-1">
                 <!-- Dashboard -->
-                <li class="menu-item ">
-                    <a href="/agente/inicio_agente" class="menu-link">
+                <li class="menu-item">
+                    <a href="inicio_agente.html" class="menu-link">
                         <i class="menu-icon tf-icons bx bx-home-circle"></i>
                         <div data-i18n="Inicio">Inicio</div>
                     </a>
                 </li>
-
                 <li class="menu-item">
                     <a href="/agente/usuarios_agente" class="menu-link">
                         <i class="menu-icon tf-icons bx bx-user"></i>
                         <div data-i18n="ListaDeUsuarios">Lista de usuarios</div>
                     </a>
                 </li>
-
                 <li class="menu-item">
-                    <a href="/agente/chat_agente" class="menu-link">
+                    <a href="chat_agente.html" class="menu-link">
                         <i class="menu-icon tf-icons bx bx-chat"></i>
                         <div data-i18n="Chats">Chats</div>
                     </a>
                 </li>
-
-                <!--
-                <li class="menu-header small text-uppercase">
-                  <span class="menu-header-text">Páginas</span>
-                </li>-->
                 <li class="menu-item active">
                     <a href="javascript:void(0);" class="menu-link menu-toggle">
                         <i class="menu-icon tf-icons bx bx-cart-alt"></i>
@@ -139,51 +120,37 @@
                                 <div data-i18n="OrdenesResueltas">Órdenes resueltas</div>
                             </a>
                         </li>
-
-
                     </ul>
                 </li>
-
                 <li class="menu-item">
                     <a href="/agente/usuarios_baneados" class="menu-link">
                         <i class="menu-icon tf-icons bx bx-block"></i>
                         <div data-i18n="UsuariosBaneados">Usuarios baneados</div>
                     </a>
                 </li>
-
-
             </ul>
         </aside>
-        <!-- / Menu -->
+
         <!-- Layout container -->
         <div class="layout-page">
             <!-- Navbar -->
-
-            <nav
-                    class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
-                    id="layout-navbar"
-            >
+            <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
+                 id="layout-navbar">
                 <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
                     <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
                         <i class="bx bx-menu bx-sm"></i>
                     </a>
                 </div>
-
                 <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
-
-
                     <ul class="navbar-nav flex-row align-items-center ms-auto">
-                        <!-- Place this tag where you want the button to render. -->
-
-
                         <!-- Notificaciones -->
                         <li class="nav-item navbar-dropdown dropdown-user dropdown">
-                            <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+                            <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);"
+                               data-bs-toggle="dropdown">
                                 <div class="position-relative">
                                     <div class="bx bx-bell" style="font-size: 26px; color: #7367F0;"></div>
-                                    <span class="badge bg-danger rounded-circle position-absolute d-flex justify-content-center align-items-center" style="top: -5px; right: -5px; font-size: 12px; width: 18px; height: 18px;">
-                      5
-                    </span>
+                                    <span class="badge bg-danger rounded-circle position-absolute d-flex justify-content-center align-items-center"
+                                          style="top: -5px; right: -5px; font-size: 12px; width: 18px; height: 18px;">5</span>
                                 </div>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end">
@@ -191,7 +158,8 @@
                                 <li>
                                     <a class="dropdown-item" href="#">
                                         <div class="d-flex align-items-center">
-                                            <div class="bx bx-message-square-dots me-3" style="font-size: 20px; color: #7367F0;"></div>
+                                            <div class="bx bx-message-square-dots me-3"
+                                                 style="font-size: 20px; color: #7367F0;"></div>
                                             <div>
                                                 <span class="d-block">Nueva solicitud recibida</span>
                                                 <small class="text-muted">Hace 5 minutos</small>
@@ -199,55 +167,17 @@
                                         </div>
                                     </a>
                                 </li>
-
-                                <li>
-                                    <a class="dropdown-item" href="#">
-                                        <div class="d-flex align-items-center">
-                                            <div class="bx bx-check-circle me-3" style="font-size: 20px; color: #28C76F;"></div>
-                                            <div>
-                                                <span class="d-block">Tarea completada</span>
-                                                <small class="text-muted">Hace 2 horas</small>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </li>
-
-                                <li>
-                                    <a class="dropdown-item" href="#">
-                                        <div class="d-flex align-items-center">
-                                            <div class="bx bx-error me-3" style="font-size: 20px; color: #EA5455;"></div>
-                                            <div>
-                                                <span class="d-block">Error en el sistema</span>
-                                                <small class="text-muted">Hace 1 día</small>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </li>
-
-                                <li>
-                                    <a class="dropdown-item" href="#">
-                                        <div class="d-flex align-items-center">
-                                            <div class="bx bx-download me-3" style="font-size: 20px; color: #FF9F43;"></div>
-                                            <div>
-                                                <span class="d-block">Archivo descargado</span>
-                                                <small class="text-muted">Hace 3 días</small>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </li>
-
-                                <li class="dropdown-footer">
-                                    <a class="dropdown-item text-center text-primary" href="#">Ver todas las notificaciones</a>
-                                </li>
+                                <!-- Más notificaciones -->
                             </ul>
                         </li>
                         <!--/ Notificaciones -->
 
                         <!-- User -->
                         <li class="nav-item navbar-dropdown dropdown-user dropdown">
-                            <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+                            <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);"
+                               data-bs-toggle="dropdown">
                                 <div class="avatar avatar-online">
-                                    <img src="/assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                                    <img src="/assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle"/>
                                 </div>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end">
@@ -256,7 +186,8 @@
                                         <div class="d-flex">
                                             <div class="flex-shrink-0 me-3">
                                                 <div class="avatar avatar-online">
-                                                    <img src="/assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                                                    <img src="../../assets/img/avatars/1.png" alt
+                                                         class="w-px-40 h-auto rounded-circle"/>
                                                 </div>
                                             </div>
                                             <div class="flex-grow-1">
@@ -270,18 +201,16 @@
                                     <div class="dropdown-divider"></div>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="/agente/cambio_contra_agente">
+                                    <a class="dropdown-item" href="../Sistema/cambio_contraseña.html">
                                         <i class="bx bx-user me-2"></i>
                                         <span class="align-middle">Cambio de Contraseña</span>
                                     </a>
                                 </li>
-
-
                                 <li>
                                     <div class="dropdown-divider"></div>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="/Login">
+                                    <a class="dropdown-item" href="../Sistema/Login.html">
                                         <i class="bx bx-power-off me-2"></i>
                                         <span class="align-middle">Cerrar Sesión</span>
                                     </a>
@@ -293,192 +222,92 @@
                 </div>
             </nav>
 
-            <!-- / Navbar -->
-
             <!-- Content wrapper -->
             <div class="content-wrapper">
                 <div class="container-xxl flex-grow-1 container-p-y">
-                    <!-- Tabla de productos -->
-                        <div class="col-12 col-lg-12 mb-4">
-                            <div class="card">
-                                <h5 class="card-header">Órdenes</h5>
-                                <div class="table-responsive text-nowrap">
-                                    <table class="table table-striped">
-                                        <thead class="table-light">
+
+                    <!-- Tabla de órdenes -->
+                    <div class="col-12 col-lg-12 mb-4">
+                        <div class="card">
+                            <div class="p-3 d-flex">
+                                <!-- Formulario de búsqueda -->
+                                <form th:action="@{/agente/ordenes}" method="get" class="d-flex w-100">
+                                    <input type="text" name="search" class="form-control me-2 search-bar" placeholder="Buscar por cliente o apellido o estado..."
+                                           th:value="${search}">
+                                    <button type="submit" class="btn btn-primary">Buscar</button>
+                                </form>
+
+                            </div>
+                            <h5 class="card-header">Órdenes</h5>
+                            <div class="table-responsive text-nowrap">
+                                <table class="table table-striped">
+                                    <thead class="table-light">
                                     <tr>
                                         <th>N°</th>
                                         <th>Cliente</th>
-                                        <th>Moneda</th>
-                                        <th>Total</th>
-                                        <th>Método de Envío</th>
+                                        <th>Apellido</th>
+                                        <th>Dirección</th>
                                         <th>Estado</th>
                                         <th>Fecha</th>
-                                    </tr> </thead>
-                                        <tbody>
-                                        <!-- Orden 1 -->
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Cliente A</td>
-                                            <td>USD</td>
-                                            <td>$150</td>
-                                            <td>Aéreo</td>
-                                            <td>
-                                                <span class="badge bg-label-warning">Creado</span>
-                                            </td>
-                                            <td>2024-09-01</td>
-                                        </tr>
-                                        <!-- Orden 2 -->
-                                        <tr>
-                                            <td>2</td>
-                                            <td>Cliente B</td>
-                                            <td>EUR</td>
-                                            <td>€200</td>
-                                            <td>Marítimo</td>
-                                            <td><span class="badge bg-label-danger">En Validación</span></td>
-                                            <td>2024-08-30</td>
-                                        </tr>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <!-- Iteración sobre las órdenes -->
+                                    <tr th:each="orden : ${ordenes}">
+                                        <td th:text="${orden.idOrdenes}"></td>
 
-                                        <!-- Orden 3 -->
-                                        <tr>
-                                            <td>3</td>
-                                            <td>Cliente C</td>
-                                            <td>MXN</td>
-                                            <td>$5000</td>
-                                            <td>Terrestre</td>
-                                            <td><span class="badge bg-label-primary">En Proceso</span></td>
-                                            <td>2024-09-02</td>
-                                        </tr>
+                                        <!-- Asegúrate de que el usuario no sea null antes de mostrar el nombre
+                                             Porque en la tabla usuario está borrado el id 25 -->
+                                        <td th:text="${orden.usuario != null} ? ${orden.usuario.nombre} : 'Usuario no disponible'"></td>
+                                        <td th:text="${orden.usuario != null} ? ${orden.usuario.apellido} : 'Usuario no disponible'"></td>
 
-                                        <!-- Orden 4 -->
-                                        <tr>
-                                            <td>4</td>
-                                            <td>Cliente D</td>
-                                            <td>USD</td>
-                                            <td>$800</td>
-                                            <td>Aéreo</td>
-                                            <td><span class="badge bg-label-dark">Arribo al País</span></td>
-                                            <td>2024-09-03</td>
-                                        </tr>
+                                        <td th:text="${orden.usuario != null} ? ${orden.usuario.direccion} : 'Dirección no disponible'"></td>
+                                        <td>
+                                            <span th:text="${orden.estadoOrdenes}"
+                                                  th:class="'badge ' + (${orden.estadoOrdenes == 'CREADO'} ? 'bg-label-warning' : (${orden.estadoOrdenes == 'EN VALIDACIÓN'} ? 'bg-label-danger' : 'bg-label-success'))"></span>
+                                        </td>
+                                        <td th:text="${#dates.format(orden.fechaArribo, 'yyyy-MM-dd')}"></td>
+                                    </tr>
+                                    </tbody>
 
-                                        <!-- Orden 5 -->
-                                        <tr>
-                                            <td>5</td>
-                                            <td>Cliente E</td>
-                                            <td>EUR</td>
-                                            <td>€300</td>
-                                            <td>Marítimo</td>
-                                            <td><span class="badge bg-label-secondary">En Aduanas</span></td>
-                                            <td>2024-08-29</td>
-                                        </tr>
-
-                                        <!-- Orden 6 -->
-                                        <tr>
-                                            <td>6</td>
-                                            <td>Cliente F</td>
-                                            <td>MXN</td>
-                                            <td>$7000</td>
-                                            <td>Terrestre</td>
-                                            <td><span class="badge bg-label-info">En Ruta</span></td>
-                                            <td>2024-09-04</td>
-                                        </tr>
-
-                                        <!-- Orden 7 -->
-                                        <tr>
-                                            <td>7</td>
-                                            <td>Cliente G</td>
-                                            <td>USD</td>
-                                            <td>$600</td>
-                                            <td>Aéreo</td>
-                                            <td><span class="badge bg-label-success">Recibido</span></td>
-                                            <td>2024-09-05</td>
-                                        </tr>
-
-                                        <!-- Orden 8 -->
-                                        <tr>
-                                            <td>8</td>
-                                            <td>Cliente H</td>
-                                            <td>EUR</td>
-                                            <td>€450</td>
-                                            <td>Marítimo</td>
-                                            <td><span class="badge bg-label-danger">En Validación</span></td>
-                                            <td>2024-09-06</td>
-                                        </tr>
-
-                                        <!-- Orden 9 -->
-                                        <tr>
-                                            <td>9</td>
-                                            <td>Cliente I</td>
-                                            <td>MXN</td>
-                                            <td>$4000</td>
-                                            <td>Terrestre</td>
-                                            <td><span class="badge bg-label-primary">En Proceso</span></td>
-                                            <td>2024-09-07</td>
-                                        </tr>
-
-                                        <!-- Orden 10 -->
-                                        <tr>
-                                            <td>10</td>
-                                            <td>Cliente J</td>
-                                            <td>USD</td>
-                                            <td>$1200</td>
-                                            <td>Aéreo</td>
-                                            <td><span class="badge bg-label-success">Recibido</span></td>
-                                            <td>2024-09-08</td>
-                                        </tr>
-                                        </tbody>
-
-
-                                    </table>
-                                </div>
-
-
-
-
-                                <!-- Paginación -->
-                                <nav aria-label="Page navigation">
-                                    <ul class="pagination justify-content-center">
-                                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                    </ul>
-                                </nav>
+                                </table>
 
                             </div>
+
+                            <!-- Paginación -->
+                            <nav aria-label="Page navigation">
+                                <ul class="pagination justify-content-center">
+                                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                </ul>
+                            </nav>
                         </div>
+                    </div>
                 </div>
             </div>
             <!-- Content wrapper -->
         </div>
         <!-- / Layout page -->
     </div>
-
     <!-- Overlay -->
     <div class="layout-overlay layout-menu-toggle"></div>
 </div>
-<!-- / Layout wrapper -->
-
-
 
 <!-- Core JS -->
-<!-- build:js assets/vendor/js/core.js -->
-<script src="/assets/vendor/libs/jquery/jquery.js"></script>
-<script src="/assets/vendor/libs/popper/popper.js"></script>
-<script src="/assets/vendor/js/bootstrap.js"></script>
-<script src="/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
-
-<script src="/assets/vendor/js/menu.js"></script>
-<!-- endbuild -->
+<script src="../../assets/vendor/libs/jquery/jquery.js"></script>
+<script src="../../assets/vendor/libs/popper/popper.js"></script>
+<script src="../../assets/vendor/js/bootstrap.js"></script>
+<script src="../../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+<script src="../../assets/vendor/js/menu.js"></script>
 
 <!-- Vendors JS -->
-<script src="/assets/vendor/libs/apex-charts/apexcharts.js"></script>
+<script src="../../assets/vendor/libs/apex-charts/apexcharts.js"></script>
 
 <!-- Main JS -->
-<script src="/assets/js/main.js"></script>
+<script src="../../assets/js/main.js"></script>
 
 <!-- Page JS -->
-<script src="/assets/js/dashboards-analytics.js"></script>
-
-<!-- Place this tag in your head or just before your close body tag. -->
-<script async defer src="https://buttons.github.io/buttons.js"></script>
+<script src="../../assets/js/dashboards-analytics.js"></script>
 </body>
 </html>

@@ -1,12 +1,10 @@
 package com.example.telexpress.entity;
 import jakarta.persistence.*;
-import lombok.Setter;
 import lombok.Getter;
+import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
-import org.springframework.format.annotation.DateTimeFormat;
-import com.example.telexpress.entity.Ordenes;
-import java.util.List;
 
 @Getter
 @Setter
@@ -27,8 +25,8 @@ public class Usuario {
     private String telefono;
     private String contrasena;
     private String estadoUsuario;
-    private String razonSocial;
-    private String codigoJurisdiccion;
+    private String motivo;
+
 
     @Column(name = "fechanacim", nullable = true)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
