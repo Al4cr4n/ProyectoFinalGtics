@@ -381,7 +381,7 @@
               <tbody>
               <!-- Aquí van las filas con los proveedores -->
               <tr th:each="proveedor, info : ${listaProveedores}">
-                <td th:text="${info.index + 1}"></td>
+                <td th:text="${info.index + 1}"></td><td th:text="${proveedor.nombreProveedor}"></td>
                 <td th:text="${proveedor.nombreProveedor}"></td>
                 <td th:text="${proveedor.nombreTienda}"></td>
                 <td th:text="${proveedor.dni}"></td>

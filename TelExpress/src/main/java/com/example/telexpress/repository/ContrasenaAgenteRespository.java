@@ -14,6 +14,6 @@ public interface ContrasenaAgenteRespository extends JpaRepository<Usuario, Inte
 
     @Query(value = "UPDATE contrasena from usuario where idroles =3 AND idusuario = 3",
             nativeQuery = true)
-    String updatecontrasena(Integer idusuario);
+    String updatecontrasena(Integer idusuario, String newPassword);
 
 }
