@@ -119,4 +119,6 @@ public class AgenteController {
 
         return "Agente/usuarios_baneados";
     }
+
+    
 }

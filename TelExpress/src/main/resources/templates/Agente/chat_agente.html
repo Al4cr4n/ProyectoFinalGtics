@@ -514,9 +514,11 @@
                                 <!-- Chat messages will be appended here dynamically -->
                             </div>
                             <div class="chat-input-area">
-                                <input type="text" id="chat-input" placeholder="Type your message here...">
-                                <button id="send-btn">Enviar</button>
+
+                                <input type="text" class="form-control" id="messageInput" placeholder="Type your message here...">
+
                             </div>
+                            <button onclick="sendMessage()" class="btn btn-primary mt-3">Send</button>
                         </div>
                     </div>
 
@@ -530,58 +532,23 @@
 </div>
 
 <!-- JavaScript for Chat Functionality -->
-<script>
-    // Function to handle sending messages
-    document.getElementById('send-btn').addEventListener('click', sendMessage);
+<script th:inline ="javascript">
+    let socket = new WebSocket("ws://localhost:8080/chatSocket")
 
-    // Handle Enter key for sending messages
-    document.getElementById('chat-input').addEventListener('keypress', function (e) {
-        if (e.key === 'Enter') {
-            sendMessage();
-        }
-    });
+    socket.onmessage = function(event) {
+        let messageArea = document.getElementById("messageArea");
+        messageArea.innerHTML += '<p>' + event.data + '</p>';
+    };
 
     function sendMessage() {
-        const input = document.getElementById('chat-input');
-        const messageText = input.value.trim();
 
-        if (messageText !== '') {
-            // Add the sent message to the chat body
-            appendMessage('sent', messageText);
+        let messageInput = document.getElementById("messageInput");
 
-            // Clear the input field
-            input.value = '';
-
-            // Simulate a received response for demonstration
-            setTimeout(() => {
-                appendMessage('received', 'Respuesta automática.');
-            }, 1000);
-        }
+        let fullMessage = "Agente" + ": " + messageInput.value;
+        socket.send(fullMessage);
+        messageInput.value = '';
     }
 
-    // Function to append messages to the chat body
-    function appendMessage(type, text) {
-        const chatBody = document.getElementById('chat-body');
-
-        const messageDiv = document.createElement('div');
-        messageDiv.classList.add('message', type);
-
-        const textDiv = document.createElement('div');
-        textDiv.classList.add('text');
-        textDiv.innerText = text;
-
-        messageDiv.appendChild(textDiv);
-        chatBody.appendChild(messageDiv);
-
-        // Scroll to the latest message
-        chatBody.scrollTop = chatBody.scrollHeight;
-    }
-
-    // Function to select a contact
-    function selectContact(name) {
-        document.getElementById('chat-with').innerText = `Chat with ${name}`;
-        document.getElementById('chat-body').innerHTML = ''; // Clear chat body for the new contact
-    }
 </script>
 
 </body>
