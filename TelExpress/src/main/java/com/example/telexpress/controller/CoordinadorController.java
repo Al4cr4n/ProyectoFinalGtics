@@ -116,7 +116,7 @@ public class CoordinadorController {
 
     @GetMapping({"/dashboard2_zonal"})
     public String dashboard2CoordinadorZonal(Model model) {
-        List<Usuario> listaTopUsuarios = usuarioRepository.findByZona("zona");
+        /*List<Usuario> listaTopUsuarios = usuarioRepository.findByZona("zona");
         listaTopUsuarios.sort(Comparator.comparing(Usuario::getCantidadcompras).reversed());
         System.out.println(listaTopUsuarios);
 
@@ -141,7 +141,7 @@ public class CoordinadorController {
         );
         model.addAttribute("colores", colores);
 
-        System.out.println();
+        System.out.println();*/
 
         return "CoordinadorZonal/dashboard2_zonal";
     }

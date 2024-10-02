@@ -26,9 +26,11 @@ public class Usuario {
     private String contrasena;
     private String estadoUsuario;
     private String motivo;
-
+/*
     @Column(name = "cantidadcompras")
     private int cantidadcompras;
+
+ */
 
     @Column(name="razonSocial")
     private String razonSocial;
