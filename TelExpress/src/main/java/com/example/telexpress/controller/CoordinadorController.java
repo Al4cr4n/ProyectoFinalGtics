@@ -102,7 +102,7 @@ public class CoordinadorController {
 
     @GetMapping({"/listaagente_zonal"})
     public String listaAgenteCoordinadorZonal(Model model) {
-        List<Usuario> lista_agentes_zonal = coordinadorRepository.buscarAgentePorRolYZona("Norte");
+        List<Usuario> lista_agentes_zonal = coordinadorRepository.buscarAgentePorRolYZona("Norte"); //solo para agente norte, pero puede ser por request param para otras zonas
         model.addAttribute("lista_agentes_zonal",lista_agentes_zonal);
 
         return "CoordinadorZonal/listaagente_zonal";
