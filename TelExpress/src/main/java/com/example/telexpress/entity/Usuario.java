@@ -27,6 +27,9 @@ public class Usuario {
     private String estadoUsuario;
     private String motivo;
 
+    @Column(name="razonSocial")
+    private String razonSocial;
+
 
     @Column(name = "fechanacim", nullable = true)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
