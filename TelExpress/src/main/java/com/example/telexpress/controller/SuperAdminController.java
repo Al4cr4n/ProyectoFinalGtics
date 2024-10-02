@@ -584,6 +584,17 @@ public class SuperAdminController {
         return "SuperAdmin/gestion_agentes";
     }
 
+    @GetMapping("/agente/filtrar")
+    public String filtrarAgentesPorEstado(@RequestParam("estado") String estado, Model model) {
+        List<Usuario> agentesFiltrados = usuarioRepository.findByRolAndEstado(estado);
+
+        System.out.println("Estado filtrado: " + estado);
+        System.out.println("Número de agentes encontrados: " + agentesFiltrados.size());
+
+        model.addAttribute("lista_agentes", agentesFiltrados);
+        return "Superadmin/gestion_agentes";
+    }
+
     @GetMapping("/rol_agente_solicitudes")
     public String rolAgenteSolicitudesSuperadmin() {
 

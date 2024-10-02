@@ -267,6 +267,17 @@
             </div>
           </form>
 
+          <form action="/superadmin/agente/filtrar" method="GET" class="mb-4">
+            <div class="input-group w-50 mb-3">
+              <select name="estado" class="form-select" onchange="this.form.submit()">
+                <option value="">Todos los estados</option>
+                <option value="Activo">Activo</option>
+                <option value="Inactivo">Inactivo</option>
+                <option value="Pendiente">Pendiente</option>
+              </select>
+            </div>
+          </form>
+
           <div class="table-responsive text-nowrap">
             <table class="table table-striped">
               <thead class="table-light">
