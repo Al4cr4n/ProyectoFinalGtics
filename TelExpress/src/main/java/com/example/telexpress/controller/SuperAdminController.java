@@ -8,6 +8,7 @@ import com.example.telexpress.entity.Proveedor;
 import com.example.telexpress.entity.Ordenes;
 import com.example.telexpress.entity.Rol;
 import com.example.telexpress.repository.*;
+import com.example.telexpress.entity.Distrito;
 
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Controller;
@@ -30,13 +31,19 @@ public class SuperAdminController {
     final UsuarioRepository usuarioRepository;
     final ProveedorRepository proveedorRepository;
     final OrdenesRepository ordenesRepository;
+    final DistritoRepository distritoRepository;
+
 
     public SuperAdminController(AdminRepository adminRepository, ZonaRepository zonaRepository,
                                 ProductoRepository productoRepository, UsuarioRepository usuarioRepository,
-                                ProveedorRepository proveedorRepository, OrdenesRepository ordenesRepository) {
+                                ProveedorRepository proveedorRepository, OrdenesRepository ordenesRepository,
+                                DistritoRepository distritoRepository
+                                ) {
         this.adminRepository=adminRepository; this.zonaRepository=zonaRepository;
         this.productoRepository=productoRepository; this.usuarioRepository=usuarioRepository;
         this.proveedorRepository=proveedorRepository; this.ordenesRepository=ordenesRepository;
+        this.distritoRepository=distritoRepository;
+
     }
 
 
@@ -174,8 +181,8 @@ public class SuperAdminController {
         Optional<Usuario> optUsuario = adminRepository.findById(id);
         if (optUsuario.isPresent()){
             Usuario usuario = optUsuario.get();
-            model.addAttribute("usuarios", usuario);
-            model.addAttribute("listaZona", zonaRepository.findAll());
+            model.addAttribute("usuario", usuario);
+            model.addAttribute("distritos", distritoRepository.findAll());
 
             return "SuperAdmin/editar_usuario";
         }else{
@@ -183,40 +190,60 @@ public class SuperAdminController {
         }
     }
 
-    /*@PostMapping("/guardar_usuario")
-    public String guardarUsuario(Usuario usuario, RedirectAttributes attr) {
+    @GetMapping("/crear_usuario")
+    public String guardarUsuario(Model model, RedirectAttributes attr) {
+        List<Distrito> distritos = distritoRepository.findAll();
+        model.addAttribute("distritos",distritos);
+        model.addAttribute("usuario",new Usuario());
 
-
-        adminRepository.save(usuario);
-        return "redirect:/superadmin/gestion_usuarios";
-    }*/
+        return "SuperAdmin/editar_usuario";
+    }
     @PostMapping("/guardar_usuario")
-    public String guardarUsuario(Usuario usuarioActualizado, RedirectAttributes attr) {
-        if (usuarioActualizado.getId() != null) { // Si es una edición
-            Optional<Usuario> optUsuarioExistente = adminRepository.findById(usuarioActualizado.getId());
+    public String guardarUsuario(Usuario usuario, RedirectAttributes attr,@RequestParam("distrito.id") Integer iddist ) {
+        // Verificar si el DNI, correo o número telefónico ya existen
+        Optional<Usuario> usuarioConMismoDni = adminRepository.findByDni(usuario.getDni());
+        Optional<Usuario> usuarioConMismoCorreo = adminRepository.findByCorreo(usuario.getCorreo());
+        Optional<Usuario> usuarioConMismoTelefono = adminRepository.findByTelefono(usuario.getTelefono());
 
-            if (optUsuarioExistente.isPresent()) {
-                Usuario usuarioExistente = optUsuarioExistente.get();
-
-                // Actualizar solo los campos modificados
-                usuarioExistente.setNombre(usuarioActualizado.getNombre());
-                usuarioExistente.setApellido(usuarioActualizado.getApellido());
-                usuarioExistente.setDni(usuarioActualizado.getDni());
-                usuarioExistente.setDireccion(usuarioActualizado.getDireccion());
-                usuarioExistente.setCorreo(usuarioActualizado.getCorreo());
-                usuarioExistente.setTelefono(usuarioActualizado.getTelefono());
-
-                // Mantener los campos que no se modifican en el formulario
-                // Por ejemplo, mantener la zona o contraseña si no se cambian
-                if (usuarioActualizado.getZona() != null) {
-                    usuarioExistente.setZona(usuarioActualizado.getZona());
-                }
-
-                adminRepository.save(usuarioExistente);
-            }
-        } else { // Si es un nuevo registro
-            adminRepository.save(usuarioActualizado);
+        // Verificar si el DNI ya está en uso por otro usuario
+        if (usuarioConMismoDni.isPresent() && !usuarioConMismoDni.get().getId().equals(usuario.getId())) {
+            attr.addFlashAttribute("mensaje", "El DNI ya está registrado en otro usuario.");
+            attr.addFlashAttribute("tipoMensaje", "danger");
+            return "redirect:/superadmin/gestion_coordinadores";
         }
+
+        // Verificar si el correo ya está en uso por otro usuario
+        if (usuarioConMismoCorreo.isPresent() && !usuarioConMismoCorreo.get().getId().equals(usuario.getId())) {
+            attr.addFlashAttribute("mensaje", "El correo ya está registrado en otro usuario.");
+            attr.addFlashAttribute("tipoMensaje", "danger");
+            return "redirect:/superadmin/gestion_coordinadores";
+        }
+
+        // Verificar si el número telefónico ya está en uso por otro usuario
+        if (usuarioConMismoTelefono.isPresent() && !usuarioConMismoTelefono.get().getId().equals(usuario.getId())) {
+            attr.addFlashAttribute("mensaje", "El número telefónico ya está registrado en otro usuario.");
+            attr.addFlashAttribute("tipoMensaje", "danger");
+            return "redirect:/superadmin/gestion_coordinadores";
+        }
+
+
+            // Asignar el rol de usuario (idroles = 4)
+            Rol rolusuario = new Rol();
+            rolusuario.setId(4); // se ingresa el id del rol usuario
+
+            usuario.setRol(rolusuario); // se le asigna a este nuevo usuario el rol
+            Distrito distrito = distritoRepository.findById(iddist).orElse(null);
+            if(distrito!= null){
+                usuario.setDistrito(distrito);
+            }
+
+            // Asignar la zona basada en el distrito seleccionado
+            Zona zona = distrito.getZona(); // Obtener la zona desde el distrito
+            usuario.setZona(zona); // Asignar la zona al usuario
+
+            adminRepository.save(usuario);
+            attr.addFlashAttribute("success", "Usuario guardado correctamente.");
+
 
         return "redirect:/superadmin/gestion_usuarios";
     }
@@ -544,6 +571,34 @@ public class SuperAdminController {
             ex.printStackTrace();  // Útil para depuración, elimínalo en producción
         }
         return "redirect:/superadmin/gestion_agentes";
+    }
+
+    @GetMapping("/agente/buscar")
+    public String busquedaAgentes2(@RequestParam("searchTermAgente2") String searchTermAgente2, Model model){
+        int rolId = 3;  // El rol de "usuarios" es 4
+        List<Usuario> lista_agentes = adminRepository.searchByNameOrDniAndRol(searchTermAgente2, rolId);
+        model.addAttribute("listaUsuario", adminRepository.buscarUsuarioPorRol(4));
+        System.out.println("Resultados encontrados: " + lista_agentes.size());
+        model.addAttribute("lista_agentes", lista_agentes);
+        model.addAttribute("listaCoordi", adminRepository.buscarUsuarioPorRol(2));
+        return "SuperAdmin/gestion_agentes";
+    }
+
+    @GetMapping("/agente/filtrar")
+    public String filtrarAgentesPorEstado(@RequestParam(value = "estado", required = false) String estado, Model model) {
+        List<Usuario> agentesFiltrados;
+
+        if (estado == null || estado.isEmpty()) {
+            // Si no se selecciona ningún estado, obtener todos los agentes con rol "Agente" (id = 3)
+            agentesFiltrados = usuarioRepository.findByRol_Id(3);
+        } else {
+            // Si se selecciona un estado, aplicar el filtro por estado
+            agentesFiltrados = usuarioRepository.findByRol_IdAndCodigoDespachador_Estado(3, estado);
+        }
+
+        model.addAttribute("lista_agentes", agentesFiltrados);
+        model.addAttribute("estadoSeleccionado", estado);  // Esto ayuda a mantener el valor seleccionado en el HTML
+        return "Superadmin/gestion_agentes";
     }
 
     @GetMapping("/rol_agente_solicitudes")

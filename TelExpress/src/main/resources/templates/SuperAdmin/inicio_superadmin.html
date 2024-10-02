@@ -397,30 +397,33 @@
       <div class="content-wrapper">
         <!-- Content -->
         <div class="container-xxl flex-grow-1 container-p-y">
-          <div class="container mt-4">
-            <!-- Mensaje de éxito -->
-            <div th:if="${success}" class="alert alert-success" role="alert">
-              <span th:text="${success}"></span>
-            </div>
-
-            <!-- Mensaje de error -->
-            <div th:if="${error}" class="alert alert-danger" role="alert">
-              <span th:text="${error}"></span>
-            </div>
-          </div>
-
 
           <div class="row">
             <div class="col-12 col-lg-12 mb-4">
               <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
                   <h5 class="mb-0">Usuarios</h5>
-                  <form action="/superadmin/buscador/buscarusuarios" method="get" class="d-flex mb-0">
-                    <div class="input-group">
-                      <input type="text" name="searchTerm" class="form-control" placeholder="Buscar por nombre, apellido o DNI" th:value="${searchTerm}" />
-                      <button type="submit" class="btn btn-primary">Buscar</button>
+                  <div class="container mt-4">
+                    <!-- Mensaje de éxito -->
+                    <div th:if="${success}" class="alert alert-success" role="alert">
+                      <span th:text="${success}"></span>
                     </div>
-                  </form>
+
+                    <!-- Mensaje de error -->
+                    <div th:if="${error}" class="alert alert-danger" role="alert">
+                      <span th:text="${error}"></span>
+                    </div>
+                  </div>
+                  <div class="filter-container w-100">
+
+                    <div class="input-group">
+                      <input type="text" id="customSearch" name="customSearch" class="form-control" placeholder="Buscar por nombre o apellido" />
+                      <button id="btnBuscar" class="btn btn-primary">Buscar</button>
+                      <button id="btnLimpiar" class="btn btn-outline-primary">Limpiar</button>
+                    </div>
+
+
+                  </div>
                 </div>
                 <div class="table-responsive text-nowrap">
                   <table class="table" id="usuariosTablep">
@@ -481,185 +484,38 @@
 
             <script>
               $(document).ready(function() {
-                $('#usuariosTablep').DataTable({
-                  "pagingType": "simple_numbers", // Esto muestra los números de página completos
-                  "pageLength":5,
-                  "infoEmpty": "No hay coordinadores disponibles",
+                var table = $('#usuariosTablep').DataTable({
+                  "pageLength": 5,
+                  "lengthChange": false,
                   "language": {
+                    "emptyTable": "No hay registros disponibles",
+                    "zeroRecords": "No se encontraron registros coincidentes",
+                    "infoEmpty": "Mostrando 0 a 0 de 0 entradas",
+                    "search": "Buscar:",
                     "paginate": {
-                      "first": "",
-                      "last": "",
-                      "next": ">>",
-                      "previous": "<<"
-                    }
-                  },
-                  "paging": true,      // Activa la paginación
-                  "searching": false,  // Desactiva el buscador
-                  "info": false        // Oculta la información de "Showing"
+                      "first": "Primero",
+                      "last": "Último",
+                      "next": "Siguiente",
+                      "previous": "Anterior"
+                    },
+                    "info": "Mostrando de _START_ a _END_ de _TOTAL_ entradas",
+                    "infoFiltered": "(filtrado de _MAX_ entradas totales)"
+                  }
+                });
 
+                // Evento para el botón Buscar
+                $('#btnBuscar').on('click', function() {
+                  var searchValue = $('#customSearch').val();
+                  table.search(searchValue).draw();  // Realiza la búsqueda
+                });
+
+                // Evento para el botón Limpiar Filtros
+                $('#btnLimpiar').on('click', function() {
+                  $('#customSearch').val('');  // Limpia el campo de búsqueda
+                  table.search('').draw();     // Resetea la tabla
                 });
               });
             </script>
-
-
-            <!-- Tabla 1
-            <div class="col-12 col-lg-12 order-2 order-md-3 order-lg-2 mb-4">
-              <div class="card">
-                <h5 class="card-header">Usuarios</h5>
-                <div class="table-responsive text-nowrap">
-                  <table class="table">
-                    <thead class="table-light">
-                    <tr>
-                      <th><i class="fab fa-angular fa-lg text-danger me-3"></i>Nombre</th>
-                      <th>Apellido</th>
-                      <th>Correo</th>
-                      <th>DNI</th>
-                      <th>Dirección</th>
-                      <th>Actions</th>
-                    </tr>
-                    </thead>
-                    <tbody id="userTable" class="table-border-bottom-0">
-                     Aquí se insertarán los datos de los usuarios dinámicamente
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-              <br>
-              <div>
-                <nav aria-label="Page navigation example">
-                  <ul class="pagination justify-content-center" id="pagination">
-                     Aquí se generará dinámicamente la paginación
-                  </ul>
-                </nav>
-              </div>
-            </div>
-
-            <script>
-              const users = [
-                { name: 'Albert', surname: 'Cook', email: 'Albert Cook', dni: '01234567', address: 'Angular Project' },
-                { name: 'Barry', surname: 'Hunter', email: 'Barry Hunter', dni: '01234567', address: 'React Project' },
-                { name: 'Trevor', surname: 'Baker', email: 'Trevor Baker', dni: '01234567', address: 'VueJs Project' },
-                { name: 'Jerry', surname: 'Milton', email: 'Jerry Milton', dni: '01234567', address: 'Bootstrap Project' },
-                { name: 'Albert', surname: 'Cook', email: 'Albert Cook', dni: '01234567', address: 'Angular Project' },
-                { name: 'Barry', surname: 'Hunter', email: 'Barry Hunter', dni: '01234567', address: 'React Project' },
-                { name: 'Trevor', surname: 'Baker', email: 'Trevor Baker', dni: '01234567', address: 'VueJs Project' },
-                { name: 'Barry', surname: 'Hunter', email: 'Barry Hunter', dni: '01234567', address: 'React Project' },
-                { name: 'Trevor', surname: 'Baker', email: 'Trevor Baker', dni: '01234567', address: 'VueJs Project' },
-                { name: 'Jerry', surname: 'Milton', email: 'Jerry Milton', dni: '01234567', address: 'Bootstrap Project' },
-                { name: 'Albert', surname: 'Cook', email: 'Albert Cook', dni: '01234567', address: 'Angular Project' },
-                { name: 'Barry', surname: 'Hunter', email: 'Barry Hunter', dni: '01234567', address: 'React Project' },
-                { name: 'Barry', surname: 'Hunter', email: 'Barry Hunter', dni: '01234567', address: 'React Project' },
-                { name: 'Trevor', surname: 'Baker', email: 'Trevor Baker', dni: '01234567', address: 'VueJs Project' },
-                { name: 'Barry', surname: 'Hunter', email: 'Barry Hunter', dni: '01234567', address: 'React Project' },
-                { name: 'Trevor', surname: 'Baker', email: 'Trevor Baker', dni: '01234567', address: 'VueJs Project' },
-                { name: 'Jerry', surname: 'Milton', email: 'Jerry Milton', dni: '01234567', address: 'Bootstrap Project' },
-                { name: 'Albert', surname: 'Cook', email: 'Albert Cook', dni: '01234567', address: 'Angular Project' },
-                { name: 'Barry', surname: 'Hunter', email: 'Barry Hunter', dni: '01234567', address: 'React Project' }
-              ];
-
-              let currentPage = 1;
-              const rowsPerPage = 5;
-              const totalPages = Math.ceil(users.length / rowsPerPage);
-
-              // Función para mostrar los usuarios de la página actual
-              function displayUsers(usersToShow) {
-                const tableBody = document.getElementById('userTable');
-                tableBody.innerHTML = ''; // Limpiar la tabla
-                usersToShow.forEach(user => {
-                  const row = `<tr>
-        <td>${user.name}</td>
-        <td>${user.surname}</td>
-        <td>${user.email}</td>
-        <td>${user.dni}</td>
-        <td>${user.address}</td>
-        <td>
-          <div class="dropdown">
-            <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-              <i class="bx bx-dots-vertical-rounded"></i>
-            </button>
-            <div class="dropdown-menu">
-              <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-edit-alt me-1"></i> Editar</a>
-              <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-trash me-1"></i> Eliminar</a>
-              <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-log-in-circle me-1"></i> Ingresar</a>
-            </div>
-          </div>
-        </td>
-      </tr>`;
-                  tableBody.innerHTML += row;
-                });
-              }
-
-              // Función para cambiar de página
-              function changePage(page) {
-                if (page < 1 || page > totalPages) return;
-
-                const start = (page - 1) * rowsPerPage;
-                const end = start + rowsPerPage;
-                const usersToShow = users.slice(start, end);
-                displayUsers(usersToShow);
-
-                currentPage = page;
-                updatePagination();
-              }
-
-              // Función para actualizar la paginación
-              function updatePagination() {
-                const pagination = document.getElementById('pagination');
-                pagination.innerHTML = ''; // Limpiar paginación
-
-                // Botón "Anterior"
-                const prevItem = `<li class="page-item ${currentPage === 1 ? 'disabled' : ''}">
-      <a class="page-link" href="#" aria-label="Previous" onclick="prevPage()">
-        <span aria-hidden="true">&laquo;</span>
-      </a>
-    </li>`;
-                pagination.innerHTML += prevItem;
-
-                // Mostrar 3 números en la paginación, con la página actual en el centro si es posible
-                let startPage = Math.max(1, currentPage - 1);
-                let endPage = Math.min(totalPages, currentPage + 1);
-
-                // Ajustar si estamos al principio o al final de las páginas
-                if (currentPage === 1) {
-                  endPage = Math.min(totalPages, 3);
-                } else if (currentPage === totalPages) {
-                  startPage = Math.max(1, totalPages - 2);
-                }
-
-                for (let i = startPage; i <= endPage; i++) {
-                  const pageItem = `<li class="page-item ${i === currentPage ? 'active' : ''}">
-        <a class="page-link" href="#" onclick="changePage(${i})">${i}</a>
-      </li>`;
-                  pagination.innerHTML += pageItem;
-                }
-
-                // Botón "Siguiente"
-                const nextItem = `<li class="page-item ${currentPage === totalPages ? 'disabled' : ''}">
-      <a class="page-link" href="#" aria-label="Next" onclick="nextPage()">
-        <span aria-hidden="true">&raquo;</span>
-      </a>
-    </li>`;
-                pagination.innerHTML += nextItem;
-              }
-
-              // Función para ir a la página anterior
-              function prevPage() {
-                if (currentPage > 1) {
-                  changePage(currentPage - 1);
-                }
-              }
-
-              // Función para ir a la página siguiente
-              function nextPage() {
-                if (currentPage < totalPages) {
-                  changePage(currentPage + 1);
-                }
-              }
-
-              // Mostrar la primera página al cargar
-              changePage(1);
-            </script>
-            / Tabla 1 -->
 
             <!-- Tabla 2 -->
             <div class="col-12 col-lg-12 order-2 order-md-3 order-lg-2 mb-4">
@@ -667,12 +523,27 @@
               <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
                   <h5 class="mb-0">Agentes</h5>
-                  <form action="/superadmin/buscador/buscaragentes" method="get" class="d-flex mb-0">
-                    <div class="input-group">
-                      <input type="text" name="searchTermAgente" class="form-control" placeholder="Buscar por nombre, apellido o DNI" th:value="${searchTermAgente}" />
-                      <button type="submit" class="btn btn-primary">Buscar</button>
+                  <div class="container mt-4">
+                    <!-- Mensaje de éxito -->
+                    <div th:if="${success}" class="alert alert-success" role="alert">
+                      <span th:text="${success}"></span>
                     </div>
-                  </form>
+
+                    <!-- Mensaje de error -->
+                    <div th:if="${error}" class="alert alert-danger" role="alert">
+                      <span th:text="${error}"></span>
+                    </div>
+                  </div>
+                  <div class="filter-container w-100">
+
+                    <div class="input-group">
+                      <input type="text" id="customSearch2" name="customSearch2" class="form-control" placeholder="Buscar por nombre o apellido" />
+                      <button id="btnBuscar2" class="btn btn-primary">Buscar</button>
+                      <button id="btnLimpiar2" class="btn btn-outline-primary">Limpiar</button>
+                    </div>
+
+
+                  </div>
                 </div>
                 <div class="table-responsive text-nowrap">
                   <table class="table" id="agentesTablep">
@@ -722,47 +593,39 @@
 
               <script>
                 $(document).ready(function() {
-                  $('#agentesTablep').DataTable({
-                    "pagingType": "simple_numbers", // Esto muestra los números de página completos
-                    "pageLength":5,
-                    "infoEmpty": "No hay coordinadores disponibles",
+                  var table = $('#agentesTablep').DataTable({
+                    "pageLength": 5,
+                    "lengthChange": false,
                     "language": {
+                      "emptyTable": "No hay registros disponibles",
+                      "zeroRecords": "No se encontraron registros coincidentes",
+                      "infoEmpty": "Mostrando 0 a 0 de 0 entradas",
+                      "search": "Buscar:",
                       "paginate": {
-                        "first": "",
-                        "last": "",
-                        "next": ">>",
-                        "previous": "<<"
-                      }
-                    },
-                    "paging": true,      // Activa la paginación
-                    "searching": false,  // Desactiva el buscador
-                    "info": false        // Oculta la información de "Showing"
+                        "first": "Primero",
+                        "last": "Último",
+                        "next": "Siguiente",
+                        "previous": "Anterior"
+                      },
+                      "info": "Mostrando de _START_ a _END_ de _TOTAL_ entradas",
+                      "infoFiltered": "(filtrado de _MAX_ entradas totales)"
+                    }
+                  });
 
+                  // Evento para el botón Buscar
+                  $('#btnBuscar2').on('click', function() {
+                    var searchValue = $('#customSearch2').val();
+                    table.search(searchValue).draw();  // Realiza la búsqueda
+                  });
+
+                  // Evento para el botón Limpiar Filtros
+                  $('#btnLimpiar2').on('click', function() {
+                    $('#customSearch2').val('');  // Limpia el campo de búsqueda
+                    table.search('').draw();     // Resetea la tabla
                   });
                 });
               </script>
-
               <br>
-              <!--
-              <div>
-                <nav aria-label="Page navigation example">
-                  <ul class="pagination justify-content-end">
-                    <li class="page-item">
-                      <a class="page-link" href="#" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                      </a>
-                    </li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item">
-                      <a class="page-link" href="#" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                      </a>
-                    </li>
-                  </ul>
-                </nav>
-              </div>   -->           <!-- Bootstrap Table with Header - Light -->
             </div>
             <!--/ Tabla 2 -->
 
@@ -771,13 +634,28 @@
               <!-- Bootstrap Table with Header - Light -->
               <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
-                  <h5 class="mb-0">Coordinadores Zonales</h5>
-                  <form action="/superadmin/buscador/buscaragentes" method="get" class="d-flex mb-0">
-                    <div class="input-group">
-                      <input type="text" name="searchTermZonal" class="form-control" placeholder="Buscar por nombre, apellido o DNI" th:value="${searchTermZonal}" />
-                      <button type="submit" class="btn btn-primary">Buscar</button>
+                  <h5 class="mb-0">Coordinadores zonales</h5>
+                  <div class="container mt-4">
+                    <!-- Mensaje de éxito -->
+                    <div th:if="${success}" class="alert alert-success" role="alert">
+                      <span th:text="${success}"></span>
                     </div>
-                  </form>
+
+                    <!-- Mensaje de error -->
+                    <div th:if="${error}" class="alert alert-danger" role="alert">
+                      <span th:text="${error}"></span>
+                    </div>
+                  </div>
+                  <div class="filter-container w-100">
+
+                    <div class="input-group">
+                      <input type="text" id="customSearch3" name="customSearch3" class="form-control" placeholder="Buscar por nombre o apellido" />
+                      <button id="btnBuscar3" class="btn btn-primary">Buscar</button>
+                      <button id="btnLimpiar3" class="btn btn-outline-primary">Limpiar</button>
+                    </div>
+
+
+                  </div>
                 </div>
                 <div class="table-responsive text-nowrap">
                   <table class="table"  id="coordinadoresTablep">
@@ -826,45 +704,39 @@
                 </div>
               </div>
               <br>
-              <!--<div>
-                <nav aria-label="Page navigation example">
-                  <ul class="pagination justify-content-end">
-                    <li class="page-item">
-                      <a class="page-link" href="#" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                      </a>
-                    </li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item">
-                      <a class="page-link" href="#" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                      </a>
-                    </li>
-                  </ul>
-                </nav>
-              </div>   -->           <!-- Bootstrap Table with Header - Light -->
             </div>
             <!--/ Tabla 3 -->
             <script>
               $(document).ready(function() {
-                $('#coordinadoresTablep').DataTable({
-                  "pagingType": "simple_numbers", // Esto muestra los números de página completos
-                  "pageLength":5,
-                  "infoEmpty": "No hay coordinadores disponibles",
+                var table = $('#coordinadoresTablep').DataTable({
+                  "pageLength": 5,
+                  "lengthChange": false,
                   "language": {
+                    "emptyTable": "No hay registros disponibles",
+                    "zeroRecords": "No se encontraron registros coincidentes",
+                    "infoEmpty": "Mostrando 0 a 0 de 0 entradas",
+                    "search": "Buscar:",
                     "paginate": {
-                      "first": "",
-                      "last": "",
-                      "next": ">>",
-                      "previous": "<<"
-                    }
-                  },
-                  "paging": true,      // Activa la paginación
-                  "searching": false,  // Desactiva el buscador
-                  "info": false        // Oculta la información de "Showing"
+                      "first": "Primero",
+                      "last": "Último",
+                      "next": "Siguiente",
+                      "previous": "Anterior"
+                    },
+                    "info": "Mostrando de _START_ a _END_ de _TOTAL_ entradas",
+                    "infoFiltered": "(filtrado de _MAX_ entradas totales)"
+                  }
+                });
 
+                // Evento para el botón Buscar
+                $('#btnBuscar3').on('click', function() {
+                  var searchValue = $('#customSearch3').val();
+                  table.search(searchValue).draw();  // Realiza la búsqueda
+                });
+
+                // Evento para el botón Limpiar Filtros
+                $('#btnLimpiar3').on('click', function() {
+                  $('#customSearch3').val('');  // Limpia el campo de búsqueda
+                  table.search('').draw();     // Resetea la tabla
                 });
               });
             </script>

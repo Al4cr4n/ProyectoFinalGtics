@@ -38,7 +38,18 @@ CREATE TABLE `codigodespachador` (
 
 LOCK TABLES `codigodespachador` WRITE;
 /*!40000 ALTER TABLE `codigodespachador` DISABLE KEYS */;
-INSERT INTO `codigodespachador` VALUES (1,'DESP001','Activo'),(2,'DESP002','Inactivo'),(3,'DESP003','Activo'),(4,'DESP004','Pendiente'),(5,'DESP005','Activo'),(6,'DESP006','Inactivo'),(7,'DESP007','Activo'),(8,'DESP008','Inactivo'),(9,'DESP009','Pendiente'),(10,'DESP010','Activo'),(11,'DESP011','Activo'),(12,'DESP012','Inactivo'),(13,'DESP013','Pendiente'),(14,'DESP014','Activo'),(15,'DESP015','Inactivo'),(16,'DESP016','Activo'),(17,'DESP017','Pendiente'),(18,'DESP018','Activo'),(19,'DESP019','Inactivo'),(20,'DESP020','Pendiente'),(21,'DESP021','Activo'),(22,'DESP022','Pendiente'),(23,'DESP023','Inactivo'),(24,'DESP024','Activo'),(25,'DESP025','Pendiente'),(26,'DESP026','Inactivo'),(27,'DESP027','Activo'),(28,'DESP028','Inactivo'),(29,'DESP029','Pendiente'),(30,'DESP030','Activo'),(31,'DESP031','Activo'),(32,'DESP032','Inactivo'),(33,'DESP033','Pendiente'),(34,'DESP034','Activo'),(35,'DESP035','Pendiente'),(36,'DESP036','Inactivo'),(37,'DESP037','Activo'),(38,'DESP038','Pendiente'),(39,'DESP039','Inactivo'),(40,'DESP040','Activo');
+INSERT INTO `codigodespachador` VALUES (1,'DESP001','Activo'),
+(2,'DESP002','Inactivo'),(3,'DESP003','Activo'),
+(4,'DESP004','Pendiente'),(5,'DESP005','Activo'),
+(6,'DESP006','Inactivo'),(7,'DESP007','Activo'),
+(8,'DESP008','Inactivo'),(9,'DESP009','Pendiente'),
+(10,'DESP010','Activo'),(11,'DESP011','Activo'),
+(12,'DESP012','Inactivo'),(13,'DESP013','Pendiente'),
+(14,'DESP014','Activo'),(15,'DESP015','Inactivo'),
+(16,'DESP016','Activo'),(17,'DESP017','Pendiente'),
+(18,'DESP018','Activo'),(19,'DESP019','Inactivo'),
+(20,'DESP020','Pendiente'),(21,'DESP021','Activo'),
+(22,'DESP022','Pendiente'),(23,'DESP023','Inactivo'),(24,'DESP024','Activo'),(25,'DESP025','Pendiente'),(26,'DESP026','Inactivo'),(27,'DESP027','Activo'),(28,'DESP028','Inactivo'),(29,'DESP029','Pendiente'),(30,'DESP030','Activo'),(31,'DESP031','Activo'),(32,'DESP032','Inactivo'),(33,'DESP033','Pendiente'),(34,'DESP034','Activo'),(35,'DESP035','Pendiente'),(36,'DESP036','Inactivo'),(37,'DESP037','Activo'),(38,'DESP038','Pendiente'),(39,'DESP039','Inactivo'),(40,'DESP040','Activo');
 /*!40000 ALTER TABLE `codigodespachador` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -90,6 +101,28 @@ CREATE TABLE `distritos` (
 
 LOCK TABLES `distritos` WRITE;
 /*!40000 ALTER TABLE `distritos` DISABLE KEYS */;
+INSERT INTO `distritos` VALUES 
+-- NORTE --
+(1,'Ancon',1),(2,'Santa Rosa',1),(3,'Carabayllo',1),(4,'Puente Piedra',1),(5, 'Comas', 1),
+(6, 'Los Olivos', 1),(7, 'San Martín de Porres', 1),(8, 'Independencia', 1),
+-- SUR --
+(9, 'San Juan de Miraflores', 2),(10, 'Villa María del Triunfo', 2),
+(11, 'Villa el Salvador', 2),(12, 'Pachacamac', 2),
+(13, 'Lurín', 2),(14, 'Punta Hermosa', 2),
+(15, 'Punta Negra', 2),(16, 'San Bartolo', 2),
+(17, 'Santa María del Mar', 2),(18, 'Pucusana', 2),
+-- ESTE --
+(19, 'San Juan de Lurigancho', 3),(20, 'Lurigancho/Chosica', 3),
+(21, 'Ate', 3),(22, 'El Agustino', 3),
+(23, 'Santa Anita', 3),(24, 'La Molina', 3),
+(25, 'Cieneguilla', 3),
+-- OESTE --
+(26, 'Rimac', 4),(27, 'Cercado de Lima', 4),(28, 'Breña', 4),
+(29, 'Pueblo Libre', 4),(30, 'Magdalena', 4),(31, 'Jesus Maria', 4),
+(32, 'La Victoria', 4),(33, 'Lince', 4),(34, 'San Isidro', 4),
+(35, 'San Miguel', 4),(36, 'Surquillo', 4),(37, 'San Borja', 4),
+(38, 'Santiago de Surco', 4),(39, 'Barranco', 4),(40, 'Chorrillos', 4),
+(41, 'San Luis', 4),(42, 'Miraflores', 4);
 /*!40000 ALTER TABLE `distritos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -579,7 +612,7 @@ INSERT INTO `usuario` VALUES (1,'Juan','Pérez','87654301','pass111','Calle Luna
 (7,'Raúl','Torres','87654307','pass777','Calle Nube 700','20123456707','Notificaciones Inactivas','raul.torres@example.com','967890123','Activo','JUR107','DES407','Torres SAC',1,0,4,3,1,'1994-06-07','baneado',7,8),
 (8,'Sofía','Vargas','87654308','pass888','Av. Arena 800','20123456708','Notificaciones Activas','sofia.vargas@example.com','978901234','Inactivo','JUR108','DES408','Vargas EIRL',0,0,4,13,2,'1994-01-12','inactivo',2,13),
 (9,'Jorge','Díaz','87654309','pass999','Calle Sol 900','20123456709','Notificaciones Inactivas','jorge.diaz@example.com','989012345','Activo','JUR109','DES409','Díaz SAC',1,0,4,23,3,'1993-11-09','activo',7,18),
-(10,'Lucía','Mendoza','87654310','pass1010','Av. Viento 1000','20123456710','Notificaciones Activas','lucia.mendoza@example.com','990123456','Activo','JUR110','DES410','Mendoza EIRL',1,0,4,4,1,'1993-09-20','activo',8,9),
+(10,'Lucía','Mendoza','87654310','pass1010','Av. Viento 1000','20123456710','Notificaciones Activas','lucia.mendoza@example.com','990123883','Activo','JUR110','DES410','Mendoza EIRL',1,0,4,4,1,'1993-09-20','activo',8,9),
 (11,'Ana','Rojas','87654311','pass1111','Calle Fuego 1100','20123456711','Notificaciones Inactivas','ana.rojas@example.com','991234567','Activo','JUR111','DES411','Rojas SAC',1,0,4,5,1,'1989-12-27','activo',9,10),
 (12,'Luis','Ortiz','87654312','pass1212','Av. Brisa 1200','20123456712','Notificaciones Activas','luis.ortiz@example.com','992345678','Inactivo','JUR112','DES412','Ortiz EIRL',1,0,4,24,3,'1988-12-21','inactivo',8,19),
 (13,'Gloria','Paredes','87654313','pass1313','Calle Trueno 1300','20123456713','Notificaciones Activas','gloria.paredes@example.com','993456789','Activo','JUR113','DES413','Paredes SAC',0,0,4,14,2,'1995-12-02','inactivo',3,14),
@@ -639,5 +672,10 @@ UNLOCK TABLES;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+ALTER TABLE resenias DROP FOREIGN KEY fk_resenias_usuario1;
 
+ALTER TABLE resenias
+ADD CONSTRAINT fk_resenias_usuario1
+FOREIGN KEY (usuario_idusuario) REFERENCES usuario(idusuario)
+ON DELETE CASCADE;
 -- Dump completed on 2024-09-27  3:22:32

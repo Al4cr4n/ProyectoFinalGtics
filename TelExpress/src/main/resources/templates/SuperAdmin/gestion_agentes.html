@@ -260,6 +260,25 @@
       <div class="content-wrapper">
         <div class="container-xxl flex-grow-1 container-p-y">
           <h5 class="mb-4">Agentes</h5>
+          <form action="/superadmin/agente/buscar" method="GET" class="mb-4">
+            <div class="input-group">
+              <input type="text" name="searchTermAgente2" class="form-control" placeholder="Buscar agente por nombre o apellido" th:value="${searchTermAgente2}" />
+              <button class="btn btn-primary" type="submit">Buscar</button>
+            </div>
+          </form>
+
+          <form action="/superadmin/agente/filtrar" method="GET" class="mb-4">
+            <div class="input-group w-50 mb-3">
+              <select name="estado" class="form-select" onchange="this.form.submit()">
+                <!-- Si no se selecciona un estado específico, el valor enviado será vacío -->
+                <option value="" th:selected="${estadoSeleccionado == null || estadoSeleccionado == ''}">Todos los estados</option>
+                <option value="Activo" th:selected="${estadoSeleccionado == 'Activo'}">Activo</option>
+                <option value="Inactivo" th:selected="${estadoSeleccionado == 'Inactivo'}">Inactivo</option>
+                <option value="Pendiente" th:selected="${estadoSeleccionado == 'Pendiente'}">Pendiente</option>
+              </select>
+            </div>
+          </form>
+
           <div class="table-responsive text-nowrap">
             <table class="table table-striped">
               <thead class="table-light">
@@ -271,7 +290,7 @@
                 <th>DNI</th>
                 <th>RUC</th>
                 <th>Nombre de la Tienda</th>
-                <th>Validación</th>
+                <th>Estado</th>
                 <th>Acciones</th>
               </tr>
               </thead>

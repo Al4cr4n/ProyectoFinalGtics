@@ -278,10 +278,12 @@
             <div class="content-wrapper">
                 <div class="container-xxl flex-grow-1 container-p-y">
                     <!-- Título -->
-                    <h4 class="mb-4">Editar Usuario</h4>
 
+                    <h4 class="mb-4" th:text="${usuario.id != null ? 'Editar información del Usuario ' : 'Registrar un Usuario'}"></h4>
+
+                    <div class="card" style="padding: 2rem;">
                     <!-- Formulario -->
-                    <form id="formRegistro" method="post" th:action="@{/superadmin/guardar_usuario}" th:object="${usuarios}">
+                    <form id="formRegistro" method="post" th:action="@{/superadmin/guardar_usuario}" th:object="${usuario}">
                         <input th:field="*{id}" name="id"  type="hidden"/>
                         <div class="row mb-3">
                             <!-- Nombre  -->
@@ -328,27 +330,40 @@
 
 
                         <div class="row mb-3">
-                            <!-- Zona-->
-                            <div class="">
-                                <label class="form-label">Zona:</label>
-                                <select class="form-select" th:field="*{zona}" disabled>
-                                    <option th:each="zona : ${listaZona}"
-                                            th:value="${zona.idzona}"
-                                            th:text="${zona.nombre}">
+                            <!-- Distrito-->
+                            <div class="col-md-6">
+                                <label class="form-label">Distrito:</label>
+                                <select class="form-select" th:field="*{distrito.id}" >
+                                    <option th:each="dist : ${distritos}"
+                                            th:value="${dist.id}"
+                                            th:text="${dist.nombredistrito}">
                                     </option>
                                 </select>
                             </div>
-
+                            <!-- Contraseña Temporal -->
+                            <div class="col-md-6">
+                                <label for="contrasenaTemporal" class="form-label">Contraseña Temporal:</label>
+                                <input type="password" class="form-control"
+                                       id="contrasenaTemporal"  th:field="*{contrasena}"
+                                       th:placeholder="${usuario.id != null ? '********' : 'Ingrese una contraseña temporal'}"
+                                       th:value="${usuario.id != null ? '********' : ''}"
+                                       th:readonly="${usuario.id != null}"/>
+                            </div>
 
                         </div>
 
                         <!-- Botón de editar -->
                         <div class="text-center">
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmModal">Guardar Cambios</button>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmModal">
+                                <span th:text="${usuario.id != null ? 'Guardar Cambios' : 'Registrar'}"></span>
+                            </button>
                             <a th:href="@{/superadmin/gestion_usuarios}" class="btn btn-danger">Cancelar</a>
 
                         </div>
+
+
                     </form>
+                    </div>
                 </div>
 
                 <!-- Modal de Confirmación -->
