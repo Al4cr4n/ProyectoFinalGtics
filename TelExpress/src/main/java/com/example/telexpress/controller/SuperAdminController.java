@@ -585,13 +585,19 @@ public class SuperAdminController {
     }
 
     @GetMapping("/agente/filtrar")
-    public String filtrarAgentesPorEstado(@RequestParam("estado") String estado, Model model) {
-        List<Usuario> agentesFiltrados = usuarioRepository.findByRolAndEstado(estado);
+    public String filtrarAgentesPorEstado(@RequestParam(value = "estado", required = false) String estado, Model model) {
+        List<Usuario> agentesFiltrados;
 
-        System.out.println("Estado filtrado: " + estado);
-        System.out.println("Número de agentes encontrados: " + agentesFiltrados.size());
+        if (estado == null || estado.isEmpty()) {
+            // Si no se selecciona ningún estado, obtener todos los agentes con rol "Agente" (id = 3)
+            agentesFiltrados = usuarioRepository.findByRol_Id(3);
+        } else {
+            // Si se selecciona un estado, aplicar el filtro por estado
+            agentesFiltrados = usuarioRepository.findByRol_IdAndCodigoDespachador_Estado(3, estado);
+        }
 
         model.addAttribute("lista_agentes", agentesFiltrados);
+        model.addAttribute("estadoSeleccionado", estado);  // Esto ayuda a mantener el valor seleccionado en el HTML
         return "Superadmin/gestion_agentes";
     }
 
