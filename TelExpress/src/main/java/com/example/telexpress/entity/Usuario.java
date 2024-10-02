@@ -27,6 +27,9 @@ public class Usuario {
     private String estadoUsuario;
     private String motivo;
 
+    @Column(name = "cantidadcompras")
+    private int cantidadcompras;
+
     @Column(name="razonSocial")
     private String razonSocial;
 

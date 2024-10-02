@@ -115,11 +115,37 @@ public class CoordinadorController {
     }
 
     @GetMapping({"/dashboard2_zonal"})
-    public String dashboard2CoordinadorZonal() {
+    public String dashboard2CoordinadorZonal(Model model) {
+        List<Usuario> listaTopUsuarios = usuarioRepository.findByZona("zona");
+        listaTopUsuarios.sort(Comparator.comparing(Usuario::getCantidadcompras).reversed());
+        System.out.println(listaTopUsuarios);
 
+
+        model.addAttribute("listaTopUsuarios",listaTopUsuarios);
+
+        if (listaTopUsuarios.size() > 10) {
+            listaTopUsuarios = listaTopUsuarios.subList(0, 10);
+        }
+
+        List<String> colores = Arrays.asList(
+                "#f1948a",
+                "#6c757d",
+                "#67c9c2",
+                "#f5a9d0",
+                "#ffc107",
+                "#17a2b8",
+                "#343a40",
+                "#C39BD3",
+                "#7FB3D5",
+                "#76D7C4"
+        );
+        model.addAttribute("colores", colores);
+
+        System.out.println();
 
         return "CoordinadorZonal/dashboard2_zonal";
     }
+
 
 
     @GetMapping({"/importacion_zonal"})

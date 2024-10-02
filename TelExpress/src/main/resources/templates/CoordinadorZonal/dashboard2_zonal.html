@@ -467,6 +467,33 @@
                         </div>
                         <!--/ TOP 10 USUARIOS CON MÁS IMPORTACIONES -->
 
+                        <!-- TOP 10 USUARIOS CON MÁS IMPORTACIONES
+                        <div class="col-md-8">
+                            <div class="card mb-4">
+                                <h5 class="card-header" style="font-family: 'Poppins', sans-serif;">Top 10 productos más vendidos</h5>
+                                <div class="card-body">
+                                    <div class="demo-vertical-spacing demo-only-element">
+                                        /* Iterar sobre la lista de productos */
+                        <div th:each="usuario, iterStat : ${listaTopUsuarios}">
+                            /* Mostrar el nombre del producto */
+                            <h6 style="margin-bottom: 5px;">Usuario [[${iterStat.index + 1}]]: [[${usuario.nombre}]]</h6>
+
+                            /* Barra de progreso */
+                            <div class="progress">
+                                /* Progresión escalada basada en el producto más comprado */
+
+                                <div class="progress-bar" role="progressbar"
+                                     th:style="'width: ' + (${usuario.cantidadcompras} * 100 / ${listaTopUsuarios[0].cantidadcompras}) + '%; background-color: ' + ${colores[iterStat.index]}"
+                                     th:aria-valuenow="${usuario.cantidadcompras}" aria-valuemin="0" aria-valuemax="${listaTop[0].cantidadcompras}"></div>
+                            </div>
+                        /* Mostrar cantidad comprada en lugar del porcentaje */
+                            <span th:text="${usuario.cantidadcompras} + ' comprados'"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        TOP 10 USUARIOS CON MÁS IMPORTACIONES -->
 
                         <!-- PAGINACION -->
                         <div class="d-flex justify-content-end mt-4">

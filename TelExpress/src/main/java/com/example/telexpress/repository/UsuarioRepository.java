@@ -19,6 +19,9 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     @Query("SELECT u FROM Usuario u WHERE u.rol.id = 3 AND u.codigoDespachador.estado = :estado")
     List<Usuario> findByRolAndEstado(@Param("estado") String estado);
 
+    @Query("SELECT u FROM Usuario u WHERE u.zona.idzona = 1 AND u.codigoDespachador.estado = :zona")
+    List<Usuario> findByZona(@Param("zona") String zona);
+
     List<Usuario> findByRol_Id(int rolId);
     List<Usuario> findByRol_IdAndCodigoDespachador_Estado(int rolId, String estado);
     long countByRol_Id(Long id);
