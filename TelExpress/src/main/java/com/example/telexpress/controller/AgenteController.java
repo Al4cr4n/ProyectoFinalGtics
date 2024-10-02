@@ -35,6 +35,10 @@ public class AgenteController {
         this.usuarioRepository = usuarioRepository;
     }
 
+    @GetMapping("/inicio")
+    public String paginicio(){
+        return "Agente/inicio_agente";
+    }
     @GetMapping("/ordenes")
     public String mostrarOrdenesAgente(@RequestParam(value = "search", required = false) String search, Model model) {
         List<Ordenes> ordenes;
