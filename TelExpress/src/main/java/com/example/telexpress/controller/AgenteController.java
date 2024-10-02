@@ -235,7 +235,6 @@ public class AgenteController {
                                 @RequestParam("motivo") String motivo,
                                 RedirectAttributes attr) {
         try {
-
             // Buscar el usuario en la base de datos
             Long idLong = Long.valueOf(id);  // Convierte el Integer a Long
             Usuario usuario = usuarioRepository.findById(idLong)
