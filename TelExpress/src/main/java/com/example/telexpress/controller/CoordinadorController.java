@@ -1,4 +1,5 @@
 package com.example.telexpress.controller;
+import com.example.telexpress.config.EmailService;
 import com.example.telexpress.entity.*;
 import com.example.telexpress.repository.*;
 import org.springframework.stereotype.Controller;
@@ -21,16 +22,18 @@ public class CoordinadorController {
     final ProveedorRepository proveedorRepository;
     final OrdenesRepository ordenesRepository;
     private final CoordinadorRepository coordinadorRepository;
+    private final EmailService emailService;
 
 
     public CoordinadorController(AdminRepository adminRepository, ZonaRepository zonaRepository,
                                 ProductoRepository productoRepository, UsuarioRepository usuarioRepository,
                                 ProveedorRepository proveedorRepository, OrdenesRepository ordenesRepository,
-                                 CoordinadorRepository coordinadorRepository) {
+                                 CoordinadorRepository coordinadorRepository, EmailService emailService) {
         this.adminRepository=adminRepository; this.zonaRepository=zonaRepository;
         this.productoRepository=productoRepository; this.usuarioRepository=usuarioRepository;
         this.proveedorRepository=proveedorRepository; this.ordenesRepository=ordenesRepository;
         this.coordinadorRepository = coordinadorRepository;
+        this.emailService=emailService;
     }
 
     @GetMapping({"/inicio_coordinador_zonal",""})
@@ -137,15 +140,25 @@ public class CoordinadorController {
         }
     }
 
-    @GetMapping({"/productos_zonal"})
+    @GetMapping("/productos_zonal")
     public String productosCoordinadorZonal(Model model) {
         List<Producto> producto = productoRepository.findAll();
         producto.sort(Comparator.comparing(Producto::getCantidadTotal).reversed());
         model.addAttribute("producto", producto);
-
-
         return "CoordinadorZonal/productos_zonal";
     }
+
+    @PostMapping("/solicitarReponer")
+    public String solicitarReposicion(@RequestParam("nombreProducto") String nombreProducto,
+                                      @RequestParam("categoria") String categoria,
+                                      @RequestParam("email") String email) {
+        // Llamar al servicio de correo
+        emailService.enviarEmailSolicitud(email, nombreProducto, categoria);
+
+        // Redirigir a la vista de productos con un mensaje de éxito
+        return "redirect:/productos_zonal?solicitudExitosa";
+    }
+
 
 
 

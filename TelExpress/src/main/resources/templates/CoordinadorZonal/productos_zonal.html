@@ -358,9 +358,24 @@
                                             class="btn btn-primary"
                                             data-bs-toggle="modal"
                                             data-bs-target="#modalCenter"
+                                            data-nombre-producto="${producto.nombreProducto}"
                                             style="background-color: #00b1cc; border-color: #00C8E5;">
                                         Solicitar
                                     </button>
+                                    <!--
+                                   <form th:action="@{/solicitarReponer}" method="post">
+                                        <input type="hidden" name="nombreProducto" th:value="${producto.nombreProducto}">
+                                        <input type="hidden" name="categoria" th:value="${producto.categoria}">
+                                        <input type="hidden" name="email" value="telexpress.superadm@gmail.com">
+                                        <button
+                                                type="submit"
+                                                class="btn btn-primary"
+                                                style="background-color: #00b1cc; border-color: #00C8E5;">
+                                            Solicitar
+                                        </button>
+                                    </form>
+                                    -->
+
                                 </td>
                                 <td>
                                     <button
@@ -417,39 +432,49 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="modalCenterTitle" style="font-family: 'Poppins', sans-serif; font-size: 20px; text-align: center;">Solicitar reposición al Administrador</h5>
-                <button
-                        type="button"
-                        class="btn-close"
-                        data-bs-dismiss="modal"
-                        aria-label="Close"
-                ></button>
+                <h5 class="modal-title" id="modalCenterTitle" style="font-family: 'Poppins', sans-serif; font-size: 20px; text-align: center;">
+                    Solicitar reposición al Administrador
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <hr class="my-4 " />
+            <hr class="my-4" />
             <div class="modal-body">
                 <div class="row">
                     <div class="col mb-3">
-                        <label >Sea enviará una notificación o un email para la reposición del producto: Cuaderno</label>
+                        <label id="producto-solicitado">Se enviará una notificación o un email para la reposición del producto: </label>
                     </div>
                 </div>
-
             </div>
             <div class="modal-footer justify-content-center mx-2">
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
-                    Cancelar
-                </button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
                 <button type="button" class="btn btn-primary" id="solicitar-btn">Solicitar</button>
             </div>
         </div>
     </div>
 </div>
+
 <script>
+    // Obtener el modal y el elemento donde se mostrará el nombre del producto
+    const modalSolicitar = document.getElementById('modalCenter');
+    const productoSolicitadoLabel = document.getElementById('producto-solicitado');
+
+    // Al abrir el modal, actualizar el nombre del producto en el mensaje
+    modalSolicitar.addEventListener('show.bs.modal', function(event) {
+        // Obtener el botón que activó el modal
+        const button = event.relatedTarget;
+        // Obtener el valor del atributo data-nombre-producto
+        const nombreProducto = button.getAttribute('data-nombre-producto');
+        // Actualizar el contenido del label con el nombre del producto
+        productoSolicitadoLabel.textContent = 'Se enviará una notificación o un email para la reposición del producto: ' + nombreProducto;
+    });
+
+    // Lógica para el botón "Solicitar"
     document.getElementById('solicitar-btn').addEventListener('click', function() {
         // Lógica de la solicitud (simulada con un console.log)
-        console.log('Solicitud realizada con éxito');
+        console.log('Solicitud realizada con éxito para el producto: ' + productoSolicitadoLabel.textContent);
 
         // Cerrar el modal
-        let modal = bootstrap.Modal.getInstance(document.getElementById('modalCenter'));
+        let modal = bootstrap.Modal.getInstance(modalSolicitar);
         modal.hide();
 
         // Mostrar el banner de éxito
@@ -462,6 +487,7 @@
         }, 3000); // 3000 ms = 3 segundos
     });
 </script>
+
 
 <!-- Modal fecha arribo -->
 <div class="modal fade" id="fechaModal" tabindex="-1" aria-hidden="true">
