@@ -22,16 +22,17 @@ public class CoordinadorController {
     final UsuarioRepository usuarioRepository;
     final ProveedorRepository proveedorRepository;
     final OrdenesRepository ordenesRepository;
+    private final CoordinadorRepository coordinadorRepository;
 
 
     public CoordinadorController(AdminRepository adminRepository, ZonaRepository zonaRepository,
                                 ProductoRepository productoRepository, UsuarioRepository usuarioRepository,
-                                ProveedorRepository proveedorRepository, OrdenesRepository ordenesRepository
-    ) {
+                                ProveedorRepository proveedorRepository, OrdenesRepository ordenesRepository,
+                                 CoordinadorRepository coordinadorRepository) {
         this.adminRepository=adminRepository; this.zonaRepository=zonaRepository;
         this.productoRepository=productoRepository; this.usuarioRepository=usuarioRepository;
         this.proveedorRepository=proveedorRepository; this.ordenesRepository=ordenesRepository;
-
+        this.coordinadorRepository = coordinadorRepository;
     }
 
     @GetMapping({"/inicio_coordinador_zonal",""})
@@ -101,8 +102,8 @@ public class CoordinadorController {
 
     @GetMapping({"/listaagente_zonal"})
     public String listaAgenteCoordinadorZonal(Model model) {
-        List<Usuario> lista_agentes = adminRepository.buscarAgentePorRol();
-        model.addAttribute("lista_agentes",lista_agentes);
+        List<Usuario> lista_agentes_zonal = coordinadorRepository.buscarAgentePorRolYZona("Norte");
+        model.addAttribute("lista_agentes_zonal",lista_agentes_zonal);
 
         return "CoordinadorZonal/listaagente_zonal";
     }

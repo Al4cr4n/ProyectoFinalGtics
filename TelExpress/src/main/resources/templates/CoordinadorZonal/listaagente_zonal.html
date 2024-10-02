@@ -335,7 +335,7 @@
                                     </tr>
                                     </thead>
                                     <tbody class="table-border-bottom-0">
-                                    <tr th:each="agente, info: ${lista_agentes}">
+                                    <tr th:each="agente, info: ${lista_agentes_zonal}">
                                         <td th:text="${info.index + 1}"></td>
                                         <td th:text="${agente.nombre}"></td>
                                         <td th:text="${agente.apellido}"></td>
