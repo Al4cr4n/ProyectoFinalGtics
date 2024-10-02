@@ -1,8 +1,7 @@
 package com.example.telexpress.repository;
 
 import com.example.telexpress.entity.Rol;
-import
-        com.example.telexpress.entity.Usuario;
+import com.example.telexpress.entity.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -23,6 +22,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     List<Usuario> findByRol_Id(int rolId);
     List<Usuario> findByRol_IdAndCodigoDespachador_Estado(int rolId, String estado);
     long countByRol_Id(Long id);
+
 
 
     // Método personalizado para obtener solo usuarios activos
@@ -49,6 +49,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
     // Método para obtener todos los usuarios baneados con motivo no nulo
     List<Usuario> findByEstadoUsuarioAndMotivoIsNotNull(String estadoUsuario);
+
 
 
 }
