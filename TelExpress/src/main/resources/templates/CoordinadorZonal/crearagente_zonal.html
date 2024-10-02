@@ -423,18 +423,23 @@
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
-                                        <label class="form-label col-md-2">Distrito:</label>
+                                        <!--<label class="form-label col-md-2">Distrito:</label>
                                         <div class="col-md-10">
                                             <select class="form-control form-select" th:field="*{distrito.nombredistrito}" required>
                                                 <option disabled selected hidden>Seleccione un distrito</option>
                                                 <option value="ancon">Ancon</option>
                                                 <option value="santa rosa">Santa Rosa</option>
-                                                <option value="carabayllo">Carabayllo</option>
-                                                <option value="puente piedra">Puente Piedra</option>
-                                                <option value="comas">Comas</option>
-                                                <option value="los olivos">Los Olivos</option>
-                                                <option value="san martin de porres">San Martin de Porres</option>
-                                                <option value="independencia">Independencia</option>
+
+                                            </select>
+                                        </div>-->
+                                        <label class="form-label col-md-2">Distrito:</label>
+                                        <div class="col-md-10">
+                                            <select class="form-control form-select" th:field="*{agente.distrito.id}" required>
+                                                <option disabled selected hidden>Seleccione un distrito</option>
+                                                <option th:each="distrito : ${distritosNorte}"
+                                                        th:value="${distrito.id}"
+                                                        th:text="${distrito.nombredistrito}">
+                                                </option>
                                             </select>
                                         </div>
                                     </div>

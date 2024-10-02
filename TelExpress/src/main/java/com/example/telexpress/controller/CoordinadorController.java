@@ -23,17 +23,20 @@ public class CoordinadorController {
     final OrdenesRepository ordenesRepository;
     private final CoordinadorRepository coordinadorRepository;
     private final EmailService emailService;
+    final DistritoRepository distritoRepository;
 
 
     public CoordinadorController(AdminRepository adminRepository, ZonaRepository zonaRepository,
                                 ProductoRepository productoRepository, UsuarioRepository usuarioRepository,
                                 ProveedorRepository proveedorRepository, OrdenesRepository ordenesRepository,
-                                 CoordinadorRepository coordinadorRepository, EmailService emailService) {
+                                 CoordinadorRepository coordinadorRepository, EmailService emailService,
+                                 DistritoRepository distritoRepository) {
         this.adminRepository=adminRepository; this.zonaRepository=zonaRepository;
         this.productoRepository=productoRepository; this.usuarioRepository=usuarioRepository;
         this.proveedorRepository=proveedorRepository; this.ordenesRepository=ordenesRepository;
         this.coordinadorRepository = coordinadorRepository;
         this.emailService=emailService;
+        this.distritoRepository=distritoRepository;
     }
 
     @GetMapping({"/inicio_coordinador_zonal",""})
@@ -45,6 +48,13 @@ public class CoordinadorController {
 
     @GetMapping("/crearagente_zonal")
     public String crearAgenteCoordinadorZonal(Model model) {
+        // Buscar la entidad Zona Norte (idzona = 1)
+        Zona zonaNorte = zonaRepository.findById(1).orElseThrow(() -> new RuntimeException("Zona no encontrada"));
+
+        // Obtener los distritos pertenecientes a la Zona Norte
+        List<Distrito> distritosNorte = distritoRepository.findByZona(zonaNorte);
+        model.addAttribute("distritosNorte", distritosNorte);
+
         model.addAttribute("agente", new Usuario()); // Inicializa un objeto Usuario para el formulario
         return "CoordinadorZonal/crearagente_zonal"; // Muestra la vista del formulario
     }
