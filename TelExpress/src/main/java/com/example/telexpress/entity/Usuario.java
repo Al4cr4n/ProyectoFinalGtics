@@ -26,6 +26,7 @@ public class Usuario {
     private String contrasena;
     private String estadoUsuario;
     private String motivo;
+    private String codigoJurisdiccion;
 /*
     @Column(name = "cantidadcompras")
     private int cantidadcompras;
