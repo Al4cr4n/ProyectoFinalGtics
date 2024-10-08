@@ -5,8 +5,7 @@ package com.example.telexpress.controller;
 
 import com.example.telexpress.entity.Ordenes;
 import com.example.telexpress.entity.Usuario;
-import com.example.telexpress.repository.OrdenesRepository;
-import com.example.telexpress.repository.UsuarioRepository;
+import com.example.telexpress.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,12 +27,28 @@ public class AgenteController {
 
     final OrdenesRepository ordenesRepository;
     final UsuarioRepository usuarioRepository;
+    final AdminRepository adminRepository;
+    final ZonaRepository zonaRepository;
+    final ProductoRepository productoRepository;
+    final ProveedorRepository proveedorRepository;
 
-    @Autowired
-    public AgenteController(OrdenesRepository ordenesRepository,UsuarioRepository usuarioRepository) {
+    public AgenteController(OrdenesRepository ordenesRepository, UsuarioRepository usuarioRepository, AdminRepository adminRepository,
+                            ZonaRepository zonaRepository, ProductoRepository productoRepository, ProveedorRepository proveedorRepository,
+                            ContrasenaAgenteRespository contrasenaAgenteRespository, UsuarioPerfilRepository usuarioPerfilRepository) {
         this.ordenesRepository = ordenesRepository;
         this.usuarioRepository = usuarioRepository;
+        this.adminRepository = adminRepository;
+        this.zonaRepository = zonaRepository;
+        this.productoRepository = productoRepository;
+        this.proveedorRepository = proveedorRepository;
+        this.contrasenaAgenteRespository = contrasenaAgenteRespository;
+        this.usuarioPerfilRepository = usuarioPerfilRepository;
     }
+
+    final ContrasenaAgenteRespository contrasenaAgenteRespository;
+    final UsuarioPerfilRepository usuarioPerfilRepository;
+
+
 
     @GetMapping("/inicio")
     public String paginicio(){
@@ -265,6 +280,87 @@ public class AgenteController {
         // Redirigir a la lista de usuarios
         return "redirect:/agente/usuarios_agente";
     }
+
+    @GetMapping("/cambio_contra_agente")
+    public String cambioContraAgente( Model model) {
+        int id =3;
+        String passw = contrasenaAgenteRespository.findcontrasena(id);
+        model.addAttribute("passw", passw);
+        return "Agente/cambio_contra_agente";
+    }
+    @PostMapping("/cambio_contra_agente")
+    public String ActualizarContraAgente(
+            @RequestParam("password") String currentPassword,  // Contraseña actual
+            @RequestParam("new-password-again") String newPassword, // Nueva contraseña
+            @RequestParam("new-password") String confirmNewPassword, // Confirmación de la nueva contraseña
+            Model model) {
+
+        int id = 3; // ID del agente
+
+        // Obtener la contraseña almacenada en la base de datos
+        String storedPassword = contrasenaAgenteRespository.findcontrasena(id);
+
+        // Verificar que la contraseña actual sea correcta
+        if (!currentPassword.equals(storedPassword)) {
+            model.addAttribute("error", "La contraseña actual es incorrecta.");
+            return "Agente/cambio_contra_agente"; // Retornar a la vista con mensaje de error
+        }
+
+        // Verificar que la nueva contraseña y su confirmación coincidan
+        if (!newPassword.equals(confirmNewPassword)) {
+            model.addAttribute("error", "Las nuevas contraseñas no coinciden.");
+            return "Agente/cambio_contra_agente"; // Retornar a la vista con mensaje de error
+        }
+
+        // Si la nueva contraseña es igual a la contraseña actual, prevenir el cambio
+        if (currentPassword.equals(newPassword)) {
+            model.addAttribute("error", "La nueva contraseña no puede ser igual a la contraseña actual.");
+            return "Agente/cambio_contra_agente"; // Retornar a la vista con mensaje de error
+        }
+
+        // Actualizar la contraseña en la base de datos
+        contrasenaAgenteRespository.updatecontrasena(id, newPassword);
+        System.out.println(newPassword);
+        // Redireccionar al perfil del agente con mensaje de éxito
+        model.addAttribute("success", "Contraseña cambiada exitosamente.");
+        return "Agente/inicio_agente"; // Redirigir al perfil
+    }
+
+    @GetMapping("/perfil_agente")
+    public String perfilAgente(Model model) {
+        int id =3;
+        String nombre;
+        nombre = usuarioPerfilRepository.findnombre(id);
+        model.addAttribute("nombre", nombre);
+
+        String apellido = usuarioPerfilRepository.findapellido(id);
+        model.addAttribute("apellido", apellido);
+
+        String telefono = usuarioPerfilRepository.findtelefono(id);
+        model.addAttribute("telefono", telefono);
+
+        String correo = usuarioPerfilRepository.findcorreo(id);
+        model.addAttribute("correo", correo);
+
+        String codigoDespachador = usuarioPerfilRepository.findcodigoDespachador(id);
+        model.addAttribute("codigoDespachador", codigoDespachador);
+
+
+
+        return "Agente/perfil_agente";
+    }
+
+    @PostMapping("/perfil_agente")
+    public String ActualizarPerfil( @RequestParam("id") int id){
+
+        usuarioPerfilRepository.updatenombre(id);
+        usuarioPerfilRepository.updateapellido(id);
+        return "Agente/perfil_agente";
+    }
+
+
+
+
 
 
     // Método para listar los usuarios baneados
