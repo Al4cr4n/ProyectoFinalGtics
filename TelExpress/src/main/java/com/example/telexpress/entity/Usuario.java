@@ -26,7 +26,6 @@ public class Usuario {
     private String contrasena;
     private String estadoUsuario;
     private String motivo;
-    private String codigoJurisdiccion;
 /*
     @Column(name = "cantidadcompras")
     private int cantidadcompras;
@@ -59,8 +58,8 @@ public class Usuario {
     @JoinColumn(name= "idproveedor", nullable = true)
     private Proveedor proveedor;
 
-    @OneToOne
-    @JoinColumn(name="idcodigoDespachador", nullable = true)
+    @ManyToOne
+    @JoinColumn(name="despachador_iddespachador", nullable = true)
     private CodigoDespachador codigoDespachador;
 
     @Column(nullable = false)
@@ -68,4 +67,9 @@ public class Usuario {
 
     /*@OneToMany(mappedBy = "usuario", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Ordenes> ordenes;*/
+
+    @ManyToOne
+    @JoinColumn(name="jurisdiccion_idjurisdiccion")
+    private Jurisdiccion jurisdiccion;
+
 }
