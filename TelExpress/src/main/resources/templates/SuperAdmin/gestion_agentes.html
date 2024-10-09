@@ -259,7 +259,8 @@
       <!-- Content wrapper -->
       <div class="content-wrapper">
         <div class="container-xxl flex-grow-1 container-p-y">
-          <h5 class="mb-4">Agentes</h5>
+          <h4 style="font-family: 'Poppins', sans-serif; color: #7367F0; font-weight: bold; padding-top: 1rem; padding-bottom: 1rem; margin-bottom: 1rem; text-align: center; font-size: 40px;">
+            Agentes</h4>
           <form action="/superadmin/agente/buscar" method="GET" class="mb-4">
             <div class="input-group">
               <input type="text" name="searchTermAgente2" class="form-control" placeholder="Buscar agente por nombre o apellido" th:value="${searchTermAgente2}" />
@@ -279,6 +280,7 @@
             </div>
           </form>
 
+
           <div class="table-responsive text-nowrap">
             <table class="table table-striped">
               <thead class="table-light">
@@ -289,8 +291,7 @@
                 <th>Teléfono</th>
                 <th>DNI</th>
                 <th>RUC</th>
-                <th>Nombre de la Tienda</th>
-                <th>Estado</th>
+
                 <th>Acciones</th>
               </tr>
               </thead>
@@ -303,8 +304,7 @@
                 <td th:text="${agente.telefono}"></td>
                 <td th:text="${agente.dni}"></td>
                 <td th:text="${agente.ruc}"></td>
-                <td th:text="${agente.proveedor.nombreTienda}"></td>
-                <td th:text="${agente.codigoDespachador.estado}"></td>
+
                 <td>
                   <a class="btn btn-sm btn-primary" th:href="@{'/superadmin/editar_agentes?id=' + ${agente.id}}">
                     <i class="bx bx-edit-alt"></i>
@@ -313,7 +313,6 @@
                   <a class="btn btn-sm btn-danger" th:href="@{'/superadmin/borrar_agentes?id=' + ${agente.id}}">
                     <i class="bx bx-trash"></i>
                   </a>
-
                 </td>
               </tr>
               </tbody>

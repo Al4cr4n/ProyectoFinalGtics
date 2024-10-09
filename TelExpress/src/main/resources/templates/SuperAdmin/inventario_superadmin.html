@@ -314,32 +314,43 @@
             </div>
           </div>
 
-          <!-- Formulario de búsqueda -->
-          <form action="/producto/buscar" method="GET" class="mb-4">
-            <div class="input-group">
-              <input type="text" name="searchField" class="form-control" placeholder="Buscar producto o categoría" th:value="${searchField}" />
-              <button class="btn btn-primary" type="submit">Buscar</button>
-            </div>
-          </form>
+          <h4 style="font-family: 'Poppins', sans-serif; color: #7367F0; font-weight: bold; padding-top: 1rem; padding-bottom: 1rem; margin-bottom: 1rem; text-align: center; font-size: 40px;">
+            Productos</h4>
 
-          <form action="/producto/filtro" method="GET" class="mb-4">
-            <div class="input-group w-50 mb-3">
-              <label for="order" class="input-group-text">Ordenar por precio:</label>
-              <select id="order" name="order" class="form-select" onchange="this.form.submit()">
-                <option th:value="asc" th:selected="${order == 'asc'}">Menor a mayor</option>
-                <option th:value="desc" th:selected="${order == 'desc'}">Mayor a menor</option>
-              </select>
-            </div>
-          </form>
+
+
 
           <!-- Tabla de productos -->
           <div class="row">
             <div class="col-12 col-lg-12 mb-4">
-              <div class="card">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                  <h5>Productos</h5>
-                  <a class="btn btn-primary" th:href="@{/producto/nuevo}" style="margin-right: 10px;">Crear Nuevo</a>
-                </div>
+              <div class="card" style="padding: 0.8rem;">
+
+                <!-- Formulario de búsqueda -->
+                <form action="/producto/buscar" method="GET" class="mb-4">
+                  <div class="input-group">
+                    <input type="text" name="searchField" class="form-control" placeholder="Buscar producto o categoría" th:value="${searchField}" />
+                    <button class="btn btn-primary" type="submit">Buscar</button>
+                  </div>
+                </form>
+
+
+                <form action="/producto/filtro" method="GET" class="mb-4">
+                  <div class="d-flex justify-content-between align-items-center mb-3"> <!-- Contenedor flexible para filtros y botón -->
+                    <div class="input-group w-50 mb-3">
+                      <label for="order" class="input-group-text">Ordenar por precio:</label>
+                      <select id="order" name="order" class="form-select" onchange="this.form.submit()">
+                        <option th:value="asc" th:selected="${order == 'asc'}">Menor a mayor</option>
+                        <option th:value="desc" th:selected="${order == 'desc'}">Mayor a menor</option>
+                      </select>
+                    </div>
+
+                    <!-- Botón "Crear Nuevo" -->
+                    <a class="btn btn-primary" th:href="@{/producto/nuevo}" style="margin-left: auto;">Crear Nuevo</a>
+                  </div>
+                </form>
+
+
+
                 <div class="table-responsive text-nowrap">
                   <table class="table table-striped"id="tablaProductos">
                     <thead class="table-light">

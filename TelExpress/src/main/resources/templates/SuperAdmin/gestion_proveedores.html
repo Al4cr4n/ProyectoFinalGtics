@@ -355,10 +355,7 @@
               <div class="card" style="padding: 0.8rem;">
 
 
-                <div class="text-end my-3">
 
-                  <a class="btn btn-primary" th:href="@{/superadmin/proveedor/nuevo}" style="margin-right: 10px;">Crear Nuevo</a>
-                </div>
                 <form action="/superadmin/proveedor/buscar" method="GET" class="mb-4">
                   <div class="input-group">
                     <input type="text" name="searchField" class="form-control" placeholder="Buscar proveedor por nombre o apellido" th:value="${searchField}" />
@@ -368,14 +365,20 @@
 
 
                 <form action="/superadmin/proveedor/filtrar" method="GET" class="mb-4">
-                  <div class="input-group w-50 mb-3">
-                    <select name="zona" class="form-select" onchange="this.form.submit()">
-                      <!-- Si no se selecciona una zona específica, el valor enviado será 0 -->
-                      <option value="0" th:selected="${zonaSeleccionada == null || zonaSeleccionada == 0}">Todas las zonas</option>
-                      <option th:each="zona : ${listaZona}" th:value="${zona.idzona}" th:selected="${zona.idzona == zonaSeleccionada}" th:text="${zona.nombre}"></option>
-                    </select>
+                  <div class="d-flex justify-content-between align-items-center mb-3"> <!-- Contenedor flexible para filtros y botón -->
+                    <div class="input-group w-25"> <!-- Filtro de zonas -->
+                      <select name="zona" class="form-select" onchange="this.form.submit()">
+                        <option value="0" th:selected="${zonaSeleccionada == null || zonaSeleccionada == 0}">Todas las zonas</option>
+                        <option th:each="zona : ${listaZona}" th:value="${zona.idzona}" th:selected="${zona.idzona == zonaSeleccionada}" th:text="${zona.nombre}"></option>
+                      </select>
+                    </div>
+
+                    <!-- Botón "Crear Nuevo" -->
+                    <a class="btn btn-primary" th:href="@{/superadmin/proveedor/nuevo}" style="margin-left: auto;">Crear Nuevo</a>
                   </div>
                 </form>
+
+
 
 
                 <div class="table-responsive text-nowrap">
