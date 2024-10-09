@@ -1,4 +1,5 @@
 package com.example.telexpress.controller;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import com.example.telexpress.entity.Usuario;
 import com.example.telexpress.entity.Zona;
@@ -17,7 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.Optional;
 import java.util.List;
 @Controller
-@RequestMapping("Usuario")
+@RequestMapping("/usuario")
 public class UsuarioController {
     private final UsuarioRepository usuarioRepository;
 
@@ -25,10 +26,11 @@ public class UsuarioController {
         this.usuarioRepository = usuarioRepository;
     }
 
-    @GetMapping("")
+    @GetMapping({"","/inicio"})
     public String index(){
         return "Usuariofinal/inicio_usuariofinal";
     }
+
     @GetMapping("/inicio_usuariofinal")
     public String inicio_usuariofinal(){
         return "Usuariofinal/inicio_usuariofinal";

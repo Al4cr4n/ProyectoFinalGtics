@@ -6,14 +6,15 @@
         class="light-style layout-menu-fixed"
         dir="ltr"
         data-theme="theme-default"
-        data-assets-path="../../assets/"
+        data-assets-path="/assets/"
         data-template="vertical-menu-template-free"
+        xmlns:th="http://www.thymeleaf.org"
 >
 <head>
   <meta charset="utf-8" />
   <meta
           name="viewport"
-          content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
+          content="width=device-width, initial-scale=1.0, user-scalable=yes"
   />
 
   <title>Inicio Usuario</title>
@@ -21,7 +22,7 @@
   <meta name="description" content="" />
 
   <!-- Favicon -->
-  <link rel="icon" type="image/x-icon" href="../../assets/img/favicon/favicon.ico" />
+  <link rel="icon" type="image/x-icon" href="/assets/img/favicon/favicon.ico" />
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -34,26 +35,26 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <!-- Icons. Uncomment required icon fonts -->
-  <link rel="stylesheet" href="../../assets/vendor/fonts/boxicons.css" />
+  <link rel="stylesheet" href="/assets/vendor/fonts/boxicons.css" />
 
   <!-- Core CSS -->
-  <link rel="stylesheet" href="../../assets/vendor/css/core.css" class="template-customizer-core-css" />
-  <link rel="stylesheet" href="../../assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
-  <link rel="stylesheet" href="../../assets/css/demo.css" />
+  <link rel="stylesheet" href="/assets/vendor/css/core.css" class="template-customizer-core-css" />
+  <link rel="stylesheet" href="/assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
+  <link rel="stylesheet" href="/assets/css/demo.css" />
 
   <!-- Vendors CSS -->
-  <link rel="stylesheet" href="../../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+  <link rel="stylesheet" href="/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
 
-  <link rel="stylesheet" href="../../assets/vendor/libs/apex-charts/apex-charts.css" />
+  <link rel="stylesheet" href="/assets/vendor/libs/apex-charts/apex-charts.css" />
 
   <!-- Page CSS -->
 
   <!-- Helpers -->
-  <script src="../../assets/vendor/js/helpers.js"></script>
+  <script src="/assets/vendor/js/helpers.js"></script>
 
   <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
   <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
-  <script src="../../assets/js/config.js"></script>
+  <script src="/assets/js/config.js"></script>
 </head>
 <body>
 <!-- Layout wrapper -->
@@ -64,11 +65,11 @@
     <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
       <!-- Contenedor para la imagen centrada -->
       <div style="text-align: center;">
-        <img src="logo.png" alt="Imagen" style="width: 150px; margin-bottom: -70px; margin-top: -20px">
+        <img src="/assets/img/icons/unicons/logo.png" alt="Imagen" style="width: 150px; margin-bottom: -70px; margin-top: -20px">
       </div>
 
       <div class="app-brand demo" style="text-align: center;">
-        <a href="/Usuario/inicio_usuariofinal" class="app-brand-link">
+        <a href="/usuario/inicio_usuariofinal" class="app-brand-link">
           <span class="app-brand-text demo menu-text fw-bolder" style="font-family: 'Poppins', sans-serif; color: #7367F0; padding-left: 15px;">TelExpress</span>
         </a>
 
@@ -83,28 +84,29 @@
       <ul class="menu-inner py-1">
         <!-- Barra lateral -->
         <li class="menu-item active">
-          <a href="/Usuario/inicio_usuariofinal" class="menu-link">
+          <a href="/usuario/inicio_usuariofinal" class="menu-link">
             <i class="menu-icon tf-icons bx bx-home-circle"></i>
             <div data-i18n="Inicio">Inicio</div>
           </a>
         </li>
 
         <li class="menu-item">
-          <a href="/Usuario/lista_pedidos" class="menu-link">
+          <a href="/usuario/lista_pedidos" class="menu-link">
             <i class="menu-icon tf-icons bx bx-list-ul"></i>
             <div data-i18n="MisPedidos">Mis pedidos</div>
           </a>
         </li>
 
+
         <li class="menu-item">
-            <a href="/Usuario/lista_productos" class="menu-link">
+            <a href="/usuario/lista_productos" class="menu-link">
               <i class="menu-icon tf-icons bx bx-store"></i>
               <div data-i18n="Tienda">Tienda</div>
             </a>
         </li>
 
         <li class="menu-item">
-            <a href="/Usuario/pago" class="menu-link">
+            <a href="/usuario/pago" class="menu-link">
               <i class="menu-icon tf-icons bx bx-credit-card"></i>
               <div data-i18n="Pago">Pago</div>
             </a>
@@ -113,14 +115,14 @@
 
 
         <li class="menu-item">
-            <a href="/Usuario/chat" class="menu-link">
+            <a href="/usuario/chat" class="menu-link">
               <i class="menu-icon tf-icons bx bx-chat"></i>
               <div data-i18n="Chats">Chats</div>
             </a>
         </li>
 
         <li class="menu-item">
-            <a href="/Usuario/unete" class="menu-link">
+            <a href="/usuario/unete" class="menu-link">
               <i class="menu-icon tf-icons bx bx-user-plus"></i>
               <div data-i18n="Unete">Unete al team</div>
             </a>
@@ -133,17 +135,17 @@
             </a>
             <ul class="menu-sub">
               <li class="menu-item">
-                <a href="Usuario/FAQS" class="menu-link">
+                <a href="usuario/FAQS" class="menu-link">
                   <div data-i18n="Faqs">FAQs</div>
                 </a>
               </li>
               <li class="menu-item">
-                <a href="Usuario/resenia" class="menu-link">
+                <a href="usuario/resenia" class="menu-link">
                   <div data-i18n="Reseñas">Reseñas</div>
                 </a>
               </li>
               <li class="menu-item">
-                <a href="Usuario/Foro" class="menu-link">
+                <a href="usuario/Foro" class="menu-link">
                   <div data-i18n="Foro">Foro</div>
                 </a>
               </li>
@@ -247,7 +249,7 @@
             <li class="nav-item navbar-dropdown dropdown-user dropdown">
               <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                 <div class="avatar avatar-online">
-                  <img src="../../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                  <img src="/assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
                 </div>
               </a>
               <ul class="dropdown-menu dropdown-menu-end">
@@ -256,7 +258,7 @@
                     <div class="d-flex">
                       <div class="flex-shrink-0 me-3">
                         <div class="avatar avatar-online">
-                          <img src="../../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                          <img src="/assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
                         </div>
                       </div>
                       <div class="flex-grow-1">
@@ -325,7 +327,7 @@
                   </p>
                 </div>
                 <!-- Imagen alineada a la derecha -->
-                <img src="inicio_usuario.png" alt="Imagen" style="width: 400px; margin-left: 20px;">
+                <img src="/assets/img/usuario/inicio_usuario.png" alt="Imagen" style="width: 400px; margin-left: 20px;">
               </div>
             </div>
           </div>
@@ -346,22 +348,22 @@
 
 <!-- Core JS -->
 <!-- build:js assets/vendor/js/core.js -->
-<script src="../../assets/vendor/libs/jquery/jquery.js"></script>
-<script src="../../assets/vendor/libs/popper/popper.js"></script>
-<script src="../../assets/vendor/js/bootstrap.js"></script>
-<script src="../../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+<script src="/assets/vendor/libs/jquery/jquery.js"></script>
+<script src="/assets/vendor/libs/popper/popper.js"></script>
+<script src="/assets/vendor/js/bootstrap.js"></script>
+<script src="/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
 
-<script src="../../assets/vendor/js/menu.js"></script>
+<script src="/assets/vendor/js/menu.js"></script>
 <!-- endbuild -->
 
 <!-- Vendors JS -->
-<script src="../../assets/vendor/libs/apex-charts/apexcharts.js"></script>
+<script src="/assets/vendor/libs/apex-charts/apexcharts.js"></script>
 
 <!-- Main JS -->
-<script src="../../assets/js/main.js"></script>
+<script src="/assets/js/main.js"></script>
 
 <!-- Page JS -->
-<script src="../../assets/js/dashboards-analytics.js"></script>
+<script src="/assets/js/dashboards-analytics.js"></script>
 
 <!-- Place this tag in your head or just before your close body tag. -->
 <script async defer src="https://buttons.github.io/buttons.js"></script>

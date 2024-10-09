@@ -7,6 +7,7 @@
         data-theme="theme-default"
         data-assets-path="../../assets/"
         data-template="vertical-menu-template-free"
+        xmlns:th="http://www.thymeleaf.org"
 >
 <head>
     <meta charset="utf-8" />
@@ -20,7 +21,7 @@
     <meta name="description" content="" />
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="../../assets/img/favicon/favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="/assets/img/favicon/favicon.ico" />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -31,39 +32,39 @@
     />
 
     <!-- Icons. Uncomment required icon fonts -->
-    <link rel="stylesheet" href="../../assets/vendor/fonts/boxicons.css" />
+    <link rel="stylesheet" href="/assets/vendor/fonts/boxicons.css" />
 
     <!-- Core CSS -->
-    <link rel="stylesheet" href="../../assets/vendor/css/core.css" class="template-customizer-core-css" />
-    <link rel="stylesheet" href="../../assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
-    <link rel="stylesheet" href="../../assets/css/demo.css" />
+    <link rel="stylesheet" href="/assets/vendor/css/core.css" class="template-customizer-core-css" />
+    <link rel="stylesheet" href="/assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
+    <link rel="stylesheet" href="/assets/css/demo.css" />
 
     <!-- Vendors CSS -->
-    <link rel="stylesheet" href="../../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+    <link rel="stylesheet" href="/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
 
-    <link rel="stylesheet" href="../../assets/vendor/libs/apex-charts/apex-charts.css" />
+    <link rel="stylesheet" href="/assets/vendor/libs/apex-charts/apex-charts.css" />
 
     <!-- Page CSS -->
 
     <!-- Helpers -->
-    <script src="../../assets/vendor/js/helpers.js"></script>
+    <script src="/assets/vendor/js/helpers.js"></script>
 
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
-    <script src="../../assets/js/config.js"></script>
+    <script src="/assets/js/config.js"></script>
 
     <!--TelExpress fuente de letra-->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Bootstrap -->
- 	<link type="text/css" rel="stylesheet" href="../../assets/css/bootstrap.min.css"/>
+ 	<link type="text/css" rel="stylesheet" href="/assets/css/bootstrap.min.css"/>
 
     <!-- Estilos personalizados -->
         <!-- Custom stlylesheet -->
-         <link type="text/css" rel="stylesheet" href="../../assets/css/style_products.css"/>
+         <link type="text/css" rel="stylesheet" href="/assets/css/style_products.css"/>
 
         <!-- fuentes FA -->
- 	    <link type="text/css" rel="stylesheet" href="../../assets/css/font-awesome.min.css"/>
+ 	    <link type="text/css" rel="stylesheet" href="/assets/css/font-awesome.min.css"/>
 
          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.3/font/bootstrap-icons.min.css">
 
@@ -82,11 +83,11 @@
 
             <!-- Contenedor para la imagen centrada -->
             <div style="text-align: center;">
-                <img src="../../assets/img/icons/unicons/logo.png" alt="Imagen" style="width: 150px; margin-bottom: -70px; margin-top: -20px">
+                <img src="/assets/img/icons/unicons/logo.png" alt="Imagen" style="width: 150px; margin-bottom: -70px; margin-top: -20px">
             </div>
 
             <div class="app-brand demo" style="text-align: center;">
-                <a href="inicio_usuariofinal.html" class="app-brand-link">
+                <a href="usuario/inicio_usuariofinal" class="app-brand-link">
                     <span class="app-brand-text demo menu-text fw-bolder desing-name" >TelExpress</span>
                 </a>
 
@@ -98,23 +99,23 @@
             <div class="menu-inner-shadow"></div> <!-- efecto visual de sombra dentro del menu -->
 
             <ul class="menu-inner py-1">
-                <!-- Inicio -->
-                <li class="menu-item">
-                    <a href="inicio_usuariofinal.html" class="menu-link">
+                <!-- Barra lateral -->
+                <li class="menu-item ">
+                    <a href="/usuario/inicio_usuariofinal" class="menu-link">
                         <i class="menu-icon tf-icons bx bx-home-circle"></i>
-                        <div data-i18n="Start">Inicio</div>
+                        <div data-i18n="Inicio">Inicio</div>
                     </a>
                 </li>
 
                 <li class="menu-item">
-                    <a href="lista_pedidos.html" class="menu-link">
+                    <a href="/usuario/lista_pedidos" class="menu-link">
                         <i class="menu-icon tf-icons bx bx-list-ul"></i>
-                        <div data-i18n="Start">Mis Pedidos</div>
+                        <div data-i18n="MisPedidos">Mis pedidos</div>
                     </a>
                 </li>
-s
+
                 <li class="menu-item active">
-                    <a href="lista_productos.html" class="menu-link">
+                    <a href="/Usuario/lista_productos" class="menu-link">
                         <i class="menu-icon tf-icons bx bx-store"></i>
                         <div data-i18n="Tienda">Tienda</div>
                     </a>
@@ -122,52 +123,52 @@ s
 
                 <!-- Zona de pagos pendientes -->
                 <li class="menu-item">
-                    <a href="pago.html" class="menu-link">
-                      <i class="menu-icon tf-icons bx bx-credit-card"></i>
-                      <div data-i18n="Pago">Pago</div>
+                    <a href="/usuario/pago" class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-credit-card"></i>
+                        <div data-i18n="Pago">Pago</div>
                     </a>
                 </li>
-                <!-- Chat -->
+                <!--Chats-->
+
                 <li class="menu-item">
-                    <a href="chat.html" class="menu-link">
-                      <i class="menu-icon tf-icons bx bx-chat"></i>
-                      <div data-i18n="Chats">Chats</div>
+                    <a href="/usuario/chat" class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-chat"></i>
+                        <div data-i18n="Chats">Chats</div>
                     </a>
                 </li>
 
                 <!-- cambiar a agente -->
                 <li class="menu-item">
-                    <a href="unete.html" class="menu-link">
-                      <i class="menu-icon tf-icons bx bx-user-plus"></i>
-                      <div data-i18n="Unete">Unete al team</div>
+                    <a href="/usuario/unete" class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-user-plus"></i>
+                        <div data-i18n="Unete">Unete al team</div>
                     </a>
                 </li>
                 <!-- paginas para el cliente-->
                 <li class="menu-item">
                     <a href="javascript:void(0);" class="menu-link menu-toggle">
-                      <i class="menu-icon tf-icons bx bx-support"></i>
-                      <div data-i18n="Helptoclient">Ayuda al cliente</div>
+                        <i class="menu-icon tf-icons bx bx-support"></i>
+                        <div data-i18n="Ayuda">Ayuda al cliente</div>
                     </a>
-      
                     <ul class="menu-sub">
-                      <li class="menu-item">
-                        <a href="FAQS.html" class="menu-link">
-                          <div data-i18n="faqs">FAQs</div>
-                        </a>
-                      </li>
-                      <li class="menu-item">
-                        <a href="resenia.html" class="menu-link">
-                          <div data-i18n="Reseñas">Reseñas</div>
-                        </a>
-                      </li>
-                      <li class="menu-item">
-                        <a href="Foro.html" class="menu-link">
-                          <div data-i18n="Foro">Foro</div>
-                        </a>
-                      </li>
-                      
+                        <li class="menu-item">
+                            <a href="usuario/FAQS" class="menu-link">
+                                <div data-i18n="Faqs">FAQs</div>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="usuario/resenia" class="menu-link">
+                                <div data-i18n="Reseñas">Reseñas</div>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="usuario/Foro" class="menu-link">
+                                <div data-i18n="Foro">Foro</div>
+                            </a>
+                        </li>
+
                     </ul>
-                  </li>
+                </li>
 
 
 
@@ -398,7 +399,7 @@ s
                                 <div class="col-md-4 ">
                                     <div class="product">
                                         <div class="product-img">
-                                            <img src="../../assets/img/elements/1.jpg" alt="">
+                                            <img src="/assets/img/elements/1.jpg" alt="">
                                             <div class="product-label">
                                                 <span class="sale">-30%</span>
                                                 <span class="new">NEW</span>
@@ -425,7 +426,7 @@ s
                                 <div class="col-md-4 ">
                                     <div class="product">
                                         <div class="product-img">
-                                            <img src="../../assets/img/elements/11.jpg" alt="">
+                                            <img src="/assets/img/elements/11.jpg" alt="">
                                             <div class="product-label">
                                                 <span class="new">NEW</span>
                                             </div>
@@ -452,7 +453,7 @@ s
                                 <div class="col-md-4 ">
                                     <div class="product">
                                         <div class="product-img">
-                                            <img src="../../assets/img/elements/12.jpg" alt="">
+                                            <img src="/assets/img/elements/12.jpg" alt="">
                                         </div>
                                         <div class="product-body">
                                             <!--<p class="product-category">Categoria</p>-->
@@ -479,7 +480,7 @@ s
                                 <div class="col-md-4 ">
                                     <div class="product">
                                         <div class="product-img">
-                                            <img src="../../assets/img/elements/13.jpg" alt="">
+                                            <img src="/assets/img/elements/13.jpg" alt="">
                                         </div>
                                         <div class="product-body">
                                             <h3 class="product-name"><a href="#">comida al por mayor </a></h3>
@@ -503,7 +504,7 @@ s
                                 <div class="col-md-4 ">
                                     <div class="product">
                                         <div class="product-img">
-                                            <img src="../../assets/img/elements/17.jpg" alt="">
+                                            <img src="/assets/img/elements/17.jpg" alt="">
                                         </div>
                                         <div class="product-body">
                                         
@@ -526,7 +527,7 @@ s
                                 <div class="col-md-4 ">
                                     <div class="product">
                                         <div class="product-img">
-                                            <img src="../../assets/img/elements/18.jpg" alt="">
+                                            <img src="/assets/img/elements/18.jpg" alt="">
                                         </div>
                                         <div class="product-body">
                                             
@@ -554,7 +555,7 @@ s
                                 <div class="col-md-4 ">
                                     <div class="product">
                                         <div class="product-img">
-                                            <img src="../../assets/img/elements/19.jpg" alt="">
+                                            <img src="/assets/img/elements/19.jpg" alt="">
                                         </div>
                                         <div class="product-body">
                                             
