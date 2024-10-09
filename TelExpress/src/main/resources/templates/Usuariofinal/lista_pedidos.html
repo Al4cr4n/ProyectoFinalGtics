@@ -381,31 +381,6 @@
                         <input type="text" placeholder="Búsqueda" class="form-control" style="width: 200px; display: inline-block;">
                         <i class="bx bx-search" style="margin-left: -30px;"></i>
 
-                        <!-- Dropdown for Fecha -->
-                        <div class="dropdown-container" id="fecha-sort">
-                            <i class="bx bx-sort"></i> Fecha
-                            <div id="radio-options-fecha" class="radio-options">
-                                <label>
-                                    <input type="radio" name="fecha" value="recientes"> Recientes
-                                </label><br>
-                                <label>
-                                    <input type="radio" name="fecha" value="antiguos"> Antiguos
-                                </label>
-                            </div>
-                        </div>
-
-                        <!-- Dropdown for N° de orden -->
-                        <div class="dropdown-container" id="numero-orden-sort" style="margin-left: 10px;">
-                            <i class="bx bx-sort"></i> N° de orden
-                            <div id="radio-options-numero-orden" class="radio-options">
-                                <label>
-                                    <input type="radio" name="numero-orden" value="mayor"> Mayor
-                                </label><br>
-                                <label>
-                                    <input type="radio" name="numero-orden" value="menor"> Menor
-                                </label>
-                            </div>
-                        </div>
 
                         <!-- Dropdown for Estado -->
                         <div class="dropdown-container" id="estado-sort" style="margin-left: 10px;">
@@ -454,15 +429,20 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td><a href="#" class="text-primary">#10002</a></td>
-                                    <td>02/04/2024</td>
-                                    <td><span class="badge bg-label-warning">En validación</span></td>
-                                    <td>Agente#003</td>
-                                    <td><a href="editar_orden.html"><i class="bx bx-pencil text-primary" style="cursor: pointer;"></i></a></td>
-                                    <td><i class="bx bx-trash" style="cursor: pointer;" onclick="openModal()"></i></td>
+                                <!-- Iteración sobre las órdenes -->
+                                <tr th:each="orden : ${ordenes}">
+                                    <td th:text="${orden.idOrdenes}"></td>
+                                    <!-- Asegúrate de que el usuario no sea null antes de mostrar el nombre
+                                         Porque en la tabla usuario está borrado el id 25 -->
+                                    <td  th:text="${#dates.format(orden.fechaCreacion, 'yyyy-MM-dd')}"></td>
+                                    <td  th:text="${#dates.format(orden.fechaCreacion, 'yyyy-MM-dd')}"></td>
+                                    <td th:text="${orden.usuario != null} ? ${orden.usuario.apellido} : 'Usuario no disponible'"></td>
+                                    <td>
+                                            <span th:text="${orden.estadoOrdenes}"
+                                                  th:class="'badge ' + (${orden.estadoOrdenes == 'CREADO'} ? 'bg-label-warning' : (${orden.estadoOrdenes == 'EN VALIDACIÓN'} ? 'bg-label-danger' : 'bg-label-success'))"></span>
+                                    </td>
+                                    <td th:text="${#dates.format(orden.fechaArribo, 'yyyy-MM-dd')}"></td>
                                 </tr>
-                                <!-- Add more rows as needed -->
                                 </tbody>
                             </table>
                         </div>
@@ -510,25 +490,6 @@
     }
 
     // JavaScript to toggle the display of the radio button groups
-    document.getElementById('fecha-sort').addEventListener('click', function() {
-        var options = document.getElementById('radio-options-fecha');
-        // Toggle visibility
-        if (options.style.display === 'block') {
-            options.style.display = 'none';
-        } else {
-            options.style.display = 'block';
-        }
-    });
-
-    document.getElementById('numero-orden-sort').addEventListener('click', function() {
-        var options = document.getElementById('radio-options-numero-orden');
-        // Toggle visibility
-        if (options.style.display === 'block') {
-            options.style.display = 'none';
-        } else {
-            options.style.display = 'block';
-        }
-    });
 
     document.getElementById('estado-sort').addEventListener('click', function() {
         var options = document.getElementById('checkbox-options-estado');

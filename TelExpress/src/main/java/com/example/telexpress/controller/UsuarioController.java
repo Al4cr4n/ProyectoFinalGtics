@@ -1,11 +1,8 @@
 package com.example.telexpress.controller;
-import com.example.telexpress.entity.Producto;
-import com.example.telexpress.entity.Resenia;
+import com.example.telexpress.entity.*;
 import com.example.telexpress.repository.*;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import com.example.telexpress.entity.Usuario;
-import com.example.telexpress.entity.Zona;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,12 +23,14 @@ public class UsuarioController {
     private final UsuarioRepository usuarioRepository;
     private final ProductoRepository productoRepository;
     private final ReseniaRepository reseniaRepository;
+    private final OrdenesRepository ordenesRepository;
 
     public UsuarioController(UsuarioRepository usuarioRepository, ProductoRepository productoRepository,
-                             ReseniaRepository reseniaRepository) {
+                             ReseniaRepository reseniaRepository, OrdenesRepository ordenesRepository) {
         this.usuarioRepository = usuarioRepository;
         this.productoRepository = productoRepository;
         this.reseniaRepository = reseniaRepository;
+        this.ordenesRepository = ordenesRepository;
     }
 
     @GetMapping({"","/inicio"})
@@ -88,7 +87,25 @@ public class UsuarioController {
     }
 
     @GetMapping("/lista_pedidos")
-    public String lista_pedidos(){
+    public String lista_pedidos(@RequestParam(value = "search", required = false) String search, Model model){
+
+
+        List<Ordenes> ordenes = ordenesRepository.findByUsuarioId(4);
+
+        // Si hay un término de búsqueda, buscar por cliente o estado de la orden
+        if (search != null && !search.isEmpty()) {
+            // Realiza la búsqueda en el repositorio por nombre de cliente o estado
+            ordenes = ordenesRepository.findByUsuarioNombreContainingIgnoreCaseOrUsuarioApellidoContainingIgnoreCaseOrEstadoOrdenesContainingIgnoreCase(search, search, search);
+        } else {
+            // Si no hay búsqueda, obtener todas las órdenes
+            ordenes = ordenesRepository.findAll();
+        }
+
+        // Pasar las órdenes al modelo para la vista
+        model.addAttribute("ordenes", ordenes);
+
+        // Pasar el término de búsqueda al modelo para que se mantenga en el campo de búsqueda
+        model.addAttribute("search", search);
         return "Usuariofinal/lista_pedidos";
     }
 

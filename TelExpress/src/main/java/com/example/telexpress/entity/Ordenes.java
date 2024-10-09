@@ -27,6 +27,12 @@ public class Ordenes {
     @Column(name = "mesCreacion")
     private String mesCreacion;
 
+    @Column(name = "fechaCreacion")
+    @Temporal(TemporalType.DATE)
+    private Date fechaCreacion;
+
+
+
     @ManyToOne
     @JoinColumn(name = "usuario_idusuario")
     private Usuario usuario;
