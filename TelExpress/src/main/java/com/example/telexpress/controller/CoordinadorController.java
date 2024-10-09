@@ -59,7 +59,7 @@ public class CoordinadorController {
         return "CoordinadorZonal/crearagente_zonal"; // Muestra la vista del formulario
     }
 
-    @PostMapping("/crearagente_zonal")
+    @PostMapping("/guardaragente_zonal")
     public String guardarAgente(@ModelAttribute("agente") Usuario agenteNuevo, RedirectAttributes attr) {
 
         if (agenteNuevo.getId() == null) { // Verificar si es un nuevo agente
