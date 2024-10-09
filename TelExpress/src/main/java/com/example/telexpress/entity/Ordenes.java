@@ -55,4 +55,7 @@ public class Ordenes {
     @ManyToOne
     @JoinColumn(name = "usuario_idusuario")
     private Usuario usuario;
+
+    @OneToMany(mappedBy = "ordenes")
+    private Set<ProductoOrdenes> productoHasOrdenes = new HashSet<>();
 }

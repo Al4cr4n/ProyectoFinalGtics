@@ -60,4 +60,7 @@ public class Producto {
    /* @JsonBackReference // Esto evita que se serialicen las órdenes dentro de un producto
     private Set<Ordenes> ordenes= new HashSet<>();*/
     private Set<Ordenes> ordenes;
+
+    @OneToMany(mappedBy = "producto")
+    private Set<ProductoOrdenes> productoHasOrdenes = new HashSet<>();
 }

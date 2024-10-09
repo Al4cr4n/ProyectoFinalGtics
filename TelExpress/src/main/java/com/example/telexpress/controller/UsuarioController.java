@@ -31,6 +31,7 @@ public class UsuarioController {
     private final ProductoRepository productoRepository;
     private final ReseniaRepository reseniaRepository;
 
+
     public UsuarioController(UsuarioRepository usuarioRepository, ProductoRepository productoRepository, ReseniaRepository reseniaRepository, OrdenesRepository ordenesRepository, DistritoRepository distritoRepository) {
         this.usuarioRepository = usuarioRepository;
         this.productoRepository = productoRepository;
@@ -148,6 +149,7 @@ public class UsuarioController {
     public String agregarProductoAlCarrito(@RequestBody Map<String, Integer> data) {
         Integer productoId = data.get("productoId");
         Integer usuarioId = data.get("usuarioId");
+        Integer cantidad = data.get("cantidad"); // cantidad de los productos en una orden
 
         // Obtener el usuario
         Usuario usuario = usuarioRepository.findById(Long.valueOf(usuarioId))
@@ -171,6 +173,27 @@ public class UsuarioController {
         // Obtener el producto
         Producto producto = productoRepository.findById(productoId)
                 .orElseThrow(() -> new IllegalArgumentException("Producto no encontrado"));
+
+        // Verificar si el producto ya está en la orden
+        /*Optional<ProductoOrdenes> productoOrden = ordenPendiente.getProductos().stream()
+                .filter(p -> p.getProducto().getIdProducto().equals(productoId))
+                .findFirst();
+        if (productoOrden.isPresent()) {
+            // Si el producto ya está en la orden, aumentar la cantidad
+            ProductoOrdenes po = productoOrden.get();
+            po.setCantidadXProducto(po.getCantidadXProducto() + cantidad); // Actualiza la cantidad
+        } else {
+            // Si no existe, se agrega un nuevo producto a la orden
+            ProductoOrdenes nuevoProductoOrden = new ProductoOrdenes();
+            nuevoProductoOrden.setProducto(producto);
+            nuevoProductoOrden.setOrdenes(ordenPendiente);
+            nuevoProductoOrden.setCantidadXProducto(cantidad); // Setear la cantidad
+            ordenPendiente.getProductos().add(nuevoProductoOrden);
+        }
+
+        ordenesRepository.save(ordenPendiente);
+
+        return "Producto agregado al carrito";*/
 
         // Agregar el producto a la orden
         ordenPendiente.agregarProducto(producto);
