@@ -52,11 +52,15 @@ public class HomeController {
 
     @GetMapping("/registro_usuario")
     public String registroUsuario(Model model) {
+        // Crear un nuevo objeto Usuario y añadirlo al modelo
+        Usuario usuario = new Usuario();
+        model.addAttribute("usuario", usuario);
+
         // Crear lista de distritos (puede venir de una base de datos o servicio)
         List<Distrito> lista_distritos = distritoRepository.findAll();
-
-        // Añadir la lista de distritos al modelo
         model.addAttribute("lista_distritos", lista_distritos);
+
         return "Sistema/registro_usuario";
     }
+
 }
