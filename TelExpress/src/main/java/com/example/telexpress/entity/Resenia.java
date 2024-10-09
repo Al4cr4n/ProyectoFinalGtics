@@ -19,4 +19,18 @@ public class Resenia {
     @ManyToOne
     @JoinColumn(name = "productos_idproductos", nullable = false)
     private Producto producto;
+    @ManyToOne
+    @JoinColumn(name = "usuario_idusuario", nullable = true)
+    private Usuario usuario;
+
+    @Column(name="tituloForo", nullable=true)
+    private String titulo;
+
+    @Column(name="tipoPublicacion", nullable=true)
+    private String tipo;
+
+
+
+
+
 }

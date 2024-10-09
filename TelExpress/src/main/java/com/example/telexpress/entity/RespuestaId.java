@@ -14,7 +14,7 @@ public class RespuestaId implements Serializable {
     @Column(name= "resenias_idresenias", nullable=false)
     private Integer reseniaid;
 
-    @Column(name="usuario_idusuario, nullable=false")
+    @Column(name="usuario_idusuario", nullable=false)
     private Integer usuarioid;
 
 
