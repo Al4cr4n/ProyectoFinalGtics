@@ -299,11 +299,12 @@ UNLOCK TABLES;
 -- Table `db_grupo2`.`usuario`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `db_grupo2`.`usuario` (
-  `idusuario` INT NOT NULL,
+  `idusuario` INT NOT NULL AUTO_INCREMENT,
+  
   `nombre` VARCHAR(45) NOT NULL,
   `apellido` VARCHAR(45) NULL DEFAULT NULL,
   `dni` VARCHAR(45) NOT NULL,
-  `contrasena` VARCHAR(45) NOT NULL,
+  `contrasena` VARCHAR(60) NOT NULL,
   `direccion` VARCHAR(256) NULL DEFAULT NULL,
   `ruc` VARCHAR(45) NULL DEFAULT NULL,
   `notificaciones` VARCHAR(1024) NULL DEFAULT NULL,
@@ -318,7 +319,7 @@ CREATE TABLE IF NOT EXISTS `db_grupo2`.`usuario` (
   `fechanacim` DATE NULL DEFAULT NULL,
   `idproveedor` INT NULL DEFAULT NULL,
   `motivo` VARCHAR(45) NULL DEFAULT NULL,
-  `idsuperior` INT NOT NULL AUTO_INCREMENT,
+  `idsuperior` INT NULL,
   `cantidadcompras` INT NULL DEFAULT NULL,
   `fotos_idfotos` INT NULL DEFAULT NULL,
   `isban` TINYINT NULL DEFAULT NULL,
