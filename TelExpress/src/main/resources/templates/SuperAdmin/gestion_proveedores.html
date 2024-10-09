@@ -345,33 +345,39 @@
       <!-- Content wrapper -->
       <div class="content-wrapper">
         <div class="container-xxl flex-grow-1 container-p-y">
-          <h5 style="font-size: 25px;">Proveedores</h5>
-          <form action="/superadmin/proveedor/buscar" method="GET" class="mb-4">
-            <div class="input-group">
-              <input type="text" name="searchField" class="form-control" placeholder="Buscar proveedor por nombre o apellido" th:value="${searchField}" />
-              <button class="btn btn-primary" type="submit">Buscar</button>
-            </div>
-          </form>
-
-
-          <form action="/superadmin/proveedor/filtrar" method="GET" class="mb-4">
-            <div class="input-group w-50 mb-3">
-              <select name="zona" class="form-select" onchange="this.form.submit()">
-                <!-- Si no se selecciona una zona específica, el valor enviado será 0 -->
-                <option value="0" th:selected="${zonaSeleccionada == null || zonaSeleccionada == 0}">Todas las zonas</option>
-                <option th:each="zona : ${listaZona}" th:value="${zona.idzona}" th:selected="${zona.idzona == zonaSeleccionada}" th:text="${zona.nombre}"></option>
-              </select>
-            </div>
-          </form>
+          <h4 style="font-family: 'Poppins', sans-serif; color: #7367F0; font-weight: bold; padding-top: 1rem; padding-bottom: 1rem; margin-bottom: 1rem; text-align: center; font-size: 40px;">
+            Proveedores</h4>
 
           <!-- Tabla Proveedores -->
           <div class="row">
             <div class="col-12 col-lg-12 mb-4">
-              <div class="card">
-                <div class="card-header d-flex justify-content-between align-items-center">
+
+              <div class="card" style="padding: 0.8rem;">
+
+
+                <div class="text-end my-3">
 
                   <a class="btn btn-primary" th:href="@{/superadmin/proveedor/nuevo}" style="margin-right: 10px;">Crear Nuevo</a>
                 </div>
+                <form action="/superadmin/proveedor/buscar" method="GET" class="mb-4">
+                  <div class="input-group">
+                    <input type="text" name="searchField" class="form-control" placeholder="Buscar proveedor por nombre o apellido" th:value="${searchField}" />
+                    <button class="btn btn-primary" type="submit">Buscar</button>
+                  </div>
+                </form>
+
+
+                <form action="/superadmin/proveedor/filtrar" method="GET" class="mb-4">
+                  <div class="input-group w-50 mb-3">
+                    <select name="zona" class="form-select" onchange="this.form.submit()">
+                      <!-- Si no se selecciona una zona específica, el valor enviado será 0 -->
+                      <option value="0" th:selected="${zonaSeleccionada == null || zonaSeleccionada == 0}">Todas las zonas</option>
+                      <option th:each="zona : ${listaZona}" th:value="${zona.idzona}" th:selected="${zona.idzona == zonaSeleccionada}" th:text="${zona.nombre}"></option>
+                    </select>
+                  </div>
+                </form>
+
+
                 <div class="table-responsive text-nowrap">
                   <table class="table table-striped" id="proveedoresTable">
                     <thead class="table-light">

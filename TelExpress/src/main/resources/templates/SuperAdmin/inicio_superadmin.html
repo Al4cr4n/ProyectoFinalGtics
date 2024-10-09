@@ -72,82 +72,78 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <!-- DataTables CSS -->
   <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+
   <!-- DataTables JS -->
   <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 
   <!--stylos personalizados-->
   <style>
-    /*.dataTables_wrapper .dataTables_paginate {
-      text-align: center; /* Centra el paginado
-      margin-top: 1.5rem;  /* Añade margen superior *
-      margin-left: auto;
-      margin-right: auto;
-    }
-    .dataTables_wrapper .dataTables_paginate .paginate_button {
-      padding: 0.5em 1em;
-      border-radius: 4px;
-      border: 1px solid #ddd;
-      background: #f5f5f5;
-      color: #89a9cc;
-    }
     /* Centrar la paginación en DataTables */
     .dataTables_wrapper .dataTables_paginate {
       display: flex; /* Usar flexbox para centrar */
       justify-content: center; /* Centrar horizontalmente */
+      align-items: center; /* Asegura que los botones estén centrados verticalmente */
       margin-top: 1.5rem; /* Añade margen superior */
-      margin-left: auto; /* Asegura que se centre */
-      margin-right: auto; /* Asegura que se centre */
-    }
-
-    /* Estilo para el paginado */
-    /*.dataTables_wrapper .dataTables_paginate {
-      text-align: center; /* Centra el paginado
-      margin-top: 1.5rem;  /* Añade margen superior *
     }
 
     /* Estilo de los botones de paginación */
     .dataTables_wrapper .dataTables_paginate .paginate_button {
-      padding: 0.5em 1em;
-      border-radius: 4px;
-      border: 1px solid #ddd;
-      background: #f5f5f5;
-      color: #89a9cc;
+      padding: 0.5em 1em; /* Espaciado interno */
+      border-radius: 4px; /* Bordes redondeados */
+      border: 1px solid #ddd; /* Borde gris claro */
+      background: #f5f5f5; /* Fondo gris claro */
+      color: #89a9cc; /* Texto en azul claro */
+      margin: 0 5px; /* Espaciado entre botones */
     }
-    /*Estilo para la tabla */
+
+    /* Estilo para el botón de la página actual */
+    .dataTables_wrapper .dataTables_paginate .paginate_button.current {
+      background-color: #5770df; /* Fondo azul */
+      color: white; /* Texto blanco */
+      border-color: #3b51b3; /* Borde azul más oscuro */
+    }
+
+    /* Efecto hover para los botones */
+    .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+      background-color: #d1d8ff; /* Fondo más claro al pasar el cursor */
+      border-color: #b5bdff; /* Borde más claro al pasar el cursor */
+      color: white; /* Texto blanco */
+    }
+
+    /* Estilos para la tabla */
     .table {
-      border-collapse: collapse; /* Para que los bordes se fusionen*/
-    }
-    /*.table th, .table td {
-      border: 1px solid rgba(0, 0, 0, 0.1); /* Borde más delgado
-      padding: 0.5rem; /* Espaciado interno para las celdas */
-    /*
-    .table th, table td {
-      padding: 12px; /* Agrega espacio interno a las celdas *
-      text-align: left; /* Alinea el contenido de las celdas a la izquierda */
-
-    /* Sin bordes en las cabeceras */
-    .table th {
-      border: none; /* Sin borde en la cabecera */
+      border-collapse: collapse; /* Evita la separación de bordes */
     }
 
-    /* Solo mostrar borde inferior en las celdas */
+    /* Estilo para las celdas de la tabla */
     .table td {
-      border: none; /* Sin borde en los lados */
-      border-bottom: 1px solid rgba(0, 0, 0, 0.1); /* Solo borde inferior para filas */
-      padding: 0.5rem; /* Espaciado interno para las celdas */
-      text-align: left; /* Alinea el contenido de las celdas a la izquierda */
+      border: none; /* Sin bordes en los lados */
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1); /* Borde inferior */
+      padding: 0.5rem; /* Espaciado interno */
+      text-align: left; /* Alineación a la izquierda */
     }
 
+    /* Espaciado entre filas de la tabla */
     table {
       border-collapse: separate; /* Evita que las celdas estén pegadas entre sí */
       border-spacing: 0 10px; /* Espaciado entre las filas */
     }
-    /* Ocultar el buscador, el texto "Showing" y el selector de longitud */
+
+    /* Ocultar el buscador, el texto "Mostrando" y el selector de longitud */
     .dataTables_wrapper .dataTables_filter,
     .dataTables_wrapper .dataTables_info,
     .dataTables_wrapper .dataTables_length {
       display: none;
     }
+
+    .dataTables_wrapper .dataTables_paginate {
+      text-align: center;
+    }
+    .dataTables_wrapper .dataTables_paginate .pagination {
+      display: inline-flex;
+    }
+
+
 
   </style>
 
@@ -454,25 +450,19 @@
                     </tbody>
                   </table>
                 </div>
+                <nav aria-label="Page navigation" class="mt-4 mb-4">
+                  <ul class="pagination justify-content-center" id="paginacion"></ul>
+                </nav>
+
               </div>
               <br>
-              <!--<div>
-                <nav aria-label="Page navigation example">
-                  <ul class="pagination justify-content-center">
-                    &lt;!&ndash; Generar la paginación dinámicamente &ndash;&gt;
-                    <li th:each="pagina : ${paginas}" class="page-item">
-                      <a class="page-link" th:text="${pagina.numero}" th:href="@{'/usuarios?page=' + ${pagina.numero}}"></a>
-                    </li>
-                  </ul>
-                </nav>
-              </div>-->
             </div>
 
             <script>
               $(document).ready(function() {
                 var table = $('#usuariosTablep').DataTable({
-                  "pageLength": 5,
-                  "lengthChange": false,
+                  "pageLength": 5, // Mostrar 5 filas por página
+                  "lengthChange": false, // No mostrar el cambio de número de filas
                   "language": {
                     "emptyTable": "No hay registros disponibles",
                     "zeroRecords": "No se encontraron registros coincidentes",
@@ -495,13 +485,14 @@
                   table.search(searchValue).draw();  // Realiza la búsqueda
                 });
 
-                // Evento para el botón Limpiar Filtros
+                // Evento para el botón Limpiar
                 $('#btnLimpiar').on('click', function() {
                   $('#customSearch').val('');  // Limpia el campo de búsqueda
                   table.search('').draw();     // Resetea la tabla
                 });
               });
             </script>
+
 
             <!-- Tabla 2 -->
             <div class="col-12 col-lg-12 order-2 order-md-3 order-lg-2 mb-4">
@@ -542,7 +533,6 @@
                       <th>DNI</th>
 
 
-                      <th>Actions</th>
                     </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
@@ -553,29 +543,13 @@
                       <td th:text="${agente.dni}"></td>
 
 
-                      <td>
-                        <div class="dropdown">
-                          <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                            <i class="bx bx-dots-vertical-rounded"></i>
-                          </button>
-                          <div class="dropdown-menu">
-                            <!--<a class="dropdown-item" href="javascript:void(0);"
-                            ><i class="bx bx-edit-alt me-1"></i> Editar</a
-                            >-->
-                            <a class="dropdown-item" th:href="@{/superadmin/borraragente_sa(id=${agente.id})}">
-                              <i class="bx bx-trash me-1"></i> Eliminar</a
-                            >
-                            <a class="dropdown-item" href="javascript:void(0);"
-                            ><i class="bx bx-log-in-circle me-1"></i> Ingresar</a
-                            >
-                          </div>
-                        </div>
-                      </td>
+
                     </tr>
 
                     </tbody>
                   </table>
                 </div>
+
               </div>
 
               <script>
@@ -654,7 +628,6 @@
                       <th>DNI</th>
                       <th>Correo</th>
                       <th>Zona</th>
-                      <th>Actions</th>
                     </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
@@ -666,24 +639,6 @@
                       <td th:text="${coordi.correo}"></td>
                       <td th:text="${coordi.zona.nombre}"></td>
 
-                      <td>
-                        <div class="dropdown">
-                          <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                            <i class="bx bx-dots-vertical-rounded"></i>
-                          </button>
-                          <div class="dropdown-menu">
-                            <a class="dropdown-item" href="javascript:void(0);"
-                            ><i class="bx bx-edit-alt me-1"></i> Editar</a
-                            >
-                            <a class="dropdown-item" href="javascript:void(0);"
-                            ><i class="bx bx-trash me-1"></i> Eliminar</a
-                            >
-                            <a class="dropdown-item" href="javascript:void(0);"
-                            ><i class="bx bx-log-in-circle me-1"></i> Ingresar</a
-                            >
-                          </div>
-                        </div>
-                      </td>
                     </tr>
 
                     </tbody>
@@ -773,5 +728,15 @@
 <!-- DataTables JS -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+
+
+
+
+
+
+
+
+
+
 </body>
 </html>
