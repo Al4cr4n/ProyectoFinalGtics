@@ -3,16 +3,12 @@ import com.example.telexpress.dto.ProductoDTO;
 import com.example.telexpress.entity.*;
 import com.example.telexpress.repository.*;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.transaction.annotation.Transactional;
 import com.example.telexpress.repository.DistritoRepository;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import com.example.telexpress.repository.UsuarioRepository;
-import com.example.telexpress.repository.ZonaRepository;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Page;
@@ -291,6 +287,42 @@ public class UsuarioController {
         // Pasar el término de búsqueda al modelo para que se mantenga en el campo de búsqueda
         model.addAttribute("search", search);
         return "Usuariofinal/lista_pedidos";
+    }
+
+
+    @GetMapping("/pedidos/editar")
+    public String editarPedidos(Model model, @RequestParam("id") int id) {
+
+        Optional<Ordenes> optionalOrdenes = ordenesRepository.findById(id);
+
+        if (optionalOrdenes.isPresent()) {
+            Ordenes ordenes = optionalOrdenes.get();
+
+            model.addAttribute("ordenes", ordenes);
+
+            return "Usuariofinal/editar_orden";
+        } else {
+            return "redirect:/usuario/lista_pedidos";
+        }
+    }
+    @PostMapping("/pedidos/guardar")
+    public String guardarPedidos(Ordenes ordenes, RedirectAttributes attr) {
+        ordenesRepository.save(ordenes);
+        return "redirect:/usuario/lista_pedidos";
+    }
+    @GetMapping("/pedidos/borrar")
+    public String borrarPedidos(Model model,
+                                  @RequestParam("id") int id,
+                                  RedirectAttributes attr) {
+
+        Optional<Ordenes> optProduct = ordenesRepository.findById(id);
+
+
+        if (optProduct.isPresent()) {
+            ordenesRepository.deleteById(id);
+        }
+        return "redirect:/usuario/lista_pedidos";
+
     }
 
     @GetMapping("/lista_productos")

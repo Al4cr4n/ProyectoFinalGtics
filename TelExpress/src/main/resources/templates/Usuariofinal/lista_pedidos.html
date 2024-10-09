@@ -459,9 +459,14 @@
                                     </td>
                                     <td th:text="${orden.usuario.nombre}" ></td>
 
-                                    <td  th:text="${#dates.format(orden.fechaCreacion, 'yyyy-MM-dd')}"></td>
-
-                                    <td th:text="${#dates.format(orden.fechaArribo, 'yyyy-MM-dd')}"></td>
+                                    <td>
+                                        <a class="btn btn-sm btn-primary" th:href="@{'/usuario/pedidos/editar?id=' + ${orden.idOrdenes}}">
+                                            <i class="bx bx-edit-alt"></i>
+                                        </a>
+                                        <a class="btn btn-sm btn-danger" th:href="@{'/usuario/pedidos/borrar?id=' + ${orden.idOrdenes}}">
+                                            <i class="bx bx-trash"></i>
+                                        </a>
+                                    </td>
                                 </tr>
                                 </tbody>
                             </table>
