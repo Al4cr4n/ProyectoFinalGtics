@@ -9,6 +9,7 @@
         data-assets-path="/assets/"
         data-template="vertical-menu-template-free"
         xmlns:th="http://www.thymeleaf.org"
+        xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 >
 <head>
   <meta charset="utf-8" />
@@ -280,14 +281,16 @@
                 </li>
 
 
-                <li>
+                <li sec:authorize="isAuthenticated()">
                   <div class="dropdown-divider"></div>
                 </li>
-                <li>
-                  <a class="dropdown-item" href="../Sistema/Login.html">
-                    <i class="bx bx-power-off me-2"></i>
-                    <span class="align-middle">Cerrar Sesión</span>
-                  </a>
+                <li sec:authorize="isAuthenticated()">
+                  <form th:action="@{/logout}" method="post">
+                    <button type="submit" class="dropdown-item">
+                      <i class="bx bx-power-off me-2"></i>
+                      <span class="align-middle">Cerrar Sesión</span>
+                    </button>
+                  </form>
                 </li>
               </ul>
             </li>

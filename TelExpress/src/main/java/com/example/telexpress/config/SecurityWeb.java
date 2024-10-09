@@ -70,7 +70,9 @@ public class SecurityWeb {
         );
         http.authorizeHttpRequests(authorize -> authorize
                 .requestMatchers ("/agente","/agente/**").hasAuthority("Agente") //acceso solo para agentes
-                //.requestMatchers("/superadmin","/superadmin/**").hasAuthority("Superadmin")  //acceso solo para superadmin
+                .requestMatchers("/superadmin","/superadmin/**").hasAuthority("Superadmin")  //acceso solo para superadmin
+                .requestMatchers("/coordinador","/coordinador/**").hasAuthority("Coordinador")
+                .requestMatchers("/usuario","/usuario/**").hasAuthority("Usuario")
                 .anyRequest().permitAll()
         );
         return http.build();
@@ -86,21 +88,6 @@ public class SecurityWeb {
         String hashedPassword1 = encoder.encode("pass222");
         System.out.println("hash de pas222:");
         System.out.println(hashedPassword1);
-        String hashedPassword2 = encoder.encode("pass111");
-        System.out.println("hash de pass111:");
-        System.out.println(hashedPassword2);
-        String hashedPassword3 = encoder.encode("pas444");
-        System.out.println("hash de pass444:");
-        System.out.println(hashedPassword3);
-        String hashedPassword4 = encoder.encode("pass555");
-        System.out.println("hash de pass555:");
-        System.out.println(hashedPassword4);
-        String hashedPassword5 = encoder.encode("pass666");
-        System.out.println("hash de pass666:");
-        System.out.println(hashedPassword5);
-        String hashedPassword6 = encoder.encode("pass777");
-        System.out.println("hash de pass777:");
-        System.out.println(hashedPassword6);
         return new BCryptPasswordEncoder();
         //return NoOpPasswordEncoder.getInstance();
     }
