@@ -47,6 +47,15 @@ public class SecurityWeb {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
+        // Configuración para el login de los agentes
+        /*http.formLogin(form -> form
+                .loginPage("/loginAgente") // Página de login para Agentes
+                .loginProcessingUrl("/procesologueoAgente") // Procesamiento del login para agentes
+                .usernameParameter("codigodespachador") // Usa el código de despachador como username
+                .passwordParameter("password") // Sigue usando la contraseña estándar
+                .successHandler(authenticationSuccessHandler()) // Llama a un método separado
+                .permitAll()
+        );*/
         //http.formLogin();
         http.formLogin(form -> form
                 .loginPage("/login")
@@ -70,7 +79,7 @@ public class SecurityWeb {
         );
         http.authorizeHttpRequests(authorize -> authorize
                 .requestMatchers ("/agente","/agente/**").hasAuthority("Agente") //acceso solo para agentes
-                .requestMatchers("/superadmin","/superadmin/**").hasAuthority("Superadmin")  //acceso solo para superadmin
+                .requestMatchers("/superadmin","/superadmin/**", "/producto/**").hasAuthority("Superadmin")  //acceso solo para superadmin
                 .requestMatchers("/coordinador","/coordinador/**").hasAuthority("Coordinador")
                 .requestMatchers("/usuario","/usuario/**").hasAuthority("Usuario")
                 .anyRequest().permitAll()
@@ -134,8 +143,12 @@ public class SecurityWeb {
                     // Redirigir de acuerdo al rol
                     if (authorities.stream().anyMatch(role -> role.getAuthority().equals("Superadmin"))) {
                         response.sendRedirect("/superadmin/inicio_superadmin");
-                    } else if (authorities.stream().anyMatch(role -> role.getAuthority().equals("Agente"))) {
+                    } else if (authorities.stream().anyMatch(role -> role.getAuthority().equals("Coordinador"))) {
+                        response.sendRedirect("/coordinador/inicio_coordinador_zonal");
+                    }else if (authorities.stream().anyMatch(role -> role.getAuthority().equals("Agente"))) {
                         response.sendRedirect("/agente/inicio");
+                    }else if (authorities.stream().anyMatch(role -> role.getAuthority().equals("Usuario"))) {
+                    response.sendRedirect("/usuario/inicio_usuariofinal");
                     } else {
                         // Si no tiene ningún rol específico, redirige a una página por defecto
                         response.sendRedirect("/usuario/resenia");
