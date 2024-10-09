@@ -1598,6 +1598,7 @@ body {
   
   .product-details .product-links {
     margin-top: 15px;
+
   }
   
   .product-details .product-links li {
@@ -1617,6 +1618,9 @@ body {
   
   .product-details .product-links li+li {
     margin-left: 10px;
+    color: #ffff; /* Cambia el color del texto al pasar el mouse */
+    background-color: #c0c0c0; /* Fondo de resaltado opcional */
+    border-radius: 5px; /* Bordes redondeados opcionales */
   }
   
   /*----------------------------*\

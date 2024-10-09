@@ -14,4 +14,7 @@ public interface ReseniaRepository extends JpaRepository<Resenia, Integer> {
     // Método para calcular el promedio de las puntuaciones de las reseñas de un producto
     @Query("SELECT AVG(r.puntuacion) FROM Resenia r WHERE r.producto.idProducto = :idproducto")
     Double obtenerPromedioPuntuacion(@Param("idproducto") Integer idproducto);
+
+    // Contar las reseñas relacionadas con un producto específico
+    Long countByProductoIdProducto(Integer idProducto);
 }

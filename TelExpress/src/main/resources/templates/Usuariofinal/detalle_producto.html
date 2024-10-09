@@ -427,18 +427,24 @@
                                             <i class="bi bi-star text-warning fs-2"></i>-->
                                             <!-- Muestra las estrellas basado en el promedioPuntuacion -->
                                             <span th:if="${promedioPuntuacion >= 1}" class="bi bi-star-fill text-warning fs-2"></span>
+                                            <span th:unless="${promedioPuntuacion >= 1}" class="bi bi-star text-warning fs-2"></span>
                                             <span th:if="${promedioPuntuacion >= 2}" class="bi bi-star-fill text-warning fs-2"></span>
+                                            <span th:unless="${promedioPuntuacion >= 2}" class="bi bi-star text-warning fs-2"></span>
                                             <span th:if="${promedioPuntuacion >= 3}" class="bi bi-star-fill text-warning fs-2"></span>
+                                            <span th:unless="${promedioPuntuacion >= 3}" class="bi bi-star text-warning fs-2"></span>
                                             <span th:if="${promedioPuntuacion >= 4}" class="bi bi-star-fill text-warning fs-2"></span>
+                                            <span th:unless="${promedioPuntuacion >= 4}" class="bi bi-star text-warning fs-2"></span>
                                             <span th:if="${promedioPuntuacion >= 5}" class="bi bi-star-fill text-warning fs-2"></span>
+                                            <span th:unless="${promedioPuntuacion >= 5}" class="bi bi-star text-warning fs-2"></span>
                                         </div>
-                                        <p>Promedio de puntuación: <span th:text="${promedioPuntuacion}"></span></p>
+                                        <p>Promedio de la puntuación: <span th:text="${promedioPuntuacion}"></span></p>
                                     </div>
                                     <div>
                                         <h3 class="product-price">$<span th:text="${producto.precio}"></span> <del class="product-old-price">$990.00</del></h3>
-                                        <span class="product-available">En Stock</span>
+                                        <span class="product-available" th:if="${producto.cantidadDisponible > 0}">En Stock</span>
+                                        <span class="product-available" th:unless="${producto.cantidadDisponible > 0}">Agotado</span>
                                     </div>
-                                    <p>Descripcion de la laptop, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                                    <p th:text="${producto.descripcion}">Descripción del producto...</p>
 
                                     <div class="product-options">
                                         
@@ -456,24 +462,22 @@
                                         <div class="qty-label">
                                             Qty
                                             <div class="input-number">
-                                                <input type="number">
-                                                <span class="qty-up">+</span>
-                                                <span class="qty-down">-</span>
+                                                <input type="number" th:attr="min=1, max=${producto.cantidadDisponible}"
+                                                       th:value="${producto.cantidadDisponible > 0 ? 1 : 0}" id="qtyInput">
+                                                <span class="qty-up" onclick="increment()">+</span>
+                                                <span class="qty-down" onclick="decrement()">-</span>
                                             </div>
                                         </div>
                                       
                                         <!-- Button to open the modal -->
                                         <button class="add-to-cart-btn" data-bs-toggle="modal" data-bs-target="#productModal"><i class="bx bx-plus"></i> Agregar</button>
-                                        
                                     </div>
-                                    <a class="review-link" href="#"> Reseñas(10)</a>
-
-                                    
-
+                                    <a class="review-link" href="#"> Reseñas(<span th:text="${cantidadResenias}">0</span>)</a>
                                     <ul class="product-links">
                                         <li>Categoría:</li>
-                                        <li><a href="#">Tecnologia</a></li>
-                                        <li><a href="#">Educacion</a></li>
+                                        <li><a href="#"><span th:text="${producto.categoria}">0</span></a></li>
+                                        <!--<li><a href="#">Tecnologia</a></li>
+                                        <li><a href="#">Educacion</a></li>-->
                                     </ul>
                                     <!--
                                     <ul class="product-links">
@@ -487,8 +491,6 @@
                                 </div>
                             </div>
                             <!-- /Product details -->
-
-					
                         </div>
                         <!-- /row -->
                     </div>
@@ -497,8 +499,6 @@
 		        <!-- /SECTION -->
 
                 </div>
-
-
 
                 </div>
             </div>
@@ -544,7 +544,9 @@
                             <td>Laptop</td>
                             <td>345678909</td>
                             <td>$980.00</td>
-                            <td><input type="number" class="form-control" value="1" min="1"></td>
+                            <td><input type="number" class="form-control"
+                                       th:attr="min=1, max=${producto.cantidadDisponible}"
+                                       id="qtyInModal" /></td>
                             <td>$980.00</td>
                         </tr>
                         <!-- Puedes agregar más filas si es necesario -->
@@ -582,7 +584,49 @@ document.querySelectorAll('input[type="number"]').forEach(input => {
         row.cells[6].textContent = `$${(price * quantity).toFixed(2)}`;
     });
 });</script>
-  
+
+<!--script>
+    // Obtener el campo de entrada de cantidad
+    const qtyInput = document.getElementById('qtyInput');
+
+    // Función para incrementar la cantidad
+    function increment() {
+        if (parseInt(qtyInput.value) < qtyInput.max) {
+            qtyInput.value = parseInt(qtyInput.value) + 1;
+        }
+    }
+
+    // Función para decrementar la cantidad
+    function decrement() {
+        if (parseInt(qtyInput.value) > 0) {
+            qtyInput.value = parseInt(qtyInput.value) - 1;
+        }
+    }
+</script>-->
+<script>
+    const qtyInput = document.getElementById('qtyInput');
+    const qtyInModal = document.getElementById('qtyInModal');
+
+    // Pasar el valor de qtyInput al modal cuando se abre
+    document.querySelector('.add-to-cart-btn').addEventListener('click', function() {
+        qtyInModal.value = qtyInput.value;
+    });
+
+    // Funciones para incrementar y decrementar el valor de Qty en la página principal
+    function increment() {
+        if (parseInt(qtyInput.value) < qtyInput.max) {
+            qtyInput.value = parseInt(qtyInput.value) + 1;
+        }
+    }
+
+    function decrement() {
+        if (parseInt(qtyInput.value) > qtyInput.min) {
+            qtyInput.value = parseInt(qtyInput.value) - 1;
+        }
+    }
+</script>
+
+
 
 
 <!-- Core JS -->

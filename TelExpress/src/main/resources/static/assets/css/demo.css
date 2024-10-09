@@ -291,3 +291,40 @@ display:flex;*/
 .fa-trash-o:before{content:"\f014"}
 .fa-home:before{content:"\f015"}
 .fa-file-o:before{content:"\f016"}
+
+/********************************************************************/
+/*visualizacion de datos, proceso de compra*/
+
+.proceso_validacion { background-color: #d1bf00;
+  font-size: 1.3rem; }
+
+/*envio de reseña*/
+.review-link {
+  color: #6a1b9a;
+  text-decoration: none;
+  font-size: 1.2rem;
+  text-decoration: underline
+}
+.review-link:hover {
+  text-decoration: underline;
+  font-size: 1.3rem;
+}
+
+/* Product images de la orden */
+.product-img-order {
+  width: 50px;
+  height: auto;
+}
+
+/* Shipping and Payment Details */
+.details-box {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-top: 0.5em;
+}
+
+.details-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+}
