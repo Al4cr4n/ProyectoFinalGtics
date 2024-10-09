@@ -470,14 +470,19 @@
                                         </div>
                                       
                                         <!-- Button to open the modal -->
-                                        <button class="add-to-cart-btn" data-bs-toggle="modal" data-bs-target="#productModal"><i class="bx bx-plus"></i> Agregar</button>
+                                        <form id="addToCartForm" action="#" method="post">
+                                            <input type="hidden" id="productoId" value="[[${producto.idProducto}]]">
+                                            <input type="hidden" id="usuarioId" value="27"> <!--  cambiar este valor por el del usuario actual -->
+
+                                            <!-- Botón para agregar al carrito -->
+                                            <button type="button" class="add-to-cart-btn" onclick="agregarAlCarrito()">Agregar al carrito</button>
+                                        </form>
+                                       <!-- <button class="add-to-cart-btn" data-bs-toggle="modal" data-bs-target="#productModal"><i class="bx bx-plus"></i> Agregar</button>-->
                                     </div>
                                     <a class="review-link" href="#"> Reseñas(<span th:text="${cantidadResenias}">0</span>)</a>
                                     <ul class="product-links">
                                         <li>Categoría:</li>
                                         <li><a href="#"><span th:text="${producto.categoria}">0</span></a></li>
-                                        <!--<li><a href="#">Tecnologia</a></li>
-                                        <li><a href="#">Educacion</a></li>-->
                                     </ul>
                                     <!--
                                     <ul class="product-links">
@@ -537,19 +542,21 @@
                             <th>Monto Total</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr class="border-bottom">
+                    <!--<tbody th:each="orden : ${ordenesPendientes}">
+                        <tr class="border-bottom" th:each="producto : ${orden.productos}">
                             <td><input type="checkbox"></td>
                             <td><img src="/assets/img/elements/product01.png" alt="Producto" class="img-thumbnail" width="100"></td>
-                            <td>Laptop</td>
-                            <td>345678909</td>
-                            <td>$980.00</td>
+                            <td th:text="${producto.nombreProducto}">Laptop</td>
+                            <td th:text="${producto.idProducto}">345678909</td>
+                            <td th:text="${producto.precio}">$980.00</td>
                             <td><input type="number" class="form-control"
                                        th:attr="min=1, max=${producto.cantidadDisponible}"
                                        id="qtyInModal" /></td>
-                            <td>$980.00</td>
-                        </tr>
+                            <td th:text="${producto.precio} * 1">$980.00</td>
+                        </tr>-->
                         <!-- Puedes agregar más filas si es necesario -->
+                    <tbody id="CartBody">
+
                     </tbody>
                 </table>
                 <!-- Campos adicionales fuera de la tabla, alineados -->
@@ -572,6 +579,70 @@
         </div>
     </div>
 </div>
+
+<script>
+    function agregarAlCarrito() {
+        const productoId = document.getElementById('productoId').value;
+        const usuarioId = document.getElementById('usuarioId').value;
+
+        // Crear el objeto de datos para enviar
+        const data = {
+            productoId: productoId,
+            usuarioId: usuarioId
+        };
+
+        // Hacer la llamada AJAX para agregar el producto al carrito
+        fetch('/usuario/agregarCarrito', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data) // Enviar los datos como JSON
+        })
+            .then(response => response.text())
+            .then(result => {
+                console.log(result); // Mostrar el mensaje de éxito en la consola
+
+                // Cargar los productos en el modal
+                cargarProductosCarrito();
+            })
+            .catch(error => console.error('Error:', error));
+    }
+
+    function cargarProductosCarrito() {
+        const usuarioId = document.getElementById('usuarioId').value;
+
+        // Hacer la llamada AJAX para obtener los productos del carrito
+        fetch(`/usuario/productos_carrito?usuarioId=${usuarioId}`)
+            .then(response => response.json())
+            .then(productos => {
+                const modalBody = document.querySelector('#productModal .modal-body tbody');
+                modalBody.innerHTML = ''; // Limpiar el contenido del modal
+
+                // Llenar el modal con los productos del carrito
+                productos.forEach(producto => {
+                    const row = `
+                <tr class="border-bottom">
+                    <td><input type="checkbox"></td>
+                    <td><img src="/assets/img/elements/product01.png" alt="Producto" class="img-thumbnail" width="100"></td>
+                    <td>${producto.nombreProducto}</td>
+                    <td>${producto.idProducto}</td>
+                    <td>${producto.precio}</td>
+                    <td><input type="number" class="form-control" min="1" max="${producto.cantidadDisponible}" value="1"></td>
+                    <td>${producto.precio}</td>
+                </tr>
+            `;
+                    modalBody.insertAdjacentHTML('beforeend', row);
+                });
+
+                // Mostrar el modal
+                const modal = new bootstrap.Modal(document.getElementById('productModal'));
+                modal.show();
+            })
+            .catch(error => console.error('Error:', error));
+    }
+</script>
+
 
 
   <script>
@@ -631,28 +702,28 @@ document.querySelectorAll('input[type="number"]').forEach(input => {
 
 <!-- Core JS -->
 <!-- build:js assets/vendor/js/core.js -->
-<script src="../../assets/vendor/libs/jquery/jquery.js"></script>
-<script src="../../assets/vendor/libs/popper/popper.js"></script>
-<script src="../../assets/vendor/js/bootstrap.js"></script>
-<script src="../../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+<script src="/assets/vendor/libs/jquery/jquery.js"></script>
+<script src="/assets/vendor/libs/popper/popper.js"></script>
+<script src="/assets/vendor/js/bootstrap.js"></script>
+<script src="/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
 
-<script src="../../assets/vendor/js/menu.js"></script>
+<script src="/assets/vendor/js/menu.js"></script>
 <!-- endbuild -->
 
 <!-- Vendors JS -->
-<script src="../../assets/vendor/libs/apex-charts/apexcharts.js"></script>
+<script src="/assets/vendor/libs/apex-charts/apexcharts.js"></script>
 
 <!-- Main JS -->
-<script src="../../assets/js/main.js"></script>
+<script src="/assets/js/main.js"></script>
 
 <!-- Page JS -->
-<script src="../../assets/js/dashboards-analytics.js"></script>
+<script src="/assets/js/dashboards-analytics.js"></script>
 
 <!-- Place this tag in your head or just before your close body tag. -->
 <script async defer src="https://buttons.github.io/buttons.js"></script>
 
-<script src="../../assets/js/slick.min.js"></script>
-<script  src="../../assets/js/product-user.js"></script>
+<script src="/assets/js/slick.min.js"></script>
+<script  src="/assets/js/product-user.js"></script>
 
 <!-- Bootstrap JS -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>

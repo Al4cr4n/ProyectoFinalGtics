@@ -1,9 +1,11 @@
 package com.example.telexpress.repository;
+import com.example.telexpress.entity.Usuario;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import com.example.telexpress.entity.Ordenes;
+import java.util.Optional;
 
 import java.util.List;
 
@@ -40,6 +42,7 @@ public interface OrdenesRepository extends JpaRepository<Ordenes, Integer> {
     // Búsqueda de todas las órdenes por estado permitido
     List<Ordenes> findByEstadoOrdenesIn(List<String> estados);
 
+    Optional<Ordenes> findByUsuarioAndEstadoOrdenesUser(Usuario usuario, String estadoOrdenesUser);
 
 
 }

@@ -1,7 +1,9 @@
 package com.example.telexpress.controller;
+import com.example.telexpress.dto.ProductoDTO;
 import com.example.telexpress.entity.*;
 import com.example.telexpress.repository.*;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.transaction.annotation.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,16 +11,17 @@ import org.springframework.ui.Model;
 import com.example.telexpress.repository.UsuarioRepository;
 import com.example.telexpress.repository.ZonaRepository;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
+import java.util.Map;
 import java.util.Optional;
 import java.util.List;
+import java.util.ArrayList;
+import java.util.stream.Collectors;
+
 @Controller
 @RequestMapping("/usuario")
 public class UsuarioController {
@@ -70,6 +73,153 @@ public class UsuarioController {
 
         return "Usuariofinal/detalle_producto";
     }
+
+    @GetMapping("/agregarCarrito")
+    @ResponseBody
+    public String agregarProductoAlCarrito(@RequestParam("productoId") Integer productoId, @RequestParam("usuarioId") Integer usuarioId) {
+        // Obtener el usuario
+        Usuario usuario = usuarioRepository.findById(Long.valueOf(usuarioId)).orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
+
+        // Buscar la orden pendiente del usuario
+        Optional<Ordenes> ordenPendienteOpt = ordenesRepository.findByUsuarioAndEstadoOrdenesUser(usuario, "pendiente");
+        Ordenes ordenPendiente;
+
+        if (ordenPendienteOpt.isPresent()) {
+            // Si existe una orden pendiente, la utilizamos
+            ordenPendiente = ordenPendienteOpt.get();
+        } else {
+            // Si no existe una orden pendiente, creamos una nueva
+            ordenPendiente = new Ordenes();
+            ordenPendiente.setUsuario(usuario);
+            ordenPendiente.setEstadoOrdenesUser("Pendiente");
+            ordenesRepository.save(ordenPendiente);
+        }
+
+        // Obtener el producto
+        Producto producto = productoRepository.findById(productoId).orElseThrow(() -> new IllegalArgumentException("Producto no encontrado"));
+
+        // Agregar el producto a la orden
+        ordenPendiente.agregarProducto(producto);
+        ordenesRepository.save(ordenPendiente);
+
+       // return "redirect:/usuario/ordenes_pendientes";
+        return "Producto agregado al carrito";
+    }
+
+    @GetMapping("/productos_carrito")
+    @ResponseBody
+    public List<ProductoDTO> verOrdenesPendientes(@RequestParam("usuarioId") Integer usuarioId, Model model) {
+        // Obtener el usuario
+        Usuario usuario = usuarioRepository.findById(Long.valueOf(usuarioId))
+                .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
+
+        // Obtener la orden pendiente del usuario
+        Optional<Ordenes> ordenPendienteOpt = ordenesRepository.findByUsuarioAndEstadoOrdenesUser(usuario, "Pendiente");
+
+        if (ordenPendienteOpt.isPresent()) {
+            // Pasar los productos al modelo para mostrarlos en el modal
+            Ordenes ordenPendiente = ordenPendienteOpt.get();
+            // Convertir los productos a ProductoDTO
+            List<ProductoDTO> productosDTO = ordenPendiente.getProductos().stream()
+                    .map(producto -> new ProductoDTO(
+                            producto.getIdProducto(),
+                            producto.getNombreProducto(),
+                            producto.getPrecio(),
+                            producto.getCantidadDisponible()
+                    ))
+                    .collect(Collectors.toList());
+
+            return productosDTO; // Retorna la lista de DTOs
+        } else {
+            //model.addAttribute("productos", new ArrayList<>()); // No hay productos en el carrito
+            return new ArrayList<>(); // Si no hay productos
+        }
+        //return "Usuariofinal/ordenes_pendientes";
+    }
+
+    @PostMapping("/agregarCarrito")
+    @ResponseBody
+    public String agregarProductoAlCarrito(@RequestBody Map<String, Integer> data) {
+        Integer productoId = data.get("productoId");
+        Integer usuarioId = data.get("usuarioId");
+
+        // Obtener el usuario
+        Usuario usuario = usuarioRepository.findById(Long.valueOf(usuarioId))
+                .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
+
+        // Buscar la orden pendiente del usuario
+        Optional<Ordenes> ordenPendienteOpt = ordenesRepository.findByUsuarioAndEstadoOrdenesUser(usuario, "Pendiente");
+        Ordenes ordenPendiente;
+
+        if (ordenPendienteOpt.isPresent()) {
+            // Si existe una orden pendiente, la utilizamos
+            ordenPendiente = ordenPendienteOpt.get();
+        } else {
+            // Si no existe una orden pendiente, creamos una nueva
+            ordenPendiente = new Ordenes();
+            ordenPendiente.setUsuario(usuario);
+            ordenPendiente.setEstadoOrdenesUser("Pendiente");
+            ordenesRepository.save(ordenPendiente);
+        }
+
+        // Obtener el producto
+        Producto producto = productoRepository.findById(productoId)
+                .orElseThrow(() -> new IllegalArgumentException("Producto no encontrado"));
+
+        // Agregar el producto a la orden
+        ordenPendiente.agregarProducto(producto);
+        ordenesRepository.save(ordenPendiente);
+
+        return "Producto agregado al carrito";
+    }
+
+
+    /*@Transactional
+    @PostMapping("/agregar_al_carrito")
+    public String agregarAlCarrito(@RequestParam("idProducto") Integer idProducto, @RequestParam("cantidad") Integer cantidad, Model model) {
+        // Obtener el usuario actual (simulación, debes implementar autenticación)
+        Usuario usuarioActual = usuarioRepository.findById(1L).orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
+
+        // Verificar si hay una orden pendiente
+        Optional<Ordenes> ordenPendienteOpt = ordenesRepository.findByUsuarioIdusuarioAndEstadoOrdenesUser(usuarioActual.getId(), "pendiente");
+
+        Ordenes ordenPendiente;
+        if (ordenPendienteOpt.isPresent()) {
+            ordenPendiente = ordenPendienteOpt.get();
+        } else {
+            // Si no hay una orden pendiente, crear una nueva
+            ordenPendiente = new Ordenes();
+            ordenPendiente.setUsuario(usuarioActual);
+            ordenPendiente.setEstadoOrdenesUser("pendiente");
+            ordenesRepository.save(ordenPendiente);
+        }
+
+        // Agregar el producto a la orden
+        Producto producto = productoRepository.findById(idProducto)
+                .orElseThrow(() -> new IllegalArgumentException("Producto no encontrado"));
+
+        ordenPendiente.agregarProducto(producto, cantidad);
+        ordenesRepository.save(ordenPendiente);
+
+        return "redirect:/usuario/ordenes_pendientes";
+    }*/
+
+    /*@GetMapping("/ordenes_pendientes")
+    public String verOrdenesPendientes(Model model) {
+        // Obtener el usuario actual
+        Usuario usuarioActual = usuarioRepository.findById(1).orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
+
+        // Obtener la orden pendiente del usuario
+        Optional<Ordenes> ordenPendiente = ordenesRepository.findByUsuarioIdusuarioAndEstadoOrdenesUser(usuarioActual.getIdusuario(), "pendiente");
+
+        if (ordenPendiente.isPresent()) {
+            model.addAttribute("productosOrden", ordenPendiente.get().getProductos());
+        } else {
+            model.addAttribute("productosOrden", List.of()); // Vacío si no hay productos
+        }
+
+        return "Usuariofinal/ordenes_pendientes";
+    }*/
 
     @GetMapping("/editar_orden")
     public String editar_orden(){

@@ -1,10 +1,13 @@
 package com.example.telexpress.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -54,4 +57,9 @@ public class Producto {
     )
     private List<Proveedor> proveedores;
 
+
+    @ManyToMany(mappedBy = "productos")
+   /* @JsonBackReference // Esto evita que se serialicen las órdenes dentro de un producto
+    private Set<Ordenes> ordenes= new HashSet<>();*/
+    private Set<Ordenes> ordenes;
 }

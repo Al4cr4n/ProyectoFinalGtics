@@ -5,6 +5,8 @@ import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
+import  java.util.List;
+import java.util.ArrayList;
 
 @Getter
 @Setter
@@ -71,5 +73,8 @@ public class Usuario {
     @ManyToOne
     @JoinColumn(name="jurisdiccion_idjurisdiccion")
     private Jurisdiccion jurisdiccion;
+
+    @OneToMany(mappedBy = "usuario")
+    private List<Ordenes> ordenes = new ArrayList<>();
 
 }

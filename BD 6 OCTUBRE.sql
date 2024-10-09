@@ -465,7 +465,7 @@ INSERT INTO `db_grupo2`.`ordenes` (`idordenes`, `estadoOrdenes`, `estadoOrdenesU
 (1018,NULL,'Pendiente', '2025-01-19', 25, 'Octubre', '2024-10-02'),
 (1019,NULL,'Pendiente', '2025-02-01', 26, 'Octubre', '2024-10-03'),
 (1020,NULL,'Pendiente', '2025-02-02', 27, 'Octubre', '2024-10-04'),
-(1021,NULL,'Pendiente', '2025-02-03', 27, 'Octubre', '2024-10-05');
+(1021,NULL,'Pendiente', '2025-02-03', 28, 'Octubre', '2024-10-05');
 /*!40000 ALTER TABLE `ordenes` ENABLE KEYS */;
 UNLOCK TABLES;
 
