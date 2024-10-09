@@ -324,8 +324,8 @@ CREATE TABLE IF NOT EXISTS `db_grupo2`.`usuario` (
   `fotos_idfotos` INT NULL DEFAULT NULL,
   `isban` TINYINT NULL DEFAULT NULL,
   `calificacion` INT NULL DEFAULT NULL,
-  `despachador_iddespachador` INT NULL,
-  `jurisdiccion_idjurisdiccion` INT NULL,
+  `despachador` VARCHAR(50) NULL,
+  `jurisdiccion` VARCHAR(50) NULL,
   PRIMARY KEY (`idusuario`),
   UNIQUE INDEX `dni_UNIQUE` (`dni` ASC) VISIBLE,
   UNIQUE INDEX `correo_UNIQUE` (`correo` ASC) VISIBLE,
@@ -336,8 +336,8 @@ CREATE TABLE IF NOT EXISTS `db_grupo2`.`usuario` (
   INDEX `fk_usuario_proveedor1_idx` (`idproveedor` ASC) VISIBLE,
   INDEX `fk_usuario_usuario1_idx` (`idsuperior` ASC) VISIBLE,
   INDEX `fk_usuario_fotos1_idx` (`fotos_idfotos` ASC) VISIBLE,
-  INDEX `fk_usuario_despachador1_idx` (`despachador_iddespachador` ASC) VISIBLE,
-  INDEX `fk_usuario_jurisdiccion1_idx` (`jurisdiccion_idjurisdiccion` ASC) VISIBLE,
+  INDEX `fk_usuario_despachador1_idx` (`despachador` ASC) VISIBLE,
+  INDEX `fk_usuario_jurisdiccion1_idx` (`jurisdiccion` ASC) VISIBLE,
   CONSTRAINT `fk_usuario_distritos1`
     FOREIGN KEY (`distritos_iddistritos`)
     REFERENCES `db_grupo2`.`distritos` (`iddistritos`),
@@ -355,64 +355,55 @@ CREATE TABLE IF NOT EXISTS `db_grupo2`.`usuario` (
     REFERENCES `db_grupo2`.`usuario` (`idusuario`),
   CONSTRAINT `fk_usuario_zona1`
     FOREIGN KEY (`idzona`)
-    REFERENCES `db_grupo2`.`zona` (`idzona`),
-  CONSTRAINT `fk_usuario_despachador1`
-    FOREIGN KEY (`despachador_iddespachador`)
-    REFERENCES `db_grupo2`.`despachador` (`iddespachador`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_usuario_jurisdiccion1`
-    FOREIGN KEY (`jurisdiccion_idjurisdiccion`)
-    REFERENCES `db_grupo2`.`jurisdiccion` (`idjurisdiccion`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    REFERENCES `db_grupo2`.`zona` (`idzona`)
+  )
 ENGINE = InnoDB
 AUTO_INCREMENT = 110
 DEFAULT CHARACTER SET = utf8mb3;
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` (`idusuario`, `nombre`, `apellido`, `dni`, `contrasena`, `direccion`, `ruc`, `notificaciones`, `correo`, `telefono`, `estadoUsuario`, `razonSocial`, `solicitudAgente`, `idroles`, `distritos_iddistritos`, `idzona`, `fechanacim`, `idproveedor`, `motivo`, `idsuperior`, `cantidadcompras`, `fotos_idfotos`,`isban`,`calificacion`,`despachador_iddespachador`,`jurisdiccion_idjurisdiccion` ) VALUES 
+INSERT INTO `usuario` (`idusuario`, `nombre`, `apellido`, `dni`, `contrasena`, `direccion`, `ruc`, `notificaciones`, `correo`, `telefono`, `estadoUsuario`, `razonSocial`, `solicitudAgente`, `idroles`, `distritos_iddistritos`, `idzona`, `fechanacim`, `idproveedor`, `motivo`, `idsuperior`, `cantidadcompras`, `fotos_idfotos`,`isban`,`calificacion`,`despachador`,`jurisdiccion` ) VALUES 
 -- 1 superadmin--
 (1, 'Juan', 'Pérez', '87654301', '$2a$10$m.uauzBWuQVoR7qJge1O3ukcYO2vnIp2wJVTLy6UdDHpkeSAm/WkK', 'Calle Luna 100', '20123456701', 'Notificaciones Activas', 'juan.perez@example.com', '987654321', 'Activo', 'Pérez SAC', 0, 1, 1, 1, '1985-05-15', NULL, NULL, NULL, 45, NULL,0,NULL,NULL,NULL),
 -- norte--
 -- -- 2 coordinadores --
 (2, 'Maria', 'López', '87654302', '$2a$10$gaAmMNaWXUrmMHMHaO1FRuwdPwBb1aF1EQSJBZeAaAF.wqZAhSMDa', 'Av. Sol 200', '20123456702', 'Notificaciones Inactivas', 'maria.lopez@example.com', '912345678', 'Activo', 'López EIRL', 0, 2, 1, 1, '1990-01-17', NULL, NULL, NULL, 0, NULL,0,NULL,NULL,NULL),
 -- -- 6 agentes --
-(3, 'Carlos', 'García', '87654303', '$2a$10$jEnQpKDadz9NIr3TULSqE.ABdrwqlEsFyCqQ6gJMCGvNYsAM.iUii', 'Calle Estrella 300', '20123456703', 'Notificaciones Activas', 'carlos.garcia@example.com', '923456789', 'Activo', 'García SAC', 0, 3, 2, 1, '1988-08-24', NULL, NULL, NULL, 0, NULL,0,3,1,1),
-(4, 'Laura', 'Ramírez', '87654304', '$2a$10$ACFCClib67XkFnKyOQ/z4.O/sHOchI1cE7x7PBQDiezmA/ZzCq1J.', 'Av. Luna 400', '20123456704', 'Notificaciones Inactivas', 'laura.ramirez@example.com', '934567890', 'Activo', 'Ramírez EIRL', 0, 3, 3, 1, '1992-11-15', NULL, NULL, 2, 100, NULL,0,2,2,2),
-(5, 'Pedro', 'Fernández', '87654355', '$2a$10$R8NzT3unrbtdi0aJ90gQ1.rA12OhVJfdQrth87MVo5OyY2eKJGYwS', 'Calle Mar 500', '20123456755', 'Notificaciones Activas', 'pedro.fernandez@example.com', '945678901', 'Activo', 'Fernández SAC', 0, 3, 4, 1, '1989-02-22', NULL, NULL, 2, 30, NULL,0,1,3,3),
+(3, 'Carlos', 'García', '87654303', '$2a$10$jEnQpKDadz9NIr3TULSqE.ABdrwqlEsFyCqQ6gJMCGvNYsAM.iUii', 'Calle Estrella 300', '20123456703', 'Notificaciones Activas', 'carlos.garcia@example.com', '923456789', 'Activo', 'García SAC', 0, 3, 2, 1, '1988-08-24', NULL, NULL, NULL, 0, NULL,0,3,'DESP001','JURIS001'),
+(4, 'Laura', 'Ramírez', '87654304', '$2a$10$ACFCClib67XkFnKyOQ/z4.O/sHOchI1cE7x7PBQDiezmA/ZzCq1J.', 'Av. Luna 400', '20123456704', 'Notificaciones Inactivas', 'laura.ramirez@example.com', '934567890', 'Activo', 'Ramírez EIRL', 0, 3, 3, 1, '1992-11-15', NULL, NULL, 2, 100, NULL,0,2,'DESP002','JURIS002'),
+(5, 'Pedro', 'Fernández', '87654355', '$2a$10$R8NzT3unrbtdi0aJ90gQ1.rA12OhVJfdQrth87MVo5OyY2eKJGYwS', 'Calle Mar 500', '20123456755', 'Notificaciones Activas', 'pedro.fernandez@example.com', '945678901', 'Activo', 'Fernández SAC', 0, 3, 4, 1, '1989-02-22', NULL, NULL, 2, 30, NULL,0,1,'DESP003','JURIS003'),
 -- sur --
 -- -- 2 coordinadores --
 (6, 'Elena', 'Castro', '87654306', '$2a$10$24Jx5FRaYqR7rQ8gWKFRN.TzHVIt6SyH2y8KJ7fnysqlQwt5VbIae', 'Av. Roca 600', '20123456706', 'Notificaciones Activas', 'elena.castro@example.com', '956789012', 'Activo', 'Castro EIRL', 0, 2, 9, 2, '1993-11-11', NULL, 'Violación de términos', 3, 10, NULL,0,NULL,NULL,NULL),
 -- -- 6 agentes --
-(7, 'Raúl', 'Torres', '87654307', '$2a$10$4vkMwb9I94wS9ZQV/FyjY.IFEmUcm3vRlgfw2K7PjXkFkPHzfKwry', 'Calle Nube 700', '20123456707', 'Notificaciones Inactivas', 'raul.torres@example.com', '967890123', 'Activo', 'Torres SAC', 0, 3, 10, 2, '1991-06-07', NULL, NULL, 3, 5, NULL,0,1,4,4),
-(8, 'Sofía', 'Vargas', '87654308', '$2a$10$lAIIRSR9rENen8g/cgMVwe7zG1UXmpQ2jyl9fKc.Xbt2dVVSuoxZ2', 'Av. Arena 800', '20123456708', 'Notificaciones Activas', 'sofia.vargas@example.com', '978901234', 'Activo', 'Vargas EIRL', 0, 3, 11, 2, '1987-01-12', NULL, NULL, NULL, 6, NULL,0,2,4,4),
-(9, 'Jorge', 'Díaz', '87654309', '$2a$10$nnBbYLxc7dtzvmJmQ.i7YuGo759bVAAsHQvZAl8LUuxQMQDiEnYpa', 'Calle Sol 900', '20123456709', 'Notificaciones Inactivas', 'jorge.diaz@example.com', '989012345', 'Activo', 'Díaz SAC', 0, 3, 12, 2, '1994-11-09', NULL, NULL, NULL, 7, NULL,0,3,5,5),
+(7, 'Raúl', 'Torres', '87654307', '$2a$10$4vkMwb9I94wS9ZQV/FyjY.IFEmUcm3vRlgfw2K7PjXkFkPHzfKwry', 'Calle Nube 700', '20123456707', 'Notificaciones Inactivas', 'raul.torres@example.com', '967890123', 'Activo', 'Torres SAC', 0, 3, 10, 2, '1991-06-07', NULL, NULL, 3, 5, NULL,0,1,'DESP004','JURIS004'),
+(8, 'Sofía', 'Vargas', '87654308', '$2a$10$lAIIRSR9rENen8g/cgMVwe7zG1UXmpQ2jyl9fKc.Xbt2dVVSuoxZ2', 'Av. Arena 800', '20123456708', 'Notificaciones Activas', 'sofia.vargas@example.com', '978901234', 'Activo', 'Vargas EIRL', 0, 3, 11, 2, '1987-01-12', NULL, NULL, NULL, 6, NULL,0,2,'DESP005','JURIS005'),
+(9, 'Jorge', 'Díaz', '87654309', '$2a$10$nnBbYLxc7dtzvmJmQ.i7YuGo759bVAAsHQvZAl8LUuxQMQDiEnYpa', 'Calle Sol 900', '20123456709', 'Notificaciones Inactivas', 'jorge.diaz@example.com', '989012345', 'Activo', 'Díaz SAC', 0, 3, 12, 2, '1994-11-09', NULL, NULL, NULL, 7, NULL,0,3,'DESP006','JURIS006'),
 -- este --
 -- -- 2 coordinadores --
 (10, 'Lucía', 'Mendoza', '87654310', '$2a$10$fPitFhE8dzg0KlZKSSw5UOOll0lvjL9xdyyAKOnQixNOexFPU8DfK', 'Av. Viento 1000', '20123456710', 'Notificaciones Activas', 'lucia.mendoza@example.com', '990123883', 'Activo', 'Mendoza EIRL', 0, 2, 19, 3, '1986-09-20', NULL, NULL, NULL,8, NULL,10,NULL,NULL,NULL),
 -- -- 6 agentes --
-(11, 'Ana', 'Rojas', '87654311', '$2a$10$24N6LMS/LhWP5cCAZVld7.gSGY0g4tn.B5zsbNOCdZufN3xrZN3KO', 'Calle Fuego 1100', '20123456711', 'Notificaciones Inactivas', 'ana.rojas@example.com', '991234567', 'Activo', 'Rojas SAC', 0, 3, 20, 3, '1990-12-27', NULL, NULL, 9, 9, NULL,0,5,6,6),
-(12, 'Luis', 'Ortiz', '87654312', '$2a$10$FQY3FTi7cXogEn8bhXsq7.dDV2oVNRlqOUa92lnKG/xNev3lHxeS.', 'Av. Brisa 1200', '20123456712', 'Notificaciones Activas', 'luis.ortiz@example.com', '992345678', 'Activo', 'Ortiz EIRL', 0, 3, 21, 4, '1988-12-21', NULL, NULL, 10, 14, NULL,0,4,7,7),
-(13, 'Gloria', 'Paredes', '87654313', '$2a$10$cFmSxOdY7R998zA/XC30PuKLKKEdatBUy6W/zMM5wvM9./CWynd3u', 'Calle Trueno 1300', '20123456713', 'Notificaciones Activas', 'gloria.paredes@example.com', '993456789', 'Activo', 'Paredes SAC', 0, 3, 22, 4, '1992-12-02', NULL, NULL, 10, 23, NULL,0,4,8,8),
+(11, 'Ana', 'Rojas', '87654311', '$2a$10$24N6LMS/LhWP5cCAZVld7.gSGY0g4tn.B5zsbNOCdZufN3xrZN3KO', 'Calle Fuego 1100', '20123456711', 'Notificaciones Inactivas', 'ana.rojas@example.com', '991234567', 'Activo', 'Rojas SAC', 0, 3, 20, 3, '1990-12-27', NULL, NULL, 9, 9, NULL,0,5,'DESP007','JURIS007'),
+(12, 'Luis', 'Ortiz', '87654312', '$2a$10$FQY3FTi7cXogEn8bhXsq7.dDV2oVNRlqOUa92lnKG/xNev3lHxeS.', 'Av. Brisa 1200', '20123456712', 'Notificaciones Activas', 'luis.ortiz@example.com', '992345678', 'Activo', 'Ortiz EIRL', 0, 3, 21, 4, '1988-12-21', NULL, NULL, 10, 14, NULL,0,4,'DESP008','JURIS008'),
+(13, 'Gloria', 'Paredes', '87654313', '$2a$10$cFmSxOdY7R998zA/XC30PuKLKKEdatBUy6W/zMM5wvM9./CWynd3u', 'Calle Trueno 1300', '20123456713', 'Notificaciones Activas', 'gloria.paredes@example.com', '993456789', 'Activo', 'Paredes SAC', 0, 3, 22, 4, '1992-12-02', NULL, NULL, 10, 23, NULL,0,4,'DESP009','JURIS009'),
 -- oeste --
 -- -- 2 coordinadores --
 (14, 'Andrés', 'Guzmán', '87654314', '$2a$10$vBPcQ2qFgjB25Jw50ux.puNmnloDUC1J0ljs8AUjsxzgpGkk/j3UO', 'Av. Relámpago 1400', '20123456714', 'Notificaciones Inactivas', 'andres.guzman@example.com', '994567890', 'Activo', 'Guzmán EIRL', 0, 2, 26, 4, '1989-05-04', NULL, NULL, NULL, 33, NULL,0,NULL,NULL,NULL),
 -- -- 6 agentes --
-(15, 'Patricia', 'Montes', '87654315', '$2a$10$N79rHHVeZeXY6JEm6sRi4eqKIIbZLp8mrHEK9w2KD2fxcQgx91F.G', 'Calle Lluvia 1500', '20123456715', 'Notificaciones Activas', 'patricia.montes@example.com', '995678901', 'Activo', 'Montes SAC', 0, 3, 27, 4, '1993-05-15', NULL, NULL, NULL, 54, NULL,0,2,9,9),
-(16, 'Gabriel', 'Salazar', '87654316', '$2a$10$WJFzk68ozO9u1Z6DIdgq3epJLdnTMQNmjGzOD/kh/Flnivdqb9Tii', 'Av. Viento 1600', '20123456716', 'Notificaciones Inactivas', 'gabriel.salazar@example.com', '996789012', 'Activo', 'Salazar EIRL', 0, 3, 28, 4, '1991-01-28', NULL, NULL, NULL, 21, NULL,0,3,10,10),
-(17, 'Daniela', 'Cruz', '87654317', '$2a$10$XymLh0gUqZyHnMLXTjxc3uOEW4OdEEQ3MUKw6WXW3gbcb5rYnhSzu', 'Calle Rayo 1700', '20123456717', 'Notificaciones Activas', 'daniela.cruz@example.com', '997890123', 'Activo', 'Cruz SAC', 0, 3, 29, 4, '1987-03-11', NULL, NULL, NULL, 20, NULL,0,4,11,11),
+(15, 'Patricia', 'Montes', '87654315', '$2a$10$N79rHHVeZeXY6JEm6sRi4eqKIIbZLp8mrHEK9w2KD2fxcQgx91F.G', 'Calle Lluvia 1500', '20123456715', 'Notificaciones Activas', 'patricia.montes@example.com', '995678901', 'Activo', 'Montes SAC', 0, 3, 27, 4, '1993-05-15', NULL, NULL, NULL, 54, NULL,0,2,'DESP010','JURIS010'),
+(16, 'Gabriel', 'Salazar', '87654316', '$2a$10$WJFzk68ozO9u1Z6DIdgq3epJLdnTMQNmjGzOD/kh/Flnivdqb9Tii', 'Av. Viento 1600', '20123456716', 'Notificaciones Inactivas', 'gabriel.salazar@example.com', '996789012', 'Activo', 'Salazar EIRL', 0, 3, 28, 4, '1991-01-28', NULL, NULL, NULL, 21, NULL,0,3,'DESP011','JURIS011'),
+(17, 'Daniela', 'Cruz', '87654317', '$2a$10$XymLh0gUqZyHnMLXTjxc3uOEW4OdEEQ3MUKw6WXW3gbcb5rYnhSzu', 'Calle Rayo 1700', '20123456717', 'Notificaciones Activas', 'daniela.cruz@example.com', '997890123', 'Activo', 'Cruz SAC', 0, 3, 29, 4, '1987-03-11', NULL, NULL, NULL, 20, NULL,0,4,'DESP012','JURIS012'),
 -- usuarios --
-(18, 'Hugo', 'Mejía', '87654318', '$2a$10$ypIEXVggJUyz/isJq9iB0.XVz8.x4ApXrNO6wWDxyR6fBDlMNFb1W', 'Av. Truenos 1800', '20123456718', 'Notificaciones Inactivas', 'hugo.mejia@example.com', '998901234', 'Activo', 'Mejía EIRL', 1, 4, 1, 1, '1990-07-30', NULL, NULL, NULL, 15, NULL,0,NULL,12,12),
-(19, 'Camila', 'Vega', '87654319', '$2a$10$D.7eKKMrvBkYgJlyg370NOzp8rSQNhdy181F7IbXmySbGdYmAvjbq', 'Calle Ríos 1900', '20123456719', 'Notificaciones Activas', 'camila.vega@example.com', '999012345', 'Baneado', 'Vega SAC', 0, 4, 2, 1, '1994-08-10', NULL, 'Actividad sospechosa', NULL, 13, NULL,1,NULL,13,13),
-(20, 'Alonso', 'Valdez', '87654320', '$2a$10$vJ0yCddrmhOV5BM8N6AH.OaJcm55CYjJZggwm7jdxfU9RU4elU/Du', 'Av. Roca 2000', '20123456720', 'Notificaciones Inactivas', 'alonso.valdez@example.com', '990123456', 'Inactivo', 'Valdez EIRL', 0, 4, 15, 2, '1986-08-03', NULL, NULL, NULL, 17, NULL,0,NULL,14,14),
-(21, 'Laura', 'Martínez', '87654377', '$2a$10$UzUUkQiMK8EmrFOWQ/TLUeZPrrgV7fhqAg/XjrEGYd9xN/m8l3R9S', 'Calle Sol 400', '20123456777', 'Notificaciones Activas', 'laura.martinez@example.com', '934567890', 'Activo', 'Martínez SRL', 0, 4, 16, 2, '1995-02-28', NULL, NULL, NULL, 20, NULL, 0,NULL,15,15),
-(22, 'Javier', 'Rodríguez', '87654305', '$2a$10$kLDp7wBEA/Ygl6RU2mEiguIeWRACD62NVgLBSjIZaiWovzp43V.EW', 'Av. Estrella 500', '20123456705', 'Notificaciones Inactivas', 'javier.rodriguez@example.com', '945678901', 'Activo', 'Rodríguez EIRL', 0, 4, 23, 3, '1987-03-15', NULL, NULL, NULL, 15, NULL, 0, NULL,16,16),
-(23, 'Ana', 'González', '87654366', '$2a$10$EPKAuguC7.urpJ4itWnCleNit06o6DVoLUuFgpEkSznoQa1t7ETQG', 'Calle Mar 600', '20123456766', 'Notificaciones Activas', 'ana.gonzalez@example.com', '956789012', 'Activo', 'González SAC', 1, 4, 24, 3, '1992-11-11', NULL, NULL, NULL, 10, NULL, 0,NULL,17,17),
-(24, 'Luis', 'Hernández', '87654387', '$2a$10$YLp2nze36xy.97TKSnqnFu2vLQYeUG49m52X906d2ytxcCf.3F0ia', 'Calle Tierra 700', '20123456787', 'Notificaciones Activas', 'luis.hernandez@example.com', '967890123', 'Activo', 'Hernández Ltda.', 1, 4, 35, 4, '1985-06-30', NULL, NULL, NULL, 5, NULL,  0, NULL,18,18),
-(25, 'Sofía', 'Morales', '87654388', '$2a$10$sKgjOMiYCJK8jXSE7xOKNeMYYf4ob8BdmW7PfuslONajMfu7YJ1AC', 'Av. Agua 800', '20123456788', 'Notificaciones Inactivas', 'sofia.morales@example.com', '978901234', 'Activo', 'Morales EIRL', 0, 4, 36, 4, '1990-09-09', NULL, NULL, NULL, 25, NULL,  0, NULL,19,19),
-(26, 'Fernando', 'Vásquez', '87654399', '$2a$10$ufLoBCdkPxw/pButrHjP1OO96kAvb0vopgar4joCuFKGBSae9WajW', 'Calle Fuego 900', '20123456799', 'Notificaciones Activas', 'fernando.vasquez@example.com', '989012345', 'Activo', 'Vásquez SAC', 1, 4, 37,4 , '1983-04-21', NULL, NULL, NULL, 30, NULL,  0, NULL,20,20),
-(27, 'Claudia', 'Cruz', '87654400', '$2a$10$7tgKsn1sjQhOL5fXrxZuH.aDsDVXmZcmC9IxK4riKSFIlFXQEVoB6', 'Av. Viento 1000', '20123456700', 'Notificaciones Inactivas', 'claudia.cruz@example.com', '990123456', 'Baneado', 'Cruz Ltda.', 1, 4, 38, 4, '1996-12-05', NULL, 'Comportamiento inapropiado', NULL, 12, NULL,  1, NULL,21,21);
+(18, 'Hugo', 'Mejía', '87654318', '$2a$10$ypIEXVggJUyz/isJq9iB0.XVz8.x4ApXrNO6wWDxyR6fBDlMNFb1W', 'Av. Truenos 1800', '20123456718', 'Notificaciones Inactivas', 'hugo.mejia@example.com', '998901234', 'Activo', 'Mejía EIRL', 1, 4, 1, 1, '1990-07-30', NULL, NULL, NULL, 15, NULL,0,NULL,'DESP013','JURIS013'),
+(19, 'Camila', 'Vega', '87654319', '$2a$10$D.7eKKMrvBkYgJlyg370NOzp8rSQNhdy181F7IbXmySbGdYmAvjbq', 'Calle Ríos 1900', '20123456719', 'Notificaciones Activas', 'camila.vega@example.com', '999012345', 'Baneado', 'Vega SAC', 0, 4, 2, 1, '1994-08-10', NULL, 'Actividad sospechosa', NULL, 13, NULL,1,NULL,'DESP014','JURIS014'),
+(20, 'Alonso', 'Valdez', '87654320', '$2a$10$vJ0yCddrmhOV5BM8N6AH.OaJcm55CYjJZggwm7jdxfU9RU4elU/Du', 'Av. Roca 2000', '20123456720', 'Notificaciones Inactivas', 'alonso.valdez@example.com', '990123456', 'Inactivo', 'Valdez EIRL', 0, 4, 15, 2, '1986-08-03', NULL, NULL, NULL, 17, NULL,0,NULL,'DESP015','JURIS015'),
+(21, 'Laura', 'Martínez', '87654377', '$2a$10$UzUUkQiMK8EmrFOWQ/TLUeZPrrgV7fhqAg/XjrEGYd9xN/m8l3R9S', 'Calle Sol 400', '20123456777', 'Notificaciones Activas', 'laura.martinez@example.com', '934567890', 'Activo', 'Martínez SRL', 0, 4, 16, 2, '1995-02-28', NULL, NULL, NULL, 20, NULL, 0,NULL,'DESP016','JURIS016'),
+(22, 'Javier', 'Rodríguez', '87654305', '$2a$10$kLDp7wBEA/Ygl6RU2mEiguIeWRACD62NVgLBSjIZaiWovzp43V.EW', 'Av. Estrella 500', '20123456705', 'Notificaciones Inactivas', 'javier.rodriguez@example.com', '945678901', 'Activo', 'Rodríguez EIRL', 0, 4, 23, 3, '1987-03-15', NULL, NULL, NULL, 15, NULL, 0, NULL,'DESP017','JURIS017'),
+(23, 'Ana', 'González', '87654366', '$2a$10$EPKAuguC7.urpJ4itWnCleNit06o6DVoLUuFgpEkSznoQa1t7ETQG', 'Calle Mar 600', '20123456766', 'Notificaciones Activas', 'ana.gonzalez@example.com', '956789012', 'Activo', 'González SAC', 1, 4, 24, 3, '1992-11-11', NULL, NULL, NULL, 10, NULL, 0,NULL,'DESP018','JURIS018'),
+(24, 'Luis', 'Hernández', '87654387', '$2a$10$YLp2nze36xy.97TKSnqnFu2vLQYeUG49m52X906d2ytxcCf.3F0ia', 'Calle Tierra 700', '20123456787', 'Notificaciones Activas', 'luis.hernandez@example.com', '967890123', 'Activo', 'Hernández Ltda.', 1, 4, 35, 4, '1985-06-30', NULL, NULL, NULL, 5, NULL,  0, NULL,'DESP019','JURIS019'),
+(25, 'Sofía', 'Morales', '87654388', '$2a$10$sKgjOMiYCJK8jXSE7xOKNeMYYf4ob8BdmW7PfuslONajMfu7YJ1AC', 'Av. Agua 800', '20123456788', 'Notificaciones Inactivas', 'sofia.morales@example.com', '978901234', 'Activo', 'Morales EIRL', 0, 4, 36, 4, '1990-09-09', NULL, NULL, NULL, 25, NULL,  0, NULL,'DESP020','JURIS020'),
+(26, 'Fernando', 'Vásquez', '87654399', '$2a$10$ufLoBCdkPxw/pButrHjP1OO96kAvb0vopgar4joCuFKGBSae9WajW', 'Calle Fuego 900', '20123456799', 'Notificaciones Activas', 'fernando.vasquez@example.com', '989012345', 'Activo', 'Vásquez SAC', 1, 4, 37,4 , '1983-04-21', NULL, NULL, NULL, 30, NULL,  0, NULL,'DESP021','JURIS021'),
+(27, 'Claudia', 'Cruz', '87654400', '$2a$10$7tgKsn1sjQhOL5fXrxZuH.aDsDVXmZcmC9IxK4riKSFIlFXQEVoB6', 'Av. Viento 1000', '20123456700', 'Notificaciones Inactivas', 'claudia.cruz@example.com', '990123456', 'Baneado', 'Cruz Ltda.', 1, 4, 38, 4, '1996-12-05', NULL, 'Comportamiento inapropiado', NULL, 12, NULL,  1, NULL,'DESP022','JURIS02');
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -462,10 +453,10 @@ INSERT INTO `db_grupo2`.`ordenes` (`idordenes`, `estadoOrdenes`, `estadoOrdenesU
 (1016, 'Sin asignar','Validacion',  '2025-01-23', 23, 'Octubre', '2024-10-01'),
 (1017, 'Sin asignar','Validacion',  '2025-02-28', 24, 'Octubre', '2024-10-02'),
 
-(1018,NULL,'Pendiente', '2025-01-19', 25, 'Octubre', '2024-10-02'),
-(1019,NULL,'Pendiente', '2025-02-01', 26, 'Octubre', '2024-10-03'),
-(1020,NULL,'Pendiente', '2025-02-02', 27, 'Octubre', '2024-10-04'),
-(1021,NULL,'Pendiente', '2025-02-03', 28, 'Octubre', '2024-10-05');
+(1018,'Pendiente','Pendiente', '2025-01-19', 25, 'Octubre', '2024-10-02'),
+(1019,'Pendiente','Pendiente', '2025-02-01', 26, 'Octubre', '2024-10-03'),
+(1020,'Pendiente','Pendiente', '2025-02-02', 27, 'Octubre', '2024-10-04'),
+(1021,'Pendiente','Pendiente', '2025-02-03', 28, 'Octubre', '2024-10-05');
 /*!40000 ALTER TABLE `ordenes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -530,6 +521,7 @@ UNLOCK TABLES;
 CREATE TABLE IF NOT EXISTS `db_grupo2`.`producto_has_ordenes` (
   `producto_idproducto` INT NOT NULL,
   `ordenes_idordenes` INT NOT NULL,
+  `cantidadxproducto` INT NULL,
   PRIMARY KEY (`producto_idproducto`, `ordenes_idordenes`),
   INDEX `fk_ordenes` (`ordenes_idordenes` ASC) VISIBLE,
   CONSTRAINT `fk_ordenes`
@@ -547,29 +539,29 @@ DEFAULT CHARACTER SET = utf8mb3;
 LOCK TABLES `producto_has_ordenes` WRITE;
 /*!40000 ALTER TABLE `producto_has_ordenes` DISABLE KEYS */;
 INSERT INTO `db_grupo2`.`producto_has_ordenes` 
-(`producto_idproducto`, `ordenes_idordenes`)
+(`producto_idproducto`, `ordenes_idordenes`, `cantidadxproducto`)
 VALUES
-(1, 1001),
-(2, 1002),
-(3, 1003),
-(4, 1004),
-(5, 1005),
-(1, 1006),
-(2, 1007),
-(3, 1008),
-(4, 1009),
-(5, 1010),
-(1, 1011),
-(2, 1012),
-(3, 1013),
-(4, 1014),
-(5, 1015),
-(1, 1016),
-(2, 1017),
-(3, 1018),
-(4, 1019),
-(5, 1020),
-(5, 1021);
+(1, 1001,1),
+(2, 1002,2),
+(3, 1003,3),
+(4, 1004,4),
+(5, 1005,5),
+(1, 1006,6),
+(2, 1007,7),
+(3, 1008,8),
+(4, 1009,9),
+(5, 1010,1),
+(1, 1011,2),
+(2, 1012,1),
+(3, 1013,3),
+(4, 1014,5),
+(5, 1015,1),
+(1, 1016,2),
+(2, 1017,3),
+(3, 1018,3),
+(4, 1019,2),
+(5, 1020,1),
+(5, 1021,1);
 /*!40000 ALTER TABLE `producto_has_ordenes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -710,6 +702,7 @@ CREATE TABLE IF NOT EXISTS `db_grupo2`.`respuestas` (
     REFERENCES `db_grupo2`.`usuario` (`idusuario`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
+
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
