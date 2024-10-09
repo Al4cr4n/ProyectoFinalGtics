@@ -328,7 +328,7 @@
           <div class="content-wrapper">
             <!-- Content -->
             <div class="container-xxl flex-grow-1 container-p-y">
-                <h4 class="desing-title-page">Zona Oeste</h4>
+                <h6 class="desing-title-page">Zona Oeste</h6>
                 
 
                 <div class="card">
@@ -396,224 +396,30 @@
 						<div class="card-body">
                             <div class="row">
                                 <!-- product -->
-                                <div class="col-md-4 ">
+                                <div class="col-md-4 " th:each="producto : ${productos}">
                                     <div class="product">
                                         <div class="product-img">
                                             <img src="/assets/img/elements/1.jpg" alt="">
                                             <div class="product-label">
                                                 <span class="sale">-30%</span>
-                                                <span class="new">NEW</span>
+                                                <span class="new" >NEW</span> <!--th:if="${producto.new}"-->
                                             </div>
                                         </div>
                                         <div class="product-body">
                                             
-                                            <h3 class="product-name"><a href="#">telefono fijo amarillo</a></h3>
-                                            <h4 class="product-price">$180.00 <del class="product-old-price">$290.00</del></h4>
-                                            <div class="product-rating">
-                                            </div>
+                                            <h3 class="product-name"><a  th:href="@{/producto/detalle/{id}(id=${producto.idProducto})}">[[${producto.nombreProducto}]]</a></h3>
+                                            <h4 class="product-price">$[[${producto.precio}]] <del class="product-old-price">$290.00</del></h4>
+
                                             <div class="product-btns">
-                                                <button class="quick-view"><i class="bi bi-eye fs-4" onclick="location.href='detalle_producto.html';"></i><span class="tooltipp">quick view</span></button>
+                                                <!--<button class="quick-view"><i class="bi bi-eye fs-4" th:onclick="'location.href=\'' + '@{/usuario/detalle_producto/' + ${producto.idProducto} + '}\''"></i><span class="tooltipp">Vista rápida</span></button>-->
+                                                <!--<a th:href="@{/usuario/detalle_producto(id=${producto.idProducto})}" >
+                                                    <i class="bi bi-eye fs-4"></i><span class="tooltipp">Vista rápida</span>
+                                                </a>-->
+                                                <button class="quick-view" th:onclick="'location.href=\'' + @{/usuario/detalle_producto(id=${producto.idProducto})} + '\''">
+                                                    <i class="bi bi-eye fs-4"></i> <span class="tooltipp">Vista rápida</span>
+                                                </button>
                                             </div>
-                                        </div>
-                                        <div class="add-to-cart">
-                                            <button class="add-to-cart-btn"><i class="bx bx-cart"></i> agregar</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- /product -->
 
-                                <!-- product -->
-                                <div class="col-md-4 ">
-                                    <div class="product">
-                                        <div class="product-img">
-                                            <img src="/assets/img/elements/11.jpg" alt="">
-                                            <div class="product-label">
-                                                <span class="new">NEW</span>
-                                            </div>
-                                        </div>
-                                        <div class="product-body">
-                                            <h3 class="product-name"><a href="#">llavero</a></h3>
-                                            <h4 class="product-price">$80.00 <del class="product-old-price">$90.00</del></h4>
-                                            <div class="product-rating">
-                                            </div>
-                                            <div class="product-btns">
-                                                <button class="quick-view"><i class="bi bi-eye fs-4" onclick="location.href='detalle_producto.html';"></i><span class="tooltipp">quick view</span></button>
-                                            </div>
-                                        </div>
-                                        <div class="add-to-cart">
-                                            <button class="add-to-cart-btn"><i class="bx bx-cart"></i> agregar</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- /product -->
-
-							
-
-                                <!-- product -->
-                                <div class="col-md-4 ">
-                                    <div class="product">
-                                        <div class="product-img">
-                                            <img src="/assets/img/elements/12.jpg" alt="">
-                                        </div>
-                                        <div class="product-body">
-                                            <!--<p class="product-category">Categoria</p>-->
-                                            <h3 class="product-name"><a href="#">telefono fijo amarillo</a></h3>
-                                            <h4 class="product-price">$180.00 <del class="product-old-price"> $190.00</del></h4>
-                                            <div class="product-rating">
-                                            </div>
-                                            <div class="product-btns">
-                                                <button class="quick-view"><i class="bi bi-eye fs-4" onclick="location.href='detalle_producto.html';"></i><span class="tooltipp">quick view</span></button>
-                                            </div>
-                                        </div>
-                                        <div class="add-to-cart">
-                                            <button class="add-to-cart-btn"><i class="bx bx-cart"></i> agregar</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- /product -->
-                            </div>
-                        
-                            <div class="row">
-							
-
-                                <!-- product -->
-                                <div class="col-md-4 ">
-                                    <div class="product">
-                                        <div class="product-img">
-                                            <img src="/assets/img/elements/13.jpg" alt="">
-                                        </div>
-                                        <div class="product-body">
-                                            <h3 class="product-name"><a href="#">comida al por mayor </a></h3>
-                                            <h4 class="product-price">$780.00 <del class="product-old-price">$990.00</del></h4>
-                                            <div class="product-rating">
-                                            </div>
-                                            <div class="product-btns">
-                                                <button class="quick-view"><i class="bi bi-eye fs-4" onclick="location.href='detalle_producto.html';"></i><span class="tooltipp">quick view</span></button>
-                                            </div>
-                                        </div>
-                                        <div class="add-to-cart">
-                                            <button class="add-to-cart-btn"><i class="bx bx-cart"></i> agregar</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- /product -->
-
-							
-
-                                <!-- product -->
-                                <div class="col-md-4 ">
-                                    <div class="product">
-                                        <div class="product-img">
-                                            <img src="/assets/img/elements/17.jpg" alt="">
-                                        </div>
-                                        <div class="product-body">
-                                        
-                                            <h3 class="product-name"><a href="#">juguete de palta</a></h3>
-                                            <h4 class="product-price">$80.00 <del class="product-old-price">$90.00</del></h4>
-                                            <div class="product-rating">
-                                            </div>
-                                            <div class="product-btns">
-                                                <button class="quick-view"><i class="bi bi-eye fs-4" onclick="location.href='detalle_producto.html';"></i><span class="tooltipp">quick view</span></button>
-                                            </div>
-                                        </div>
-                                        <div class="add-to-cart">
-                                            <button class="add-to-cart-btn"><i class="bx bx-cart"></i> agregar</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- /product -->
-
-                                <!-- product -->
-                                <div class="col-md-4 ">
-                                    <div class="product">
-                                        <div class="product-img">
-                                            <img src="/assets/img/elements/18.jpg" alt="">
-                                        </div>
-                                        <div class="product-body">
-                                            
-                                            <h3 class="product-name"><a href="#">utensilios de cocina</a></h3>
-                                            <h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
-                                            <div class="product-rating">
-                                                
-                                            </div>
-                                            <div class="product-btns">
-                                                <button class="quick-view"><i class="bi bi-eye fs-4" onclick="location.href='detalle_producto.html';"></i><span class="tooltipp">quick view</span></button>
-                                            </div>
-                                        </div>
-                                        <div class="add-to-cart">
-                                            <button class="add-to-cart-btn"><i class="bx bx-cart"></i> agregar</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- /product -->
-
-							</div>
-
-                            <div class="row">
-
-                                <!-- product -->
-                                <div class="col-md-4 ">
-                                    <div class="product">
-                                        <div class="product-img">
-                                            <img src="/assets/img/elements/19.jpg" alt="">
-                                        </div>
-                                        <div class="product-body">
-                                            
-                                            <h3 class="product-name"><a href="#">candado</a></h3>
-                                            <h4 class="product-price">$120.00 <del class="product-old-price">$990.00</del></h4>
-                                            <div class="product-rating">
-                                                
-                                            </div>
-                                            <div class="product-btns">
-                                                <button class="quick-view"><i class="bi bi-eye fs-4" onclick="location.href='detalle_producto.html';"></i><span class="tooltipp">quick view</span></button>
-                                            </div>
-                                        </div>
-                                        <div class="add-to-cart">
-                                            <button class="add-to-cart-btn"><i class="bx bx-cart"></i> agregar</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- /product -->
-
-                                <!-- product -->
-                                <div class="col-md-4">
-                                    <div class="product">
-                                        <div class="product-img">
-                                            <img src="../../assets/img/elements/2.jpg" alt="">
-                                        </div>
-                                        <div class="product-body">
-                                            <h3 class="product-name"><a href="#">juguete naranja</a></h3>
-                                            <h4 class="product-price">$80.00 <del class="product-old-price">$90.00</del></h4>
-                                            <div class="product-rating">
-                                            </div>
-                                            <div class="product-btns">
-                                                <button class="quick-view"><i class="bi bi-eye fs-4" onclick="location.href='detalle_producto.html';"></i><span class="tooltipp">quick view</span></button>
-                                            </div>
-                                        </div>
-                                        <div class="add-to-cart">
-                                            <button class="add-to-cart-btn"><i class="bx bx-cart"></i> agregar</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- /product -->
-
-							
-
-                                <!-- product -->
-                                <div class="col-md-4">
-                                    <div class="product">
-                                        <div class="product-img">
-                                            <img src="../../assets/img/elements/3.jpg" alt="">
-                                        </div>
-                                        <div class="product-body">
-                                            
-                                            <h3 class="product-name"><a href="#">decorativo</a></h3>
-                                            <h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
-                                            <div class="product-rating">
-                                            </div>
-                                            <div class="product-btns">
-                                                <button class="quick-view"><i class="bi bi-eye fs-4" onclick="location.href='detalle_producto.html';"></i><span class="tooltipp">quick view</span></button>
-                                            </div>
                                         </div>
                                         <div class="add-to-cart">
                                             <button class="add-to-cart-btn"><i class="bx bx-cart"></i> agregar</button>
@@ -623,11 +429,36 @@
                                 <!-- /product -->
                             </div>
 
+                            <div class="pagination-container-user-products d-flex justify-content-center">
+                                <div class="pagination-container">
+                                    <ul class="pagination">
+                                        <!-- Botón para ir a la página anterior -->
+                                        <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled'">
+                                            <a class="page-link" th:href="@{/usuario/lista_productos(page=${currentPage - 1})}" aria-label="Previous">
+                                                <span aria-hidden="true">&laquo;</span>
+                                            </a>
+                                        </li>
+
+                                        <!-- Mostrar las páginas disponibles -->
+                                        <li class="page-item" th:each="i : ${#numbers.sequence(0, totalPages - 1)}"
+                                            th:classappend="${i == currentPage} ? 'active'">
+                                            <a class="page-link" th:href="@{/usuario/lista_productos(page=${i})}">[[${i + 1}]]</a>
+                                        </li>
+
+                                        <!-- Botón para ir a la página siguiente -->
+                                        <li class="page-item" th:classappend="${currentPage == totalPages - 1} ? 'disabled'">
+                                            <a class="page-link" th:href="@{/usuario/lista_productos(page=${currentPage + 1})}" aria-label="Next">
+                                                <span aria-hidden="true">&raquo;</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
 						</div>
 						<!-- /store products -->
 
 						<!-- store bottom filter -->
-						<div class="store-filter card-footer" style="margin-bottom:1rem">
+						<!--<div class="store-filter card-footer" style="margin-bottom:1rem">
 							
 							<ul class="store-pagination">
 								<li class="active">1</li>
@@ -636,7 +467,7 @@
 								<li><a href="#">4</a></li>
 								<li><a href="#"><i class="tf-icon bx bx-chevrons-right"></i></a></li>
 							</ul>
-						</div>
+						</div>-->
                         
 						<!-- /store bottom filter -->
 					</div>

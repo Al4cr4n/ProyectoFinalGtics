@@ -1,11 +1,11 @@
 package com.example.telexpress.controller;
+import com.example.telexpress.entity.Producto;
+import com.example.telexpress.entity.Resenia;
+import com.example.telexpress.repository.*;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.example.telexpress.entity.Usuario;
 import com.example.telexpress.entity.Zona;
-import com.example.telexpress.repository.AdminRepository;
-import com.example.telexpress.repository.UsuarioRepository;
-import com.example.telexpress.repository.ZonaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 
 import java.util.Optional;
 import java.util.List;
@@ -21,9 +24,14 @@ import java.util.List;
 @RequestMapping("/usuario")
 public class UsuarioController {
     private final UsuarioRepository usuarioRepository;
+    private final ProductoRepository productoRepository;
+    private final ReseniaRepository reseniaRepository;
 
-    public UsuarioController(UsuarioRepository usuarioRepository) {
+    public UsuarioController(UsuarioRepository usuarioRepository, ProductoRepository productoRepository,
+                             ReseniaRepository reseniaRepository) {
         this.usuarioRepository = usuarioRepository;
+        this.productoRepository = productoRepository;
+        this.reseniaRepository = reseniaRepository;
     }
 
     @GetMapping({"","/inicio"})
@@ -42,7 +50,20 @@ public class UsuarioController {
     }
 
     @GetMapping("/detalle_producto")
-    public String detalle_producto(){
+    public String detalle_producto(Model model, @RequestParam("id")  Integer id){
+        // Obtener el producto por ID
+        Producto producto = productoRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Producto no encontrado"));
+
+        // Obtener el promedio de puntuación de todas las reseñas del producto
+        Double promedioPuntuacion = reseniaRepository.obtenerPromedioPuntuacion(id);
+        // Si no hay reseñas, establecer el promedio como 0
+        if (promedioPuntuacion == null) {
+            promedioPuntuacion = 0.0;
+        }
+        // Añadir el producto al modelo
+        model.addAttribute("producto", producto);
+        model.addAttribute("promedioPuntuacion", promedioPuntuacion);
+
         return "Usuariofinal/detalle_producto";
     }
 
@@ -72,7 +93,19 @@ public class UsuarioController {
     }
 
     @GetMapping("/lista_productos")
-    public String lista_productos(){
+    public String lista_productos(Model model,
+                                  @RequestParam(value = "page", defaultValue = "0") int page,
+                                  @RequestParam(value = "size", defaultValue = "9") int size){
+        // Definir el paginador
+        Pageable pageable = PageRequest.of(page, size);
+        // Obtener los productos paginados desde el servicio
+        Page<Producto> pagproductos = productoRepository.findAll(pageable);
+
+        // Pasar los productos y la información de paginación al modelo
+        model.addAttribute("productos", pagproductos.getContent());
+        model.addAttribute("totalPages", pagproductos.getTotalPages());
+        model.addAttribute("currentPage", page);
+
         return "Usuariofinal/lista_productos";
     }
 

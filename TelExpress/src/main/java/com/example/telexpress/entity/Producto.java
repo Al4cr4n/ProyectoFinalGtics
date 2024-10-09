@@ -42,6 +42,10 @@ public class Producto {
     @Column(name = "cantidadComprada")
     private int cantidadComprada;
 
+    // Relación con Resenia
+    @OneToMany(mappedBy = "producto", cascade = CascadeType.ALL)
+    private List<Resenia> resenias;
+
     @ManyToMany
     @JoinTable(
             name = "producto_has_proveedor",
