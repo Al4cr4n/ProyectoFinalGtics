@@ -48,11 +48,11 @@ public class SuperAdminController {
 
 
 
-    @GetMapping("")
+    /*@GetMapping("")
     public String index(){
 
         return "SuperAdmin/inicio_superadmin";
-    }
+    }*/
 
     /*METODO DE TODAS LAS LISTAS DE LA VISTA PRINCIPAL*/
 
