@@ -38,8 +38,6 @@ public class Producto {
     @Column(name = "costoenvio")
     private Double costoEnvio;
 
-    @Column(name = "cantidadtotal")
-    private int cantidadTotal;
 
 
     @Column(name = "cantidadComprada")

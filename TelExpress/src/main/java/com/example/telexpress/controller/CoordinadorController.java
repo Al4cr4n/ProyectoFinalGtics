@@ -179,7 +179,7 @@ public class CoordinadorController {
     @GetMapping("/productos_zonal")
     public String productosCoordinadorZonal(Model model) {
         List<Producto> producto = productoRepository.findAll();
-        producto.sort(Comparator.comparing(Producto::getCantidadTotal).reversed());
+        producto.sort(Comparator.comparing(Producto::getCantidadDisponible));
         model.addAttribute("producto", producto);
         return "CoordinadorZonal/productos_zonal";
     }
