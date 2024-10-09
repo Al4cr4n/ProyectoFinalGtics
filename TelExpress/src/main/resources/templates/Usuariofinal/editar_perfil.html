@@ -300,38 +300,48 @@
 
       <!-- Content wrapper -->
       <div class="content-wrapper">
-        <!-- Aquí se agrega el contenido central -->
         <div class="container-xxl flex-grow-1 container-p-y">
-          <div class="card">
-            <div class="card-body">
+          <div class="row">
+            <div class="col-12 mb-4 order-0">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title text-primary">Detalles del Usuario</h5>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <h6 class="text-muted">Nombre Completo:</h6>
+                      <p class="text-dark" th:text="${nombre} + ' ' + ${apellido}">Nombre Apellido</p>
+                    </div>
 
-              <h4 style="font-family: 'Poppins', sans-serif; color: #7367F0; font-weight: bold; padding-top: 1rem; padding-bottom: 1rem; margin-bottom: 1rem; text-align: center; font-size: 40px;">
-                ¡Bienvenido!
-              </h4>
 
-              <!-- Añadimos margen superior al segundo h4 -->
-              <h4 class="mb-2" style="margin-top: 20px; margin-bottom: -20px; font-size: 20px; font-family: 'Poppins', sans-serif; font-weight: 100">
-                En esta sección, podrás ver las acciones que puedes realizar como usuario final.
-              </h4>
-
-              <!-- Contenedor flexbox para alinear el texto y la imagen -->
-              <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 40px">
-                <!-- Banner con el texto de funciones a la izquierda -->
-                <div style="background-color: #6DC8C2; padding: 20px; border-radius: 10px; width: 60%;">
-                  <p style="font-size:20px; color: white; font-family: 'Poppins', sans-serif; font-weight: 100;">
-                    Funciones:
-                    <br>1. Podrás crear, modificar y eliminar tus órdenes de compra.
-                    <br>2. Podrás interactuar mediante un chat con tu agente asignado.
-                    <br>3. Podrás modificar tu perfil a excepción del DNI.
-                    <br>4. Podrás colocar una reseña del producto y a su vez generar preguntas de ayuda.
-                  </p>
+                    <div class="col-md-6">
+                      <h6 class="text-muted">Correo Electrónico:</h6>
+                      <p class="text-dark" th:text="${correo}">johndoe@example.com</p>
+                    </div>
+                    <div class="col-md-6">
+                      <h6 class="text-muted">Teléfono:</h6>
+                      <p class="text-dark" th:text="${telefono}">(123) 456-7890</p>
+                    </div>
+                    <div class="col-md-6">
+                      <h6 class="text-muted">Dirección:</h6>
+                      <p class="text-dark" th:text="${direccion}">Dirección</p>
+                    </div>
+                    <div class="col-md-6">
+                      <h6 class="text-muted">Distrito:</h6>
+                      <p class="text-dark" th:text="${distrito}">Distrito</p>
+                    </div>
+                  </div>
                 </div>
-                <!-- Imagen alineada a la derecha -->
-                <img src="/assets/img/usuario/inicio_usuario.png" alt="Imagen" style="width: 400px; margin-left: 20px;">
               </div>
             </div>
+            <div class="text-center mt-4">
+              <button id="edit-button" class="btn btn-primary">Modificar Información</button>
+            </div>
           </div>
+
+          <!-- Additional content can go here -->
+
         </div>
+
       </div>
       <!-- /Aquí termina el contenido central -->
 
@@ -346,6 +356,45 @@
 
 
 
+<script>
+  document.getElementById('edit-button').addEventListener('click', function() {
+    // Selecciona los campos que deseas hacer editables
+    const fields = document.querySelectorAll('.text-dark');
+
+    // Cambia los párrafos a inputs para hacerlos editables
+    fields.forEach(field => {
+      const input = document.createElement('input');
+      input.type = 'text';
+      input.value = field.textContent;
+      input.className = 'form-control mb-2'; // Clase para estilo
+      field.replaceWith(input);
+    });
+
+    // Cambia el texto del botón a "Guardar Cambios"
+    this.textContent = "Guardar Cambios";
+    this.classList.add('btn-success');
+    this.classList.remove('btn-primary');
+
+    // Manejar el evento de guardar cambios (aquí podrías agregar un código para enviar datos al servidor)
+    this.removeEventListener('click', arguments.callee); // Evita que el evento se duplique
+    this.addEventListener('click', function() {
+      const inputs = document.querySelectorAll('input');
+
+      // Aquí puedes agregar la lógica para guardar los cambios
+      inputs.forEach(input => {
+        const newField = document.createElement('p');
+        newField.className = 'text-dark';
+        newField.textContent = input.value;
+        input.replaceWith(newField);
+      });
+
+      // Cambia el texto del botón de nuevo a "Modificar Información"
+      this.textContent = "Modificar Información";
+      this.classList.add('btn-primary');
+      this.classList.remove('btn-success');
+    });
+  });
+</script>
 <!-- Core JS -->
 <!-- build:js assets/vendor/js/core.js -->
 <script src="/assets/vendor/libs/jquery/jquery.js"></script>

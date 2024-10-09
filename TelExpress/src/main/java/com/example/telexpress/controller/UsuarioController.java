@@ -134,6 +134,15 @@ public class UsuarioController {
         return "Usuariofinal/unete";
     }
 
+    @GetMapping("/editar_perfil")
+    public String editar_perfil(){
+        return "Usuariofinal/editar_perfil";
+    }
+
+    @GetMapping("/cambiar_contrasena")
+    public String cambiar_contrasena(){
+        return "Usuariofinal/cambiar_contrasena";
+    }
 }
 
 

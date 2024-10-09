@@ -206,39 +206,11 @@
                                         <td th:text="${usuario.nombre}">Nombre</td>
                                         <td th:text="${usuario.apellido}">Apellido</td>
                                         <td th:text="${usuario.correo}">Correo</td>
-                                        <td>
-                                            <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmModal"
-                                                    th:data-motivo="${usuario.motivo}">Ver Motivo</button>
-                                        </td>
+                                        <td th:text="${usuario.motivo}">Motivo</td>
                                     </tr>
                                     </tbody>
                                 </table>
 
-                                <!-- Modal -->
-                                <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered modal-lg">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="confirmModalLabel">Motivo de Baneo</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body" id="modalContent">Motivo motivo motivo</div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <script>
-                                    document.querySelectorAll('button[data-motivo]').forEach(function(button) {
-                                        button.addEventListener('click', function() {
-                                            var motivo = button.getAttribute('data-motivo');
-                                            setModalContent(motivo);
-                                        });
-                                    });
-
-                                    function setModalContent(motivo) {
-                                        document.getElementById('modalContent').innerText = motivo;
-                                    }
-                                </script>
                             </div>
 
                             <!-- Paginación -->

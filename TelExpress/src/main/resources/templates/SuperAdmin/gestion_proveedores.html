@@ -345,6 +345,7 @@
       <!-- Content wrapper -->
       <div class="content-wrapper">
         <div class="container-xxl flex-grow-1 container-p-y">
+          <h5 style="font-size: 25px;">Proveedores</h5>
           <form action="/superadmin/proveedor/buscar" method="GET" class="mb-4">
             <div class="input-group">
               <input type="text" name="searchField" class="form-control" placeholder="Buscar proveedor por nombre o apellido" th:value="${searchField}" />
@@ -364,47 +365,61 @@
           </form>
 
           <!-- Tabla Proveedores -->
-          <h5 class="mb-4">Proveedores</h5>
-          <div class="table-responsive text-nowrap">
-            <table class="table table-striped" id="proveedoresTable">
-              <thead class="table-light">
-              <tr>
-                <th>N°</th>
-                <th>Proveedor</th>
-                <th>Tienda</th>
-                <th>DNI</th>
-                <th>Zona</th>
-                <th>RUC</th>
-                <th>Acciones</th>
-              </tr>
-              </thead>
-              <tbody>
-              <!-- Aquí van las filas con los proveedores -->
-              <tr th:each="proveedor, info : ${listaProveedores}">
-                <td th:text="${info.index + 1}"></td><td th:text="${proveedor.nombreProveedor}"></td>
-                <td th:text="${proveedor.nombreProveedor}"></td>
-                <td th:text="${proveedor.nombreTienda}"></td>
-                <td th:text="${proveedor.dni}"></td>
-                <td th:text="${proveedor.zona.nombre}"></td>
-                <td th:text="${proveedor.ruc}"></td>
-                <td>
-                  <a class="btn btn-sm btn-primary" th:href="@{'/superadmin/proveedor/editar?id=' + ${proveedor.idProveedor}}">
-                    <i class="bx bx-edit-alt"></i>
-                  </a>
-                  <a class="btn btn-sm btn-danger" th:href="@{'/superadmin/proveedor/borrar?id=' + ${proveedor.idProveedor}}">
-                    <i class="bx bx-trash"></i>
-                  </a>
-                </td>
-              </tr>
-              <!-- Puedes agregar más filas aquí -->
-              </tbody>
-            </table>
+          <div class="row">
+            <div class="col-12 col-lg-12 mb-4">
+              <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+
+                  <a class="btn btn-primary" th:href="@{/superadmin/proveedor/nuevo}" style="margin-right: 10px;">Crear Nuevo</a>
+                </div>
+                <div class="table-responsive text-nowrap">
+                  <table class="table table-striped" id="proveedoresTable">
+                    <thead class="table-light">
+                    <tr>
+                      <th>N°</th>
+                      <th>Proveedor</th>
+                      <th>Tienda</th>
+                      <th>DNI</th>
+                      <th>Zona</th>
+                      <th>RUC</th>
+                      <th>Acciones</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <!-- Aquí van las filas con los proveedores -->
+                    <tr th:each="proveedor, info : ${listaProveedores}">
+                      <td th:text="${info.index + 1}"></td>
+                      <td th:text="${proveedor.nombreProveedor}"></td>
+                      <td th:text="${proveedor.nombreTienda}"></td>
+                      <td th:text="${proveedor.dni}"></td>
+                      <td th:text="${proveedor.zona.nombre}"></td>
+                      <td th:text="${proveedor.ruc}"></td>
+                      <td>
+                        <a class="btn btn-sm btn-primary" th:href="@{'/superadmin/proveedor/editar?id=' + ${proveedor.idProveedor}}">
+                          <i class="bx bx-edit-alt"></i>
+                        </a>
+                        <a class="btn btn-sm btn-danger" th:href="@{'/superadmin/proveedor/borrar?id=' + ${proveedor.idProveedor}}">
+                          <i class="bx bx-trash"></i>
+                        </a>
+                      </td>
+                    </tr>
+                    <!-- Puedes agregar más filas aquí -->
+                    </tbody>
+                  </table>
+                </div>
+                <nav aria-label="Page navigation" class="mt-4 mb-4">
+                  <ul class="pagination justify-content-center" id="paginacion"></ul>
+                </nav>
+
+              </div>
+            </div>
           </div>
 
           <!-- Botón "Crear Nuevo" -->
+          <!--
           <div class="text-center my-3">
             <a class="btn btn-primary" th:href="@{/superadmin/proveedor/nuevo}">Crear Nuevo</a>
-          </div>
+          </div> -->
 
           <!-- Paginación -->
           <!--<nav aria-label="Page navigation">
@@ -414,6 +429,7 @@
               <li class="page-item"><a class="page-link" href="#">3</a></li>
             </ul>
           </nav>-->
+
         </div>
         <!-- Content backdrop -->
         <div class="content-backdrop fade"></div>
@@ -478,24 +494,74 @@
 <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
 
 <script>
-  $(document).ready(function() {
-    $('#proveedoresTable').DataTable({
-      "pagingType": "full_numbers", // Esto muestra los números de página completos
-      "pageLength":8,
-      "infoEmpty": "No hay usuarios disponibles",
-      "language": {
-        "paginate": {
-          "first": "",
-          "last": "",
-          "next": ">>",
-          "previous": "<<"
-        }
-      },
-      "paging": true,      // Activa la paginación
-      "searching": false,  // Desactiva el buscador
-      "info": false        // Oculta la información de "Showing"
+  document.addEventListener("DOMContentLoaded", function() {
+    const rowsPerPage = 5; // Número de filas por página
+    const table = document.getElementById("proveedoresTable");
+    const tableBody = table.querySelector("tbody");
+    const rows = tableBody.querySelectorAll("tr");
+    const pagination = document.getElementById("paginacion");
+    let currentPage = 1;
+    const totalPages = Math.ceil(rows.length / rowsPerPage);
 
-    });
+    function displayRows(page) {
+      const start = (page - 1) * rowsPerPage;
+      const end = start + rowsPerPage;
+
+      // Ocultar todas las filas y mostrar sólo las de la página actual
+      rows.forEach((row, index) => {
+        row.style.display = (index >= start && index < end) ? "" : "none";
+      });
+    }
+
+    function setupPagination() {
+      pagination.innerHTML = "";
+
+      // Botón "Anterior"
+      const prevButton = document.createElement("li");
+      prevButton.className = "page-item" + (currentPage == 1 ? " disabled" : "");
+      prevButton.innerHTML = `<a class="page-link" href="#"> << </a>`;
+      prevButton.addEventListener("click", function(e) {
+        e.preventDefault();
+        if (currentPage > 1) {
+          currentPage--;
+          displayRows(currentPage);
+          setupPagination();
+        }
+      });
+      pagination.appendChild(prevButton);
+
+      // Números de página
+      for (let i = 1; i <= totalPages; i++) {
+        const pageItem = document.createElement("li");
+        pageItem.className = "page-item" + (currentPage == i ? " active" : "");
+        pageItem.innerHTML = `<a class="page-link" href="#">${i}</a>`;
+        pageItem.addEventListener("click", function(e) {
+          e.preventDefault();
+          currentPage = i;
+          displayRows(currentPage);
+          setupPagination();
+        });
+        pagination.appendChild(pageItem);
+      }
+
+      // Botón "Siguiente"
+      const nextButton = document.createElement("li");
+      nextButton.className = "page-item" + (currentPage == totalPages ? " disabled" : "");
+      nextButton.innerHTML = `<a class="page-link" href="#"> >> </a>`;
+      nextButton.addEventListener("click", function(e) {
+        e.preventDefault();
+        if (currentPage < totalPages) {
+          currentPage++;
+          displayRows(currentPage);
+          setupPagination();
+        }
+      });
+      pagination.appendChild(nextButton);
+    }
+
+    // Inicializar la tabla y la paginación
+    displayRows(currentPage);
+    setupPagination();
   });
 </script>
 

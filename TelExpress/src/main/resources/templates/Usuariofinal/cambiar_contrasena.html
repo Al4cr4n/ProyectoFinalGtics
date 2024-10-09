@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" class="light-style layout-menu-fixed" dir="ltr" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"/>
+  <title>Cambio de Contraseña</title>
+
+  <link rel="stylesheet" href="/assets/vendor/fonts/boxicons.css" />
+  <link rel="stylesheet" href="/assets/vendor/css/core.css" />
+  <link rel="stylesheet" href="/assets/vendor/css/theme-default.css" />
+  <link rel="stylesheet" href="/assets/css/demo.css" />
+  <link rel="stylesheet" href="/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+  <link rel="stylesheet" href="/assets/vendor/css/pages/page-auth.css" />
+  <style>
+    body {
+      background-color: #F2F3F4;
+    }
+  </style>
+</head>
+<body>
+<div class="container-xxl">
+  <div class="authentication-wrapper authentication-basic container-p-y">
+    <div class="authentication-inner">
+      <div class="card">
+        <div class="card-body">
+          <img src="/assets/img/avatars/1.png" class="rounded-circle" alt="Logo" style="width: 120px; display: block; margin:  -20px auto;" />
+          <h4 class="mb-2" style="font-family: Zilla Slab">TelExpress</h4>
+
+          <!-- Formulario de Cambio de Contraseña -->
+          <form id="formAuthentication" class="mb-3" th:action="@{/cambio_contra_agente}" method="post">
+            <!-- Contraseña Actual almacenada desde el servidor -->
+            <input type="hidden" id="currentPasswordHidden" th:value="${passw}" />
+
+            <div class="mb-3 form-password-toggle">
+              <label class="form-label" for="password">Contraseña Actual</label>
+              <div class="input-group input-group-merge">
+                <input type="password" id="password" class="form-control" name="currentPassword" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" required />
+                <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+              </div>
+            </div>
+
+            <div class="mb-3 form-password-toggle">
+              <label class="form-label" for="new-password">Nueva Contraseña</label>
+              <div class="input-group input-group-merge">
+                <input type="password" id="new-password" class="form-control" name="newPassword" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" required />
+                <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+              </div>
+            </div>
+
+            <div class="mb-3 form-password-toggle">
+              <label class="form-label" for="confirmNewPassword">Repetir Nueva Contraseña</label>
+              <div class="input-group input-group-merge">
+                <input type="password" id="confirmNewPassword" class="form-control" name="confirmPassword" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" required />
+                <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <button type="submit" class="btn btn-primary d-grid w-100">Cambiar Contraseña</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Script para validar la contraseña -->
+<script th:inline="javascript">
+  document.getElementById('formAuthentication').addEventListener('submit', function(event) {
+    // Obtener valores de los campos
+    const currentPassword = document.getElementById('password').value;
+    const newPassword = document.getElementById('new-password').value;
+    const confirmNewPassword = document.getElementById('confirmNewPassword').value;
+
+    // Contraseña actual almacenada en el servidor
+    const storedPassword = /*[[${passw}]]*/ '[contraseña_actual]';  // Esto será reemplazado por Thymeleaf
+
+    // Validar que los campos no estén vacíos
+    if (!currentPassword || !newPassword || !confirmNewPassword) {
+      alert('Por favor, completa todos los campos.');
+      event.preventDefault(); // Evita el envío del formulario
+      return;
+    }
+
+    // Validar que la contraseña actual sea correcta
+    if (currentPassword !== storedPassword) {
+      alert('La contraseña actual es incorrecta.');
+      event.preventDefault(); // Evita el envío del formulario
+      return;
+    }
+
+    // Validar que las nuevas contraseñas coincidan
+    if (newPassword !== confirmNewPassword) {
+      alert('Las nuevas contraseñas no coinciden.');
+      event.preventDefault(); // Evita el envío del formulario
+      return;
+    }
+
+    // Si todo es correcto, permitir el envío del formulario
+  });
+</script>
+</body>
+</html>
