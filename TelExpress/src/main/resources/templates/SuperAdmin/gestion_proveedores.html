@@ -345,6 +345,7 @@
       <!-- Content wrapper -->
       <div class="content-wrapper">
         <div class="container-xxl flex-grow-1 container-p-y">
+          <h5 style="font-size: 25px;">Proveedores</h5>
           <form action="/superadmin/proveedor/buscar" method="GET" class="mb-4">
             <div class="input-group">
               <input type="text" name="searchField" class="form-control" placeholder="Buscar proveedor por nombre o apellido" th:value="${searchField}" />
@@ -364,44 +365,54 @@
           </form>
 
           <!-- Tabla Proveedores -->
-          <div class="card-header d-flex justify-content-between align-items-center">
-            <h5>Productos</h5>
-            <a class="btn btn-primary" th:href="@{/superadmin/proveedor/nuevo}" style="margin-right: 10px;">Crear Nuevo</a>
-          </div>
-          <div class="table-responsive text-nowrap">
-            <table class="table table-striped" id="proveedoresTable">
-              <thead class="table-light">
-              <tr>
-                <th>N°</th>
-                <th>Proveedor</th>
-                <th>Tienda</th>
-                <th>DNI</th>
-                <th>Zona</th>
-                <th>RUC</th>
-                <th>Acciones</th>
-              </tr>
-              </thead>
-              <tbody>
-              <!-- Aquí van las filas con los proveedores -->
-              <tr th:each="proveedor, info : ${listaProveedores}">
-                <td th:text="${info.index + 1}"></td>
-                <td th:text="${proveedor.nombreProveedor}"></td>
-                <td th:text="${proveedor.nombreTienda}"></td>
-                <td th:text="${proveedor.dni}"></td>
-                <td th:text="${proveedor.zona.nombre}"></td>
-                <td th:text="${proveedor.ruc}"></td>
-                <td>
-                  <a class="btn btn-sm btn-primary" th:href="@{'/superadmin/proveedor/editar?id=' + ${proveedor.idProveedor}}">
-                    <i class="bx bx-edit-alt"></i>
-                  </a>
-                  <a class="btn btn-sm btn-danger" th:href="@{'/superadmin/proveedor/borrar?id=' + ${proveedor.idProveedor}}">
-                    <i class="bx bx-trash"></i>
-                  </a>
-                </td>
-              </tr>
-              <!-- Puedes agregar más filas aquí -->
-              </tbody>
-            </table>
+          <div class="row">
+            <div class="col-12 col-lg-12 mb-4">
+              <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+
+                  <a class="btn btn-primary" th:href="@{/superadmin/proveedor/nuevo}" style="margin-right: 10px;">Crear Nuevo</a>
+                </div>
+                <div class="table-responsive text-nowrap">
+                  <table class="table table-striped" id="proveedoresTable">
+                    <thead class="table-light">
+                    <tr>
+                      <th>N°</th>
+                      <th>Proveedor</th>
+                      <th>Tienda</th>
+                      <th>DNI</th>
+                      <th>Zona</th>
+                      <th>RUC</th>
+                      <th>Acciones</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <!-- Aquí van las filas con los proveedores -->
+                    <tr th:each="proveedor, info : ${listaProveedores}">
+                      <td th:text="${info.index + 1}"></td>
+                      <td th:text="${proveedor.nombreProveedor}"></td>
+                      <td th:text="${proveedor.nombreTienda}"></td>
+                      <td th:text="${proveedor.dni}"></td>
+                      <td th:text="${proveedor.zona.nombre}"></td>
+                      <td th:text="${proveedor.ruc}"></td>
+                      <td>
+                        <a class="btn btn-sm btn-primary" th:href="@{'/superadmin/proveedor/editar?id=' + ${proveedor.idProveedor}}">
+                          <i class="bx bx-edit-alt"></i>
+                        </a>
+                        <a class="btn btn-sm btn-danger" th:href="@{'/superadmin/proveedor/borrar?id=' + ${proveedor.idProveedor}}">
+                          <i class="bx bx-trash"></i>
+                        </a>
+                      </td>
+                    </tr>
+                    <!-- Puedes agregar más filas aquí -->
+                    </tbody>
+                  </table>
+                </div>
+                <nav aria-label="Page navigation" class="mt-4 mb-4">
+                  <ul class="pagination justify-content-center" id="paginacion"></ul>
+                </nav>
+
+              </div>
+            </div>
           </div>
 
           <!-- Botón "Crear Nuevo" -->
@@ -418,9 +429,6 @@
               <li class="page-item"><a class="page-link" href="#">3</a></li>
             </ul>
           </nav>-->
-          <nav aria-label="Page navigation" class="mt-4 mb-4">
-            <ul class="pagination justify-content-center" id="paginacion"></ul>
-          </nav>
 
         </div>
         <!-- Content backdrop -->
