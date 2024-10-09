@@ -62,6 +62,10 @@ public class Usuario {
     @JoinColumn(name="despachador_iddespachador", nullable = true)
     private CodigoDespachador codigoDespachador;
 
+    @ManyToOne
+    @JoinColumn(name="idSuperior", nullable = true)
+    private Usuario idSuperior;
+
     @Column(nullable = false)
     private Integer isBan = 0; // Inicializa con 0 por defecto
 
