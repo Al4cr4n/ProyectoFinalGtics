@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import com.example.telexpress.repository.UsuarioRepository;
+import com.example.telexpress.repository.ZonaRepository;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -59,9 +61,12 @@ public class UsuarioController {
         if (promedioPuntuacion == null) {
             promedioPuntuacion = 0.0;
         }
+        // Contar las reseñas relacionadas con el producto específico
+        Long cantidad_resenias = reseniaRepository.countByProductoIdProducto(id);
         // Añadir el producto al modelo
         model.addAttribute("producto", producto);
         model.addAttribute("promedioPuntuacion", promedioPuntuacion);
+        model.addAttribute("cantidadResenias", cantidad_resenias);
 
         return "Usuariofinal/detalle_producto";
     }
