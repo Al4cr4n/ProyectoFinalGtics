@@ -303,7 +303,7 @@ CREATE TABLE IF NOT EXISTS `db_grupo2`.`usuario` (
   `nombre` VARCHAR(45) NOT NULL,
   `apellido` VARCHAR(45) NULL DEFAULT NULL,
   `dni` VARCHAR(45) NOT NULL,
-  `contrasena` VARCHAR(45) NOT NULL,
+  `contrasena` VARCHAR(60) NOT NULL,
   `direccion` VARCHAR(256) NULL DEFAULT NULL,
   `ruc` VARCHAR(45) NULL DEFAULT NULL,
   `notificaciones` VARCHAR(1024) NULL DEFAULT NULL,
