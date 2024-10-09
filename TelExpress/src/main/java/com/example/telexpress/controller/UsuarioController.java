@@ -81,7 +81,7 @@ public class UsuarioController {
         Usuario usuario = usuarioRepository.findById(Long.valueOf(usuarioId)).orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
 
         // Buscar la orden pendiente del usuario
-        Optional<Ordenes> ordenPendienteOpt = ordenesRepository.findByUsuarioAndEstadoOrdenesUser(usuario, "pendiente");
+        Optional<Ordenes> ordenPendienteOpt = ordenesRepository.findByUsuarioAndEstadoOrdenesUser(usuario, "Pendiente");
         Ordenes ordenPendiente;
 
         if (ordenPendienteOpt.isPresent()) {
@@ -267,16 +267,27 @@ public class UsuarioController {
     @GetMapping("/lista_productos")
     public String lista_productos(Model model,
                                   @RequestParam(value = "page", defaultValue = "0") int page,
-                                  @RequestParam(value = "size", defaultValue = "9") int size){
+                                  @RequestParam(value = "size", defaultValue = "9") int size,
+                                  @RequestParam(value = "filtroStock", required = false) String filtroStock){
         // Definir el paginador
         Pageable pageable = PageRequest.of(page, size);
         // Obtener los productos paginados desde el servicio
         Page<Producto> pagproductos = productoRepository.findAll(pageable);
 
+        // Filtrar productos según el valor del filtro de stock
+        if ("agotado".equals(filtroStock)) {
+            // Si se selecciona "agotado", mostrar solo productos sin stock
+            pagproductos = productoRepository.findByCantidadDisponible(0, pageable);
+        } else {
+            // Si no se selecciona "agotado", mostrar productos con stock
+            pagproductos = productoRepository.findByCantidadDisponibleGreaterThan(0, pageable);
+        }
+
         // Pasar los productos y la información de paginación al modelo
         model.addAttribute("productos", pagproductos.getContent());
         model.addAttribute("totalPages", pagproductos.getTotalPages());
         model.addAttribute("currentPage", page);
+        model.addAttribute("filtroStock", filtroStock);
 
         return "Usuariofinal/lista_productos";
     }

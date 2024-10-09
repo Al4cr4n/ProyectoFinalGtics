@@ -370,11 +370,20 @@
                                 >
                                     Disponibilidad
                                 </button>
-                                <ul class="dropdown-menu radio-options ">
-                                    <li><a class="dropdown-item" href="javascript:void(0);">Stock</a></li>
-                                    <li><a class="dropdown-item" href="javascript:void(0);">Agotado</a></li>
-                                    
-                                </ul>
+                                    <ul class="dropdown-menu radio-options ">
+                                        <li>
+                                            <a class="dropdown-item"
+                                               th:href="@{/usuario/lista_productos(filtroStock='stock', page=${currentPage}, size=${size})}">
+                                                Stock
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item"
+                                               th:href="@{/usuario/lista_productos(filtroStock='agotado', page=${currentPage}, size=${size})}">
+                                                Agotado
+                                            </a>
+                                        </li>
+                                    </ul>
                                 </div>
                                 
                             </div> 
