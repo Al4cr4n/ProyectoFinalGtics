@@ -1,14 +1,11 @@
 package com.example.telexpress.controller;
-<<<<<<< Updated upstream
 import com.example.telexpress.dto.ProductoDTO;
 import com.example.telexpress.entity.*;
 import com.example.telexpress.repository.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.transaction.annotation.Transactional;
-=======
 import com.example.telexpress.repository.DistritoRepository;
 import org.springframework.web.bind.annotation.GetMapping;
->>>>>>> Stashed changes
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,25 +28,21 @@ import java.util.stream.Collectors;
 @RequestMapping("/usuario")
 public class UsuarioController {
     private final UsuarioRepository usuarioRepository;
-<<<<<<< Updated upstream
     private final ProductoRepository productoRepository;
     private final ReseniaRepository reseniaRepository;
-    private final OrdenesRepository ordenesRepository;
 
-    public UsuarioController(UsuarioRepository usuarioRepository, ProductoRepository productoRepository,
-                             ReseniaRepository reseniaRepository, OrdenesRepository ordenesRepository) {
+    public UsuarioController(UsuarioRepository usuarioRepository, ProductoRepository productoRepository, ReseniaRepository reseniaRepository, OrdenesRepository ordenesRepository, DistritoRepository distritoRepository) {
         this.usuarioRepository = usuarioRepository;
         this.productoRepository = productoRepository;
         this.reseniaRepository = reseniaRepository;
         this.ordenesRepository = ordenesRepository;
-=======
+        this.distritoRepository = distritoRepository;
+    }
+
+    private final OrdenesRepository ordenesRepository;
     private final DistritoRepository distritoRepository;
 
-    public UsuarioController(UsuarioRepository usuarioRepository, DistritoRepository distritoRepository) {
-        this.usuarioRepository = usuarioRepository;
-        this.distritoRepository = distritoRepository;
->>>>>>> Stashed changes
-    }
+
 
     @GetMapping({"","/inicio"})
     public String index(){
@@ -369,7 +362,7 @@ public class UsuarioController {
             @RequestParam("new-password") String confirmNewPassword, // Confirmación de la nueva contraseña
             Model model) {
 
-        int id = 3; // ID del agente
+        int id = 4; // ID del agente
 
         // Obtener la contraseña almacenada en la base de datos
         String storedPassword = usuarioRepository.findcontrasena(id);
