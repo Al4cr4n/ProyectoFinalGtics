@@ -19,4 +19,8 @@ public class HomeController {
         return "Sistema/cambio_contraseña";
     }
 
+    @GetMapping("/registro_usuario")
+    public String registroUsuario() {
+        return "Sistema/registro_usuario";
+    }
 }
