@@ -434,7 +434,7 @@
                       <th>Correo</th>
                       <th>DNI</th>
                       <th>Dirección</th>
-                      <th>Acciones</th>
+
                     </tr>
                     </thead>
                     <tbody>
@@ -449,21 +449,7 @@
                       <td th:text="${usuario.correo}"></td>
                       <td th:text="${usuario.dni}"></td>
                       <td th:text="${usuario.direccion}"></td>
-                      <td>
-                        <div class="dropdown">
-                          <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                            <i class="bx bx-dots-vertical-rounded"></i>
-                          </button>
-                          <div class="dropdown-menu">
-                           <!-- <a class="dropdown-item" th:href="@{'/superadmin/editar/' + ${usuario.id}}">
-                              <i class="bx bx-edit-alt me-1"></i> Editar
-                            </a>-->
-                            <a class="dropdown-item" th:href="@{/superadmin/eliminarusuario_sa(id=${usuario.id})}">
-                              <i class="bx bx-trash me-1"></i> Eliminar
-                            </a>
-                          </div>
-                        </div>
-                      </td>
+
                     </tr>
                     </tbody>
                   </table>
@@ -545,6 +531,7 @@
 
                   </div>
                 </div>
+
                 <div class="table-responsive text-nowrap">
                   <table class="table" id="agentesTablep">
                     <thead class="table-light">
@@ -553,8 +540,8 @@
                       <th>Apellido</th>
                       <th>Teléfono</th>
                       <th>DNI</th>
-                      <th>RUC</th>
-                      <th>Tienda</th>
+
+
                       <th>Actions</th>
                     </tr>
                     </thead>
@@ -564,8 +551,8 @@
                       <td th:text="${agente.apellido}"></td>
                       <td th:text="${agente.telefono}"></td>
                       <td th:text="${agente.dni}"></td>
-                      <td th:text="${agente.ruc}"></td>
-                      <td th:text="${agente.proveedor.nombreTienda}"></td>
+
+
                       <td>
                         <div class="dropdown">
                           <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
