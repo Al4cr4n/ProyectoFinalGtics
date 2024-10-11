@@ -98,5 +98,5 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     @Query(value = "SELECT direccion FROM usuario WHERE idusuario = ?1", nativeQuery = true)
     String finddireccion(Integer idusuario);
 
-
+    List<Usuario> findByIdSuperior(Usuario idSuperior);
 }

@@ -14,10 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
-import java.util.Map;
-import java.util.Optional;
-import java.util.List;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Controller
@@ -281,25 +278,27 @@ public class UsuarioController {
     }
 
     @GetMapping("/lista_pedidos")
-    public String lista_pedidos(@RequestParam(value = "search", required = false) String search, Model model){
-        model.addAttribute("activePage", "lista_pedidos");
+    public String lista_pedidos(@RequestParam(value = "search", required = false) String search, Model model) {
+        List<Ordenes> ordenes = ordenesRepository.findOrdenesByUsuario(18);
+        List<Usuario> usuarios = usuarioRepository.findAll();
 
-        List<Ordenes> ordenes = ordenesRepository.findByUsuarioId(4);
-
-        // Si hay un término de búsqueda, buscar por cliente o estado de la orden
-        if (search != null && !search.isEmpty()) {
-            // Realiza la búsqueda en el repositorio por nombre de cliente o estado
-            ordenes = ordenesRepository.findByUsuarioNombreContainingIgnoreCaseOrUsuarioApellidoContainingIgnoreCaseOrEstadoOrdenesContainingIgnoreCase(search, search, search);
-        } else {
-            // Si no hay búsqueda, obtener todas las órdenes
-            ordenes = ordenesRepository.findAll();
+        // Obtener el agente asignado a cada usuario a través del idsuperior
+        Map<Integer, String> agentesMap = new HashMap<>();
+        for (Usuario usuario : usuarios) {
+            if (usuario.getIdSuperior() != null) {
+                // Obtener el agente directamente del idSuperior
+                Usuario agente = usuario.getIdSuperior();
+                agentesMap.put(usuario.getId(), agente != null ? agente.getNombre() : "Sin Asignar");
+            } else {
+                agentesMap.put(usuario.getId(), "Sin Asignar");
+            }
         }
 
-        // Pasar las órdenes al modelo para la vista
+        // Pasar las órdenes, usuarios y agentes al modelo para la vista
         model.addAttribute("ordenes", ordenes);
+        model.addAttribute("usuarios", usuarios);
+        model.addAttribute("agentesMap", agentesMap);
 
-        // Pasar el término de búsqueda al modelo para que se mantenga en el campo de búsqueda
-        model.addAttribute("search", search);
         return "Usuariofinal/lista_pedidos";
     }
 

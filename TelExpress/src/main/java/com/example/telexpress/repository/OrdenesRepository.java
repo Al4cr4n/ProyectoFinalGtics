@@ -3,6 +3,7 @@ import com.example.telexpress.entity.Usuario;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import com.example.telexpress.entity.Ordenes;
 import java.util.Optional;
@@ -44,5 +45,15 @@ public interface OrdenesRepository extends JpaRepository<Ordenes, Integer> {
 
     Optional<Ordenes> findByUsuarioAndEstadoOrdenesUser(Usuario usuario, String estadoOrdenesUser);
 
+    @Query(value = "SELECT o.idordenes, " +
+            "o.estadoOrdenes, " +
+            "o.estadoOrdenesUser, " +
+            "o.fechaArribo, " +
+            "o.usuario_idusuario, " +
+            "o.mesCreacion, " +
+            "o.fechaCreacion " +
+            "FROM ordenes o " +
+            "WHERE o.usuario_idusuario = :idusuario", nativeQuery = true)
+    List<Ordenes> findOrdenesByUsuario(@Param("idusuario") int idusuario);
 
 }
