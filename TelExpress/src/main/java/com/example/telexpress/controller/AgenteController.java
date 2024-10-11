@@ -6,7 +6,6 @@ package com.example.telexpress.controller;
 import com.example.telexpress.entity.Ordenes;
 import com.example.telexpress.entity.Usuario;
 import com.example.telexpress.repository.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.ui.Model;
@@ -14,7 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.PathVariable;
+
 import java.util.Arrays;
 
 
@@ -59,24 +58,30 @@ public class AgenteController {
     }
 
     @GetMapping("/ordenes")
-    public String mostrarOrdenesAgente(@RequestParam(value = "search", required = false) String search, Model model) {
+    public String mostrarOrdenesAgente(@RequestParam(value = "search", required = false) String search, Model model, RedirectAttributes redirectAttributes) {
         model.addAttribute("paginaActual", "ordenes");
 
         List<Ordenes> ordenes;
+        List<String> estadosTodos = Arrays.asList("EN PROCESO", "ARRIBO AL PAÍS", "EN ADUANAS", "EN RUTA", "RECIBIDO", "EN VALIDACIÓN", "CREADO","EN PROCESO");
 
-        // Si hay un término de búsqueda, buscar por cliente o estado de la orden
+        // Si hay un término de búsqueda, primero filtramos por estado y luego por nombre/apellido
         if (search != null && !search.isEmpty()) {
-            // Realiza la búsqueda en el repositorio por nombre de cliente o estado
-            ordenes = ordenesRepository.findByUsuarioNombreContainingIgnoreCaseOrUsuarioApellidoContainingIgnoreCaseOrEstadoOrdenesContainingIgnoreCase(search, search, search);
+            // Realizamos la búsqueda en base a nombre/apellido y estados permitidos
+            ordenes = ordenesRepository.findByEstadoOrdenesInAndUsuarioNombreContainingIgnoreCaseOrUsuarioApellidoContainingIgnoreCase(
+                    estadosTodos, search, search);
+
+            // Si no se encuentran resultados, mostrar un mensaje de error
+            if (ordenes.isEmpty()) {
+                redirectAttributes.addFlashAttribute("errorMessage", "No se encontraron órdenes para el nombre o apellido proporcionado.");
+                return "redirect:/agente/ordenes";
+            }
         } else {
-            // Si no hay búsqueda, obtener todas las órdenes
-            ordenes = ordenesRepository.findAll();
+            // Si no hay búsqueda, mostrar todas las órdenes con los estados permitidos
+            ordenes = ordenesRepository.findByEstadoOrdenesIn(estadosTodos);
         }
 
-        // Pasar las órdenes al modelo para la vista
+        // Pasar las órdenes filtradas al modelo para la vista
         model.addAttribute("ordenes", ordenes);
-
-        // Pasar el término de búsqueda al modelo para que se mantenga en el campo de búsqueda
         model.addAttribute("search", search);
 
         // Retornar la vista "ordenes_agente.html"
