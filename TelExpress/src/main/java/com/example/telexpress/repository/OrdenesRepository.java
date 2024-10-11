@@ -55,4 +55,14 @@ public interface OrdenesRepository extends JpaRepository<Ordenes, Integer> {
             "WHERE o.usuario_idusuario = :idusuario", nativeQuery = true)
     List<Ordenes> findOrdenesByUsuario(@Param("idusuario") int idusuario);
 
+    @Query(value = "SELECT o.idordenes, " +
+            "o.estadoOrdenes, " +
+            "o.fechaArribo, " +
+            "o.usuario_idusuario, " +
+            "o.mesCreacion, " +
+            "o.fechaCreacion " +
+            "FROM ordenes o " +
+            "WHERE o.usuario_idusuario = :idusuario AND o.estadoOrdenes IN :estados", nativeQuery = true)
+    List<Ordenes> findOrdenesByUsuarioAAndEstadoOrdenes(@Param("idusuario") int idusuario,@Param("estados") List<String> estados);
+
 }
