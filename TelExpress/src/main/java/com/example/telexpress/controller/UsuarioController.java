@@ -42,22 +42,31 @@ public class UsuarioController {
 
 
     @GetMapping({"","/inicio"})
-    public String index(){
+    public String index(Model model){
+        model.addAttribute("activePage", "inicio");
+
         return "Usuariofinal/inicio_usuariofinal";
     }
 
     @GetMapping("/inicio_usuariofinal")
-    public String inicio_usuariofinal(){
+    public String inicio_usuariofinal(Model model){
+
+        model.addAttribute("activePage", "inicio");
         return "Usuariofinal/inicio_usuariofinal";
     }
 
     @GetMapping("/chat")
-    public String chat(){
+    public String chat(Model model){
+
+        model.addAttribute("activePage", "chat");
+
         return "Usuariofinal/chat";
     }
 
     @GetMapping("/detalle_producto")
     public String detalle_producto(Model model, @RequestParam("id")  Integer id){
+        model.addAttribute("activePage", "detalle_producto");
+
         // Obtener el producto por ID
         Producto producto = productoRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Producto no encontrado"));
 
@@ -257,18 +266,23 @@ public class UsuarioController {
     }
 
     @GetMapping("/FAQS")
-    public String FAQS(){
+    public String FAQS(Model model){
+        model.addAttribute("activePage", "faqs");
+
+
         return "Usuariofinal/FAQS";
     }
 
     @GetMapping("/Foro")
-    public String Foro(){
+    public String Foro(Model model){
+
+        model.addAttribute("activePage", "foro");
         return "Usuariofinal/Foro";
     }
 
     @GetMapping("/lista_pedidos")
     public String lista_pedidos(@RequestParam(value = "search", required = false) String search, Model model){
-
+        model.addAttribute("activePage", "lista_pedidos");
 
         List<Ordenes> ordenes = ordenesRepository.findByUsuarioId(4);
 
@@ -330,6 +344,8 @@ public class UsuarioController {
                                   @RequestParam(value = "page", defaultValue = "0") int page,
                                   @RequestParam(value = "size", defaultValue = "9") int size,
                                   @RequestParam(value = "filtroStock", required = false) String filtroStock){
+        model.addAttribute("activePage", "lista_productos");
+
         // Definir el paginador
         Pageable pageable = PageRequest.of(page, size);
         // Obtener los productos paginados desde el servicio
@@ -359,12 +375,16 @@ public class UsuarioController {
     }
 
     @GetMapping("/pago")
-    public String pago(){
+    public String pago(Model model){
+
+        model.addAttribute("activePage", "pago");
         return "Usuariofinal/pago";
     }
 
     @GetMapping("/resenia")
-    public String resenia(){
+    public String resenia(Model model){
+        model.addAttribute("activePage", "resenia");
+
         return "Usuariofinal/resenia";
     }
 
@@ -374,7 +394,9 @@ public class UsuarioController {
     }
 
     @GetMapping("/unete")
-    public String unete(){
+    public String unete(Model model){
+
+        model.addAttribute("activePage", "unete");
         return "Usuariofinal/unete";
     }
 
