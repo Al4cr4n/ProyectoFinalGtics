@@ -307,13 +307,19 @@
                             <!-- DNI -->
                             <div class="col-md-6">
                                 <label for="dniCoordinador" class="form-label">DNI:</label>
-                                <input type="text" class="form-control" id="dniCoordinador" placeholder="Ingrese el DNI" th:field="*{dni}">
+                                <input type="text" class="form-control" id="dniCoordinador" placeholder="Ingrese el DNI" th:field="*{dni}"
+                                       pattern="\d{8}" maxlength="8" minlength="8" required>
+                                <small class="text-muted">Debe tener exactamente 8 dígitos.</small>
                             </div>
 
                             <!-- Teléfono -->
                             <div class="col-md-6">
                                 <label for="telefonoCoordinador" class="form-label">Teléfono:</label>
-                                <input type="text" class="form-control" id="telefonoCoordinador" placeholder="Ingrese el teléfono" th:field="*{telefono}">
+                                <input type="text" class="form-control" id="telefonoCoordinador" placeholder="Ingrese el teléfono" th:field="*{telefono}"
+
+                                       pattern="\d{9}" maxlength="9" minlength="9" required>
+
+                                <small class="text-muted">Debe tener exactamente 9 dígitos.</small>
                             </div>
                         </div>
 

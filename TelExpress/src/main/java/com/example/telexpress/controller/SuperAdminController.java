@@ -313,6 +313,8 @@ public class SuperAdminController {
         for(Usuario cz : listazonal){
             System.out.println("Zonal ID: " + cz.getId());
         }
+        List<Zona> listaZona = zonaRepository.findAll();
+        model.addAttribute("listaZona", listaZona);
         model.addAttribute("coordinadores",listazonal);
         return "SuperAdmin/gestion_coordinadores";
     }
@@ -772,23 +774,56 @@ public class SuperAdminController {
         return "Superadmin/gestion_proveedores";
     }
 
+    /*
     @GetMapping("/coordinador/filtrar")
     public String filtrarPorZonaCoordi(@RequestParam(value = "zona", required = false) Integer idzona, Model model) {
-        List<Usuario> listaUsuarios;
+        //List<Usuario> listaUsuarios;
+
+        List<Usuario> listazonal = adminRepository.buscarUsuarioPorRol(2);
+        for(Usuario cz : listazonal){
+            System.out.println("Zonal ID: " + cz.getId());
+        }
+        model.addAttribute("coordinadores",listazonal);
+
 
         if (idzona == null || idzona == 0) {
             // Si no se selecciona ninguna zona, retorna todos los proveedores
-            listaUsuarios = usuarioRepository.findAll();
+            listazonal = usuarioRepository.findAll();
         } else {
             // Si se selecciona una zona, realiza la búsqueda filtrando por el ID de la zona
-            listaUsuarios = usuarioRepository.findByZona_Idzona(idzona);
+            listazonal = usuarioRepository.findByZona_Idzona(idzona);
         }
 
-        model.addAttribute("listaUsuarios", listaUsuarios);
+        model.addAttribute("coordinadores", listazonal);
         model.addAttribute("listaZona", zonaRepository.findAll());  // Cargar zonas nuevamente para el select
         model.addAttribute("zonaSeleccionada", idzona);  // Esto asegura que el valor seleccionado se manteng
-        return "Superadmin/gestion_proveedores";
-    }
+        return "Superadmin/gestion_coordinadores";
+    }*/
 
+    @GetMapping("/coordinador/filtrar")
+    public String filtrarPorZonaCoordi(@RequestParam(value = "zona", required = false) Integer idzona, Model model) {
+
+        System.out.println("ID de la zona seleccionada: " + idzona);  // Verificar el valor que llega
+        List<Usuario> listaCoordinadores;
+
+        if (idzona == null || idzona == 0) {
+            // Si no se selecciona una zona, se muestran todos los coordinadores
+            listaCoordinadores = adminRepository.buscarUsuarioPorRol(2);  // Método ya implementado
+        } else {
+            // Si se selecciona una zona, se buscan los coordinadores por esa zona
+            listaCoordinadores = adminRepository.buscarCoordinadoresPorZona(2, idzona);  // Método para buscar coordinadores por zona
+        }
+
+        // Asegúrate de cargar la lista de zonas **siempre**
+        List<Zona> listaZona = zonaRepository.findAll();
+        model.addAttribute("listaZona", listaZona);  // Cargar todas las zonas
+        // Cargar la lista de zonas para el select
+        //model.addAttribute("listaZona", zonaRepository.findAll());  // Cargar todas las zonas
+
+        model.addAttribute("coordinadores", listaCoordinadores);
+        model.addAttribute("zonaSeleccionada", idzona);  // Mantener la zona seleccionada
+
+        return "SuperAdmin/gestion_coordinadores";  // Nombre de tu plantilla
+    }
 
 }

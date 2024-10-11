@@ -4,7 +4,9 @@
       dir="ltr" data-theme="theme-default"
       data-assets-path="/assets/"
       data-template="vertical-menu-template-free"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
@@ -347,11 +349,13 @@
                 <li>
                   <div class="dropdown-divider"></div>
                 </li>
-                <li>
-                  <a class="dropdown-item" href="/Login">
-                    <i class="bx bx-power-off me-2"></i>
-                    <span class="align-middle">Cerrar Sesión</span>
-                  </a>
+                <li sec:authorize="isAuthenticated()">
+                  <form th:action="@{/logout}" method="post">
+                    <button type="submit" class="dropdown-item">
+                      <i class="bx bx-power-off me-2"></i>
+                      <span class="align-middle">Cerrar Sesión</span>
+                    </button>
+                  </form>
                 </li>
               </ul>
             </li>
@@ -402,13 +406,16 @@
 
               <form action="/superadmin/coordinador/filtrar" method="GET" class="mb-4">
                 <div class="d-flex justify-content-between align-items-center mb-3"> <!-- Contenedor flexible para filtros y botón -->
-                  <div class="input-group w-25"> <!-- Filtro de zonas -->
+                  <div class="input-group w-25">
                     <select name="zona" class="form-select" onchange="this.form.submit()">
                       <option value="0" th:selected="${zonaSeleccionada == null || zonaSeleccionada == 0}">Todas las zonas</option>
-                      <option th:each="zona : ${listaZona}" th:value="${zona.idzona}" th:selected="${zona.idzona == zonaSeleccionada}" th:text="${zona.nombre}"></option>
+                      <option th:each="zona : ${listaZona}"
+                              th:value="${zona.idzona}"
+                              th:selected="${zona.idzona == zonaSeleccionada}"
+                              th:text="${zona.nombre}">
+                      </option>
                     </select>
                   </div>
-
                   <!-- Botón "Crear Nuevo" -->
                   <a class="btn btn-primary" th:href="@{/superadmin/new}" style="margin-left: auto;">Crear Nuevo</a>
                 </div>
