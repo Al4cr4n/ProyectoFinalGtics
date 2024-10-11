@@ -104,7 +104,7 @@ public class UsuarioController {
             // Si no existe una orden pendiente, creamos una nueva
             ordenPendiente = new Ordenes();
             ordenPendiente.setUsuario(usuario);
-            ordenPendiente.setEstadoOrdenesUser("Pendiente");
+            ordenPendiente.setEstadoOrdenes("Pendiente");
             ordenesRepository.save(ordenPendiente);
         }
 
@@ -172,7 +172,7 @@ public class UsuarioController {
             // Si no existe una orden pendiente, creamos una nueva
             ordenPendiente = new Ordenes();
             ordenPendiente.setUsuario(usuario);
-            ordenPendiente.setEstadoOrdenesUser("Pendiente");
+            ordenPendiente.setEstadoOrdenes("Pendiente");
             ordenesRepository.save(ordenPendiente);
         }
 

@@ -47,7 +47,6 @@ public interface OrdenesRepository extends JpaRepository<Ordenes, Integer> {
 
     @Query(value = "SELECT o.idordenes, " +
             "o.estadoOrdenes, " +
-            "o.estadoOrdenesUser, " +
             "o.fechaArribo, " +
             "o.usuario_idusuario, " +
             "o.mesCreacion, " +

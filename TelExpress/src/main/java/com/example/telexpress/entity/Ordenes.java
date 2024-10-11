@@ -18,8 +18,6 @@ public class Ordenes {
     @Column(name = "idordenes")
     private int idOrdenes;
 
-    @Column(name = "estadoOrdenes")
-    private String estadoOrdenes;
 
     @Column(name = "fechaArribo")
     @Temporal(TemporalType.DATE)
@@ -32,8 +30,8 @@ public class Ordenes {
     @Temporal(TemporalType.DATE)
     private Date fechaCreacion;
 
-    @Column(name="estadoOrdenesUser")
-    private String estadoOrdenesUser;
+    @Column(name="estadoOrdenes")
+    private String estadoOrdenes;
 
     @ManyToMany
     @JoinTable(

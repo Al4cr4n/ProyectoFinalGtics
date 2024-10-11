@@ -225,14 +225,14 @@
                                     <td>
                                             <span th:text="${orden.estadoOrdenesUser}"
                                                   th:class="'badge ' + (
-    ${orden.estadoOrdenesUser == 'Creado'} ? 'bg-label-warning' :
-    (${orden.estadoOrdenesUser == 'En validación'} ? 'bg-label-danger' :
-    (${orden.estadoOrdenesUser == 'En proceso'} ? 'bg-label-primary' :
-    (${orden.estadoOrdenesUser == 'Arribo al país'} ? 'bg-label-dark' :
-    (${orden.estadoOrdenesUser == 'En aduanas'} ? 'bg-label-secondary' :
-    (${orden.estadoOrdenesUser == 'En ruta'} ? 'bg-label-info' :
-    (${orden.estadoOrdenesUser == 'Recibido'} ? 'bg-label-success' :
-    'bg-label-default' )))))))"></span>                                    </td>
+                                                ${orden.estadoOrdenes == 'CREADO'} ? 'bg-label-warning' :
+                                                (${orden.estadoOrdenes == 'EN VALIDACIÓN'} ? 'bg-label-danger' :
+                                                (${orden.estadoOrdenes == 'EN PROCESO'} ? 'bg-label-primary' :
+                                                (${orden.estadoOrdenes == 'ARRIBO AL PAÍS'} ? 'bg-label-dark' :
+                                                (${orden.estadoOrdenes == 'EN ADUANAS'} ? 'bg-label-secondary' :
+                                                (${orden.estadoOrdenes == 'EN RUTA'} ? 'bg-label-info' :
+                                                (${orden.estadoOrdenes == 'RECIBIDO'} ? 'bg-label-success' :
+                                                'bg-label-default' )))))))"></span>                                     </td>
                                     <td th:text="${agentesMap[orden.usuario]}"></td>
 
                                     <td>
