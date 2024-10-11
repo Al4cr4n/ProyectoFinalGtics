@@ -1,5 +1,6 @@
 package com.example.telexpress.repository;
 
+import com.example.telexpress.entity.Proveedor;
 import com.example.telexpress.entity.Rol;
 import com.example.telexpress.entity.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -55,6 +56,8 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
     // Método para obtener todos los usuarios baneados con motivo no nulo
     List<Usuario> findByEstadoUsuarioAndMotivoIsNotNull(String estadoUsuario);
+
+    List<Usuario> findByZona_Idzona(Integer idzona);
 
     @Query(value = "SELECT contrasena from usuario where idroles =4 AND idusuario = 4",
             nativeQuery = true)

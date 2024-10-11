@@ -367,7 +367,7 @@
           <!-- Tabla Coordinadores Zonales -->
           <h4 style="font-family: 'Poppins', sans-serif; color: #7367F0; font-weight: bold; padding-top: 1rem; padding-bottom: 1rem; margin-bottom: 1rem; text-align: center; font-size: 40px;">
             Coordinadores Zonales</h4>
-          <div class="container mt-4">
+          <div class="row">
             <!-- Mensaje de éxito -->
             <div th:if="${success}" class="alert alert-success" role="alert">
               <span th:text="${success}"></span>
@@ -389,18 +389,35 @@
             <div class="card-header">
               <!-- Botón "Crear Nuevo" -->
 
-              <form action="/superadmin/buscadorcoordinador" method="get" class="mb-3">
+              <form action="/superadmin/buscadorcoordinador" method="get" class="mb-4">
                 <div class="input-group">
                   <input type="text" name="searchTerm" class="form-control" placeholder="Buscar por nombre, apellido o DNI" th:value="${searchTerm}" />
                   <button type="submit" class="btn btn-primary">Buscar</button>
                 </div>
               </form>
-
+<!--
               <div class="card-header d-flex justify-content-between align-items-center">
                 <a class="btn btn-primary" th:href="@{/superadmin/new}">Crear Nuevo</a>
-              </div>
+              </div> -->
 
-              </div>
+              <form action="/superadmin/coordinador/filtrar" method="GET" class="mb-4">
+                <div class="d-flex justify-content-between align-items-center mb-3"> <!-- Contenedor flexible para filtros y botón -->
+                  <div class="input-group w-25"> <!-- Filtro de zonas -->
+                    <select name="zona" class="form-select" onchange="this.form.submit()">
+                      <option value="0" th:selected="${zonaSeleccionada == null || zonaSeleccionada == 0}">Todas las zonas</option>
+                      <option th:each="zona : ${listaZona}" th:value="${zona.idzona}" th:selected="${zona.idzona == zonaSeleccionada}" th:text="${zona.nombre}"></option>
+                    </select>
+                  </div>
+
+                  <!-- Botón "Crear Nuevo" -->
+                  <a class="btn btn-primary" th:href="@{/superadmin/new}" style="margin-left: auto;">Crear Nuevo</a>
+                </div>
+              </form>
+
+
+
+
+            </div>
           <div class="table-responsive text-nowrap">
             <table class="table table-striped" id="coordinadoresTable" style="margin-top: 20px;">
               <thead class="table-light">
