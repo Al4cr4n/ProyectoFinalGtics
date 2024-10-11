@@ -282,31 +282,59 @@
           <form id="formRegistro" method="post" th:action="@{/producto/guardar}" th:object="${producto}">
             <input th:field="*{idProducto}" name="id" type="hidden"/>
             <div class="row mb-3">
-              <!-- Nombre del producto -->
+              <!-- Nombre del producto
               <div class="col-md-6">
                 <label class="form-label">Nombre del Producto</label>
                 <input th:field="*{nombreProducto}" type="text" class="form-control">
+              </div>-->
+
+              <div class="col-md-6">
+                <label class="form-label">Nombre del Producto</label>
+                <input th:field="*{nombreProducto}" type="text" class="form-control" placeholder="Ingrese el nombre del producto"
+                       th:classappend="${#fields.hasErrors('nombreProducto') ? 'is-invalid' : ''}">
+                <div class="invalid-feedback" th:if="${#fields.hasErrors('nombreProducto')}" th:errors="*{nombreProducto}"></div>
               </div>
 
-              <!-- Cantidad disponible -->
+
+              <!-- Cantidad disponible
               <div class="col-md-6">
                 <label class="form-label">Cantidad disponible:</label>
                 <input th:field="*{cantidadDisponible}" type="number" class="form-control">
+              </div>-->
+
+              <div class="col-md-6">
+                <label class="form-label">Cantidad disponible:</label>
+                <input th:field="*{cantidadDisponible}" type="number" class="form-control" placeholder="Ingrese la cantidad disponible"
+                       th:classappend="${#fields.hasErrors('cantidadDisponible') ? 'is-invalid' : ''}">
+                <div class="invalid-feedback" th:if="${#fields.hasErrors('cantidadDisponible')}" th:errors="*{cantidadDisponible}"></div>
               </div>
             </div>
 
             <div class="row mb-3">
-              <!-- Precio -->
+              <!-- Precio
               <div class="col-md-6">
                 <label class="form-label">Precio:</label>
                 <input th:field="*{precio}" type="number" class="form-control">
-              </div>
+              </div>-->
 
-              <!-- Costo de envío -->
+              <div class="col-md-6">
+                <label class="form-label">Precio:</label>
+                <input th:field="*{precio}" type="number" class="form-control" placeholder="Ingrese el precio"
+                       th:classappend="${#fields.hasErrors('precio') ? 'is-invalid' : ''}">
+                <div class="invalid-feedback" th:if="${#fields.hasErrors('precio')}" th:errors="*{precio}"></div>
+              </div>
+              <!-- Costo de envío
               <div class="col-md-6">
                 <label class="form-label">Costo de envío:</label>
                 <input th:field="*{costoEnvio}" type="number" class="form-control">
+              </div>-->
+              <div class="col-md-6">
+                <label class="form-label">Costo de envío:</label>
+                <input th:field="*{costoEnvio}" type="number" class="form-control" placeholder="Ingrese el costo de envío"
+                       th:classappend="${#fields.hasErrors('costoEnvio') ? 'is-invalid' : ''}">
+                <div class="invalid-feedback" th:if="${#fields.hasErrors('costoEnvio')}" th:errors="*{costoEnvio}"></div>
               </div>
+
             </div>
 
             <div class="row mb-3">
@@ -320,11 +348,20 @@
                 </select>
               </div>
 
-              <!-- Categoría -->
+              <!-- Categoría
               <div class="col-md-6">
                 <label class="form-label">Categoría:</label>
                 <input th:field="*{categoria}" type="text" class="form-control">
+              </div>-->
+
+              <div class="col-md-6">
+                <label class="form-label">Categoría:</label>
+                <input th:field="*{categoria}" type="text" class="form-control" placeholder="Ingrese la categoría"
+                       th:classappend="${#fields.hasErrors('categoria') ? 'is-invalid' : ''}">
+                <div class="invalid-feedback" th:if="${#fields.hasErrors('categoria')}" th:errors="*{categoria}"></div>
               </div>
+
+
             </div>
 
             <div class="row mb-3">
@@ -340,10 +377,17 @@
               </div>
 
 
-              <!-- Descripción  -->
+              <!-- Descripción
               <div class="col-md-6">
                 <label class="form-label">Descripción:</label>
                 <input th:field="*{descripcion}" type="text" class="form-control">
+              </div>-->
+
+              <div class="col-md-6">
+                <label class="form-label">Descripción:</label>
+                <textarea th:field="*{descripcion}" class="form-control" rows="3" placeholder="Ingrese la descripción"
+                          th:classappend="${#fields.hasErrors('descripcion') ? 'is-invalid' : ''}"></textarea>
+                <div class="invalid-feedback" th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}"></div>
               </div>
 
             </div>

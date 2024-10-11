@@ -8,12 +8,11 @@ import com.example.telexpress.repository.ProductoUsuarioRepository;
 import com.example.telexpress.repository.ProveedorRepository;
 import com.example.telexpress.repository.ZonaRepository;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Comparator;
@@ -59,7 +58,16 @@ public class ProductoController {
     }
 
     @PostMapping("/producto/guardar")
-    public String guardarProducto(Producto producto, RedirectAttributes attr) {
+    public String guardarProducto(@Valid @ModelAttribute Producto producto,
+                                  BindingResult result,
+                                  RedirectAttributes attr,
+                                  Model model) {
+
+        if (result.hasErrors()) {
+            model.addAttribute("listaProveedores", proveedorRepository.findAll());
+            model.addAttribute("listaZona", zonaRepository.findAll());
+            return "SuperAdmin/inventario_registrar_producto"; // Volver a la vista de formulario
+        }
         productoRepository.save(producto);
         return "redirect:/producto/lista";
     }
