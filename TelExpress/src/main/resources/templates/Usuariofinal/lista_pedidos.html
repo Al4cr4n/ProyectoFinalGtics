@@ -223,7 +223,7 @@
                                          Porque en la tabla usuario está borrado el id 25 -->
                                     <td  th:text="${#dates.format(orden.fechaCreacion, 'yyyy-MM-dd')}"></td>
                                     <td>
-                                            <span th:text="${orden.estadoOrdenesUser}"
+                                            <span th:text="${orden.estadoOrdenes}"
                                                   th:class="'badge ' + (
                                                 ${orden.estadoOrdenes == 'CREADO'} ? 'bg-label-warning' :
                                                 (${orden.estadoOrdenes == 'EN VALIDACIÓN'} ? 'bg-label-danger' :

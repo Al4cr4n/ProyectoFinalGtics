@@ -2,8 +2,6 @@ package com.example.telexpress.controller;
 import com.example.telexpress.dto.ProductoDTO;
 import com.example.telexpress.entity.*;
 import com.example.telexpress.repository.*;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.example.telexpress.repository.DistritoRepository;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -94,7 +92,7 @@ public class UsuarioController {
         Usuario usuario = usuarioRepository.findById(Long.valueOf(usuarioId)).orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
 
         // Buscar la orden pendiente del usuario
-        Optional<Ordenes> ordenPendienteOpt = ordenesRepository.findByUsuarioAndEstadoOrdenesUser(usuario, "Pendiente");
+        Optional<Ordenes> ordenPendienteOpt = ordenesRepository.findByUsuarioAndEstadoOrdenes(usuario, "Pendiente");
         Ordenes ordenPendiente;
 
         if (ordenPendienteOpt.isPresent()) {
@@ -127,7 +125,7 @@ public class UsuarioController {
                 .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
 
         // Obtener la orden pendiente del usuario
-        Optional<Ordenes> ordenPendienteOpt = ordenesRepository.findByUsuarioAndEstadoOrdenesUser(usuario, "Pendiente");
+        Optional<Ordenes> ordenPendienteOpt = ordenesRepository.findByUsuarioAndEstadoOrdenes(usuario, "Pendiente");
 
         if (ordenPendienteOpt.isPresent()) {
             // Pasar los productos al modelo para mostrarlos en el modal
@@ -162,7 +160,7 @@ public class UsuarioController {
                 .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
 
         // Buscar la orden pendiente del usuario
-        Optional<Ordenes> ordenPendienteOpt = ordenesRepository.findByUsuarioAndEstadoOrdenesUser(usuario, "Pendiente");
+        Optional<Ordenes> ordenPendienteOpt = ordenesRepository.findByUsuarioAndEstadoOrdenes(usuario, "Pendiente");
         Ordenes ordenPendiente;
 
         if (ordenPendienteOpt.isPresent()) {
@@ -216,7 +214,7 @@ public class UsuarioController {
         Usuario usuarioActual = usuarioRepository.findById(1L).orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
 
         // Verificar si hay una orden pendiente
-        Optional<Ordenes> ordenPendienteOpt = ordenesRepository.findByUsuarioIdusuarioAndEstadoOrdenesUser(usuarioActual.getId(), "pendiente");
+        Optional<Ordenes> ordenPendienteOpt = ordenesRepository.findByUsuarioIdusuarioAndEstadoOrdenes(usuarioActual.getId(), "pendiente");
 
         Ordenes ordenPendiente;
         if (ordenPendienteOpt.isPresent()) {
@@ -225,7 +223,7 @@ public class UsuarioController {
             // Si no hay una orden pendiente, crear una nueva
             ordenPendiente = new Ordenes();
             ordenPendiente.setUsuario(usuarioActual);
-            ordenPendiente.setEstadoOrdenesUser("pendiente");
+            ordenPendiente.setEstadoOrdenes("pendiente");
             ordenesRepository.save(ordenPendiente);
         }
 
@@ -245,7 +243,7 @@ public class UsuarioController {
         Usuario usuarioActual = usuarioRepository.findById(1).orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
 
         // Obtener la orden pendiente del usuario
-        Optional<Ordenes> ordenPendiente = ordenesRepository.findByUsuarioIdusuarioAndEstadoOrdenesUser(usuarioActual.getIdusuario(), "pendiente");
+        Optional<Ordenes> ordenPendiente = ordenesRepository.findByUsuarioIdusuarioAndEstadoOrdenes(usuarioActual.getIdusuario(), "pendiente");
 
         if (ordenPendiente.isPresent()) {
             model.addAttribute("productosOrden", ordenPendiente.get().getProductos());

@@ -43,7 +43,7 @@ public interface OrdenesRepository extends JpaRepository<Ordenes, Integer> {
     // Búsqueda de todas las órdenes por estado permitido
     List<Ordenes> findByEstadoOrdenesIn(List<String> estados);
 
-    Optional<Ordenes> findByUsuarioAndEstadoOrdenesUser(Usuario usuario, String estadoOrdenesUser);
+    Optional<Ordenes> findByUsuarioAndEstadoOrdenes(Usuario usuario, String estadoOrdenes);
 
     @Query(value = "SELECT o.idordenes, " +
             "o.estadoOrdenes, " +
