@@ -69,6 +69,9 @@
 
             <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
 
+                <!-- Añadir el badge aquí, después del div de notificaciones -->
+                <span class="badge bg-label-warning" style="font-size: 17px; margin-right: 20px;" th:text="${session.usuario.distrito.nombredistrito}"></span>
+
 
                 <ul class="navbar-nav flex-row align-items-center ms-auto">
                     <!-- Place this tag where you want the button to render. -->
@@ -150,7 +153,7 @@
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end">
                             <li>
-                                <a class="dropdown-item" th:href="@{/usuario/editar_perfil}">
+                                <a class="dropdown-item" th:href="@{'/usuario/perfil' + '?id=' + ${session.usuario.id}}">
                                     <div class="d-flex">
                                         <div class="flex-shrink-0 me-3">
                                             <div class="avatar avatar-online">
@@ -169,7 +172,7 @@
                                 <div class="dropdown-divider"></div>
                             </li>
                             <li>
-                                <a class="dropdown-item" th:href="@{/usuario/cambiar_contrasena}">
+                                <a class="dropdown-item" href="/agente/cambio_contra_usuario">
                                     <i class="bx bx-user me-2"></i>
                                     <span class="align-middle">Cambio de Contraseña</span>
                                 </a>

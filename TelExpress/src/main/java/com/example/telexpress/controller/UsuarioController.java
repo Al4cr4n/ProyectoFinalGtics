@@ -25,14 +25,16 @@ public class UsuarioController {
     private final UsuarioRepository usuarioRepository;
     private final ProductoRepository productoRepository;
     private final ReseniaRepository reseniaRepository;
+    private final CoordinadorRepository coordinadorRepository;
 
 
-    public UsuarioController(UsuarioRepository usuarioRepository, ProductoRepository productoRepository, ReseniaRepository reseniaRepository, OrdenesRepository ordenesRepository, DistritoRepository distritoRepository) {
+    public UsuarioController(UsuarioRepository usuarioRepository, ProductoRepository productoRepository, ReseniaRepository reseniaRepository, OrdenesRepository ordenesRepository, DistritoRepository distritoRepository,CoordinadorRepository coordinadorRepository) {
         this.usuarioRepository = usuarioRepository;
         this.productoRepository = productoRepository;
         this.reseniaRepository = reseniaRepository;
         this.ordenesRepository = ordenesRepository;
         this.distritoRepository = distritoRepository;
+        this.coordinadorRepository = coordinadorRepository;
     }
 
     private final OrdenesRepository ordenesRepository;
@@ -469,6 +471,20 @@ public class UsuarioController {
         // Redireccionar al perfil del agente con mensaje de éxito
         model.addAttribute("success", "Contraseña cambiada exitosamente.");
         return "Usuariofinal/cambiar_contrasena"; // Redirigir al perfil
+    }
+
+    @GetMapping("/perfil")
+    public String verPerfil(Model model, @RequestParam("id") Integer id) {
+
+        Optional<Usuario> optUsuario = coordinadorRepository.findById(id);
+
+        if (optUsuario.isPresent()) {
+            Usuario user = optUsuario.get();
+            model.addAttribute("usuario", user);
+            return "Usuariofinal/perfil_usuario";
+        } else {
+            return "redirect:/usuario";
+        }
     }
 
 }
