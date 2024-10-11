@@ -55,114 +55,11 @@
 <!-- Layout wrapper -->
 <div class="layout-wrapper layout-content-navbar">
     <div class="layout-container">
-        <!-- Menu -->
-        <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
-            <!-- Contenedor para la imagen centrada -->
-            <div style="text-align: center;">
-                <img src="/logo.png" alt="Imagen" style="width: 150px; margin-bottom: -70px; margin-top: -20px">
-            </div>
-
-            <div class="app-brand demo" style="text-align: center;">
-                <a href="/agente/inicio_agente" class="app-brand-link">
-                    <span class="app-brand-text demo menu-text fw-bolder" style="font-family: 'Poppins', sans-serif; color: #7367F0; padding-left: 15px;">TelExpress</span>
-                </a>
-            </div>
-
-            <div class="menu-inner-shadow"></div>
-
-            <ul class="menu-inner py-1">
-                <!-- Órdenes -->
-                <li class="menu-item ">
-                    <a href="/agente/inicio_agente" class="menu-link">
-                        <i class="menu-icon tf-icons bx bx-home-circle"></i>
-                        <div data-i18n="Inicio">Inicio</div>
-                    </a>
-                </li>
-
-                <li class="menu-item">
-                    <a href="/agente/ordenes" class="menu-link">
-                        <i class="menu-icon tf-icons bx bx-user"></i>
-                        <div data-i18n="ListaDeUsuarios">Lista de usuarios</div>
-                    </a>
-                </li>
-
-                <li class="menu-item">
-                    <a href="/agente/chat_agente" class="menu-link">
-                        <i class="menu-icon tf-icons bx bx-chat"></i>
-                        <div data-i18n="Chats">Chats</div>
-                    </a>
-                </li>
-
-                <li class="menu-item active">
-                    <a href="javascript:void(0);" class="menu-link menu-toggle">
-                        <i class="menu-icon tf-icons bx bx-cart-alt"></i>
-                        <div data-i18n="Órdenes">Órdenes</div>
-                    </a>
-                    <ul class="menu-sub">
-                        <li class="menu-item">
-                            <a href="/agente/ordenes" class="menu-link">
-                                <div data-i18n="TodasLasOrdenes">Todas las órdenes</div>
-                            </a>
-                        </li>
-                        <li class="menu-item">
-                            <a href="/agente/ordenes_sin_asignar" class="menu-link">
-                                <div data-i18n="OrdenesSinAsignar">Órdenes sin asignar</div>
-                            </a>
-                        </li>
-                        <li class="menu-item active">
-                            <a href="/agente/ordenes_pendientes" class="menu-link">
-                                <div data-i18n="Órdenes Pendientes">Órdenes pendientes</div>
-                            </a>
-                        </li>
-                        <li class="menu-item">
-                            <a href="/agente/ordenes_en_progreso" class="menu-link">
-                                <div data-i18n="Órdenes en Progreso">Órdenes en progreso</div>
-                            </a>
-                        </li>
-                        <li class="menu-item">
-                            <a href="/agente/ordenes_resueltas" class="menu-link">
-                                <div data-i18n="OrdenesResueltas">Órdenes resueltas</div>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-
-                <li class="menu-item">
-                    <a href="/agente/usuarios_baneados" class="menu-link">
-                        <i class="menu-icon tf-icons bx bx-block"></i>
-                        <div data-i18n="UsuariosBaneados">Usuarios baneados</div>
-                    </a>
-                </li>
-            </ul>
-        </aside>
-        <!-- / Menu -->
+        <div th:insert="~{Agente/fragments/menu.html::menu}"></div> <!-- este es el menu -->
 
         <!-- Layout page -->
         <div class="layout-page">
-            <!-- Navbar -->
-            <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme" id="layout-navbar">
-                <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
-                    <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
-                        <i class="bx bx-menu bx-sm"></i>
-                    </a>
-                </div>
-
-                <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
-                    <ul class="navbar-nav flex-row align-items-center ms-auto">
-                        <li class="nav-item navbar-dropdown dropdown-user dropdown">
-                            <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
-                                <div class="position-relative">
-                                    <div class="bx bx-bell" style="font-size: 26px; color: #7367F0;"></div>
-                                    <span class="badge bg-danger rounded-circle position-absolute d-flex justify-content-center align-items-center" style="top: -5px; right: -5px; font-size: 12px; width: 18px; height: 18px;">5</span>
-                                </div>
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-end">
-                                <li class="dropdown-header">Notificaciones</li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
+            <div th:insert="~{Agente/fragments/navbar.html::navbar}"></div> <!-- este es el navbar -->
 
             <!-- Content wrapper -->
             <div class="content-wrapper">

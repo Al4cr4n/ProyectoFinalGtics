@@ -49,13 +49,16 @@ public class AgenteController {
     final UsuarioPerfilRepository usuarioPerfilRepository;
 
 
-
     @GetMapping("/inicio")
-    public String paginicio(){
+    public String paginicio(Model model) {
+        model.addAttribute("paginaActual", "inicio");
         return "Agente/inicio_agente";
     }
+
     @GetMapping("/ordenes")
     public String mostrarOrdenesAgente(@RequestParam(value = "search", required = false) String search, Model model) {
+        model.addAttribute("paginaActual", "ordenes");
+
         List<Ordenes> ordenes;
 
         // Si hay un término de búsqueda, buscar por cliente o estado de la orden
@@ -81,6 +84,8 @@ public class AgenteController {
 
     @GetMapping("/ordenes_en_progreso")
     public String mostrarOrdenesEnProgreso(@RequestParam(value = "search", required = false) String search, Model model, RedirectAttributes redirectAttributes) {
+        model.addAttribute("paginaActual", "ordenes_en_progreso");
+
         List<Ordenes> ordenesEnProgreso;
         List<String> estadosPermitidos = Arrays.asList("EN PROCESO", "ARRIBO AL PAÍS", "EN ADUANAS", "EN RUTA");
 
@@ -113,6 +118,8 @@ public class AgenteController {
 
     @GetMapping("/ordenes_pendientes")
     public String mostrarOrdenesPendientes(@RequestParam(value = "search", required = false) String search, Model model, RedirectAttributes redirectAttributes) {
+        model.addAttribute("paginaActual", "ordenes_pendientes");
+
         List<Ordenes> ordenesEnValidacion;
 
         // Si hay un término de búsqueda, buscar por nombre o apellido solo si el estado es "En Validación"
@@ -145,6 +152,8 @@ public class AgenteController {
 
     @GetMapping("/ordenes_sin_asignar")
     public String mostrarOrdenesSinAsignar(@RequestParam(value = "search", required = false) String search, Model model, RedirectAttributes redirectAttributes) {
+        model.addAttribute("paginaActual", "ordenes_sin_asignar");
+
         List<Ordenes> ordenesSinAsignar;
 
         // Si hay un término de búsqueda, buscar por nombre o apellido
@@ -176,6 +185,8 @@ public class AgenteController {
 
     @GetMapping("/ordenes_resueltas")
     public String mostrarOrdenesResueltas(@RequestParam(value = "search", required = false) String search, Model model, RedirectAttributes redirectAttributes) {
+        model.addAttribute("paginaActual", "ordenes_resueltas");
+
         List<Ordenes> ordenesResueltas;
 
         // Si hay un término de búsqueda, buscar por nombre o apellido
@@ -209,6 +220,8 @@ public class AgenteController {
     // Método para mostrar la lista de usuarios en la vista con búsqueda por nombre o apellido
     @GetMapping("/usuarios_agente")
     public String usuariosAgente(@RequestParam(value = "search", required = false) String search, Model model) {
+        model.addAttribute("paginaActual", "usuarios_agente");
+
         // Crear una lista de estados permitidos
         List<String> estados = Arrays.asList("Activo", "Inactivo");
 
@@ -235,6 +248,8 @@ public class AgenteController {
     // Método para listar los usuarios baneados o buscar por nombre y apellido
     @GetMapping("/usuarios_baneados")
     public String getUsuariosBaneados(@RequestParam(value = "search", required = false) String search, Model model) {
+        model.addAttribute("paginaActual", "usuarios_baneados");
+
         List<Usuario> usuariosBaneados;
 
         // Si hay un criterio de búsqueda, filtrar por nombre o apellido y motivo no nulo
@@ -283,6 +298,8 @@ public class AgenteController {
 
     @GetMapping("/cambio_contra_agente")
     public String cambioContraAgente( Model model) {
+        model.addAttribute("paginaActual", "cambio_contra_agente");
+
         int id =3;
         String passw = contrasenaAgenteRespository.findcontrasena(id);
         model.addAttribute("passw", passw);
@@ -328,6 +345,8 @@ public class AgenteController {
 
     @GetMapping("/perfil_agente")
     public String perfilAgente(Model model) {
+        model.addAttribute("paginaActual", "perfil_agente");
+
         int id =3;
         String nombre;
         nombre = usuarioPerfilRepository.findnombre(id);
