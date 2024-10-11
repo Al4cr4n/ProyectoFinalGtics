@@ -59,7 +59,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
     List<Usuario> findByZona_Idzona(Integer idzona);
 
-    @Query(value = "SELECT contrasena from usuario where idroles =4 AND idusuario = 4",
+   /* @Query(value = "SELECT contrasena from usuario where idroles =4 AND idusuario = 4",
             nativeQuery = true)
     String findcontrasena(Integer idusuario);
 
@@ -97,6 +97,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
     @Query(value = "SELECT direccion FROM usuario WHERE idusuario = ?1", nativeQuery = true)
     String finddireccion(Integer idusuario);
-
+*/
     List<Usuario> findByIdSuperior(Usuario idSuperior);
+    public Usuario findByCorreo(String Correo);
 }
