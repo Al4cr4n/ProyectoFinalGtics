@@ -2,6 +2,8 @@ package com.example.telexpress.controller;
 import com.example.telexpress.dto.ProductoDTO;
 import com.example.telexpress.entity.*;
 import com.example.telexpress.repository.*;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.example.telexpress.repository.DistritoRepository;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -402,7 +404,7 @@ public class UsuarioController {
     @GetMapping("/editar_perfil")
     public String editar_perfil(Model model){
 
-        int id =4;
+        /*int id =4;
         String nombre = usuarioRepository.findnombre(id);
         model.addAttribute("nombre", nombre);
 
@@ -419,7 +421,7 @@ public class UsuarioController {
         model.addAttribute("distrito", distrito);
 
         String direccion = usuarioRepository.finddireccion(id);
-        model.addAttribute("direccion", direccion);
+        model.addAttribute("direccion", direccion);*/
 
         return "Usuariofinal/editar_perfil";
     }
@@ -427,8 +429,8 @@ public class UsuarioController {
     @GetMapping("/cambiar_contrasena")
     public String cambiar_contrasena(Model model){
         int id =4;
-        String passw = usuarioRepository.findcontrasena(id);
-        model.addAttribute("passw", passw);
+        //String passw = usuarioRepository.findcontrasena(id);
+        //model.addAttribute("passw", passw);
         return "Usuariofinal/cambiar_contrasena";
     }
     @PostMapping("/cambiar_contrasena")
@@ -441,13 +443,13 @@ public class UsuarioController {
         int id = 4; // ID del agente
 
         // Obtener la contraseña almacenada en la base de datos
-        String storedPassword = usuarioRepository.findcontrasena(id);
+        //String storedPassword = usuarioRepository.findcontrasena(id);
 
         // Verificar que la contraseña actual sea correcta
-        if (!currentPassword.equals(storedPassword)) {
+        /*if (!currentPassword.equals(storedPassword)) {
             model.addAttribute("error", "La contraseña actual es incorrecta.");
             return "Agente/cambio_contra_agente"; // Retornar a la vista con mensaje de error
-        }
+        }*/
 
         // Verificar que la nueva contraseña y su confirmación coincidan
         if (!newPassword.equals(confirmNewPassword)) {
@@ -462,12 +464,13 @@ public class UsuarioController {
         }
 
         // Actualizar la contraseña en la base de datos
-        usuarioRepository.updatecontrasena(id, newPassword);
+        //usuarioRepository.updatecontrasena(id, newPassword);
         System.out.println(newPassword);
         // Redireccionar al perfil del agente con mensaje de éxito
         model.addAttribute("success", "Contraseña cambiada exitosamente.");
         return "Usuariofinal/cambiar_contrasena"; // Redirigir al perfil
     }
+
 }
 
 

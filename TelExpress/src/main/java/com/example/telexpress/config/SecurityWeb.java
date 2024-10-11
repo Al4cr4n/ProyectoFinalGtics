@@ -1,7 +1,10 @@
 package com.example.telexpress.config;
+import com.example.telexpress.repository.UsuarioRepository;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.*;
 
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -44,6 +47,9 @@ public class SecurityWeb {
     public SecurityWeb(DataSource dataSource){
         this.dataSource = dataSource;
     }
+
+    @Autowired
+    UsuarioRepository usuarioRepository;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
@@ -133,6 +139,12 @@ public class SecurityWeb {
                     throws IOException, ServletException {
                 // Verificar si existe una URL guardada en la sesión (DefaultSavedRequest)
                 DefaultSavedRequest savedRequest = (DefaultSavedRequest) request.getSession().getAttribute("SPRING_SECURITY_SAVED_REQUEST");
+
+                HttpSession session = request.getSession();
+                session.setAttribute("usuario",usuarioRepository.findByCorreo(authentication.getName()));
+
+
+
                 if (savedRequest != null) {
                     String targetURL = savedRequest.getRedirectUrl();
                     redirectStrategy.sendRedirect(request, response, targetURL);

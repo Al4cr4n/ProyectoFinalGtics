@@ -163,8 +163,8 @@
                                     </div>
                                     <div class="flex-grow-1">
 
-                                        <span class="fw-semibold d-block">John Doe</span>
-                                        <small class="text-muted">Admin</small>
+                                        <span class="fw-semibold d-block" th:text="${session.usuario.nombre}+' '+${session.usuario.apellido}"></span>
+                                        <small class="text-muted">Coordinador zonal</small>
                                     </div>
                                 </div>
                             </a>

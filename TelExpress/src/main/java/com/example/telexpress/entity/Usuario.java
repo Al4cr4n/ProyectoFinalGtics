@@ -1,11 +1,15 @@
 package com.example.telexpress.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.ArrayList;
@@ -14,7 +18,8 @@ import java.util.ArrayList;
 @Setter
 @Entity
 @Table(name = "usuario")
-public class Usuario {
+public class Usuario implements Serializable {
+    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idusuario")
@@ -103,5 +108,6 @@ public class Usuario {
     private String jurisdiccion;
 
     @OneToMany(mappedBy = "usuario")
+
     private List<Ordenes> ordenes = new ArrayList<>();
 }
