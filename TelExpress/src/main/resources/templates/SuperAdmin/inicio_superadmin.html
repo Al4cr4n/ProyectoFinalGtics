@@ -20,6 +20,8 @@
         data-assets-path="/assets/"
         data-template="vertical-menu-template-free"
         xmlns:th="http://www.thymeleaf.org"
+        xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+
 >
 <head>
   <meta charset="utf-8" />
@@ -373,11 +375,14 @@
                 <li>
                   <div class="dropdown-divider"></div>
                 </li>
-                <li>
-                  <a class="dropdown-item" href="/Login">
-                    <i class="bx bx-power-off me-2"></i>
-                    <span class="align-middle">Cerrar Sesión</span>
-                  </a>
+
+                <li sec:authorize="isAuthenticated()">
+                  <form th:action="@{/logout}" method="post">
+                    <button type="submit" class="dropdown-item">
+                      <i class="bx bx-power-off me-2"></i>
+                      <span class="align-middle">Cerrar Sesión</span>
+                    </button>
+                  </form>
                 </li>
               </ul>
             </li>
@@ -398,7 +403,7 @@
             <div class="col-12 col-lg-12 mb-4">
               <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
-                  <h5 class="mb-0">Usuarios</h5>
+                  <h5 class="mb-0" style="font-weight: bold;">Usuarios</h5>
                   <div class="container mt-4">
                     <!-- Mensaje de éxito -->
                     <div th:if="${success}" class="alert alert-success" role="alert">
@@ -499,7 +504,7 @@
               <!-- Bootstrap Table with Header - Light -->
               <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
-                  <h5 class="mb-0">Agentes</h5>
+                  <h5 class="mb-0" style="font-weight: bold;">Agentes</h5>
                   <div class="container mt-4">
                     <!-- Mensaje de éxito -->
                     <div th:if="${success}" class="alert alert-success" role="alert">
@@ -595,7 +600,7 @@
               <!-- Bootstrap Table with Header - Light -->
               <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
-                  <h5 class="mb-0">Coordinadores zonales</h5>
+                  <h5 class="mb-0" style="font-weight: bold;">Coordinadores zonales</h5>
                   <div class="container mt-4">
                     <!-- Mensaje de éxito -->
                     <div th:if="${success}" class="alert alert-success" role="alert">

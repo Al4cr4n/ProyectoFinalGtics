@@ -276,13 +276,13 @@
                 </li>
 
 
-                <li>
-                  <div class="dropdown-divider"></div>
-                </li>
 
                 <li sec:authorize="isAuthenticated()">
                   <div class="dropdown-divider"></div>
+
                 </li>
+
+                <!-- log out -->
                 <li sec:authorize="isAuthenticated()">
                   <form th:action="@{/logout}" method="post">
                     <button type="submit" class="dropdown-item">
