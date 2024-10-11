@@ -21,6 +21,7 @@ public class Usuario {
 
     @Column(nullable = false)
     private String nombre;
+    private Integer calificacion;
 
     private String apellido;
     private String correo;
@@ -58,30 +59,28 @@ public class Usuario {
     @JoinColumn(name = "idproveedor", nullable = true)
     private Proveedor proveedor;
 
-    @ManyToOne
-    @JoinColumn(name = "despachador", nullable = true)
-    private CodigoDespachador codigoDespachador;
+    // Relación corregida a String para despachador
+    @Column(name = "despachador", nullable = true)
+    private String despachador;
 
     @ManyToOne
-    @JoinColumn(name = "idSuperior", nullable = true)
+    @JoinColumn(name = "idsuperior", nullable = true)
     private Usuario idSuperior;
 
     @Column(nullable = false)
     private Integer isBan = 0; // Inicializa con 0 por defecto
 
-    /* Comentado según la solicitud */
+    // Comentado según la solicitud
     //@Column(name = "cantidadcompras")
     //private int cantidadcompras;
 
-    //FOTOS
-    /*
-    @ManyToOne
+    /*@ManyToOne
     @JoinColumn(name = "fotos_idfotos", nullable = true)
     private Foto foto;*/
 
-    @ManyToOne
-    @JoinColumn(name = "jurisdiccion", nullable = true)
-    private Jurisdiccion jurisdiccion;
+    // Relación corregida para jurisdicción, ahora es un String
+    @Column(name = "jurisdiccion", length = 50, nullable = true)
+    private String jurisdiccion;
 
     @OneToMany(mappedBy = "usuario")
     private List<Ordenes> ordenes = new ArrayList<>();
