@@ -60,6 +60,8 @@ public class SuperAdminController {
 
     @GetMapping("/inicio_superadmin")
     public String inicioSuperadmin(Model model){
+        model.addAttribute("activePage", "inicio");
+
         List<Usuario> usuarios = adminRepository.buscarUsuarioPorRol(4);
         System.out.println("Usuarios: " + usuarios);
         model.addAttribute("listaUsuario", usuarios);
@@ -179,6 +181,7 @@ public class SuperAdminController {
 
     @GetMapping("/editar/{id}")
     public String editarUsuario(Model model, @PathVariable("id") Integer id){
+        model.addAttribute("activePage", "usuarios");
 
         Optional<Usuario> optUsuario = adminRepository.findById(id);
         if (optUsuario.isPresent()){
@@ -194,6 +197,8 @@ public class SuperAdminController {
 
     @GetMapping("/crear_usuario")
     public String guardarUsuario(Model model, RedirectAttributes attr) {
+        model.addAttribute("activePage", "usuarios");
+
         List<Distrito> distritos = distritoRepository.findAll();
         model.addAttribute("distritos",distritos);
         model.addAttribute("usuario",new Usuario());
@@ -264,6 +269,8 @@ public class SuperAdminController {
                                 RedirectAttributes attr) {
 
         try {
+            model.addAttribute("activePage", "usuarios");
+
             Optional<Usuario> optUser = adminRepository.findById(id);
 
             if (optUser.isPresent()) {
@@ -294,20 +301,22 @@ public class SuperAdminController {
 
     @GetMapping("/nuevo_usuario")
     public String nuevoUsuario(Model model){
+        model.addAttribute("activePage", "usuarios");
+
         model.addAttribute("listaZona", zonaRepository.findAll());
         return "Superadmin/crear_usuario";
     }
 
     @GetMapping("/inventario_registrar_producto")
-    public String inventarioRegistrarSuperadmin() {
-
+    public String inventarioRegistrarSuperadmin(Model model) {
+        model.addAttribute("activePage", "inventario");
 
         return "SuperAdmin/inventario_registrar_producto";
     }
 
     @GetMapping("/inventario_editar_producto")
-    public String inventarioEditarSuperadmin() {
-
+    public String inventarioEditarSuperadmin(Model model) {
+        model.addAttribute("activePage", "inventario");
 
         return "SuperAdmin/inventario_editar_producto";
     }
@@ -316,6 +325,8 @@ public class SuperAdminController {
 
     @GetMapping("/gestion_coordinadores")
     public String gestionCoordinadoresSuperadmin(Model model) {
+        model.addAttribute("activePage", "coordinadores");
+
         List<Usuario> listazonal = adminRepository.buscarUsuarioPorRol(2);
         for(Usuario cz : listazonal){
             System.out.println("Zonal ID: " + cz.getId());
@@ -328,6 +339,8 @@ public class SuperAdminController {
 /*para gestionar coordinador zonal*/
     @GetMapping("/coordinador_zonal_formu/{id}")
     public String CoordinadorZonalFormularioSuperadmin(Model model, @PathVariable("id") Integer id) {
+        model.addAttribute("activePage", "coordinadores");
+
         Optional<Usuario> coordinador = adminRepository.findById(id);
         if (coordinador.isPresent()) {
             Usuario user = coordinador.get();
@@ -349,6 +362,8 @@ public class SuperAdminController {
 /*para gestionar coordinador zonal*/
     @GetMapping("/new")
     public String crearnuevocoordi(Model model){
+        model.addAttribute("activePage", "coordinadores");
+
         List<Zona> zonas = zonaRepository.findAll();
         model.addAttribute("zonas", zonas);
         model.addAttribute("coordinadorzonal", new Usuario()); //creacion
@@ -453,6 +468,8 @@ public class SuperAdminController {
     }*/
     @GetMapping("/deletecoordi")
     public String eliminarCoordi(Model model,@RequestParam("id") Integer id, RedirectAttributes attrbt) {
+        model.addAttribute("activePage", "coordinadores");
+
         try {
             Optional<Usuario> optUser = adminRepository.findById(id);
 
@@ -487,6 +504,8 @@ public class SuperAdminController {
 
     @GetMapping("/buscadorcoordinador")
     public String buscador_coordinador_zonal(Usuario usuario, @RequestParam("searchTerm") String  searchTerm, Model model){
+        model.addAttribute("activePage", "coordinadores");
+
         int rolId = 2;  // El rol de "usuarios" es 4
         List<Usuario> listazonal = adminRepository.searchByNameOrDniAndRol(searchTerm, rolId);
         //List<Usuario> listazonal = adminRepository.searchByNameOrDni(searchTerm);
@@ -495,6 +514,8 @@ public class SuperAdminController {
     }
     @GetMapping("/gestion_usuarios")
     public String gestionUsuariosSuperadmin(Model model) {
+        model.addAttribute("activePage", "usuarios");
+
         List<Usuario> listaUsuario= adminRepository.buscarUsuarioPorRol(4);
         model.addAttribute("listaUsuario",listaUsuario);
         return "SuperAdmin/gestion_usuarios";
@@ -503,7 +524,8 @@ public class SuperAdminController {
 
 
     @GetMapping("/modificar_usuario")
-    public String modificarUsuarioSuperadmin() {
+    public String modificarUsuarioSuperadmin(Model model) {
+        model.addAttribute("activePage", "usuarios");
 
 
         return "SuperAdmin/modificar_usuario";
@@ -511,6 +533,8 @@ public class SuperAdminController {
 
     @GetMapping("/gestion_agentes")
     public String listar_agentes(Model model) {
+        model.addAttribute("activePage", "agentes");
+
         List<Usuario> lista_agentes = adminRepository.buscarAgentePorRol();
         model.addAttribute("lista_agentes",lista_agentes);
         return "SuperAdmin/gestion_agentes";
@@ -518,6 +542,8 @@ public class SuperAdminController {
 
     @GetMapping("/editar_agentes")
     public String editar_agentes(Model model, @RequestParam("id") Integer id) {
+        model.addAttribute("activePage", "agentes");
+
         Optional<Usuario> optionalUsuario = adminRepository.findById(id);
 
         if (optionalUsuario.isPresent()) {
@@ -531,7 +557,9 @@ public class SuperAdminController {
 
     /* para actualizar datos de agente*/
     @PostMapping("/actualizar_agentes")
-    public String actualizar_agentes(Usuario agenteActualizado, RedirectAttributes attr) {
+    public String actualizar_agentes(Usuario agenteActualizado, RedirectAttributes attr, Model model) {
+        model.addAttribute("activePage", "agentes");
+
         if (agenteActualizado.getId() != null) { // Si es una edición
             Optional<Usuario> optAgenteExistente = adminRepository.findById(agenteActualizado.getId());
 
@@ -571,6 +599,8 @@ public class SuperAdminController {
     /*para borrar agente*/
     @GetMapping("/borrar_agentes")
     public String borrar_agentes(Model model, @RequestParam("id") int id, RedirectAttributes attr) {
+        model.addAttribute("activePage", "agentes");
+
         System.out.println("Eliminando agente con ID: " + id);
         try {
             // Buscar al agente por ID
@@ -606,6 +636,8 @@ public class SuperAdminController {
 
     @GetMapping("/agente/buscar")
     public String busquedaAgentes2(@RequestParam("searchTermAgente2") String searchTermAgente2, Model model){
+        model.addAttribute("activePage", "agentes");
+
         int rolId = 3;  // El rol de "usuarios" es 4
         List<Usuario> lista_agentes = adminRepository.searchByNameOrDniAndRol(searchTermAgente2, rolId);
         model.addAttribute("listaUsuario", adminRepository.buscarUsuarioPorRol(4));
@@ -617,6 +649,8 @@ public class SuperAdminController {
 
     @GetMapping("/agente/filtrar")
     public String filtrarAgentesPorEstado(@RequestParam(value = "estado", required = false) String estado, Model model) {
+        model.addAttribute("activePage", "agentes");
+
         List<Usuario> agentesFiltrados;
 
         if (estado == null || estado.isEmpty()) {
@@ -633,22 +667,23 @@ public class SuperAdminController {
     }
 
     @GetMapping("/rol_agente_solicitudes")
-    public String rolAgenteSolicitudesSuperadmin() {
+    public String rolAgenteSolicitudesSuperadmin(Model model) {
+        model.addAttribute("activePage", "agentes");
 
 
         return "SuperAdmin/rol_agente_solicitudes";
     }
 
     @GetMapping("/solicitud_agente")
-    public String solicitudAgenteSuperadmin() {
-
+    public String solicitudAgenteSuperadmin(Model model) {
+        model.addAttribute("activePage", "agentes");
 
         return "SuperAdmin/solicitud_agente";
     }
 
     @GetMapping({ "/dashboard_superadmin"})
     public String listasDashboard(Model model) {
-
+        model.addAttribute("activePage", "dashboard");
         List<Producto> listaTop = productoRepository.findAll();
         listaTop.sort(Comparator.comparing(Producto::getCantidadComprada).reversed());
 
@@ -722,6 +757,8 @@ public class SuperAdminController {
 
     @GetMapping({"/proveedor/lista", "/gestion_proveedores"})
     public String listarProveedores(Model model) {
+        model.addAttribute("activePage", "proveedores");
+
         List<Proveedor> listaProveedores = proveedorRepository.findAll();
         //model.addAttribute("lista", proveedorRepository.findAll());
         model.addAttribute("listaProveedores", listaProveedores);
@@ -732,6 +769,8 @@ public class SuperAdminController {
 
     @GetMapping("/proveedor/nuevo")
     public String nuevoProveedor(Model model){
+        model.addAttribute("activePage", "proveedores");
+
         model.addAttribute("proveedor", new Proveedor());
         model.addAttribute("listaZona", zonaRepository.findAll());
 
@@ -740,6 +779,7 @@ public class SuperAdminController {
 
     @GetMapping("/proveedor/editar")
     public String editarProveedor(Model model, @RequestParam("id") int id) {
+        model.addAttribute("activePage", "proveedores");
 
         Optional<Proveedor> optProovedor = proveedorRepository.findById(id);
 
@@ -755,7 +795,9 @@ public class SuperAdminController {
         }
     }
     @PostMapping("/proveedor/guardar")
-    public String guardarProveedor(Proveedor proveedor, RedirectAttributes attr) {
+    public String guardarProveedor(Proveedor proveedor, RedirectAttributes attr, Model model) {
+        model.addAttribute("activePage", "proveedores");
+
         proveedorRepository.save(proveedor);
         return "redirect:/superadmin/proveedor/lista";
     }
@@ -763,6 +805,7 @@ public class SuperAdminController {
     public String borrarProveedor(Model model,
                                   @RequestParam("id") int id,
                                   RedirectAttributes attr) {
+        model.addAttribute("activePage", "proveedores");
 
         Optional<Proveedor> optProduct = proveedorRepository.findById(id);
 
@@ -777,6 +820,7 @@ public class SuperAdminController {
     @GetMapping("/proveedor/buscar")
     public String buscarProveedor(@RequestParam("searchField") String searchField,
                                  Model model) {
+        model.addAttribute("activePage", "proveedores");
 
         List<Proveedor> listaProveedor = proveedorRepository.findByNombreProveedorContaining(searchField);
         System.out.println("Resultados encontrados: " + listaProveedor.size());
@@ -787,6 +831,8 @@ public class SuperAdminController {
 
     @GetMapping("/proveedor/filtrar")
     public String filtrarPorZona(@RequestParam(value = "zona", required = false) Integer idzona, Model model) {
+        model.addAttribute("activePage", "proveedores");
+
         List<Proveedor> listaProveedores;
 
         if (idzona == null || idzona == 0) {
@@ -831,6 +877,7 @@ public class SuperAdminController {
 
     @GetMapping("/coordinador/filtrar")
     public String filtrarPorZonaCoordi(@RequestParam(value = "zona", required = false) Integer idzona, Model model) {
+        model.addAttribute("activePage", "coordinadores");
 
         System.out.println("ID de la zona seleccionada: " + idzona);  // Verificar el valor que llega
         List<Usuario> listaCoordinadores;

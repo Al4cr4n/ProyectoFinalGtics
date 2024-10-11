@@ -42,6 +42,7 @@ public class ProductoController {
 
     @GetMapping({"/producto/lista", "/superadmin/inventario_superadmin", "/superadmin/producto/lista"})
     public String listarProductos(Model model) {
+        model.addAttribute("activePage", "inventario");
 
         model.addAttribute("lista", productoRepository.findAll());
         return "SuperAdmin/inventario_superadmin";
@@ -50,6 +51,8 @@ public class ProductoController {
 
     @GetMapping("/producto/nuevo")
     public String nuevoProductoFrm(Model model) {
+        model.addAttribute("activePage", "inventario");
+
         model.addAttribute("producto", new Producto());
         model.addAttribute("listaProveedores",proveedorRepository.findAll());
         //model.addAttribute("listaDepartamentos", departmentRepository.findAll());
@@ -74,6 +77,7 @@ public class ProductoController {
 
     @GetMapping("/producto/editar")
     public String editarProducto(Model model, @RequestParam("id") int id) {
+        model.addAttribute("activePage", "inventario");
 
         Optional<Producto> optProduct = productoRepository.findById(id);
 
@@ -92,6 +96,7 @@ public class ProductoController {
     public String borrarProducto(Model model,
                                  @RequestParam("id") int id,
                                  RedirectAttributes attr){
+        model.addAttribute("activePage", "inventario");
 
         //Optional<Producto> optProduct = productoRepository.findById(id);
         //if (optProduct.isPresent()) {
@@ -131,6 +136,7 @@ public class ProductoController {
     @GetMapping("/producto/buscar")
     public String buscarProducto(@RequestParam("searchField") String searchField,
                                       Model model) {
+        model.addAttribute("activePage", "inventario");
 
         List<Producto> listaProductos = productoRepository.buscarPorNombreOCategoria(searchField);
         System.out.println("Resultados encontrados: " + listaProductos.size());
@@ -141,6 +147,8 @@ public class ProductoController {
 
     @GetMapping("/producto/filtro")
     public String filtrarProductos(@RequestParam(value = "order", required = false, defaultValue = "asc") String order, Model model) {
+        model.addAttribute("activePage", "inventario");
+
         List<Producto> listaProductos;
 
         // Verificar si el filtro es ascendente o descendente

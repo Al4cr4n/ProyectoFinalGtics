@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html
+        lang="en"
+        class="light-style layout-menu-fixed"
+        dir="ltr"
+        data-theme="theme-default"
+        data-assets-path="/assets/"
+        data-template="vertical-menu-template-free"
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
+<head>
+    <meta charset="utf-8" />
+    <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
+    />
+    <title>Menu- SuperAdmin</title>
+
+    <meta name="description" content="" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/assets/img/favicon/favicon.ico" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+            href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+            rel="stylesheet"
+    />
+
+    <!-- Icons. Uncomment required icon fonts -->
+    <link rel="stylesheet" href="/assets/vendor/fonts/boxicons.css" />
+
+    <!-- Core CSS -->
+    <link rel="stylesheet" href="/assets/vendor/css/core.css" class="template-customizer-core-css" />
+    <link rel="stylesheet" href="/assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
+    <link rel="stylesheet" href="/assets/css/demo.css" />
+
+    <!-- Vendors CSS -->
+    <link rel="stylesheet" href="/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+
+    <link rel="stylesheet" href="/assets/vendor/libs/apex-charts/apex-charts.css" />
+
+    <!-- Page CSS -->
+
+    <!-- Helpers -->
+    <script src="/assets/vendor/js/helpers.js"></script>
+
+    <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
+    <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
+    <script src="/assets/js/config.js"></script>
+    <!--TelExpress fuente de letra-->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- ingreso de datatables para modificar la tabla a gusto -->
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+
+    <!--stylos personalizados-->
+    <style>
+        /* Centrar la paginación en DataTables */
+        .dataTables_wrapper .dataTables_paginate {
+            display: flex; /* Usar flexbox para centrar */
+            justify-content: center; /* Centrar horizontalmente */
+            align-items: center; /* Asegura que los botones estén centrados verticalmente */
+            margin-top: 1.5rem; /* Añade margen superior */
+        }
+
+        /* Estilo de los botones de paginación */
+        .dataTables_wrapper .dataTables_paginate .paginate_button {
+            padding: 0.5em 1em; /* Espaciado interno */
+            border-radius: 4px; /* Bordes redondeados */
+            border: 1px solid #ddd; /* Borde gris claro */
+            background: #f5f5f5; /* Fondo gris claro */
+            color: #89a9cc; /* Texto en azul claro */
+            margin: 0 5px; /* Espaciado entre botones */
+        }
+
+        /* Estilo para el botón de la página actual */
+        .dataTables_wrapper .dataTables_paginate .paginate_button.current {
+            background-color: #5770df; /* Fondo azul */
+            color: white; /* Texto blanco */
+            border-color: #3b51b3; /* Borde azul más oscuro */
+        }
+
+        /* Efecto hover para los botones */
+        .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+            background-color: #d1d8ff; /* Fondo más claro al pasar el cursor */
+            border-color: #b5bdff; /* Borde más claro al pasar el cursor */
+            color: white; /* Texto blanco */
+        }
+
+        /* Estilos para la tabla */
+        .table {
+            border-collapse: collapse; /* Evita la separación de bordes */
+        }
+
+        /* Estilo para las celdas de la tabla */
+        .table td {
+            border: none; /* Sin bordes en los lados */
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1); /* Borde inferior */
+            padding: 0.5rem; /* Espaciado interno */
+            text-align: left; /* Alineación a la izquierda */
+        }
+
+        /* Espaciado entre filas de la tabla */
+        table {
+            border-collapse: separate; /* Evita que las celdas estén pegadas entre sí */
+            border-spacing: 0 10px; /* Espaciado entre las filas */
+        }
+
+        /* Ocultar el buscador, el texto "Mostrando" y el selector de longitud */
+        .dataTables_wrapper .dataTables_filter,
+        .dataTables_wrapper .dataTables_info,
+        .dataTables_wrapper .dataTables_length {
+            display: none;
+        }
+
+        .dataTables_wrapper .dataTables_paginate {
+            text-align: center;
+        }
+        .dataTables_wrapper .dataTables_paginate .pagination {
+            display: inline-flex;
+        }
+
+
+
+    </style>
+</head>
+<body>
+    <div th:fragment="menu">
+        <!-- Menu -->
+
+        <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+            <!-- Contenedor para la imagen centrada -->
+            <div style="text-align: center;">
+                <img src="/assets/img/icons/unicons/logo.png" alt="Imagen" style="width: 150px; margin-bottom: -70px; margin-top: -20px">
+            </div>
+
+            <div class="app-brand demo" style="text-align: center;">
+                <a href="/superadmin/inicio_superadmin" class="app-brand-link">
+                    <span class="app-brand-text demo menu-text fw-bolder" style="font-family: 'Poppins', sans-serif; color: #7367F0; padding-left: 15px;">TelExpress</span>
+                </a>
+
+                <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
+                    <i class="bx bx-chevron-left bx-sm align-middle"></i>
+                </a>
+            </div>
+
+
+            <div class="menu-inner-shadow"></div>
+
+            <ul class="menu-inner py-1">
+                <!-- Dashboard -->
+                <li class="menu-item" th:class="${activePage == 'inicio'} ? 'menu-item active' : 'menu-item'">
+                    <a href="/superadmin/inicio_superadmin" class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                        <div data-i18n="Inicio">Inicio</div>
+                    </a>
+                </li>
+
+                <li class="menu-item" th:class="${activePage == 'dashboard'} ? 'menu-item active' : 'menu-item'">
+                    <a href="/superadmin/dashboard_superadmin" class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-grid-alt"></i>
+                        <div data-i18n="Dashboard">Dashboard</div>
+                    </a>
+                </li>
+
+                <li class="menu-item" th:class="${activePage == 'inventario'} ? 'menu-item active' : 'menu-item'">
+                    <a href="/superadmin/inventario_superadmin" class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-package"></i>
+                        <div data-i18n="Inventario">Inventario</div>
+                    </a>
+                </li>
+
+                <!-- Gestión de Roles -->
+                <li class="menu-item" th:class="${activePage == 'coordinadores' || activePage == 'agentes' || activePage == 'usuarios'} ? 'menu-item active' : 'menu-item'">
+                    <a href="javascript:void(0);" class="menu-link menu-toggle">
+                        <i class="menu-icon tf-icons bx bx-dock-top"></i>
+                        <div data-i18n="Gestión de Roles">Gestión de Roles</div>
+                    </a>
+                    <ul class="menu-sub">
+                        <li class="menu-item" th:class="${activePage == 'coordinadores'} ? 'menu-item active' : 'menu-item'">
+                            <a href="/superadmin/gestion_coordinadores" class="menu-link">
+                                <div data-i18n="Coordinador Zonal">Coordinador Zonal</div>
+                            </a>
+                        </li>
+                        <li class="menu-item" th:class="${activePage == 'agentes'} ? 'menu-item active' : 'menu-item'">
+                            <a href="/superadmin/gestion_agentes" class="menu-link">
+                                <div data-i18n="Agente">Agente</div>
+                            </a>
+                        </li>
+                        <li class="menu-item" th:class="${activePage == 'usuarios'} ? 'menu-item active' : 'menu-item'">
+                            <a href="/superadmin/gestion_usuarios" class="menu-link">
+                                <div data-i18n="Usuario">Usuario</div>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="menu-item" th:class="${activePage == 'proveedores'} ? 'menu-item active' : 'menu-item'">
+                    <a href="/superadmin/gestion_proveedores" class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-box"></i>
+                        <div data-i18n="Proveedores">Proveedores</div>
+                    </a>
+                </li>
+            </ul>
+
+        </aside>
+        <!-- / Menu -->
+    </div>
+</body>
+</html>
