@@ -420,6 +420,14 @@ public class UsuarioController {
         return "Usuariofinal/editar_perfil";
     }
 
+    @PostMapping("/editar_perfil")
+    public String ActualizarPerfil( @RequestParam("id") int id){
+
+
+
+        return "Usuariofinal/editar_perfil";
+    }
+
     @GetMapping("/cambiar_contrasena")
     public String cambiar_contrasena(Model model){
         int id =4;
