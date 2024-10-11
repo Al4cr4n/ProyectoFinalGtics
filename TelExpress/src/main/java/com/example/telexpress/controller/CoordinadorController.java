@@ -84,9 +84,8 @@ public class CoordinadorController {
 
     @GetMapping({"/dashboard_zonal"})
     public String dashboardCoordinadorZonal(Model model) {
-        model.addAttribute("paginaActual", "dashboard");
 
-        List<Producto> listaTop = productoRepository.findAll();
+        List<Producto> listaTop = productoRepository.findProductosByZona(2);
         listaTop.sort(Comparator.comparing(Producto::getCantidadComprada).reversed());
         model.addAttribute("listaTop", listaTop);
 
