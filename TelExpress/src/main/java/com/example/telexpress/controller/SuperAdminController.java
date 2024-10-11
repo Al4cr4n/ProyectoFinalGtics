@@ -590,13 +590,13 @@ public class SuperAdminController {
 
         if (estado == null || estado.isEmpty()) {
             // Si no se selecciona ningún estado, obtener todos los agentes con rol "Agente" (id = 3)
-            agentesFiltrados = usuarioRepository.findByRol_Id(3);
+            //agentesFiltrados = usuarioRepository.findByRol_Id(3);
         } else {
             // Si se selecciona un estado, aplicar el filtro por estado
-            agentesFiltrados = usuarioRepository.findByRol_IdAndCodigoDespachador_Estado(3, estado);
+            //agentesFiltrados = usuarioRepository.findByRol_IdAndCodigoDespachador_Estado(3, estado);
         }
 
-        model.addAttribute("lista_agentes", agentesFiltrados);
+        //model.addAttribute("lista_agentes", agentesFiltrados);
         model.addAttribute("estadoSeleccionado", estado);  // Esto ayuda a mantener el valor seleccionado en el HTML
         return "Superadmin/gestion_agentes";
     }
