@@ -80,30 +80,30 @@
 
                             <!--Llamado-->
                             <form id="formAccountSettings" method="POST" th:object="${coordinador}" onsubmit="return false">
-                                <div class="row">
-                                    <div class="mb-3 col-md-6">
+                                <div class="row ">
+                                    <div class="mb-3 col-md-4 ">
                                         <label for="firstName" class="form-label">Nombre</label>
                                         <input class="form-control" type="text" id="firstName" th:field="*{nombre}" readonly />
                                     </div>
-                                    <div class="mb-3 col-md-6">
+                                    <div class="mb-3 col-md-4">
                                         <label for="lastName" class="form-label">Apellido</label>
                                         <input class="form-control" type="text" id="lastName" th:field="*{apellido}" readonly />
                                     </div>
-                                    <div class="mb-3 col-md-6">
+                                    <div class="mb-3 col-md-4">
                                         <label for="dni" class="form-label">DNI</label>
                                         <input class="form-control" type="text" id="dni" th:field="*{dni}" readonly />
                                     </div>
-                                    <div class="mb-3 col-md-6">
+                                    <div class="mb-3 col-md-4">
                                         <label for="email" class="form-label">Correo</label>
                                         <input class="form-control" type="text" id="email" th:field="*{correo}" readonly />
                                     </div>
 
-                                    <div class="mb-3 col-md-6">
+                                    <div class="mb-3 col-md-4">
                                         <label for="address" class="form-label">Dirección</label>
                                         <input type="text" class="form-control" id="address" th:field="*{direccion}" readonly />
                                     </div>
 
-                                    <div class="mb-3 col-md-6">
+                                    <div class="mb-3 col-md-4">
                                         <label for="zone" class="form-label">Zona</label>
                                         <input type="text" class="form-control" id="zone" th:field="*{zona.nombre}" readonly />
                                     </div>
