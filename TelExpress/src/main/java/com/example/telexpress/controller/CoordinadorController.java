@@ -40,8 +40,8 @@ public class CoordinadorController {
     }
 
     @GetMapping({"/inicio_coordinador_zonal",""})
-    public String inicioCoordinadorZonal() {
-
+    public String inicioCoordinadorZonal(Model model) {
+        model.addAttribute("paginaActual", "inicio");
 
         return "CoordinadorZonal/inicio_coordinador_zonal";
     }
@@ -84,6 +84,7 @@ public class CoordinadorController {
 
     @GetMapping({"/dashboard_zonal"})
     public String dashboardCoordinadorZonal(Model model) {
+        model.addAttribute("paginaActual", "dashboard");
 
         List<Producto> listaTop = productoRepository.findAll();
         listaTop.sort(Comparator.comparing(Producto::getCantidadComprada).reversed());
@@ -116,6 +117,7 @@ public class CoordinadorController {
 
     @GetMapping({"/dashboard2_zonal"})
     public String dashboard2CoordinadorZonal(Model model) {
+        model.addAttribute("paginaActual", "dashboard");
         /*List<Usuario> listaTopUsuarios = usuarioRepository.findByZona("zona");
         listaTopUsuarios.sort(Comparator.comparing(Usuario::getCantidadcompras).reversed());
         System.out.println(listaTopUsuarios);
@@ -149,14 +151,16 @@ public class CoordinadorController {
 
 
     @GetMapping({"/importacion_zonal"})
-    public String importacionCoordinadorZonal() {
-
+    public String importacionCoordinadorZonal(Model model) {
+        model.addAttribute("paginaActual", "importaciones");
 
         return "CoordinadorZonal/importacion_zonal";
     }
 
     @GetMapping({"/listaagente_zonal"})
     public String listaAgenteCoordinadorZonal(Model model) {
+        model.addAttribute("paginaActual", "agentes");
+
         List<Usuario> lista_agentes_zonal = coordinadorRepository.buscarAgentePorRolYZona("Norte"); //solo para agente norte, pero puede ser por request param para otras zonas
         model.addAttribute("lista_agentes_zonal",lista_agentes_zonal);
 
@@ -165,6 +169,7 @@ public class CoordinadorController {
 
     @GetMapping({"/perfilagente_zonal"})
     public String perfilAgenteCoordinadorZonal(Model model, @RequestParam("id") Integer id) {
+
         Optional<Usuario> optionalUsuario = adminRepository.findById(id);
 
         if (optionalUsuario.isPresent()) {
@@ -178,6 +183,7 @@ public class CoordinadorController {
 
     @GetMapping("/productos_zonal")
     public String productosCoordinadorZonal(Model model) {
+        model.addAttribute("paginaActual", "productos");
         List<Producto> producto = productoRepository.findAll();
         producto.sort(Comparator.comparing(Producto::getCantidadDisponible));
         model.addAttribute("producto", producto);
