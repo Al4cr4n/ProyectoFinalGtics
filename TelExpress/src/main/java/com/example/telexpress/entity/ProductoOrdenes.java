@@ -23,5 +23,5 @@ public class ProductoOrdenes {
     private Ordenes ordenes;
 
     @Column(name = "cantidadxproducto")
-    private int cantidadXProducto;
+    private int cantidadxproducto;
 }

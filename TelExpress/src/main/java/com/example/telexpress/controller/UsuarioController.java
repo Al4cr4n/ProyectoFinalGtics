@@ -24,15 +24,19 @@ public class UsuarioController {
     private final ProductoRepository productoRepository;
     private final ReseniaRepository reseniaRepository;
     private final CoordinadorRepository coordinadorRepository;
+    private final ProductoOrdenesRepository productoOrdenesRepository;
 
 
-    public UsuarioController(UsuarioRepository usuarioRepository, ProductoRepository productoRepository, ReseniaRepository reseniaRepository, OrdenesRepository ordenesRepository, DistritoRepository distritoRepository,CoordinadorRepository coordinadorRepository) {
+    public UsuarioController(UsuarioRepository usuarioRepository, ProductoRepository productoRepository, ReseniaRepository reseniaRepository,
+                             OrdenesRepository ordenesRepository, DistritoRepository distritoRepository,CoordinadorRepository coordinadorRepository,
+                             ProductoOrdenesRepository productoOrdenesRepository) {
         this.usuarioRepository = usuarioRepository;
         this.productoRepository = productoRepository;
         this.reseniaRepository = reseniaRepository;
         this.ordenesRepository = ordenesRepository;
         this.distritoRepository = distritoRepository;
         this.coordinadorRepository = coordinadorRepository;
+        this.productoOrdenesRepository = productoOrdenesRepository;
     }
 
     private final OrdenesRepository ordenesRepository;
@@ -129,16 +133,21 @@ public class UsuarioController {
 
         if (ordenPendienteOpt.isPresent()) {
             // Pasar los productos al modelo para mostrarlos en el modal
-            Ordenes ordenPendiente = ordenPendienteOpt.get();
+            //Ordenes ordenPendiente = ordenPendienteOpt.get();
+            // Obtener los productos de la tabla intermedia con su cantidad
+            List<ProductoOrdenes> productosHasOrdenes = productoOrdenesRepository.findByOrdenesIdOrdenes(ordenPendienteOpt.get().getIdOrdenes());
+
             // Convertir los productos a ProductoDTO
-            List<ProductoDTO> productosDTO = ordenPendiente.getProductos().stream()
-                    .map(producto -> new ProductoDTO(
-                            producto.getIdProducto(),
-                            producto.getNombreProducto(),
-                            producto.getPrecio(),
-                            producto.getCantidadDisponible()
+            List<ProductoDTO> productosDTO = productosHasOrdenes.stream()
+                    .map(p -> new ProductoDTO(
+                            p.getProducto().getIdProducto(),
+                            p.getProducto().getNombreProducto(),
+                            p.getProducto().getPrecio(),
+                            p.getProducto().getCantidadDisponible(),
+                            p.getCantidadxproducto() // cantidad de este producto en la orden
                     ))
                     .collect(Collectors.toList());
+            System.out.println("Producto ID: " + productosDTO);
 
             return productosDTO; // Retorna la lista de DTOs
         } else {
@@ -150,60 +159,43 @@ public class UsuarioController {
 
     @PostMapping("/agregarCarrito")
     @ResponseBody
-    public String agregarProductoAlCarrito(@RequestBody Map<String, Integer> data) {
-        Integer productoId = data.get("productoId");
-        Integer usuarioId = data.get("usuarioId");
-        Integer cantidad = data.get("cantidad"); // cantidad de los productos en una orden
+    public List<ProductoOrdenes> agregarAlCarrito(@RequestParam("productoId") Integer productoId, @RequestParam("cantidadxproducto") Integer cantidad, Model model ) {
+        // Obtener el usuario actual (simulación, debes implementar autenticación)
+        Usuario usuarioActual = usuarioRepository.findById(1L).orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
 
-        // Obtener el usuario
-        Usuario usuario = usuarioRepository.findById(Long.valueOf(usuarioId))
-                .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
-
-        // Buscar la orden pendiente del usuario
-        Optional<Ordenes> ordenPendienteOpt = ordenesRepository.findByUsuarioAndEstadoOrdenes(usuario, "Pendiente");
-        Ordenes ordenPendiente;
-
-        if (ordenPendienteOpt.isPresent()) {
-            // Si existe una orden pendiente, la utilizamos
-            ordenPendiente = ordenPendienteOpt.get();
-        } else {
-            // Si no existe una orden pendiente, creamos una nueva
-            ordenPendiente = new Ordenes();
-            ordenPendiente.setUsuario(usuario);
-            ordenPendiente.setEstadoOrdenes("Pendiente");
-            ordenesRepository.save(ordenPendiente);
+        // Busca la orden pendiente
+        Ordenes orden = ordenesRepository.findByUsuarioAndEstadoOrdenes(usuarioActual, "Pendiente")
+                .orElseGet(() -> {
+                    Ordenes nuevaOrden = new Ordenes();
+                    nuevaOrden.setUsuario(usuarioActual);
+                    nuevaOrden.setEstadoOrdenes("Pendiente");
+                    //nuevaOrden.setFechaCreacion(new Date());
+                    //nuevaOrden.setMesCreacion(new SimpleDateFormat("MM").format(new Date()));
+                    return ordenesRepository.save(nuevaOrden);
+                });
+        // Asegurarse de que el ID de la orden está generado antes de proceder
+        if (orden.getIdOrdenes() == null) {
+            orden = ordenesRepository.save(orden); // Esto asegura que la orden tiene un ID generado
         }
-
-        // Obtener el producto
+        // Buscar el producto
         Producto producto = productoRepository.findById(productoId)
                 .orElseThrow(() -> new IllegalArgumentException("Producto no encontrado"));
 
-        // Verificar si el producto ya está en la orden
-        /*Optional<ProductoOrdenes> productoOrden = ordenPendiente.getProductos().stream()
-                .filter(p -> p.getProducto().getIdProducto().equals(productoId))
-                .findFirst();
-        if (productoOrden.isPresent()) {
-            // Si el producto ya está en la orden, aumentar la cantidad
-            ProductoOrdenes po = productoOrden.get();
-            po.setCantidadXProducto(po.getCantidadXProducto() + cantidad); // Actualiza la cantidad
-        } else {
-            // Si no existe, se agrega un nuevo producto a la orden
-            ProductoOrdenes nuevoProductoOrden = new ProductoOrdenes();
-            nuevoProductoOrden.setProducto(producto);
-            nuevoProductoOrden.setOrdenes(ordenPendiente);
-            nuevoProductoOrden.setCantidadXProducto(cantidad); // Setear la cantidad
-            ordenPendiente.getProductos().add(nuevoProductoOrden);
-        }
+        // Crear la clave compuesta
+        ProductoOrdenesId productoOrdenesId = new ProductoOrdenesId(producto.getIdProducto(), orden.getIdOrdenes());
 
-        ordenesRepository.save(ordenPendiente);
+        // Crear o actualizar el producto en la orden
+        ProductoOrdenes productoEnOrden = new ProductoOrdenes();
+        productoEnOrden.setId(productoOrdenesId);  // Asegúrate de asignar la clave compuesta
+        productoEnOrden.setProducto(producto);
+        productoEnOrden.setOrdenes(orden);
+        productoEnOrden.setCantidadxproducto(cantidad);
+        productoOrdenesRepository.save(productoEnOrden);
 
-        return "Producto agregado al carrito";*/
+        //ordenPendiente.agregarProducto(producto, cantidad);
+        //ordenesRepository.save(ordenPendiente);
 
-        // Agregar el producto a la orden
-        ordenPendiente.agregarProducto(producto);
-        ordenesRepository.save(ordenPendiente);
-
-        return "Producto agregado al carrito";
+        return productoOrdenesRepository.findByOrdenes(orden);
     }
 
 

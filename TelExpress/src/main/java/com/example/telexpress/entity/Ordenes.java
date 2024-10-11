@@ -16,7 +16,7 @@ public class Ordenes {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idordenes")
-    private int idOrdenes;
+    private Integer idOrdenes;
 
 
     @Column(name = "fechaArribo")

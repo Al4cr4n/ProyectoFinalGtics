@@ -86,10 +86,9 @@
 <!-- Bootstrap JS -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 
-
-    <style>
-        
-    </style>
+    <!--tokens para uso de ajax (token)-->
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
 
 </head>
 
@@ -224,26 +223,27 @@
                                         </label>
                                     </div>
 
+                                    <!-- Quantity selector -->
                                     <div class="add-to-cart">
                                         <div class="qty-label">
-                                            Qty
+                                            Cantidad
                                             <div class="input-number">
-                                                <input type="number" th:attr="min=1, max=${producto.cantidadDisponible}"
-                                                       th:value="${producto.cantidadDisponible > 0 ? 1 : 0}" id="qtyInput">
-                                                <span class="qty-up" onclick="increment()">+</span>
-                                                <span class="qty-down" onclick="decrement()">-</span>
+                                                <select id="cantidadProducto" name="cantidad">
+                                                    <option th:each="i : ${#numbers.sequence(1, producto.cantidadDisponible)}"
+                                                            th:value="${i}"
+                                                            th:text="${i}"></option>
+                                                </select>
                                             </div>
                                         </div>
-                                      
-                                        <!-- Button to open the modal -->
-                                        <form id="addToCartForm" action="#" method="post">
-                                            <input type="hidden" id="productoId" value="[[${producto.idProducto}]]">
-                                            <input type="hidden" id="usuarioId" value="27"> <!--  cambiar este valor por el del usuario actual -->
+
+                                        <!-- Add to Cart button -->
+                                        <form id="addToCartForm" style="margin-top: 1.5rem">
+                                            <input type="hidden" id="productoId" th:value="${producto.idProducto}">
+                                            <input type="hidden" id="usuarioId" value="27"> <!-- Cambiar por el usuario actual -->
 
                                             <!-- Botón para agregar al carrito -->
                                             <button type="button" class="add-to-cart-btn" onclick="agregarAlCarrito()">Agregar al carrito</button>
                                         </form>
-                                       <!-- <button class="add-to-cart-btn" data-bs-toggle="modal" data-bs-target="#productModal"><i class="bx bx-plus"></i> Agregar</button>-->
                                     </div>
                                     <a class="review-link" href="#"> Reseñas(<span th:text="${cantidadResenias}">0</span>)</a>
                                     <ul class="product-links">
@@ -328,10 +328,10 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-6 offset-md-6 text-end">
-                            <p><strong>Precio Total:</strong> $980.00</p>
+                            <p><strong>Precio Total:</strong> <span id="precioTotal">S/. 0.00</span>12</p>
                             <p><strong>Delivery:</strong> S/. 15.00</p>
                             <hr>
-                            <p><strong>Total General:</strong> S/. 995.00</p>
+                            <p><strong>Total General:</strong><span id="totalGeneral">S/. 0.00</span> S/. 5.00</p>
                         </div>
                     </div>
                 </div>
@@ -339,7 +339,7 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger">Eliminar</button>
                 <button type="button" class="btn btn-primary">Importar</button>
-                
+
             </div>
         </div>
     </div>
@@ -348,33 +348,56 @@
 <script>
     function agregarAlCarrito() {
         const productoId = document.getElementById('productoId').value;
-        const usuarioId = document.getElementById('usuarioId').value;
-
-        // Crear el objeto de datos para enviar
-        const data = {
-            productoId: productoId,
-            usuarioId: usuarioId
-        };
-
+       // const usuarioId = document.getElementById('usuarioId').value;
+        const cantidadxproducto = document.getElementById('cantidadProducto').value; // Obtén la cantidad seleccionada
+        // Obtener el token CSRF del meta tag o el input hidden
+        var csrfToken = $("meta[name='_csrf']").attr("content");
+        var csrfHeader = $("meta[name='_csrf_header']").attr("content");
         // Hacer la llamada AJAX para agregar el producto al carrito
-        fetch('/usuario/agregarCarrito', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
+        $.ajax({
+            type: 'POST',
+            url: '/usuario/agregarCarrito',  // Este es el endpoint donde agregas productos al carrito
+            data: {
+                productoId: productoId,
+                cantidadxproducto: cantidadxproducto
             },
-            body: JSON.stringify(data) // Enviar los datos como JSON
-        })
-            .then(response => response.text())
-            .then(result => {
-                console.log(result); // Mostrar el mensaje de éxito en la consola
+            beforeSend: function(xhr) {
+                // Incluir el token CSRF en la cabecera
+                xhr.setRequestHeader(csrfHeader, csrfToken);
+            },
+            success: function (response) {
+                // Actualizar el contenido del carrito en el modal
+                var carritoHtml = '';
+                var precioTotal = 0;
+                response.forEach(function (item) {
+                    var totalPorProducto = item.producto.precio * item.cantidadxproducto;
+                    precioTotal += totalPorProducto;
 
-                // Cargar los productos en el modal
-                cargarProductosCarrito();
-            })
-            .catch(error => console.error('Error:', error));
+                    carritoHtml += '<tr class="border-bottom">';
+                    carritoHtml += '<td><input type="checkbox"></td>';
+                    carritoHtml += '<td><img src="/assets/img/elements/product01.png" alt="Producto" class="img-thumbnail" width="100"></td>';
+                    carritoHtml += '<td>' + item.producto.nombreProducto + '</td>';
+                    carritoHtml += '<td>' + item.producto.idproducto + '</td>';
+                    carritoHtml += '<td>S/. ' + item.producto.precio.toFixed(2) + '</td>';
+                    carritoHtml += '<td><input type="number" class="form-control" value="' + item.cantidadxproducto + '" min="1" max="' + item.producto.cantidadDisponible + '" /></td>';
+                    carritoHtml += '<td>S/. ' + totalPorProducto.toFixed(2) + '</td>';
+                    carritoHtml += '</tr>';
+                });
+                $('#CartBody').html(carritoHtml);
+                $('#precioTotal').text('S/. ' + precioTotal.toFixed(2));
+                var delivery = 15.00;  // Por ejemplo, un costo de delivery fijo
+                var totalGeneral = precioTotal + delivery;
+                $('#totalGeneral').text('S/. ' + totalGeneral.toFixed(2));
+
+                // Mostrar el modal después de actualizar el contenido
+                $('#productModal').modal('show');
+            },
+            error: function (xhr, status, error) {
+                console.error('Error al agregar el producto al carrito: ', error);
+            }
+        });
     }
-
-    function cargarProductosCarrito() {
+    /*function cargarProductosCarrito() {
         const usuarioId = document.getElementById('usuarioId').value;
 
         // Hacer la llamada AJAX para obtener los productos del carrito
@@ -405,7 +428,7 @@
                 modal.show();
             })
             .catch(error => console.error('Error:', error));
-    }
+    }*/
 </script>
 
 

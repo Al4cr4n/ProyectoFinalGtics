@@ -5,21 +5,23 @@ public class ProductoDTO {
     private String nombreProducto;
     private Double precio;
     private int cantidadDisponible;
+    private int cantidadxproducto; // cantidad agregada en el carrito
 
     // Constructor
-    public ProductoDTO(int idProducto, String nombreProducto, Double precio, int cantidadDisponible) {
+    public ProductoDTO(int idProducto, String nombreProducto, Double precio, int cantidadDisponible, Integer cantidadxproducto) {
         this.idProducto = idProducto;
         this.nombreProducto = nombreProducto;
         this.precio = precio;
-        this.cantidadDisponible = cantidadDisponible;
+        this.cantidadDisponible = cantidadDisponible; //cantidad total disponible
+        this.cantidadxproducto = cantidadxproducto; // cantidad del producto en la orden
     }
 
     // Getters and Setters
-    public int getIdProducto() {
+    public Integer getIdProducto() {
         return idProducto;
     }
 
-    public void setIdProducto(int idProducto) {
+    public void setIdProducto(Integer idProducto) {
         this.idProducto = idProducto;
     }
 
@@ -43,8 +45,10 @@ public class ProductoDTO {
         return cantidadDisponible;
     }
 
-    public void setCantidadDisponible(int cantidadDisponible) {
+    public void setCantidadDisponible(Integer cantidadDisponible) {
         this.cantidadDisponible = cantidadDisponible;
     }
+    public Integer getCantidadxproducto(){return cantidadxproducto;}
+    public void setCantidadxproducto(Integer cantidadxproducto){this.cantidadxproducto=cantidadxproducto;}
 }
 

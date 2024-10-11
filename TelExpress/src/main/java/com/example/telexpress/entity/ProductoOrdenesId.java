@@ -14,12 +14,27 @@ public class ProductoOrdenesId implements Serializable {
 
     public ProductoOrdenesId() {}
 
-    public ProductoOrdenesId(int productoId, int ordenesId) {
+    public ProductoOrdenesId(Integer productoId, Integer ordenesId) {
         this.productoId = productoId;
         this.ordenesId = ordenesId;
     }
 
     // Getters y setters
+    public Integer getProductoId() {
+        return productoId;
+    }
+
+    public void setProductoId(Integer productoId) {
+        this.productoId = productoId;
+    }
+
+    public Integer getOrdenesId() {
+        return ordenesId;
+    }
+
+    public void setOrdenesId(Integer ordenesId) {
+        this.ordenesId = ordenesId;
+    }
 
     @Override
     public boolean equals(Object o) {
