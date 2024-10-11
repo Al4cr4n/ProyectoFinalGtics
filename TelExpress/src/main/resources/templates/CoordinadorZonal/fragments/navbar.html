@@ -72,7 +72,7 @@
 
         <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
             <!-- Añadir el badge aquí, después del div de notificaciones -->
-            <span class="badge bg-label-warning" style="font-size: 17px; margin-right: 20px;">Norte</span>
+            <span class="badge bg-label-warning" style="font-size: 17px; margin-right: 20px;" th:text="${session.usuario.zona.nombre}"></span>
 
             <ul class="navbar-nav flex-row align-items-center ms-auto">
                 <!-- Place this tag where you want the button to render. -->
@@ -154,7 +154,7 @@
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end">
                         <li>
-                            <a class="dropdown-item" href="/agente/perfil_agente">
+                            <a class="dropdown-item" th:href="@{'/coordinador/perfil' + '?id=' + ${session.usuario.id}}">
                                 <div class="d-flex">
                                     <div class="flex-shrink-0 me-3">
                                         <div class="avatar avatar-online">

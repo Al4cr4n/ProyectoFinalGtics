@@ -19,6 +19,7 @@ import java.util.Arrays;
 
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Controller
@@ -31,10 +32,11 @@ public class AgenteController {
     final ZonaRepository zonaRepository;
     final ProductoRepository productoRepository;
     final ProveedorRepository proveedorRepository;
+    private final CoordinadorRepository coordinadorRepository;
 
     public AgenteController(OrdenesRepository ordenesRepository, UsuarioRepository usuarioRepository, AdminRepository adminRepository,
                             ZonaRepository zonaRepository, ProductoRepository productoRepository, ProveedorRepository proveedorRepository,
-                            ContrasenaAgenteRespository contrasenaAgenteRespository, UsuarioPerfilRepository usuarioPerfilRepository) {
+                            ContrasenaAgenteRespository contrasenaAgenteRespository, UsuarioPerfilRepository usuarioPerfilRepository, CoordinadorRepository coordinadorRepository) {
         this.ordenesRepository = ordenesRepository;
         this.usuarioRepository = usuarioRepository;
         this.adminRepository = adminRepository;
@@ -43,6 +45,7 @@ public class AgenteController {
         this.proveedorRepository = proveedorRepository;
         this.contrasenaAgenteRespository = contrasenaAgenteRespository;
         this.usuarioPerfilRepository = usuarioPerfilRepository;
+        this.coordinadorRepository = coordinadorRepository;
     }
 
     final ContrasenaAgenteRespository contrasenaAgenteRespository;
@@ -305,7 +308,7 @@ public class AgenteController {
         model.addAttribute("passw", passw);
         return "Agente/cambio_contra_agente";
     }
-    @PostMapping("/cambio_contra_agente")
+    /*@PostMapping("/cambio_contra_agente")
     public String ActualizarContraAgente(
             @RequestParam("password") String currentPassword,  // Contraseña actual
             @RequestParam("new-password-again") String newPassword, // Nueva contraseña
@@ -375,6 +378,20 @@ public class AgenteController {
         usuarioPerfilRepository.updatenombre(id);
         usuarioPerfilRepository.updateapellido(id);
         return "Agente/perfil_agente";
+    }*/
+
+    @GetMapping("/perfil")
+    public String verPerfil(Model model, @RequestParam("id") Integer id) {
+
+        Optional<Usuario> optUsuario = coordinadorRepository.findById(id);
+
+        if (optUsuario.isPresent()) {
+            Usuario agente = optUsuario.get();
+            model.addAttribute("agente", agente);
+            return "Agente/perfil_agente";
+        } else {
+            return "redirect:/agente";
+        }
     }
 
 

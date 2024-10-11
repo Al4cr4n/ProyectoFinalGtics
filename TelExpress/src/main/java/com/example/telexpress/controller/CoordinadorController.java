@@ -200,6 +200,20 @@ public class CoordinadorController {
         return "redirect:/productos_zonal?solicitudExitosa";
     }
 
+    @GetMapping("/perfil")
+    public String verPerfil(Model model, @RequestParam("id") int id) {
+
+        Optional<Usuario> optUsuario = coordinadorRepository.findById(id);
+
+        if (optUsuario.isPresent()) {
+            Usuario usuario = optUsuario.get();
+            model.addAttribute("coordinador", usuario);
+            return "CoordinadorZonal/perfil_coordinador";
+        } else {
+            return "redirect:/coordinador";
+        }
+    }
+
 
 
 
