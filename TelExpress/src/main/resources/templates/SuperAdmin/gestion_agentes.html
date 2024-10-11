@@ -261,25 +261,28 @@
         <div class="container-xxl flex-grow-1 container-p-y">
           <h4 style="font-family: 'Poppins', sans-serif; color: #7367F0; font-weight: bold; padding-top: 1rem; padding-bottom: 1rem; margin-bottom: 1rem; text-align: center; font-size: 40px;">
             Agentes</h4>
-          <form action="/superadmin/agente/buscar" method="GET" class="mb-4">
-            <div class="input-group">
-              <input type="text" name="searchTermAgente2" class="form-control" placeholder="Buscar agente por nombre o apellido" th:value="${searchTermAgente2}" />
-              <button class="btn btn-primary" type="submit">Buscar</button>
-            </div>
-          </form>
 
-          <form action="/superadmin/agente/filtrar" method="GET" class="mb-4">
-            <div class="input-group w-50 mb-3">
-              <select name="estado" class="form-select" onchange="this.form.submit()">
-                <!-- Si no se selecciona un estado específico, el valor enviado será vacío -->
-                <option value="" th:selected="${estadoSeleccionado == null || estadoSeleccionado == ''}">Todos los estados</option>
-                <option value="Activo" th:selected="${estadoSeleccionado == 'Activo'}">Activo</option>
-                <option value="Inactivo" th:selected="${estadoSeleccionado == 'Inactivo'}">Inactivo</option>
-                <option value="Pendiente" th:selected="${estadoSeleccionado == 'Pendiente'}">Pendiente</option>
-              </select>
-            </div>
-          </form>
 
+          <div class="card" style="padding: 0.8rem;">
+            <div class="card-header">
+              <form action="/superadmin/agente/buscar" method="GET" class="mb-4">
+                <div class="input-group">
+                  <input type="text" name="searchTermAgente2" class="form-control" placeholder="Buscar agente por nombre o apellido" th:value="${searchTermAgente2}" />
+                  <button class="btn btn-primary" type="submit">Buscar</button>
+                </div>
+              </form>
+
+              <form action="/superadmin/agente/filtrar" method="GET" class="mb-4">
+                <div class="input-group w-50 mb-3">
+                  <select name="estado" class="form-select" onchange="this.form.submit()">
+                    <!-- Si no se selecciona un estado específico, el valor enviado será vacío -->
+                    <option value="" th:selected="${estadoSeleccionado == null || estadoSeleccionado == ''}">Todos los estados</option>
+                    <option value="Activo" th:selected="${estadoSeleccionado == 'Activo'}">Activo</option>
+                    <option value="Inactivo" th:selected="${estadoSeleccionado == 'Inactivo'}">Inactivo</option>
+                    <option value="Pendiente" th:selected="${estadoSeleccionado == 'Pendiente'}">Pendiente</option>
+                  </select>
+                </div>
+              </form>
 
           <div class="table-responsive text-nowrap">
             <table class="table table-striped" id="agentesTable">
@@ -317,15 +320,18 @@
               </tr>
               </tbody>
             </table>
+            <!-- Paginación -->
+            <nav aria-label="Page navigation" class="mt-4 mb-4">
+              <ul class="pagination justify-content-center" id="paginacion"></ul>
+            </nav>
+          </div>
+            </div>
           </div>
           <!-- Botón "Crear Nuevo" -->
           <div class="text-center my-3">
             <!--<button class="btn btn-primary" onclick="window.location.href='/rol_agente_solicitudes';">Solicitudes Agentes</button> -->
           </div>
-          <!-- Paginación -->
-          <nav aria-label="Page navigation" class="mt-4 mb-4">
-            <ul class="pagination justify-content-center" id="paginacion"></ul>
-          </nav>
+
         </div>
         <!-- Modal de confirmación
         <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">

@@ -426,7 +426,7 @@
 
             </div>
           <div class="table-responsive text-nowrap">
-            <table class="table table-striped" id="coordinadoresTable" style="margin-top: 20px;">
+            <table class="table table-striped" id="coordinadoresTable" >
               <thead class="table-light">
               <tr>
                 <th>N°</th>
@@ -453,14 +453,46 @@
                   <a th:href="@{/superadmin/coordinador_zonal_formu/{id}(id=${usuario.id})}" class="btn btn-sm btn-primary">
                     <i class="bx bx-edit-alt"></i>
                   </a>
-
+<!--
                   <a th:href="@{/superadmin/deletecoordi(id=${usuario.id})}" class="btn btn-sm btn-danger">
-                    <i class="bx bx-trash"></i></a>
+                    <i class="bx bx-trash"></i></a> -->
+
+<!--
+                  <a href="#" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal" onclick="setDeleteUrl('/superadmin/deletecoordi?id=${usuario.id}')">
+                    <i class="bx bx-trash"></i>
+                  </a> -->
+
+                  <a href="#" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal"
+                     th:attr="onclick='setDeleteUrl(\'/superadmin/deletecoordi?id=' + ${usuario.id} + '\')'">
+                    <i class="bx bx-trash"></i>
+                  </a>
 
                 </td>
               </tr>
               <!-- Puedes agregar más filas aquí -->
               </tbody>
+
+              <!-- Modal para confirmar la eliminación -->
+              <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="confirmDeleteLabel">Confirmar Eliminación</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      ¿Estás seguro de que deseas eliminar este registro?
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancelar</button>
+                      <a href="#" id="confirmDeleteButton" class="btn btn-danger">Eliminar</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+
             </table>
           </div>
             <nav aria-label="Page navigation" class="mt-4 mb-4">
@@ -504,6 +536,11 @@
 <!-- DataTables JS -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+<script>
+  function setDeleteUrl(url) {
+    document.getElementById('confirmDeleteButton').setAttribute('href', url);
+  }
+</script>
 
 <script>
   document.addEventListener("DOMContentLoaded", function() {

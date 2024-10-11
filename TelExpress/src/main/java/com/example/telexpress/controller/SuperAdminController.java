@@ -11,8 +11,10 @@ import com.example.telexpress.repository.*;
 import com.example.telexpress.entity.Distrito;
 
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -199,7 +201,12 @@ public class SuperAdminController {
         return "SuperAdmin/editar_usuario";
     }
     @PostMapping("/guardar_usuario")
-    public String guardarUsuario(Usuario usuario, RedirectAttributes attr,@RequestParam("distrito.id") Integer iddist ) {
+    public String guardarUsuario( @ModelAttribute("usuario") @Valid Usuario usuario, BindingResult result, RedirectAttributes attr, @RequestParam("distrito.id") Integer iddist ) {
+
+        if (result.hasErrors()) {
+            // Si hay errores de validación, volvemos al formulario con los mensajes de error
+            return "SuperAdmin/coordinador_zonal_formulario";  // Vuelve a la página del formulario
+        }
         // Verificar si el DNI, correo o número telefónico ya existen
         Optional<Usuario> usuarioConMismoDni = adminRepository.findByDni(usuario.getDni());
         Optional<Usuario> usuarioConMismoCorreo = adminRepository.findByCorreo(usuario.getCorreo());
@@ -349,9 +356,24 @@ public class SuperAdminController {
     }
 
     /* para actualizar datos de coodinador zonal*/
+    /* para actualizar datos de coodinador zonal*/
     @PostMapping("/update")
-    public String actualizardatoscoordi(Usuario usuario, @RequestParam("zona.idzona") Integer zonaid, RedirectAttributes rttbtsp) {
+    public String actualizardatoscoordi(@ModelAttribute("coordinadorzonal") @Valid  Usuario usuario,BindingResult result,
+                                        @RequestParam("zona.idzona") Integer zonaid,
+                                        RedirectAttributes rttbtsp,
+                                        Model model) {
 
+        // Si hay errores de validación, se regresa al formulario con los mensajes de error
+        if (result.hasErrors()) {
+           // rttbtsp.addFlashAttribute("mensaje", "Por favor corrige los errores en el formulario.");
+           // rttbtsp.addFlashAttribute("tipoMensaje", "danger");
+            List<Zona> zonas = zonaRepository.findAll();
+            model.addAttribute("zonas", zonas);
+            model.addAttribute("coordinadorzonal", usuario);
+            return "SuperAdmin/coordinador_zonal_formulario"; // Cambia esta ruta por la ruta del formulario
+        }
+
+        boolean esNuevoCoordinador = usuario.getId() == null;
         // Verificar si el DNI, correo o número telefónico ya existen
         Optional<Usuario> usuarioConMismoDni = adminRepository.findByDni(usuario.getDni());
         Optional<Usuario> usuarioConMismoCorreo = adminRepository.findByCorreo(usuario.getCorreo());
@@ -390,8 +412,15 @@ public class SuperAdminController {
         }
         adminRepository.save(usuario);
 
+        // Mensaje según si es una creación o actualización
+        if (esNuevoCoordinador) {
+            rttbtsp.addFlashAttribute("mensaje", "Felicidades, has creado un nuevo coordinador zonal.");
+        } else {
+            rttbtsp.addFlashAttribute("mensaje", "Los datos del coordinador fueron actualizados con éxito.");
+        }
+        rttbtsp.addFlashAttribute("tipoMensaje", "success");
         // Mensaje de éxito
-        rttbtsp.addFlashAttribute("mensaje", "Los datos del coordinador fueron actualizados con éxito.");
+        //rttbtsp.addFlashAttribute("mensaje", "Los datos del coordinador fueron actualizados con éxito.");
         rttbtsp.addFlashAttribute("tipoMensaje", "success");
         return "redirect:/superadmin/gestion_coordinadores";
     }

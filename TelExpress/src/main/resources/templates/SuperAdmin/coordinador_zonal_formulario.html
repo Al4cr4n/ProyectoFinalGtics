@@ -291,28 +291,66 @@
                     <input type="hidden" th:if="${id != null}" th:field="*{id}" name="id"/>
                     <div class="row mb-3">
                             <!-- Nombre -->
-                            <div class="col-md-6">
-                                <label for="nombreCoordinador" class="form-label">Nombre:</label>
-                                <input type="text" class="form-control" id="nombreCoordinador" placeholder="Ingrese el nombre" th:field="*{nombre}">
-                            </div>
+                        <!--
+                        <div class="col-md-6">
+                            <label for="nombreCoordinador" class="form-label">Nombre:</label>
+                            <input type="text" class="form-control" id="nombreCoordinador" placeholder="Ingrese el nombre" th:field="*{nombre}" required>
+                            <div class="text-danger" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></div>
+                        </div> -->
 
-                            <!-- Apellido -->
-                            <div class="col-md-6">
-                                <label for="apellidoCoordinador" class="form-label">Apellido:</label>
-                                <input type="text" class="form-control" id="apellidoCoordinador" placeholder="Ingrese el apellido" th:field="*{apellido}">
+
+                        <div class="col-md-6">
+                            <label class="form-label">Nombre:</label>
+                            <input th:field="*{nombre}" type="text" class="form-control" placeholder="Ingrese el nombre"
+                                   th:classappend="${#fields.hasErrors('nombre')?'is-invalid':''}"/>
+                            <div id="validationServer03Feedback" class="invalid-feedback"
+                                 th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}">
+                                Mensaje de error de nombre
                             </div>
                         </div>
 
+                            <!-- Apellido
+                            <div class="col-md-6">
+                                <label for="apellidoCoordinador" class="form-label">Apellido:</label>
+                                <input type="text" class="form-control" id="apellidoCoordinador" placeholder="Ingrese el apellido" th:field="*{apellido}">
+
+                            </div>-->
+
+                        <div class="col-md-6">
+                            <label class="form-label">Apellido:</label>
+                            <input th:field="*{apellido}" type="text" class="form-control" placeholder="Ingrese el apellido"
+                                   th:classappend="${#fields.hasErrors('apellido')?'is-invalid':''}"/>
+                            <div class="invalid-feedback"
+                                 th:if="${#fields.hasErrors('apellido')}" th:errors="*{apellido}">
+                                Mensaje de error de apellido
+                            </div>
+                        </div>
+
+
+                        </div>
+
                         <div class="row mb-3">
-                            <!-- DNI -->
+                            <!-- DNI
                             <div class="col-md-6">
                                 <label for="dniCoordinador" class="form-label">DNI:</label>
                                 <input type="text" class="form-control" id="dniCoordinador" placeholder="Ingrese el DNI" th:field="*{dni}"
                                        pattern="\d{8}" maxlength="8" minlength="8" required>
                                 <small class="text-muted">Debe tener exactamente 8 dígitos.</small>
+                            </div>-->
+
+
+                            <div class="col-md-6">
+                                <label class="form-label">DNI:</label>
+                                <input th:field="*{dni}" type="text" class="form-control" placeholder="Ingrese el DNI"
+                                       th:classappend="${#fields.hasErrors('dni')?'is-invalid':''}"/>
+                                <div class="invalid-feedback"
+                                     th:if="${#fields.hasErrors('dni')}" th:errors="*{dni}">
+                                    Mensaje de error de apellido
+                                </div>
                             </div>
 
-                            <!-- Teléfono -->
+
+                            <!-- Teléfono
                             <div class="col-md-6">
                                 <label for="telefonoCoordinador" class="form-label">Teléfono:</label>
                                 <input type="text" class="form-control" id="telefonoCoordinador" placeholder="Ingrese el teléfono" th:field="*{telefono}"
@@ -320,15 +358,37 @@
                                        pattern="\d{9}" maxlength="9" minlength="9" required>
 
                                 <small class="text-muted">Debe tener exactamente 9 dígitos.</small>
+                            </div>-->
+
+                            <div class="col-md-6">
+                                <label class="form-label">Teléfono:</label>
+                                <input th:field="*{telefono}" type="text" class="form-control" placeholder="Ingrese el número de teléfono"
+                                       th:classappend="${#fields.hasErrors('telefono')?'is-invalid':''}"/>
+                                <div class="invalid-feedback"
+                                     th:if="${#fields.hasErrors('telefono')}" th:errors="*{telefono}">
+                                    Mensaje de error de telefono
+                                </div>
                             </div>
+
                         </div>
 
                         <div class="row mb-3">
-                            <!-- Correo -->
+                            <!-- Correo
                             <div class="col-md-6">
                                 <label for="correoCoordinador" class="form-label">Correo:</label>
                                 <input type="email" class="form-control" id="correoCoordinador" placeholder="Ingrese el correo" th:field="*{correo}">
+                            </div>-->
+
+                            <div class="col-md-6">
+                                <label class="form-label">Correo:</label>
+                                <input th:field="*{correo}" type="text" class="form-control" placeholder="Ingrese el correo"
+                                       th:classappend="${#fields.hasErrors('correo')?'is-invalid':''}"/>
+                                <div class="invalid-feedback"
+                                     th:if="${#fields.hasErrors('correo')}" th:errors="*{correo}">
+                                    Mensaje de error de correo
+                                </div>
                             </div>
+
 
                             <!-- Zona -->
                             <div class="col-md-6">
@@ -336,23 +396,69 @@
                                 <select class="form-control" id="zonaCoordinador" th:field="*{zona.idzona}">
                                     <option value="" disabled selected>Escoger una zona</option>
                                     <option th:each="zona : ${zonas}" th:value="${zona.idzona}" th:text="${zona.nombre}"></option>
-                                    <!--<option escoger uno></option>-->
-                                </select>
 
+                                </select>
                             </div>
+<!--
+                            <div class="col-md-6">
+                                <label for="zonaCoordinador" class="form-label">Zona:</label>
+                                <select class="form-control" id="zonaCoordinador" th:field="*{zona.idzona}"
+                                        th:classappend="${#fields.hasErrors('zona') ? 'is-invalid' : ''}" required>
+                                    <option value="" disabled
+                                            th:selected="${coordinadorzonal.zona == null}">Escoger una zona</option>
+                                    <option th:each="zona : ${zonas}"
+                                            th:value="${zona.idzona}"
+                                            th:text="${zona.nombre}"
+                                            th:selected="${coordinadorzonal.zona != null and zona.idzona == coordinadorzonal.zona.idzona}">
+                                    </option>
+                                </select>
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('zona')}" th:errors="*{zona}">
+                                   Mensaje de error específico para el campo zona
+                                </div>
+                            </div>-->
+
+
+
                         </div>
 
                         <div class="row mb-3">
-                            <!-- Fecha de Nacimiento -->
+                            <!-- Fecha de Nacimiento
                             <div class="col-md-6">
                                 <label for="fechaNacimientoCoordinador" class="form-label">Fecha de Nacimiento:</label>
                                 <input type="date" class="form-control"
                                        id="fechaNacimientoCoordinador" th:field="*{fechanacimiento}"
                                        th:value="${formattedDate}"/>
+                            </div>-->
+
+
+                            <div class="col-md-6">
+                                <label class="form-label">Fecha de Nacimiento:</label>
+                                <input th:field="*{fechanacimiento}" type="date" class="form-control"
+                                       th:classappend="${#fields.hasErrors('fechanacimiento')?'is-invalid':''}"/>
+                                <div class="invalid-feedback"
+                                     th:if="${#fields.hasErrors('fechanacimiento')}" th:errors="*{fechanacimiento}">
+                                    Mensaje de error de correo
+                                </div>
                             </div>
+
                             <!--<p th:text="${coordinadorzonal.fechanacimiento}"></p>-->
 
-                            <!-- Contraseña Temporal -->
+                            <!-- Contraseña Temporal
+                            <div class="col-md-6">
+                                <label for="contrasenaTemporal" class="form-label">Contraseña Temporal:</label>
+                                <input type="password" class="form-control"
+                                       id="contrasenaTemporal"  th:field="*{contrasena}"
+                                       th:placeholder="${coordinadorzonal.id != null ? '********' : 'Ingrese una contraseña temporal'}"
+                                       th:value="${coordinadorzonal.id != null ? '********' : ''}"
+                                       th:readonly="${coordinadorzonal.id != null}"
+                                       th:classappend="${#fields.hasErrors('contrasena') ? 'is-invalid' : ''}"/>
+                                 Mostrar mensaje de error si hay errores en el campo de contraseña
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('contrasena')}" th:errors="*{contrasena}">
+                                    La contraseña es obligatoria y debe tener al menos 6 caracteres.
+                                </div>
+                            </div>-->
+
+
                             <div class="col-md-6">
                                 <label for="contrasenaTemporal" class="form-label">Contraseña Temporal:</label>
                                 <input type="password" class="form-control"
@@ -361,6 +467,9 @@
                                        th:value="${coordinadorzonal.id != null ? '********' : ''}"
                                        th:readonly="${coordinadorzonal.id != null}"/>
                             </div>
+
+
+
                         </div>
 
                         <!-- Botón de registrar -->

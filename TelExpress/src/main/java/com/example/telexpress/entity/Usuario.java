@@ -1,6 +1,7 @@
 package com.example.telexpress.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -20,17 +21,33 @@ public class Usuario {
     private Integer id;
 
     @Column(nullable = false)
+    @NotBlank(message = "El nombre es obligatorio")
     private String nombre;
+
     private Integer calificacion;
 
+    @NotBlank(message = "El apellido es obligatorio")
     private String apellido;
+
+    @Email(message = "Correo electrónico inválido")
+    @NotBlank(message = "El correo es obligatorio")
     private String correo;
+
     private String direccion;
+
+    @Pattern(regexp = "\\d{8}", message = "El DNI debe tener 8 dígitos")
     private String dni;
+
+    @Pattern(regexp = "\\d{9}", message = "El número de teléfono debe tener 9 dígitos")
     private String telefono;
+
+    //@NotBlank(message = "La contraseña es obligatoria")
+    //@Size(min = 6, message = "La contraseña debe tener al menos 6 caracteres")
     private String contrasena;
     private String estadoUsuario;
     private String motivo;
+
+    @Pattern(regexp = "\\d{11}", message = "El RUC debe tener 11 dígitos")
     private String ruc;
 
     @Column(name = "notificaciones", length = 1024)
@@ -41,6 +58,8 @@ public class Usuario {
 
     @Column(name = "fechanacim", nullable = true)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @NotNull(message = "La fecha de nacimiento es obligatoria")
+    @Past(message = "La fecha de nacimiento debe ser en el pasado")
     private LocalDate fechanacimiento;
 
     @ManyToOne
@@ -53,6 +72,7 @@ public class Usuario {
 
     @ManyToOne
     @JoinColumn(name = "idzona", nullable = false)
+    @NotNull(message = "Debe seleccionar una zona")
     private Zona zona;
 
     @ManyToOne
