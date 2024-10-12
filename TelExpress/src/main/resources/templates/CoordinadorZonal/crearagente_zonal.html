@@ -87,7 +87,7 @@
                 <div class="card">
                     <div class="card-body">
                         <!--FORMULARIO-->
-                        <form id="formCrearAgente" method="post" th:action="@{/coordinador/crearagente_zonal}">
+                        <form id="formCrearAgente" method="post" th:action="@{'/coordinador/guardaragente_zonal'}">
                             <div class="row">
                                 <input th:field="*{agente.id}" name="id" type="hidden"/>
                                     <div class="mb-3 row">
@@ -169,7 +169,7 @@
                                     <div class="mb-3 row">
                                         <label class="form-label col-md-2">Código despachador:</label>
                                         <div class="col-md-10">
-                                            <input th:field="*{agente.codigoDespachador.codigoDespachador}" type="text" class="form-control" id="basic-codigo-despachador" placeholder="Ingresa el código despachador" required/>
+                                            <input th:field="*{agente.despachador}" type="text" class="form-control" id="basic-codigo-despachador" placeholder="Ingresa el código despachador" required/>
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
@@ -205,16 +205,17 @@
 
                                             </select>
                                         </div>-->
-                                        <label class="form-label col-md-2">Distrito:</label>
-                                        <div class="col-md-10">
-                                            <select class="form-control form-select" th:field="*{agente.distrito.id}" required>
-                                                <option disabled selected hidden>Seleccione un distrito</option>
-                                                <option th:each="distrito : ${distritosNorte}"
-                                                        th:value="${distrito.id}"
-                                                        th:text="${distrito.nombredistrito}">
-                                                </option>
-                                            </select>
+                                        <!-- Selección de distrito -->
+                                        <div class="mb-3 row">
+                                            <label class="form-label col-md-2">Distrito:</label>
+                                            <div class="col-md-10">
+                                                <select class="form-control form-select" th:field="*{distrito.id}" required>
+                                                    <option disabled selected hidden>Seleccione un distrito</option>
+                                                    <option th:each="distrito : ${distritos}" th:value="${distrito.id}" th:text="${distrito.nombredistrito}"></option>
+                                                </select>
+                                            </div>
                                         </div>
+
                                     </div>
                                     <div class="mb-3 row">
                                         <label class="form-label col-md-2">Código de jurisdicción:</label>

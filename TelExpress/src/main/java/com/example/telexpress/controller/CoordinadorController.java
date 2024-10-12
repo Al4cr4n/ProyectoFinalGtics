@@ -6,7 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
+import java.security.Principal;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Optional;
@@ -47,17 +47,43 @@ public class CoordinadorController {
     }
 
     @GetMapping("/crearagente_zonal")
-    public String crearAgenteCoordinadorZonal(Model model) {
-        // Buscar la entidad Zona Norte (idzona = 1)
-        Zona zonaNorte = zonaRepository.findById(1).orElseThrow(() -> new RuntimeException("Zona no encontrada"));
+    public String crearAgenteCoordinadorZonal(Model model, Principal principal) {
+        // Obtener el usuario logueado
+        Usuario usuarioLogueado = usuarioRepository.findByCorreo(principal.getName());
+        if (usuarioLogueado == null) {
+            throw new RuntimeException("Usuario logueado no encontrado");
+        }
 
-        // Obtener los distritos pertenecientes a la Zona Norte
-        List<Distrito> distritosNorte = distritoRepository.findByZona(zonaNorte);
-        model.addAttribute("distritosNorte", distritosNorte);
+        // Obtener la zona del usuario logueado
+        Zona zonaUsuario = usuarioLogueado.getZona();
+        if (zonaUsuario == null) {
+            throw new RuntimeException("El usuario logueado no tiene una zona asignada");
+        }
 
-        model.addAttribute("agente", new Usuario()); // Inicializa un objeto Usuario para el formulario
+        // Obtener los distritos pertenecientes a la zona del usuario logueado
+        List<Distrito> distritos = distritoRepository.findByZona_Idzona(zonaUsuario.getIdzona());
+
+        // Agregar los distritos al modelo
+        model.addAttribute("distritos", distritos);
+
+        // Inicializa un objeto Usuario para el formulario del nuevo agente
+        Usuario nuevoAgente = new Usuario();
+        nuevoAgente.setRol(new Rol()); // Asigna un rol vacío que puedes configurar después
+
+        // Inicializa el objeto Distrito dentro del nuevo agente
+        nuevoAgente.setDistrito(new Distrito());  // Asegúrate de inicializar el distrito
+
+        // Agregar el nuevo agente al modelo
+        model.addAttribute("agente", nuevoAgente);
+
+        // Pasar el objeto zona para saber a qué zona pertenece el nuevo agente
+        model.addAttribute("zona", zonaUsuario);
+
         return "CoordinadorZonal/crearagente_zonal"; // Muestra la vista del formulario
     }
+
+
+
 
     @PostMapping("/guardaragente_zonal")
     public String guardarAgente(@ModelAttribute("agente") Usuario agenteNuevo, RedirectAttributes attr) {
