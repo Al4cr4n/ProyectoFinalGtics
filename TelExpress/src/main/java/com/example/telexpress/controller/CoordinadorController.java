@@ -207,13 +207,28 @@ public class CoordinadorController {
     }
 
     @GetMapping({"/listaagente_zonal"})
-    public String listaAgenteCoordinadorZonal(Model model) {
+    public String listaAgenteCoordinadorZonal(Model model, Principal principal) {
         model.addAttribute("paginaActual", "agentes");
 
-        List<Usuario> lista_agentes_zonal = coordinadorRepository.buscarAgentePorRolYZona("Norte"); //solo para agente norte, pero puede ser por request param para otras zonas
-        model.addAttribute("lista_agentes_zonal",lista_agentes_zonal);
+        // Obtener el usuario logueado
+        Usuario usuarioLogueado = usuarioRepository.findByCorreo(principal.getName());
+        if (usuarioLogueado == null) {
+            throw new RuntimeException("Usuario logueado no encontrado");
+        }
 
-        return "CoordinadorZonal/listaagente_zonal";
+        // Obtener la zona del usuario logueado
+        Zona zonaUsuario = usuarioLogueado.getZona();
+        if (zonaUsuario == null) {
+            throw new RuntimeException("El usuario logueado no tiene una zona asignada");
+        }
+
+        // Obtener los agentes de compra que pertenecen a la misma zona del usuario logueado
+        List<Usuario> listaAgentesZonal = coordinadorRepository.buscarAgentePorZona(zonaUsuario.getIdzona());
+
+        // Pasar la lista de agentes al modelo
+        model.addAttribute("lista_agentes_zonal", listaAgentesZonal);
+
+        return "CoordinadorZonal/listaagente_zonal"; // Retorna la vista con la lista de agentes
     }
 
     @GetMapping({"/perfilagente_zonal"})
