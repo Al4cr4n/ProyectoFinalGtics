@@ -223,6 +223,33 @@ public class AgenteController {
         return "Agente/ordenes_resueltas";
     }
 
+    @GetMapping("/orden/editar")
+    public String editarOrden(Model model, @RequestParam("idOrdenes") Integer idOrdenes) {
+        model.addAttribute("activePage", "proveedores");
+
+        Optional<Ordenes> optionalOrdenes = ordenesRepository.findById(idOrdenes);
+        List<String> estadosTodos = Arrays.asList("EN PROCESO", "ARRIBO AL PAÍS", "EN ADUANAS", "EN RUTA", "RECIBIDO", "EN VALIDACIÓN", "CREADO","EN PROCESO");
+
+        if (optionalOrdenes.isPresent()) {
+            Ordenes ordenes = optionalOrdenes.get();
+
+            model.addAttribute("ordenes", ordenes);
+            model.addAttribute("estadosPermitidos", estadosTodos); // Agrega los estados permitidos al modelo
+
+            return "Agente/orden_editar";
+        } else {
+            return "redirect:/agente/ordenes";
+        }
+    }
+
+    @PostMapping("/orden/guardar")
+    public String guardarOrden(Ordenes ordenes, RedirectAttributes attr, Model model) {
+        model.addAttribute("activePage", "ordenes");
+
+        ordenesRepository.save(ordenes);
+        return "redirect:/agente/ordenes";
+    }
+
 
 
     // Método para mostrar la lista de usuarios en la vista con búsqueda por nombre o apellido

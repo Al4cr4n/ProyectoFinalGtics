@@ -85,6 +85,7 @@
                                         <th>Dirección</th>
                                         <th>Estado</th>
                                         <th>Fecha de Arribo</th>
+                                        <th>Editar</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -110,7 +111,14 @@
                                                     (${orden.estadoOrdenes == 'RECIBIDO'} ? 'bg-label-success' :
                                                     'bg-label-default' )))))))"></span>    </td>
                                         <td th:text="${#dates.format(orden.fechaArribo, 'yyyy-MM-dd')}"></td>
+                                        <td>
+                                            <a class="btn btn-sm btn-primary" th:href="@{'/agente/orden/editar?idOrdenes=' + ${orden.idOrdenes}}">
+                                                <i class="bx bx-edit-alt"></i>
+                                            </a>
+
+                                        </td>
                                     </tr>
+
                                     </tbody>
 
                                 </table>
