@@ -65,4 +65,13 @@ public interface OrdenesRepository extends JpaRepository<Ordenes, Integer> {
             "WHERE o.usuario_idusuario = :idusuario AND o.estadoOrdenes IN :estados", nativeQuery = true)
     List<Ordenes> findOrdenesByUsuarioAAndEstadoOrdenes(@Param("idusuario") int idusuario,@Param("estados") List<String> estados);
 
+
+    @Query("SELECT o FROM Ordenes o JOIN Usuario u ON o.usuario.id = u.id " +
+            "WHERE (u.nombre LIKE %:search% OR u.apellido LIKE %:search% OR o.estadoOrdenes LIKE %:search%)")
+    List<Ordenes> buscarOrdenes(@Param("search") List<String> search);
+
+    @Query("SELECT o FROM Ordenes o WHERE o.estadoOrdenes IN :estados")
+    List<Ordenes> findAllByEstadoIn(@Param("estados") List<String> estados);
+
 }
+
