@@ -1,35 +1,9 @@
 <!DOCTYPE html>
-
-<!-- =========================================================
-* Sneat - Bootstrap 5 HTML Admin Template - Pro | v1.0.0
-==============================================================
-
-* Product Page: https://themeselection.com/products/sneat-bootstrap-html-admin-template/
-* Created by: ThemeSelection
-* License: You must have a valid license purchased in order to legally use the theme for your project.
-* Copyright ThemeSelection (https://themeselection.com)
-
-=========================================================
- -->
-<!-- beautify ignore:start -->
-<html
-        lang="en"
-        class="light-style layout-menu-fixed"
-        dir="ltr"
-        data-theme="theme-default"
-        data-assets-path="/assets/"
-        data-template="vertical-menu-template-free"
-        xmlns="http://www.w3.org/1999/html"
-        xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="en" class="light-style layout-menu-fixed" dir="ltr" data-theme="theme-default" data-assets-path="/assets/" data-template="vertical-menu-template-free" xmlns="http://www.w3.org/1999/html" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="utf-8" />
-    <meta
-            name="viewport"
-            content="width=device-width, initial-scale=1.0"
-    />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Crear- CoordinadorZonal</title>
-
     <meta name="description" content="" />
 
     <!-- Favicon -->
@@ -38,10 +12,7 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-            href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
-            rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet" />
 
     <!-- Icons. Uncomment required icon fonts -->
     <link rel="stylesheet" href="/assets/vendor/fonts/boxicons.css" />
@@ -53,22 +24,16 @@
 
     <!-- Vendors CSS -->
     <link rel="stylesheet" href="/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
-
     <link rel="stylesheet" href="/assets/vendor/libs/apex-charts/apex-charts.css" />
-
-    <!-- Page CSS -->
 
     <!-- Helpers -->
     <script src="/assets/vendor/js/helpers.js"></script>
 
-    <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
-    <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
+    <!--! Template customizer & Theme config files -->
     <script src="/assets/js/config.js"></script>
 
     <!--TelExpress fuente de letra-->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-
 </head>
 
 <body>
@@ -89,147 +54,102 @@
                         <!--FORMULARIO-->
                         <form id="formCrearAgente" method="post" th:action="@{'/coordinador/guardaragente_zonal'}">
                             <div class="row">
-                                <input th:field="*{agente.id}" name="id" type="hidden"/>
-                                    <div class="mb-3 row">
-                                        <label class="form-label col-md-2">Nombre:</label>
-                                        <div class="col-md-10">
-                                            <input th:field="*{agente.nombre}" type="text" class="form-control " id="basic-nombre" placeholder="Ingresa el nombre" required/>
+                                <input th:field="*{agente.id}" name="id" type="hidden" />
+                                <div class="mb-3 row">
+                                    <label class="form-label col-md-2">Nombre:</label>
+                                    <div class="col-md-10">
+                                        <input th:field="*{agente.nombre}" type="text" class="form-control" id="basic-nombre" placeholder="Ingresa el nombre" required />
+                                    </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label class="form-label col-md-2">Apellido:</label>
+                                    <div class="col-md-10">
+                                        <input th:field="*{agente.apellido}" type="text" class="form-control" id="basic-apellido" placeholder="Ingresa el apellido" required />
+                                    </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label class="form-label col-md-2">Correo electrónico:</label>
+                                    <div class="col-md-10">
+                                        <input th:field="*{agente.correo}" type="text" class="form-control" id="basic-correo" placeholder="Ingresa el email" pattern="[a-zA-Z0-9._%+-]+@" required />
+                                    </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label class="form-label col-md-2">Contraseña:</label>
+                                    <div class="col-md-10">
+                                        <input th:field="*{agente.contrasena}" type="password" class="form-control" id="basic-password" placeholder="Ingresa la contraseña" pattern="^(?=.*[A-Za-z])(?=.*\\d)(?=.*[!@#$%^&*()_+\\-=\\[\\]{};':&quot;\\\\|,.&lt;&gt;\\/\\?]).{8,16}$" title="La contraseña debe tener al menos 1 número, 2 caracteres especiales, 1 letra, y una longitud entre 8 y 16 caracteres." minlength="8" maxlength="16" required />
+                                        <div class="invalid-feedback">
+                                            La contraseña debe tener al menos 1 número, 2 caracteres especiales, 1 letra, y una longitud entre 8 y 16 caracteres.
                                         </div>
                                     </div>
-                                    <div class="mb-3 row">
-                                        <label class="form-label col-md-2">Apellido:</label>
-                                        <div class="col-md-10">
-                                            <input th:field="*{agente.apellido}" type="text" class="form-control" id="basic-apellido" placeholder="Ingresa el apellido" required/>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label class="form-label col-md-2">Repetir Contraseña:</label>
+                                    <div class="col-md-10">
+                                        <input type="password" class="form-control" id="basic-password-confirm" placeholder="Repite la contraseña" minlength="8" maxlength="16" required />
+                                        <div class="invalid-feedback">
+                                            Las contraseñas no coinciden.
                                         </div>
                                     </div>
-                                    <div class="mb-3 row">
-                                        <label class="form-label col-md-2">Correo electrónico:</label>
-                                        <div class="col-md-10">
-                                        <input th:field="*{agente.correo}" type="text" class="form-control" id="basic-correo" placeholder="Ingresa el email"
-                                        pattern="[a-zA-Z0-9._%+-]+@"
-                                        required />
-                                        </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label class="form-label col-md-2">DNI:</label>
+                                    <div class="col-md-10">
+                                        <input th:field="*{agente.dni}" type="text" class="form-control" id="basic-dni" placeholder="Ingresa el DNI" maxlength="8" pattern="\d{8}" oninput="this.value = this.value.replace(/\D/g, '')" required />
                                     </div>
-                                    <div class="mb-3 row">
-                                        <label class="form-label col-md-2">Contraseña:</label>
-                                        <div class="col-md-10">
-                                            <input th:field="*{agente.contrasena}"
-                                                   type="password"
-                                                   class="form-control"
-                                                   id="basic-password"
-                                                   placeholder="Ingresa la contraseña"
-                                                   pattern="^(?=.*[A-Za-z])(?=.*\\d)(?=.*[!@#$%^&*()_+\\-=\\[\\]{};':&quot;\\\\|,.&lt;&gt;\\/\\?]).{8,16}$"
-                                                   title="La contraseña debe tener al menos 1 número, 2 caracteres especiales, 1 letra, y una longitud entre 8 y 16 caracteres."
-                                                   minlength="8"
-                                                   maxlength="16"
-                                                   required />
-                                            <div class="invalid-feedback">
-                                                La contraseña debe tener al menos 1 número, 2 caracteres especiales, 1 letra, y una longitud entre 8 y 16 caracteres.
-                                            </div>
-                                        </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label class="form-label col-md-2">Teléfono:</label>
+                                    <div class="col-md-10">
+                                        <input th:field="*{agente.telefono}" type="text" class="form-control" id="basic-telefono" placeholder="Ingresa el número telefónico" maxlength="11" oninput="this.value = this.value.replace(/\D/g, '')" required />
                                     </div>
-                                    <div class="mb-3 row">
-                                        <label class="form-label col-md-2">Repetir Contraseña:</label>
-                                        <div class="col-md-10">
-                                            <input type="password"
-                                                   class="form-control"
-                                                   id="basic-password-confirm"
-                                                   placeholder="Repite la contraseña"
-                                                   minlength="8"
-                                                   maxlength="16"
-                                                   required />
-                                            <div class="invalid-feedback">
-                                                Las contraseñas no coinciden.
-                                            </div>
-                                        </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label class="form-label col-md-2">Código despachador:</label>
+                                    <div class="col-md-10">
+                                        <input th:field="*{agente.despachador}" type="text" class="form-control" id="basic-codigo-despachador" placeholder="Ingresa el código despachador" required />
                                     </div>
-                                    <div class="mb-3 row">
-                                        <label class="form-label col-md-2">DNI:</label>
-                                        <div class="col-md-10">
-                                            <input th:field="*{agente.dni}"
-                                                   type="text"
-                                                   class="form-control "
-                                                   id="basic-dni"
-                                                   placeholder="Ingresa el DNI"
-                                                   maxlength="8"
-                                                   pattern="\d{8}"
-                                                   oninput="this.value = this.value.replace(/\D/g, '')"
-                                                   required/>
-                                        </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label class="form-label col-md-2">RUC:</label>
+                                    <div class="col-md-10">
+                                        <input th:field="*{agente.ruc}" type="text" class="form-control" id="basic-ruc" placeholder="Ingresa el RUC" maxlength="11" pattern="\d{11}" oninput="this.value = this.value.replace(/\D/g, '')" required />
                                     </div>
-                                    <div class="mb-3 row ">
-                                        <label class="form-label col-md-2">Telefono:</label>
-                                        <div class="col-md-10">
-                                            <input th:field="*{agente.telefono}" type="text" class="form-control" id="basic-telefono" placeholder="Ingresa el número telefónico"
-                                                   maxlength="11"
-                                                   oninput="this.value = this.value.replace(/\D/g, '')"
-                                                   required/>
-                                        </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label class="form-label col-md-2">Razón Social:</label>
+                                    <div class="col-md-10">
+                                        <input th:field="*{agente.razonSocial}" type="text" class="form-control" id="basic-razon-social" placeholder="Ingrese la razón social" required />
                                     </div>
-                                    <div class="mb-3 row">
-                                        <label class="form-label col-md-2">Código despachador:</label>
-                                        <div class="col-md-10">
-                                            <input th:field="*{agente.despachador}" type="text" class="form-control" id="basic-codigo-despachador" placeholder="Ingresa el código despachador" required/>
-                                        </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label class="form-label col-md-2">Dirección:</label>
+                                    <div class="col-md-10">
+                                        <input th:field="*{agente.direccion}" type="text" class="form-control" id="basic-direccion" placeholder="Ingresa la dirección" required />
                                     </div>
-                                    <div class="mb-3 row">
-                                        <label class="form-label col-md-2">RUC:</label>
-                                        <div class="col-md-10">
-                                        <input th:field="*{agente.ruc}" type="text"  class="form-control"    id="basic-ruc"
-                                        placeholder="Ingresa el RUC" 
-                                        maxlength="11"
-                                        pattern="\d{11}"
-                                        oninput="this.value = this.value.replace(/\D/g, '')"
-                                        required/>
-                                        </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label class="form-label col-md-2">Distrito:</label>
+                                    <div class="col-md-10">
+                                        <select th:field="*{agente.distrito.id}" class="form-select" required>
+                                            <option value="" disable selected>Seleccione un distrito</option>
+                                            <option th:each="distrito : ${distritos}" th:value="${distrito.id}" th:text="${distrito.nombredistrito}"></option>
+                                        </select>
                                     </div>
-                                    <div class="mb-3 row">
-                                        <label class="form-label col-md-2">Razón Social :</label>
-                                        <div class="col-md-10">
-                                            <input th:field="*{agente.razonSocial}" type="text" class="form-control" id="basic-razon-social" placeholder="Ingrese la razón social" required/>
-                                        </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label class="form-label col-md-2">Código de jurisdicción:</label>
+                                    <div class="col-md-10">
+                                        <input th:field="*{agente.jurisdiccion}" type="text" class="form-control" id="basic-codigo-jurisdiccion" placeholder="Ingresa el código de jurisdicción" required />
                                     </div>
-                                    <div class="mb-3 row">
-                                        <label class="form-label col-md-2">Dirección:</label>
-                                        <div class="col-md-10">
-                                        <input th:field="*{agente.direccion}" type="text" class="form-control" id="basic-direccion" placeholder="Ingresa la dirección" required/>
-                                        </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label class="form-label col-md-2">Zona:</label>
+                                    <div class="col-md-10">
+                                        <input type="text" class="form-control" id="basic-zona" th:value="${session.usuario.zona.nombre}" readonly required style="background: linear-gradient(#ffffff75,#d8d8d885,#ffffff);" />
                                     </div>
-                                    <div class="mb-3 row">
-                                        <!--<label class="form-label col-md-2">Distrito:</label>
-                                        <div class="col-md-10">
-                                            <select class="form-control form-select" th:field="*{distrito.nombredistrito}" required>
-                                                <option disabled selected hidden>Seleccione un distrito</option>
-                                                <option value="ancon">Ancon</option>
-                                                <option value="santa rosa">Santa Rosa</option>
-
-                                            </select>
-                                        </div>-->
-                                        <!-- Selección de distrito -->
-                                        <div class="mb-3 row">
-                                            <label class="form-label col-md-2">Distrito:</label>
-                                            <div class="col-md-10">
-                                                <select class="form-control form-select" th:field="*{distrito.id}" required>
-                                                    <option disabled selected hidden>Seleccione un distrito</option>
-                                                    <option th:each="distrito : ${distritos}" th:value="${distrito.id}" th:text="${distrito.nombredistrito}"></option>
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                    <div class="mb-3 row">
-                                        <label class="form-label col-md-2">Código de jurisdicción:</label>
-                                        <div class="col-md-10">
-                                            <input th:field="*{agente.codigoJurisdiccion}" type="text" class="form-control" id="basic-codigo-jurisdiccion" placeholder="Ingresa el código de jurisdicción" required/>
-                                        </div>
-                                    </div>
-                                    <div class="mb-3 row">
-                                        <label class="form-label col-md-2">Zona:</label>
-                                        <div class="col-md-10">
-                                            <input type="text" class="form-control" id="basic-zona" placeholder="Norte" value="Norte"readonly required style="background: linear-gradient(#ffffff75,#d8d8d885,#ffffff);"/>
-                                        </div>
-                                    </div>
+                                </div>
                             </div>
+
                             <!-- BOTON DE CREAR AGENTE -->
                             <div class="text-center mt-3">
                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmModal" style="background-color: #e89b85; border-color: #e89b85; font-size: 17px; font-family: 'Poppins', sans-serif;">Enviar</button>
@@ -260,149 +180,67 @@
                         </div>
                     </div>
 
-                    <!-- Bootstrap JS and dependencies (Popper.js and Bootstrap JS) -->
+                    <!-- Bootstrap JS -->
                     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
                     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
 
                     <script>
-                        document.getElementById('confirmarRegistro').addEventListener('click', function () {
-                            document.getElementById('formRegistro').submit(); // Envía el formulario
-                        });
-                    </script>
-
-                    <!-- Script para validar que las contraseñas coincidan -->
-                    <script>
                         document.getElementById('formCrearAgente').addEventListener('submit', function(event) {
-                            // Obtener los valores de los campos de contraseña
-                            var password = document.getElementById('basic-password').value;
-                            var confirmPassword = document.getElementById('basic-password-confirm').value;
+                            event.preventDefault(); // Evita el envío inmediato del formulario
 
-                            // Validar que las contraseñas coincidan
-                            if (password !== confirmPassword) {
-                                event.preventDefault(); // Evita el envío del formulario
-                                document.getElementById('basic-password-confirm').classList.add('is-invalid'); // Mostrar error
-                                document.getElementById('errorMessages').textContent = 'Las contraseñas no coinciden.';
-                                document.getElementById('errorMessages').style.display = 'block';
-                            } else {
-                                document.getElementById('basic-password-confirm').classList.remove('is-invalid'); // Quitar error
+                            const inputs = document.querySelectorAll('.form-control');
+                            const errorMessages = document.getElementById('errorMessages');
+                            let allValid = true;
+
+                            inputs.forEach((input) => {
+                                if (input.value.trim() === '' && input.id !== 'basic-zona') {
+                                    input.classList.add('is-invalid');
+                                    allValid = false;
+                                } else {
+                                    input.classList.remove('is-invalid');
+                                }
+                            });
+
+                            if (!allValid) {
+                                errorMessages.textContent = 'Por favor, completa todos los campos correctamente.';
+                                errorMessages.style.display = 'block';
+                                return;
                             }
+
+                            var confirmationModal = new bootstrap.Modal(document.getElementById('modalcrear'));
+                            confirmationModal.show();
+                        });
+
+                        document.getElementById('confirmarRegistro').addEventListener('click', function() {
+                            document.getElementById('formCrearAgente').submit(); // Envía el formulario al confirmar
+                        });
+
+                        document.querySelectorAll('.form-control').forEach((input) => {
+                            input.addEventListener('input', function() {
+                                if (this.value.trim() !== '') {
+                                    this.classList.remove('is-invalid');
+                                }
+                            });
                         });
                     </script>
-
                 </div>
             </div>
         </div>
         <!-- Content wrapper -->
-
-    </div>
-    <!-- / Layout page -->
-</div>
-
-<!-- Overlay -->
-<div class="layout-overlay layout-menu-toggle"></div>
-</div>
-<!-- / Layout wrapper -->
-
-
-<!-- Modal de Confirmación -->
-<div class="modal fade" id="modalcrear" tabindex="-1"  aria-labelledby="confirmationModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="confirmationModalLabel" style="font-family: 'Poppins', sans-serif; font-size: 20px; text-align: center;">Confirmar solicitud</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <hr class="my-4 " />
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col mb-3">
-                        <label>¿Estás seguro de la creación de un nuevo agente de compra?</label>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer justify-content-center mx-2">
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
-                  Cancelar
-                </button>
-                <button type="button" class="btn btn-primary" id="confirm-submit">Confirmar</button>
-              </div>
-        </div>
     </div>
 </div>
-
-
-<script>
-    document.getElementById('formCrearAgente').addEventListener('submit', function(event) {
-        event.preventDefault(); // Evita el envío inmediato del formulario
-
-        // Obtener todos los inputs del formulario
-        const inputs = document.querySelectorAll('.form-control');
-        const errorMessages = document.getElementById('errorMessages');
-
-        // Variable para controlar si todos los campos son válidos
-        let allValid = true;
-
-        // Validar cada input
-        inputs.forEach((input) => {
-            // Trim para remover espacios en blanco del inicio y final
-            if (input.value.trim() === '' && input.id!='basic-zona') {
-                // Si está vacío o solo tiene espacios, es inválido
-                input.classList.add('is-invalid'); // Agregar clase para resaltar el error
-                allValid = false;
-            } else {
-                input.classList.remove('is-invalid'); // Remover clase si es válido
-            }
-        });
-
-        // Si algún campo es inválido, mostrar mensaje de error
-        if (!allValid) {
-            errorMessages.textContent='Por favor, completa todos los campos correctamente.';
-            errorMessages.style.display='block';
-            return;
-        }
-
-        // Si todos los campos son válidos, muestra el modal de confirmación
-        var confirmationModal = new bootstrap.Modal(document.getElementById('modalcrear'));
-        confirmationModal.show();
-    });
-
-    // Escuchar el botón de confirmar en el modal
-    document.getElementById('confirm-submit').addEventListener('click', function() {
-        document.getElementById('formCrearAgente').submit(); // Envía el formulario al confirmar
-    });
-
-    // Remover clase de error en cuanto el usuario empiece a escribir
-    document.querySelectorAll('.form-control').forEach((input) => {
-        input.addEventListener('input', function() {
-            if (this.value.trim() !== '') {
-                this.classList.remove('is-invalid');
-            }
-        });
-    });
-</script>
-
-
 
 <!-- Core JS -->
-<!-- build:js assets/vendor/js/core.js -->
 <script src="/assets/vendor/libs/jquery/jquery.js"></script>
 <script src="/assets/vendor/libs/popper/popper.js"></script>
 <script src="/assets/vendor/js/bootstrap.js"></script>
 <script src="/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
-
 <script src="/assets/vendor/js/menu.js"></script>
-<!-- endbuild -->
 
 <!-- Vendors JS -->
 <script src="/assets/vendor/libs/apex-charts/apexcharts.js"></script>
 
 <!-- Main JS -->
 <script src="/assets/js/main.js"></script>
-
-<!-- Page JS -->
-<script src="/assets/js/dashboards-analytics.js"></script>
-
-<!-- Place this tag in your head or just before your close body tag. -->
-<script async defer src="https://buttons.github.io/buttons.js"></script>
 </body>
 </html>

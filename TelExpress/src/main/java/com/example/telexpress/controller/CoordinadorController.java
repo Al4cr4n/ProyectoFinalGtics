@@ -63,6 +63,12 @@ public class CoordinadorController {
         // Obtener los distritos pertenecientes a la zona del usuario logueado
         List<Distrito> distritos = distritoRepository.findByZona_Idzona(zonaUsuario.getIdzona());
 
+        // Verificar si la lista de distritos está vacía o es nula
+        if (distritos == null || distritos.isEmpty()) {
+            // Manejo del caso donde no hay distritos encontrados
+            throw new RuntimeException("No se encontraron distritos para la zona del usuario.");
+        }
+
         // Agregar los distritos al modelo
         model.addAttribute("distritos", distritos);
 
@@ -86,25 +92,43 @@ public class CoordinadorController {
 
 
     @PostMapping("/guardaragente_zonal")
-    public String guardarAgente(@ModelAttribute("agente") Usuario agenteNuevo, RedirectAttributes attr) {
+    public String guardarAgente(@ModelAttribute("agente") Usuario agenteNuevo, RedirectAttributes attr, Principal principal) {
 
-        if (agenteNuevo.getId() == null) { // Verificar si es un nuevo agente
+        // Verificar si el agente es nuevo
+        if (agenteNuevo.getId() == null) {
+
+            // Obtener el usuario logueado para asignarle la zona al nuevo agente
+            Usuario usuarioLogueado = usuarioRepository.findByCorreo(principal.getName());
+            if (usuarioLogueado == null) {
+                throw new RuntimeException("Usuario logueado no encontrado.");
+            }
+
+            // Obtener la zona del usuario logueado
+            Zona zonaUsuario = usuarioLogueado.getZona();
+            if (zonaUsuario == null) {
+                throw new RuntimeException("El usuario logueado no tiene una zona asignada.");
+            }
+
+            // Asignar la misma zona del usuario logueado al nuevo agente
+            agenteNuevo.setZona(zonaUsuario);
+
+            // Asignar el rol de agente (ID de rol = 3)
+            Rol rolAgente = new Rol();
+            rolAgente.setId(3); // Asigna el ID 3 al rol de agente
+            agenteNuevo.setRol(rolAgente);
+
             // Si el agente tiene un proveedor asociado, se guarda el proveedor
             if (agenteNuevo.getProveedor() != null && agenteNuevo.getProveedor().getNombreTienda() != null) {
                 proveedorRepository.save(agenteNuevo.getProveedor());
             }
 
-            // Asignar la zona "Norte" por defecto, ya que no la modificas en el formulario
-            Zona zonaNorte = new Zona();
-            zonaNorte.setIdzona(1); // Aquí debes usar el ID correspondiente para la zona Norte en la base de datos
-            agenteNuevo.setZona(zonaNorte);
-
-            // Guardar el nuevo agente
+            // Guardar el nuevo agente en la base de datos
             adminRepository.save(agenteNuevo);
             attr.addFlashAttribute("successMessage", "Agente creado exitosamente.");
         }
 
-        return "redirect:/coordinador/listaagente_zonal"; // Redireccionar a la lista de agentes después de guardar
+        // Redirigir a la lista de agentes actualizada después de guardar
+        return "redirect:/coordinador/listaagente_zonal";
     }
 
 
