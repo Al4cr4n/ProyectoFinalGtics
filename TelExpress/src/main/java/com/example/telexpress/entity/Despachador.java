@@ -7,11 +7,11 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "despachador")
-public class CodigoDespachador {
+public class Despachador {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "iddespachador")
-    private int iddespachador;
+    private Integer id;
 
     @Column(name = "despachador")
     private String despachador;

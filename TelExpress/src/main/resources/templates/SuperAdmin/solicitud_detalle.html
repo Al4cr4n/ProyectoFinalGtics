@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
-    <title>Solicitudes</title>
+    <title>Validacion</title>
     <meta name="description" content="" />
     <link rel="icon" type="image/x-icon" href="/assets/img/favicon/favicon.ico" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -32,12 +32,12 @@
             <div class="content-wrapper">
                 <div class="container-xxl flex-grow-1 container-p-y">
                     <h4 style="font-family: 'Poppins', sans-serif; color: #7367F0; font-weight: bold; padding-top: 1rem; padding-bottom: 1rem; margin-bottom: 1rem; text-align: center; font-size: 40px;">
-                        Validacion</h4>
+                        Validación</h4>
 
 
                     <div class="card" style="padding: 0.8rem;">
                         <div class="card-header">
-                            <!-- Formulario de solicitud -->
+                            <!-- Datos del solicitante -->
                             <form id="formAccountSettings" method="POST" th:object="${postulante}" onsubmit="return false">
                                 <div class="row mb-3">
                                     <div class="col-md-6">
@@ -73,32 +73,41 @@
                                 </div>
 
                                 <!-- Código despachador -->
-                                <div class="row mb-3">
-                                    <div class="col-md-6">
-                                        <label for="codigoDespachador" class="form-label">Código despachador:</label>
-                                        <input type="text" id="codigoDespachador" class="form-control" th:field="*{despachador}" readonly>
+                                <form th:action="@{/validarDespachador}" method="post" th:object="${despachador}">
+                                    <div class="row mb-3">
+                                        <div class="col-md-6">
+                                            <label for="codigoDespachador" class="form-label">Código despachador:</label>
+                                            <input type="text" id="codigoDespachador" class="form-control" th:field="*{despachador}">
+                                        </div>
+                                        <div class="col-md-3 align-self-end">
+                                            <button type="submit" class="btn btn-primary w-100">Validar</button>
+                                        </div>
                                     </div>
-                                    <div class="col-md-3 align-self-end">
-                                        <button type="button" class="btn btn-primary w-100">Validar</button>
-                                    </div>
-                                </div>
+                                </form>
+
+                                <!-- Mensaje de resultado de despachador -->
                                 <div class="mb-3">
-                                    <div class="alert alert-warning" role="alert">Mensaje de resultado</div>
+                                    <div class="alert alert-warning" role="alert" th:text="${mensajeDespachador}">Mensaje de resultado</div>
                                 </div>
 
                                 <!-- Código de jurisdicción -->
-                                <div class="row mb-3">
-                                    <div class="col-md-6">
-                                        <label for="codigoJurisdiccion" class="form-label">Código de jurisdicción:</label>
-                                        <input type="text" id="codigoJurisdiccion" class="form-control" th:field="*{jurisdiccion}" readonly>
+                                <form th:action="@{/validarJurisdiccion}" method="post" th:object="${jurisdiccion}">
+                                    <div class="row mb-3">
+                                        <div class="col-md-6">
+                                            <label for="codigoJurisdiccion" class="form-label">Código de jurisdicción:</label>
+                                            <input type="text" id="codigoJurisdiccion" class="form-control" th:field="*{codigoJurisdiccion}">
+                                        </div>
+                                        <div class="col-md-3 align-self-end">
+                                            <button type="submit" class="btn btn-primary w-100">Validar</button>
+                                        </div>
                                     </div>
-                                    <div class="col-md-3 align-self-end">
-                                        <button type="button" class="btn btn-primary w-100">Validar</button>
-                                    </div>
-                                </div>
+                                </form>
+
+                                <!-- Mensaje de resultado de jurisdicción -->
                                 <div class="mb-3">
-                                    <div class="alert alert-warning" role="alert">Mensaje de resultado</div>
+                                    <div class="alert alert-warning" role="alert" th:text="${mensajeJurisdiccion}">Mensaje de resultado</div>
                                 </div>
+
 
                                 <!-- Botones Aceptar y Denegar -->
                                 <div class="text-center">
