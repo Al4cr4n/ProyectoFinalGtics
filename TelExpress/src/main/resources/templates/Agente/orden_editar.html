@@ -65,23 +65,21 @@
 
           <!-- Formulario -->
           <form id="formEdicion" method="post" th:action="@{/agente/orden/guardar}" th:object="${ordenes}">
-            <input th:field="*{idOrdenes}" name="id" type="hidden"/>
+            <input th:field="*{idOrdenes}" name="id" type="hidden" />
+
             <div class="row mb-3">
               <!-- Nombre del cliente -->
               <div class="col-md-6">
                 <label for="nombreCliente" class="form-label">Nombre del Cliente:</label>
-                <input type="text" class="form-control" name="nombreCliente" id="nombreCliente" th:value="${ordenes.usuario.nombre}" placeholder="Ingrese el nombre del cliente">
+                <input type="text" class="form-control" id="nombreCliente" th:value="${ordenes.usuario.nombre}" readonly placeholder="Ingrese el nombre del cliente">
               </div>
 
               <!-- Nombre de la tienda -->
               <div class="col-md-6">
                 <label for="apellidoCliente" class="form-label">Tienda:</label>
-                <input type="text" class="form-control" name="apellidoCliente" id="apellidoCliente" th:value="${ordenes.usuario.apellido}" placeholder="Ingrese el apellido del cliente">
+                <input type="text" class="form-control" id="apellidoCliente" th:value="${ordenes.usuario.apellido}" readonly placeholder="Ingrese el apellido del cliente">
               </div>
-
             </div>
-
-
 
             <div class="row mb-3">
               <!-- Zona -->
@@ -98,16 +96,13 @@
               <div class="col-md-6">
                 <label class="form-label">Fecha de Arribo:</label>
                 <input th:field="*{fechaArribo}" type="date" class="form-control"
-                       th:value="${formattedDate}"
+                       th:value="${ordenes.fechaArribo != null ? #dates.format(ordenes.fechaArribo, 'yyyy-MM-dd') : ''}"
                        th:classappend="${#fields.hasErrors('fechaArribo') ? 'is-invalid' : ''}" />
                 <div class="invalid-feedback"
                      th:if="${#fields.hasErrors('fechaArribo')}" th:errors="*{fechaArribo}">
                   Error en la fecha de arribo.
                 </div>
               </div>
-
-
-
             </div>
 
             <!-- Botón de actualizar y cancelar -->
@@ -116,6 +111,7 @@
               <a class="btn btn-danger mx-2" th:href="@{/agente/ordenes}">Cancelar</a>
             </div>
           </form>
+
         </div>
 
         <!-- Modal de Confirmación -->

@@ -14,9 +14,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -246,7 +249,19 @@ public class AgenteController {
     public String guardarOrden(Ordenes ordenes, RedirectAttributes attr, Model model) {
         model.addAttribute("activePage", "ordenes");
 
-        ordenesRepository.save(ordenes);
+        // Convertir la fecha de arribo desde String a Date
+        String fechaArriboStr = ordenes.getFechaArribo().toString(); // Supongamos que recibes un String
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            Date fechaArribo = sdf.parse(fechaArriboStr);
+            ordenes.setFechaArribo(fechaArribo);
+        } catch (ParseException e) {
+            // Manejo de error si la conversión falla
+            e.printStackTrace();
+            model.addAttribute("error", "Error al convertir la fecha.");
+            return "agente/ordenes"; // Regresa a la vista actual
+        }
         return "redirect:/agente/ordenes";
     }
 
