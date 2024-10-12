@@ -46,6 +46,11 @@ public interface AdminRepository extends JpaRepository<Usuario,Integer>{
     // Método para buscar un usuario por teléfono
     Optional<Usuario> findByTelefono(String telefono);
 
+    //Metodo para buscar a los usuarios que postulan a agente
+    @Query(value = "select * from usuario where solicitudAgente = ?1",
+            nativeQuery= true)
+    List<Usuario> buscarPostulante(Integer solicitud);
+
 
 
 

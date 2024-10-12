@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en" class="light-style layout-menu-fixed" dir="ltr" data-theme="theme-default" data-assets-path="../../assets/" data-template="vertical-menu-template-free">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+    <title>Solicitudes</title>
+    <meta name="description" content="" />
+    <link rel="icon" type="image/x-icon" href="/assets/img/favicon/favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/assets/vendor/fonts/boxicons.css" />
+    <link rel="stylesheet" href="/assets/vendor/css/core.css" class="template-customizer-core-css" />
+    <link rel="stylesheet" href="/assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
+    <link rel="stylesheet" href="/assets/css/demo.css" />
+    <link rel="stylesheet" href="/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+    <link rel="stylesheet" href="/assets/vendor/libs/apex-charts/apex-charts.css" />
+    <script src="/assets/vendor/js/helpers.js"></script>
+    <script src="/assets/js/config.js"></script>
+    <!--TelExpress fuente de letra-->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+<!-- Layout wrapper -->
+<div class="layout-wrapper layout-content-navbar">
+    <div class="layout-container">
+        <div th:insert="~{SuperAdmin/fragments/menu.html::menu}"></div> <!-- este es el menu -->
+        <!-- Layout container -->
+        <div class="layout-page">
+            <div th:insert="~{SuperAdmin/fragments/navbar.html::navbar}"></div> <!-- este es el navbar -->
+            <!-- Content wrapper -->
+            <div class="content-wrapper">
+                <div class="container-xxl flex-grow-1 container-p-y">
+                    <h4 style="font-family: 'Poppins', sans-serif; color: #7367F0; font-weight: bold; padding-top: 1rem; padding-bottom: 1rem; margin-bottom: 1rem; text-align: center; font-size: 40px;">
+                        Solicitudes</h4>
+
+
+                    <div class="card" style="padding: 0.8rem;">
+                        <div class="card-header">
+
+                            <div class="table-responsive text-nowrap">
+                                <table class="table table-striped" id="agentesTable">
+                                    <thead class="table-light">
+                                    <tr>
+                                        <th>N°</th>
+                                        <th>Nombre</th>
+                                        <th>Apellido</th>
+                                        <th>Teléfono</th>
+                                        <th>DNI</th>
+                                        <th>RUC</th>
+
+                                        <th>Acciones</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <!-- Ejemplo de filas de la tabla -->
+                                    <tr th:each="persona, info: ${lista_solicitudes}">
+                                        <td th:text="${info.index + 1}"></td>
+                                        <td th:text="${persona.nombre}"></td>
+                                        <td th:text="${persona.apellido}"></td>
+                                        <td th:text="${persona.telefono}"></td>
+                                        <td th:text="${persona.dni}"></td>
+                                        <td th:text="${persona.ruc}"></td>
+
+                                        <td>
+                                            <a class="btn btn-sm btn-primary" th:href="@{'/superadmin/solicitud_detalle?id=' + ${persona.id}}">
+                                                <i class="bx bx-edit-alt"></i>
+                                            </a>
+
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <!-- Paginación -->
+                                <nav aria-label="Page navigation" class="mt-4 mb-4">
+                                    <ul class="pagination justify-content-center" id="paginacion"></ul>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Botón "Crear Nuevo" -->
+                    <div class="text-center my-3">
+                        <!--<button class="btn btn-primary" onclick="window.location.href='/rol_agente_solicitudes';">Solicitudes Agentes</button> -->
+                    </div>
+
+                </div>
+
+                <div class="content-backdrop fade"></div>
+            </div>
+            <!-- / Content wrapper -->
+        </div>
+        <!-- / Layout page -->
+    </div>
+    <!-- Overlay -->
+    <div class="layout-overlay layout-menu-toggle"></div>
+</div>
+
+
+<!-- / Layout wrapper -->
+<!-- Core JS -->
+<script>
+    let agenteId;
+
+    // Capturar el id del agente al hacer clic en el botón de eliminar
+    document.querySelectorAll('[data-bs-target="#confirmModal"]').forEach(button => {
+        button.addEventListener('click', function () {
+            agenteId = this.getAttribute('data-id');
+        });
+    });
+
+    // Confirmar la eliminación y redirigir al método del controlador
+    document.getElementById('confirmarEliminar').addEventListener('click', function () {
+        if (agenteId) {
+            window.location.href = '/superadmin/borrar_agentes?id=' + encodeURIComponent(agenteId);
+        }
+    });
+</script>
+
+<script src="/assets/vendor/libs/jquery/jquery.js"></script>
+<script src="/assets/vendor/libs/popper/popper.js"></script>
+<script src="/assets/vendor/js/bootstrap.js"></script>
+<script src="/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+<script src="/assets/vendor/js/menu.js"></script>
+<!-- endbuild -->
+<!-- Vendors JS -->
+<script src="/assets/vendor/libs/apex-charts/apexcharts.js"></script>
+<!-- Main JS -->
+<script src="/assets/js/main.js"></script>
+<!-- Page JS -->
+<script src="/assets/js/dashboards-analytics.js"></script>
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const rowsPerPage = 5; // Número de filas por página
+        const table = document.getElementById("agentesTable");
+        const tableBody = table.querySelector("tbody");
+        const rows = tableBody.querySelectorAll("tr");
+        const pagination = document.getElementById("paginacion");
+        let currentPage = 1;
+        const totalPages = Math.ceil(rows.length / rowsPerPage);
+
+        function displayRows(page) {
+            const start = (page - 1) * rowsPerPage;
+            const end = start + rowsPerPage;
+
+            // Ocultar todas las filas y mostrar sólo las de la página actual
+            rows.forEach((row, index) => {
+                row.style.display = (index >= start && index < end) ? "" : "none";
+            });
+        }
+
+        function setupPagination() {
+            pagination.innerHTML = "";
+
+            // Botón "Anterior"
+            const prevButton = document.createElement("li");
+            prevButton.className = "page-item" + (currentPage == 1 ? " disabled" : "");
+            prevButton.innerHTML = `<a class="page-link" href="#"> << </a>`;
+            prevButton.addEventListener("click", function(e) {
+                e.preventDefault();
+                if (currentPage > 1) {
+                    currentPage--;
+                    displayRows(currentPage);
+                    setupPagination();
+                }
+            });
+            pagination.appendChild(prevButton);
+
+            // Números de página
+            for (let i = 1; i <= totalPages; i++) {
+                const pageItem = document.createElement("li");
+                pageItem.className = "page-item" + (currentPage == i ? " active" : "");
+                pageItem.innerHTML = `<a class="page-link" href="#">${i}</a>`;
+                pageItem.addEventListener("click", function(e) {
+                    e.preventDefault();
+                    currentPage = i;
+                    displayRows(currentPage);
+                    setupPagination();
+                });
+                pagination.appendChild(pageItem);
+            }
+
+            // Botón "Siguiente"
+            const nextButton = document.createElement("li");
+            nextButton.className = "page-item" + (currentPage == totalPages ? " disabled" : "");
+            nextButton.innerHTML = `<a class="page-link" href="#"> >> </a>`;
+            nextButton.addEventListener("click", function(e) {
+                e.preventDefault();
+                if (currentPage < totalPages) {
+                    currentPage++;
+                    displayRows(currentPage);
+                    setupPagination();
+                }
+            });
+            pagination.appendChild(nextButton);
+        }
+
+        // Inicializar la tabla y la paginación
+        displayRows(currentPage);
+        setupPagination();
+    });
+</script>
+</body>
+</html>

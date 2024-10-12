@@ -180,6 +180,13 @@
                     </a>
                 </li>
 
+                <li class="menu-item" th:class="${activePage == 'solicitudes'} ? 'menu-item active' : 'menu-item'">
+                    <a href="/superadmin/solicitudes" class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-book-content"></i>
+                        <div data-i18n="Inventario">Solicitudes</div>
+                    </a>
+                </li>
+
                 <!-- Gestión de Roles -->
                 <li class="menu-item" th:class="${activePage == 'coordinadores' || activePage == 'agentes' || activePage == 'usuarios'} ? 'menu-item active' : 'menu-item'">
                     <a href="javascript:void(0);" class="menu-link menu-toggle">

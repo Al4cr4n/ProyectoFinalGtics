@@ -34,17 +34,19 @@ public class SuperAdminController {
     final ProveedorRepository proveedorRepository;
     final OrdenesRepository ordenesRepository;
     final DistritoRepository distritoRepository;
+    final CoordinadorRepository coordinadorRepository;
 
 
     public SuperAdminController(AdminRepository adminRepository, ZonaRepository zonaRepository,
                                 ProductoRepository productoRepository, UsuarioRepository usuarioRepository,
                                 ProveedorRepository proveedorRepository, OrdenesRepository ordenesRepository,
-                                DistritoRepository distritoRepository
+                                DistritoRepository distritoRepository,CoordinadorRepository coordinadorRepository
                                 ) {
         this.adminRepository=adminRepository; this.zonaRepository=zonaRepository;
         this.productoRepository=productoRepository; this.usuarioRepository=usuarioRepository;
         this.proveedorRepository=proveedorRepository; this.ordenesRepository=ordenesRepository;
         this.distritoRepository=distritoRepository;
+        this.coordinadorRepository = coordinadorRepository;
 
     }
 
@@ -666,19 +668,26 @@ public class SuperAdminController {
         return "Superadmin/gestion_agentes";
     }
 
-    @GetMapping("/rol_agente_solicitudes")
+    @GetMapping("/solicitudes")
     public String rolAgenteSolicitudesSuperadmin(Model model) {
-        model.addAttribute("activePage", "agentes");
-
-
-        return "SuperAdmin/rol_agente_solicitudes";
+        model.addAttribute("activePage", "solicitudes");
+        List<Usuario> listaPostulantes = adminRepository.buscarPostulante(1);
+        model.addAttribute("lista_solicitudes", listaPostulantes);
+        return "SuperAdmin/solicitudes";
     }
 
-    @GetMapping("/solicitud_agente")
-    public String solicitudAgenteSuperadmin(Model model) {
-        model.addAttribute("activePage", "agentes");
+    @GetMapping("/solicitud_detalle")
+    public String solicitudAgenteSuperadmin(Model model, @RequestParam("id") Integer id) {
+        model.addAttribute("activePage", "solicitudes");
+        Optional<Usuario> optUsuario= coordinadorRepository.findById(id);
+        if(optUsuario.isPresent()){
+            Usuario user= optUsuario.get();
+            model.addAttribute("postulante", user);
+            return "SuperAdmin/solicitud_detalle";
+        }else{
+            return "redirect:/superadmin";
+        }
 
-        return "SuperAdmin/solicitud_agente";
     }
 
     @GetMapping({ "/dashboard_superadmin"})
