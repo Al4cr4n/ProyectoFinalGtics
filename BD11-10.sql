@@ -33,12 +33,12 @@ DROP TABLE IF EXISTS `despachador`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `despachador` (
-  `iddespachador` int NOT NULL AUTO_INCREMENT,
+  `iddespachador` int NOT NULL,
   `despachador` varchar(45) NOT NULL,
   `estado` varchar(45) NOT NULL,
   PRIMARY KEY (`iddespachador`),
-  UNIQUE KEY `codigo_UNIQUE` (`despachador`)
-) ENGINE=InnoDB AUTO_INCREMENT=64 DEFAULT CHARSET=utf8mb3;
+  UNIQUE KEY `despachador_UNIQUE` (`despachador`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -47,7 +47,28 @@ CREATE TABLE `despachador` (
 
 LOCK TABLES `despachador` WRITE;
 /*!40000 ALTER TABLE `despachador` DISABLE KEYS */;
-INSERT INTO `despachador` VALUES (43,'DESP001','Habilitado'),(44,'DESP002','Habilitado'),(45,'DESP003','Habilitado'),(46,'DESP004','Habilitado'),(47,'DESP005','Habilitado'),(48,'DESP006','Habilitado'),(49,'DESP007','Habilitado'),(50,'DESP008','Habilitado'),(51,'DESP009','Habilitado'),(52,'DESP010','Habilitado'),(53,'DESP011','Habilitado'),(54,'DESP012','Habilitado'),(55,'DESP013','Habilitado'),(56,'DESP014','Habilitado'),(57,'DESP015','Habilitado'),(58,'DESP016','Habilitado'),(59,'DESP017','Supendido'),(60,'DESP018','Multado'),(61,'DESP019','Anulado'),(62,'DESP020','Multado'),(63,'DESP021','Anulado');
+INSERT INTO `despachador` VALUES 
+(43,'DESP001','Habilitado'),
+(44,'DESP002','Habilitado'),
+(45,'DESP003','Habilitado'),
+(46,'DESP004','Habilitado'),
+(47,'DESP005','Habilitado'),
+(48,'DESP006','Habilitado'),
+(49,'DESP007','Habilitado'),
+(50,'DESP008','Habilitado'),
+(51,'DESP009','Habilitado'),
+(52,'DESP010','Habilitado'),
+(53,'DESP011','Habilitado'),
+(54,'DESP012','Habilitado'),
+(55,'DESP013','Habilitado'),
+(56,'DESP014','Habilitado'),
+(57,'DESP015','Habilitado'),
+(58,'DESP016','Habilitado'),
+(59,'DESP017','Supendido'),
+(60,'DESP018','Multado'),
+(61,'DESP019','Anulado'),
+(62,'DESP020','Multado'),
+(63,'DESP021','Anulado');
 /*!40000 ALTER TABLE `despachador` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -151,7 +172,28 @@ CREATE TABLE `jurisdiccion` (
 
 LOCK TABLES `jurisdiccion` WRITE;
 /*!40000 ALTER TABLE `jurisdiccion` DISABLE KEYS */;
-INSERT INTO `jurisdiccion` VALUES (1,'JURIS001','Habilitado'),(2,'JURIS002','Habilitado'),(3,'JURIS003','Habilitado'),(4,'JURIS004','Habilitado'),(5,'JURIS005','Habilitado'),(6,'JURIS006','Habilitado'),(7,'JURIS007','Habilitado'),(8,'JURIS008','Habilitado'),(9,'JURIS009','Habilitado'),(10,'JURIS010','Habilitado'),(11,'JURIS011','Habilitado'),(12,'JURIS012','Habilitado'),(13,'JURIS013','Habilitado'),(14,'JURIS014','Habilitado'),(15,'JURIS015','Habilitado'),(16,'JURIS016','Habilitado'),(17,'JURIS017','Habilitado'),(18,'JURIS018','Suspendido'),(19,'JURIS019','Anulado'),(20,'JURIS020','Multado'),(21,'JURIS021','Multado');
+INSERT INTO `jurisdiccion` VALUES 
+(1,'JURIS001','Habilitado'),
+(2,'JURIS002','Habilitado'),
+(3,'JURIS003','Habilitado'),
+(4,'JURIS004','Habilitado'),
+(5,'JURIS005','Habilitado'),
+(6,'JURIS006','Habilitado'),
+(7,'JURIS007','Habilitado'),
+(8,'JURIS008','Habilitado'),
+(9,'JURIS009','Habilitado'),
+(10,'JURIS010','Habilitado'),
+(11,'JURIS011','Habilitado'),
+(12,'JURIS012','Habilitado'),
+(13,'JURIS013','Habilitado'),
+(14,'JURIS014','Habilitado'),
+(15,'JURIS015','Habilitado'),
+(16,'JURIS016','Habilitado'),
+(17,'JURIS017','Habilitado'),
+(18,'JURIS018','Suspendido'),
+(19,'JURIS019','Anulado'),
+(20,'JURIS020','Multado'),
+(21,'JURIS021','Multado');
 /*!40000 ALTER TABLE `jurisdiccion` ENABLE KEYS */;
 UNLOCK TABLES;
 

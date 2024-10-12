@@ -1,14 +1,8 @@
 package com.example.telexpress.controller;
 
-import com.example.telexpress.entity.Producto;
-import com.example.telexpress.entity.ProductoUsuario;
-import com.example.telexpress.entity.Usuario;
-import com.example.telexpress.entity.Zona;
-import com.example.telexpress.entity.Proveedor;
-import com.example.telexpress.entity.Ordenes;
-import com.example.telexpress.entity.Rol;
+import com.example.telexpress.entity.*;
 import com.example.telexpress.repository.*;
-import com.example.telexpress.entity.Distrito;
+
 
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
@@ -36,17 +30,22 @@ public class SuperAdminController {
     final DistritoRepository distritoRepository;
     final CoordinadorRepository coordinadorRepository;
 
+    final DespachadorRepository despachadorRepository;
+    final JurisdiccionRepository jurisdiccionRepository;
 
     public SuperAdminController(AdminRepository adminRepository, ZonaRepository zonaRepository,
                                 ProductoRepository productoRepository, UsuarioRepository usuarioRepository,
                                 ProveedorRepository proveedorRepository, OrdenesRepository ordenesRepository,
-                                DistritoRepository distritoRepository,CoordinadorRepository coordinadorRepository
+                                DistritoRepository distritoRepository,CoordinadorRepository coordinadorRepository,
+                                DespachadorRepository despachadorRepository,JurisdiccionRepository jurisdiccionRepository
                                 ) {
         this.adminRepository=adminRepository; this.zonaRepository=zonaRepository;
         this.productoRepository=productoRepository; this.usuarioRepository=usuarioRepository;
         this.proveedorRepository=proveedorRepository; this.ordenesRepository=ordenesRepository;
         this.distritoRepository=distritoRepository;
         this.coordinadorRepository = coordinadorRepository;
+        this.jurisdiccionRepository= jurisdiccionRepository;
+        this.despachadorRepository= despachadorRepository;
 
     }
 
@@ -974,6 +973,43 @@ public class SuperAdminController {
             return "redirect:/superadmin";
         }
     }
+
+    // Metodo para validar los codigos despachador y jurisdiccion
+    @PostMapping("/validarDespachador")
+    public String validarDespachador(@RequestParam("id") Integer id,
+                                     @RequestParam("codigoDespachador") String codigoDespachador,
+                                     RedirectAttributes redirectAttributes) {
+        System.out.println("Método validarDespachador llamado");
+        System.out.println("Validando despachador: " + codigoDespachador + " para ID: " + id); // Log para debugging
+        Optional<Despachador> despachador = despachadorRepository.findByDespachador(codigoDespachador);
+        if (despachador.isPresent()) {
+            String mensaje1 = "Código despachador " + despachador.get().getEstado().toLowerCase();
+            System.out.println("Mensaje despachador: " + mensaje1); // Log para debugging
+            redirectAttributes.addFlashAttribute("mensajeDespachador", mensaje1);
+        } else {
+            System.out.println("Despachador no encontrado para el código: " + codigoDespachador);
+
+            redirectAttributes.addFlashAttribute("mensajeDespachador", "Código Despachador no encontrado");
+        }
+        return "redirect:/superadmin/solicitud_detalle?id=" + id;
+    }
+
+    @PostMapping("/validarJurisdiccion")
+    public String validarJurisdiccion(@RequestParam("id") Integer id,
+                                      @RequestParam("codigoJurisdiccion") String codigoJurisdiccion,
+                                      RedirectAttributes redirectAttributes) {
+        System.out.println("Validando jurisdicción: " + codigoJurisdiccion + " para ID: " + id); // Log para debugging
+        Optional<Jurisdiccion> jurisdiccion = jurisdiccionRepository.findByJurisdiccion(codigoJurisdiccion);
+        if (jurisdiccion.isPresent()) {
+            String mensaje = "Código jurisdicción " + jurisdiccion.get().getEstado().toLowerCase();
+            System.out.println("Mensaje jurisdicción: " + mensaje); // Log para debugging
+            redirectAttributes.addFlashAttribute("mensajeJurisdiccion", mensaje);
+        } else {
+            redirectAttributes.addFlashAttribute("mensajeJurisdiccion", "Código Jurisdicción no encontrado");
+        }
+        return "redirect:/superadmin/solicitud_detalle?id=" + id;
+    }
+
 
 
 

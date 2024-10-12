@@ -72,42 +72,37 @@
                                     </div>
                                 </div>
 
-                                <!-- Código despachador -->
-                                <form th:action="@{/validarDespachador}" method="post" th:object="${despachador}">
+
+
+                                <!-- Formulario para código despachador -->
+                                <form th:action="@{/superadmin/validarDespachador}" method="post">
+                                    <input type="hidden" name="id" th:value="${postulante.id}" />
                                     <div class="row mb-3">
                                         <div class="col-md-6">
                                             <label for="codigoDespachador" class="form-label">Código despachador:</label>
-                                            <input type="text" id="codigoDespachador" class="form-control" th:field="*{despachador}">
+                                            <input type="text" id="codigoDespachador" name="codigoDespachador" class="form-control" th:value="${postulante.despachador}" readonly>
                                         </div>
                                         <div class="col-md-3 align-self-end">
-                                            <button type="submit" class="btn btn-primary w-100">Validar</button>
+                                            <button type="submit" class="btn btn-primary w-100">Validar Despachador</button>
                                         </div>
                                     </div>
                                 </form>
+                                <div th:if="${mensajeDespachador}" class="alert alert-info mt-2" th:text="${mensajeDespachador}"></div>
 
-                                <!-- Mensaje de resultado de despachador -->
-                                <div class="mb-3">
-                                    <div class="alert alert-warning" role="alert" th:text="${mensajeDespachador}">Mensaje de resultado</div>
-                                </div>
-
-                                <!-- Código de jurisdicción -->
-                                <form th:action="@{/validarJurisdiccion}" method="post" th:object="${jurisdiccion}">
+                                <!-- Formulario para código de jurisdicción -->
+                                <form th:action="@{/superadmin/validarJurisdiccion}" method="post">
+                                    <input type="hidden" name="id" th:value="${postulante.id}" />
                                     <div class="row mb-3">
                                         <div class="col-md-6">
                                             <label for="codigoJurisdiccion" class="form-label">Código de jurisdicción:</label>
-                                            <input type="text" id="codigoJurisdiccion" class="form-control" th:field="*{codigoJurisdiccion}">
+                                            <input type="text" id="codigoJurisdiccion" name="codigoJurisdiccion" class="form-control" th:value="${postulante.jurisdiccion}" readonly>
                                         </div>
                                         <div class="col-md-3 align-self-end">
-                                            <button type="submit" class="btn btn-primary w-100">Validar</button>
+                                            <button type="submit" class="btn btn-primary w-100">Validar Jurisdicción</button>
                                         </div>
                                     </div>
                                 </form>
-
-                                <!-- Mensaje de resultado de jurisdicción -->
-                                <div class="mb-3">
-                                    <div class="alert alert-warning" role="alert" th:text="${mensajeJurisdiccion}">Mensaje de resultado</div>
-                                </div>
-
+                                <div th:if="${mensajeJurisdiccion}" class="alert alert-info mt-2" th:text="${mensajeJurisdiccion}"></div>
 
                                 <!-- Botones Aceptar y Denegar -->
                                 <div class="text-center">
@@ -160,7 +155,11 @@
 <script async defer src="https://buttons.github.io/buttons.js"></script>
 
 <script>
-
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelector('form[action$="/validarDespachador"]').addEventListener('submit', function(e) {
+            console.log('Formulario de despachador enviado');
+        });
+    });
 </script>
 </body>
 </html>
