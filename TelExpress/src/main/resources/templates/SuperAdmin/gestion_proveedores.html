@@ -128,12 +128,14 @@
 
 
                 <div class="card-header">
-                <form action="/superadmin/proveedor/buscar" method="GET" class="mb-4">
-                  <div class="input-group">
-                    <input type="text" name="searchField" class="form-control" placeholder="Buscar proveedor por nombre o apellido" th:value="${searchField}" />
-                    <button class="btn btn-primary" type="submit">Buscar</button>
-                  </div>
-                </form>
+                  <form action="/superadmin/proveedor/buscar" method="GET" class="mb-4">
+                    <div class="input-group">
+                      <input type="text" name="searchField" class="form-control" placeholder="Buscar proveedor por nombre o apellido" th:value="${searchField}" />
+                      <button class="btn btn-primary" type="submit">Buscar</button>
+                      <!-- Botón de Limpiar -->
+                      <a href="/superadmin/proveedor/lista" class="btn btn-secondary" type="button">Limpiar</a>
+                    </div>
+                  </form>
 
 
                 <form action="/superadmin/proveedor/filtrar" method="GET" class="mb-4">
@@ -179,13 +181,31 @@
                         <a class="btn btn-sm btn-primary" th:href="@{'/superadmin/proveedor/editar?id=' + ${proveedor.idProveedor}}">
                           <i class="bx bx-edit-alt"></i>
                         </a>
-                        <a class="btn btn-sm btn-danger" th:href="@{'/superadmin/proveedor/borrar?id=' + ${proveedor.idProveedor}}">
+                        <a href="#" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal"
+                           th:attr="onclick='setDeleteUrl(\'/superadmin/proveedor/borrar?id=' + ${proveedor.idProveedor} + '\')'">
                           <i class="bx bx-trash"></i>
                         </a>
                       </td>
                     </tr>
                     <!-- Puedes agregar más filas aquí -->
                     </tbody>
+                    <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="confirmDeleteLabel">Confirmar Eliminación</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+                            ¿Estás seguro de que deseas eliminar este proveedor?
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancelar</button>
+                            <a href="#" id="confirmDeleteButton" class="btn btn-danger">Eliminar</a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </table>
                 </div>
                 <nav aria-label="Page navigation" class="mt-4 mb-4">
@@ -223,7 +243,11 @@
   <!-- Overlay -->
   <div class="layout-overlay layout-menu-toggle"></div>
 </div>
-
+<script>
+  function setDeleteUrl(url) {
+    document.getElementById('confirmDeleteButton').setAttribute('href', url);
+  }
+</script>
 
 <!--script para la tabla-->
 <script>

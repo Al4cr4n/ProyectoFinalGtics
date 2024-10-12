@@ -804,9 +804,29 @@ public class SuperAdminController {
         }
     }
     @PostMapping("/proveedor/guardar")
-    public String guardarProveedor(Proveedor proveedor, RedirectAttributes attr, Model model) {
+    public String guardarProveedor(@Valid @ModelAttribute Proveedor proveedor,
+                                   BindingResult result,
+                                   RedirectAttributes attr,
+                                   Model model) {
+
         model.addAttribute("activePage", "proveedores");
 
+        // Verificar si el DNI ya existe
+        if (proveedorRepository.existsByDni(proveedor.getDni())) {
+            result.rejectValue("dni", "error.proveedor", "El DNI ya está en uso.");
+        }
+
+        // Verificar si el RUC ya existe
+        if (proveedorRepository.existsByRuc(proveedor.getRuc())) {
+            result.rejectValue("ruc", "error.proveedor", "El RUC ya está en uso.");
+        }
+
+
+        if (result.hasErrors()) {
+            //model.addAttribute("listaProveedores", proveedorRepository.findAll());
+            model.addAttribute("listaZona", zonaRepository.findAll());
+            return "SuperAdmin/proveedor_registrar"; // Volver a la vista de formulario
+        }
         proveedorRepository.save(proveedor);
         return "redirect:/superadmin/proveedor/lista";
     }
@@ -816,11 +836,13 @@ public class SuperAdminController {
                                   RedirectAttributes attr) {
         model.addAttribute("activePage", "proveedores");
 
-        Optional<Proveedor> optProduct = proveedorRepository.findById(id);
+        Optional<Proveedor> optProveedor = proveedorRepository.findById(id);
 
-
-        if (optProduct.isPresent()) {
+        if (optProveedor.isPresent()) {
             proveedorRepository.deleteById(id);
+            attr.addFlashAttribute("success", "Proveedor eliminado exitosamente.");
+        } else {
+            attr.addFlashAttribute("error", "El proveedor no fue encontrado.");
         }
         return "redirect:/superadmin/proveedor/lista";
 
