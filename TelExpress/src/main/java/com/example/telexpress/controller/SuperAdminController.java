@@ -514,6 +514,17 @@ public class SuperAdminController {
         model.addAttribute("coordinadores", listazonal);
         return "SuperAdmin/gestion_coordinadores";
     }
+
+    @GetMapping("/buscadoragente")
+    public String buscador_agente(Usuario usuario, @RequestParam("searchTerm") String  searchTerm, Model model){
+        model.addAttribute("activePage", "coordinadores");
+
+        int rolId = 4;  // El rol de "usuarios" es 4
+        List<Usuario> listazonal = adminRepository.searchByNameOrDniAndRol(searchTerm, rolId);
+        //List<Usuario> listazonal = adminRepository.searchByNameOrDni(searchTerm);
+        model.addAttribute("listaUsuario", listazonal);
+        return "SuperAdmin/gestion_usuarios";
+    }
     @GetMapping("/gestion_usuarios")
     public String gestionUsuariosSuperadmin(Model model) {
         model.addAttribute("activePage", "usuarios");

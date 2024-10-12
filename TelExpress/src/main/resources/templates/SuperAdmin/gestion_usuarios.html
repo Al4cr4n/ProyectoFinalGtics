@@ -121,11 +121,15 @@
             <!--- BUSCADOR||FILTRO||LIMPIAR FILTRO---->
             <div class="filter-container">
 
-              <div class="input-group">
-                <input type="text" id="customSearch" name="customSearch" class="form-control" placeholder="Buscar por nombre o apellido" />
-                <button id="btnBuscar" class="btn btn-primary">Buscar</button>
-                <button id="btnLimpiar" class="btn btn-outline-primary">Limpiar Filtros</button>
-              </div>
+              <form action="/superadmin/buscadoragente" method="get" class="mb-4">
+                <div class="input-group">
+                  <input type="text" name="searchTerm" class="form-control" placeholder="Buscar por nombre, apellido o DNI" th:value="${searchTerm}" />
+                  <button type="submit" class="btn btn-primary">Buscar</button>
+                  <!-- Botón de Limpiar -->
+                  <a href="/superadmin/gestion_usuarios" class="btn btn-secondary">Limpiar</a>
+                </div>
+              </form>
+
               <div class="text-end my-3">
                 <a class="btn btn-primary" th:href="@{/superadmin/crear_usuario}">Crear Nuevo</a>
               </div>
