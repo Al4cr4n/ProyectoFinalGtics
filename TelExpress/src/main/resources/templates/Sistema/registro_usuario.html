@@ -83,24 +83,26 @@
                         <div class="mb-3">
                             <label class="form-label">Distrito</label>
                             <select class="form-control form-select" th:field="*{distrito.id}" required>
-                                <!-- Esta es la opción por defecto, fuera de la iteración -->
                                 <option value="" disable selected>Seleccione un distrito</option>
-
-                                <!-- Iteras sobre la lista de distritos -->
                                 <option th:each="distrito : ${lista_distritos}"
                                         th:value="${distrito.id}"
                                         th:text="${distrito.nombredistrito}">
                                 </option>
                             </select>
-
                         </div>
+
+                        <!-- Campo de Contraseña -->
                         <div class="mb-3 form-password-toggle">
                             <label class="form-label">Contraseña</label>
                             <div class="input-group input-group-merge">
-                                <input th:field="*{contrasena}" id="password" type="password" class="form-control" placeholder="********" required />
+                                <input th:field="*{contrasena}" id="password" type="password" class="form-control" placeholder="********" required
+                                       pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*()_+\\-=\\[\\]{};':&quot;\\\\|,.<>/?]).{8,16}$"
+                                       title="La contraseña debe tener al menos 1 letra, 1 número, 2 caracteres especiales y una longitud entre 8 y 16 caracteres." />
                                 <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
                             </div>
                         </div>
+
+                        <!-- Repetir Contraseña -->
                         <div class="mb-3 form-password-toggle">
                             <label class="form-label">Repetir contraseña</label>
                             <div class="input-group input-group-merge">
@@ -130,7 +132,6 @@
 <script src="../assets/vendor/libs/popper/popper.js"></script>
 <script src="../assets/vendor/js/bootstrap.js"></script>
 <script src="../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
-
 <script src="../assets/vendor/js/menu.js"></script>
 
 <!-- Vendors JS -->
@@ -142,7 +143,13 @@
         var password = document.getElementById('password').value;
         var confirmPassword = document.getElementById('confirm_password').value;
 
-        if (password !== confirmPassword) {
+        // Expresión regular para validar la contraseña
+        var passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{8,16}$/;
+
+        if (!password.match(passwordPattern)) {
+            e.preventDefault(); // Evita el envío del formulario
+            alert("La contraseña debe tener al menos 1 letra, 1 número, 2 caracteres especiales y una longitud entre 8 y 16 caracteres.");
+        } else if (password !== confirmPassword) {
             e.preventDefault(); // Evita el envío del formulario si las contraseñas no coinciden
             alert("Las contraseñas no coinciden.");
         }
