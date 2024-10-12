@@ -16,7 +16,7 @@
     <title>Perfil Agente</title>
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="../../assets/img/favicon/favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="/assets/img/favicon/favicon.ico" />
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
@@ -54,26 +54,26 @@
                 <!-- Content -->
                 <div class="container-xxl flex-grow-1 container-p-y d-flex justify-content-center align-items-center vh-100">
                     <div class="card" style="width: 50%; padding: 20px;">
-                        <div class="card-body text-center">
-                            <img src="../../assets/img/avatars/1.png" alt="User Avatar" class="d-block mx-auto w-px-100 h-px-100 rounded-circle mb-4">
+                        <div class="card-body text-center" th:object="${superadmin}" >
+                            <img src="/assets/img/avatars/1.png" alt="User Avatar" class="d-block mx-auto w-px-100 h-px-100 rounded-circle mb-4">
                             <h4 class="mb-4" style="font-family: 'Poppins', sans-serif; color: #7367F0; font-weight: bold;">Mi perfil</h4>
 
                             <div class="mb-3">
-                                <label for="firstName" class="form-label">Nombres:</label>
-                                <input type="text" class="form-control" id="firstName" value="Super" readonly>
+                                <label for="firstName" class="form-label">Nombre:</label>
+                                <input type="text" class="form-control" id="firstName" th:field="*{nombre}" readonly>
                             </div>
                             <div class="mb-3">
                                 <label for="lastName" class="form-label">Apellidos:</label>
-                                <input type="text" class="form-control" id="lastName" value="Admin" readonly>
+                                <input type="text" class="form-control" id="lastName" th:field="*{apellido}" readonly>
                             </div>
                             <div class="mb-3">
-                                <label for="codigo" class="form-label">Correo:</label>
-                                <input type="text" class="form-control" id="correo" value="super.admin@example.com" readonly>
+                                <label for="correo" class="form-label">Correo:</label>
+                                <input type="text" class="form-control" id="correo" th:field="*{correo}" readonly>
                             </div>
 
                             <div class="d-flex justify-content-center mt-4">
                                 <!--<a href="../Sistema/cambio_contraseña.html" class="btn btn-primary">Cambiar contraseña</button>-->
-                                <a href="inicio_superadmin.html" class="btn btn-danger">Regresar</a>
+                                <a href="/superadmin/inicio_superadmin" class="btn btn-danger">Regresar</a>
                             </div>
                         </div>
                     </div>
@@ -89,17 +89,17 @@
 <!-- / Layout wrapper -->
 
 <!-- Core JS -->
-<script src="../../assets/vendor/libs/jquery/jquery.js"></script>
-<script src="../../assets/vendor/libs/popper/popper.js"></script>
-<script src="../../assets/vendor/js/bootstrap.js"></script>
-<script src="../../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
-<script src="../../assets/vendor/js/menu.js"></script>
+<script src="/assets/vendor/libs/jquery/jquery.js"></script>
+<script src="/assets/vendor/libs/popper/popper.js"></script>
+<script src="/assets/vendor/js/bootstrap.js"></script>
+<script src="/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+<script src="/assets/vendor/js/menu.js"></script>
 
 <!-- Vendors JS -->
-<script src="../../assets/vendor/libs/apex-charts/apexcharts.js"></script>
+<script src="/assets/vendor/libs/apex-charts/apexcharts.js"></script>
 
 <!-- Main JS -->
-<script src="../../assets/js/main.js"></script>
+<script src="/assets/js/main.js"></script>
 
 <!-- Page JS -->
 <script src="../../assets/js/dashboards-analytics.js"></script>

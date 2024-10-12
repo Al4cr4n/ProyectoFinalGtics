@@ -943,5 +943,20 @@ public class SuperAdminController {
 
         return "SuperAdmin/gestion_coordinadores";  // Nombre de tu plantilla
     }
+    @GetMapping("/perfil")
+    public String verPerfil(Model model, @RequestParam("id") Integer id) {
+
+        Optional<Usuario> optUsuario = coordinadorRepository.findById(id);
+
+        if (optUsuario.isPresent()) {
+            Usuario user = optUsuario.get();
+            model.addAttribute("superadmin", user);
+            return "SuperAdmin/perfil_superadmin";
+        } else {
+            return "redirect:/superadmin";
+        }
+    }
+
+
 
 }
