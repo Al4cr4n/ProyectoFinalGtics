@@ -151,6 +151,17 @@
                     <a class="btn btn-primary" th:href="@{/superadmin/proveedor/nuevo}" style="margin-left: auto;">Crear Nuevo</a>
                   </div>
                 </form>
+                  <!-- Mensaje de éxito con botón de cierre -->
+                  <div th:if="${success}" class="alert alert-success alert-dismissible fade show" role="alert">
+                    <span th:text="${success}"></span>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+
+                  <!-- Mensaje de error con botón de cierre -->
+                  <div th:if="${error}" class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <span th:text="${error}"></span>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
                 </div>
 
 
