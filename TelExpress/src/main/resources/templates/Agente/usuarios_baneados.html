@@ -60,6 +60,9 @@
             <!-- Content wrapper -->
             <div class="content-wrapper">
                 <div class="container-xxl flex-grow-1 container-p-y">
+                    <h4 style="font-family: 'Poppins', sans-serif; color: #7367F0; font-weight: bold; padding-top: 1rem; padding-bottom: 1rem; margin-bottom: 1rem; text-align: center; font-size: 40px;">
+                        Usuarios baneados
+                    </h4>
                     <!-- Formulario de búsqueda -->
                     <div class="p-3 d-flex">
                         <form th:action="@{/agente/usuarios_baneados}" method="get" class="d-flex w-100">
@@ -72,7 +75,6 @@
                     <!-- Tabla de usuarios -->
                     <div class="col-12 col-lg-12 mb-4">
                         <div class="card">
-                            <h5 class="card-header">Usuarios Baneados</h5>
                             <div class="table-responsive text-nowrap">
                                 <table class="table table-striped" id="usuariosTable">
                                     <thead>
