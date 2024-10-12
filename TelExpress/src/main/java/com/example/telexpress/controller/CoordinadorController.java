@@ -139,7 +139,21 @@ public class CoordinadorController {
         listaTop.sort(Comparator.comparing(Producto::getCantidadComprada).reversed());
         model.addAttribute("listaTop", listaTop);
 
+        // Obtén la instancia de la zona correspondiente
+        Zona zona = zonaRepository.findById(1).orElse(null);
 
+        // Contar usuarios activos e inactivos utilizando el objeto Zona
+        long usuariosActivos = usuarioRepository.countByZonaAndEstadoUsuario(zona, "Activo");
+        long usuariosInactivos = usuarioRepository.countByZonaAndEstadoUsuario(zona, "Inactivo");
+
+        // Contar el número total de usuarios en la zona
+        long totalUsuarios = usuarioRepository.countByZona(zona);
+
+        model.addAttribute("totalUsuarios", totalUsuarios);
+        model.addAttribute("usuariosActivos", usuariosActivos);
+        model.addAttribute("usuariosInactivos", usuariosInactivos);
+
+        // Limita la lista de productos a los 10 más vendidos
         if (listaTop.size() > 10) {
             listaTop = listaTop.subList(0, 10);
         }
@@ -158,11 +172,9 @@ public class CoordinadorController {
         );
         model.addAttribute("colores", colores);
 
-
-
-
         return "CoordinadorZonal/dashboard_zonal";
     }
+
 
     @GetMapping("/dashboard2_zonal")
     public String dashboard2CoordinadorZonal(Model model) {

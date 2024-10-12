@@ -3,6 +3,7 @@ package com.example.telexpress.repository;
 import com.example.telexpress.entity.Proveedor;
 import com.example.telexpress.entity.Rol;
 import com.example.telexpress.entity.Usuario;
+import com.example.telexpress.entity.Zona;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -16,6 +17,10 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
     // Contar usuarios por estado
     long countByEstadoUsuario(String estadoUsuario);
+    long countByZona(Zona zona);
+    long countByZonaAndEstadoUsuario(Zona zona, String estadoUsuario);
+
+
 
     @Query("SELECT u FROM Usuario u WHERE u.zona.idzona = :idzona ORDER BY u.cantidadcompras DESC")
     List<Usuario> findAllByZonaOrderByCantidadCompras(@Param("idzona") int idzona);

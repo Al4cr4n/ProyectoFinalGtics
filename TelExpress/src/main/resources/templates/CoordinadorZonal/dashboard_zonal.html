@@ -153,12 +153,12 @@
         <div class="layout-page">
             <div th:insert="~{CoordinadorZonal/fragments/navbar.html::navbar}"></div> <!-- este es el navbar -->
 
-            <!--Este es el contenedor principal-->
+            <!-- Este es el contenedor principal -->
             <div class="container-xxl flex-grow-1 container-p-y">
                 <h4 style="font-family: 'Poppins', sans-serif; color: #7367F0; font-weight: bold; padding-top: 1rem; padding-bottom: 1rem; margin-bottom: 1rem; text-align: center; font-size: 40px;">Dashboard</h4>
                 <div class="card">
                     <div class="card-body">
-                        <!--Contenedor flex de dashboard -->
+                        <!-- Contenedor flex de dashboard -->
                         <div class="row">
 
                             <!-- Top 10 productos más vendidos -->
@@ -188,12 +188,8 @@
                             </div>
                             <!--/ Top 10 productos más vendidos -->
 
-
-
-
-
-                            <!-- Usuarios activos y Contenedor nuevo -->
-                            <div class="col-md-4">
+                            <!-- Contenedor derecho con tres secciones en columna -->
+                            <div class="col-md-4 d-flex flex-column">
                                 <!-- Contenedor Usuarios Activos -->
                                 <div class="card mb-4" style="height: 350px;">
                                     <div class="card-header d-flex align-items-center justify-content-between pb-0">
@@ -204,7 +200,7 @@
                                     <div class="card-body">
                                         <div class="d-flex justify-content-between align-items-center mb-3">
                                             <div class="d-flex flex-column align-items-center gap-1">
-                                                <h2 class="mb-2">8,258</h2>
+                                                <h2 class="mb-2" th:text="${totalUsuarios}">0</h2>
                                                 <span>Total de usuarios</span>
                                             </div>
                                             <div id="orderStatisticsChart"></div>
@@ -219,6 +215,7 @@
                                                 <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
                                                     <div class="me-2">
                                                         <h6 class="mb-0">Inactivos</h6>
+                                                        <span th:text="${usuariosInactivos} + ' usuarios'">0 usuarios</span>
                                                     </div>
                                                 </div>
                                             </li>
@@ -231,6 +228,7 @@
                                                 <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
                                                     <div class="me-2">
                                                         <h6 class="mb-0">Activos</h6>
+                                                        <span th:text="${usuariosActivos} + ' usuarios'">0 usuarios</span>
                                                     </div>
                                                 </div>
                                             </li>
@@ -238,7 +236,7 @@
                                     </div>
                                 </div>
 
-                                <!-- USUARIOS POR AGENTE -->
+                                <!-- Usuarios por Agente -->
                                 <div class="card mb-4" style="height: 350px;">
                                     <div class="card-header d-flex align-items-center justify-content-between pb-0">
                                         <div class="card-title mb-0">
@@ -246,11 +244,8 @@
                                         </div>
                                     </div>
                                     <div class="card-body">
-                                        <!-- Gráfico de pastel -->
                                         <div class="pie-chart-container">
                                             <div class="pie-chart"></div>
-
-                                            <!-- Leyenda del gráfico -->
                                             <div class="legend">
                                                 <div class="legend-item">
                                                     <div class="legend-color color-nicole"></div>
@@ -268,8 +263,8 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!--/ USUARIOS POR AGENTE -->
-                                <!-- ATAJOS A AGENTE Y PRODUCTOS -->
+
+                                <!-- Atajos a Agente y Productos -->
                                 <div class="card mb-4" style="height: 275px;">
                                     <div class="card-header d-flex align-items-center justify-content-between pb-0">
                                         <div class="card-title mb-0">
@@ -277,26 +272,21 @@
                                         </div>
                                     </div>
                                     <div class="card-body">
-                                        <!-- Texto y botón para agentes -->
-                                        <!-- Espaciado entre los dos textos -->
-                                        <div style="margin-top: 20px;"></div>
-                                        <p> Revisa los agentes de compra</p>
+                                        <p>Revisa los agentes de compra</p>
                                         <a href="/coordinador/listaagente_zonal" class="btn btn-primary">Revisar Agentes</a>
 
-                                        <!-- Espaciado entre los dos textos -->
                                         <div style="margin-top: 20px;"></div>
 
-                                        <!-- Texto y botón para productos con poco stock -->
                                         <p>Revisa los productos con poco stock</p>
                                         <a href="/coordinador/productos_zonal" class="btn btn-primary">Revisar Productos</a>
                                     </div>
                                 </div>
-                                <!--/ ATAJOS A AGENTE Y PRODUCTOS -->
-
                             </div>
+                            <!--/ Contenedor derecho con tres secciones en columna -->
+
                         </div>
 
-                        <!-- PAGINACION -->
+                        <!-- Paginación -->
                         <div class="d-flex justify-content-end mt-4">
                             <nav aria-label="Page navigation" class="text-end">
                                 <ul class="pagination">
@@ -319,11 +309,12 @@
                                 </ul>
                             </nav>
                         </div>
-                        <!--/ PAGINACION -->
+                        <!--/ Paginación -->
                     </div>
                 </div>
             </div>
-            <!--Aqui termina el contenedor principal-->
+            <!-- Aquí termina el contenedor principal -->
+
         </div>
     <!-- / Layout page -->
 
