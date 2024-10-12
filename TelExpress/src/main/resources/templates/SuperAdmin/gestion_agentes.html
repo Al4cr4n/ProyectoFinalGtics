@@ -83,7 +83,11 @@
                 <td th:text="${agente.ruc}"></td>
 
                 <td>
+                  <!--
                   <a class="btn btn-sm btn-primary" th:href="@{'/superadmin/editar_agentes?id=' + ${agente.id}}">
+                    <i class="bx bx-edit-alt"></i>
+                  </a> -->
+                  <a class="btn btn-sm btn-primary" th:href="@{'/superadmin/editar_agentes/' + ${agente.id}}">
                     <i class="bx bx-edit-alt"></i>
                   </a>
                   <!-- Botón para eliminar -->

@@ -552,7 +552,7 @@ public class SuperAdminController {
         model.addAttribute("lista_agentes",lista_agentes);
         return "SuperAdmin/gestion_agentes";
     }
-
+/*
     @GetMapping("/editar_agentes")
     public String editar_agentes(Model model, @RequestParam("id") Integer id) {
         model.addAttribute("activePage", "agentes");
@@ -566,7 +566,25 @@ public class SuperAdminController {
         } else {
             return "SuperAdmin/gestion_agentes";
         }
+    } */
+
+    @GetMapping("/editar_agentes/{id}")
+    public String editar_agentes2(Model model, @PathVariable("id") Integer id){
+        model.addAttribute("activePage", "agentes");
+
+        Optional<Usuario> optUsuario = adminRepository.findById(id);
+        if (optUsuario.isPresent()){
+            Usuario agente = optUsuario.get();
+            model.addAttribute("agente", agente);
+            model.addAttribute("distritos", distritoRepository.findAll());
+
+            return "SuperAdmin/editar_agente";
+        }else{
+            return "redirect:/superadmin/gestion_agentes";
+        }
     }
+
+
 
     /* para actualizar datos de agente*/
     @PostMapping("/actualizar_agentes")
