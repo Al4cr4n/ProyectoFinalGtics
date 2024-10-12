@@ -164,20 +164,21 @@ public class CoordinadorController {
         return "CoordinadorZonal/dashboard_zonal";
     }
 
-    @GetMapping({"/dashboard2_zonal"})
+    @GetMapping("/dashboard2_zonal")
     public String dashboard2CoordinadorZonal(Model model) {
         model.addAttribute("paginaActual", "dashboard");
-        /*List<Usuario> listaTopUsuarios = usuarioRepository.findByZona("zona");
-        listaTopUsuarios.sort(Comparator.comparing(Usuario::getCantidadcompras).reversed());
-        System.out.println(listaTopUsuarios);
 
+        // Obtener y ordenar los usuarios por cantidad de compras directamente desde el repositorio
+        List<Usuario> listaTopUsuarios = usuarioRepository.findAllByZonaOrderByCantidadCompras(1);
 
-        model.addAttribute("listaTopUsuarios",listaTopUsuarios);
-
+        // Limitar la lista a los 10 usuarios con más importaciones
         if (listaTopUsuarios.size() > 10) {
             listaTopUsuarios = listaTopUsuarios.subList(0, 10);
         }
 
+        model.addAttribute("listaTopUsuarios", listaTopUsuarios);
+
+        // Definir colores para la barra de progreso
         List<String> colores = Arrays.asList(
                 "#f1948a",
                 "#6c757d",
@@ -192,10 +193,9 @@ public class CoordinadorController {
         );
         model.addAttribute("colores", colores);
 
-        System.out.println();*/
-
         return "CoordinadorZonal/dashboard2_zonal";
     }
+
 
 
 

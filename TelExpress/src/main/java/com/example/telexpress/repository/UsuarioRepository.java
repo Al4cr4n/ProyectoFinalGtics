@@ -17,14 +17,8 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     // Contar usuarios por estado
     long countByEstadoUsuario(String estadoUsuario);
 
-    //@Query("SELECT u FROM Usuario u WHERE u.rol.id = 3 AND u.codigoDespachador.estado = :estado")
-    //List<Usuario> findByRolAndEstado(@Param("estado") String estado);
-/*
-    @Query("SELECT u FROM Usuario u WHERE u.zona.idzona = 1 AND u.codigoDespachador.estado = :zona")
-    List<Usuario> findByZona(@Param("zona") String zona);
-
-
- */
+    @Query("SELECT u FROM Usuario u WHERE u.zona.idzona = :idzona ORDER BY u.cantidadcompras DESC")
+    List<Usuario> findAllByZonaOrderByCantidadCompras(@Param("idzona") int idzona);
 
     List<Usuario> findByRol_Id(int rolId);
     //List<Usuario> findByRol_IdAndCodigoDespachador_Estado(int rolId, String estado);

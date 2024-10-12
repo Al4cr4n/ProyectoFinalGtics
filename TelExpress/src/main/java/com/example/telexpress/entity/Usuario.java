@@ -95,9 +95,9 @@ public class Usuario implements Serializable {
     @Column(nullable = false)
     private Integer isBan = 0; // Inicializa con 0 por defecto
 
-    // Comentado según la solicitud
-    //@Column(name = "cantidadcompras")
-    //private int cantidadcompras;
+
+    @Column(name = "cantidadcompras")
+    private Integer cantidadcompras;
 
     /*@ManyToOne
     @JoinColumn(name = "fotos_idfotos", nullable = true)
