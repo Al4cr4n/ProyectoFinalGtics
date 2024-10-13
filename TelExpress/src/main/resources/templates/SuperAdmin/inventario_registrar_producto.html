@@ -52,20 +52,20 @@
                     <h4 class="mb-4">Registrar Producto</h4>
 
                     <!-- Formulario -->
-                    <form id="formRegistro" method="post" th:action="@{/producto/guardar}"  th:object="${producto}">
+                    <form id="formRegistro" method="post" th:action="@{/producto/guardar}"  th:object="${producto}" enctype="multipart/form-data">
                         <div class="row mb-3">
                             <!-- Nombre del producto -->
-<!--
-                            <div class="col-md-6">
-                                <label for="nombreProducto" class="form-label">Nombre del Producto</label>
-                                <input type="text" class="form-control" name="nombreProducto" id="nombreProducto" placeholder="Ingrese el nombre del producto">
-                            </div> -->
-<!--
-                            <div class="col-md-6">
-                                <label for="nombreProducto" class="form-label">Nombre del Producto</label>
-                                <input type="text" class="form-control" name="nombreProducto" id="nombreProducto" placeholder="Ingrese el nombre del producto" required>
-                                <div class="invalid-feedback">Por favor, ingresa un nombre para el producto.</div>
-                            </div> -->
+                            <!--
+                                                        <div class="col-md-6">
+                                                            <label for="nombreProducto" class="form-label">Nombre del Producto</label>
+                                                            <input type="text" class="form-control" name="nombreProducto" id="nombreProducto" placeholder="Ingrese el nombre del producto">
+                                                        </div> -->
+                            <!--
+                                                        <div class="col-md-6">
+                                                            <label for="nombreProducto" class="form-label">Nombre del Producto</label>
+                                                            <input type="text" class="form-control" name="nombreProducto" id="nombreProducto" placeholder="Ingrese el nombre del producto" required>
+                                                            <div class="invalid-feedback">Por favor, ingresa un nombre para el producto.</div>
+                                                        </div> -->
 
                             <div class="col-md-6">
                                 <label for="nombreProducto" class="form-label">Nombre del Producto</label>
@@ -79,12 +79,12 @@
                                 <label for="cantidadDisponible" class="form-label">Cantidad disponible:</label>
                                 <input type="number" class="form-control" name="cantidadDisponible" id = "cantidadDisponible" placeholder="Ingrese la cantidad disponible">
                             </div>-->
-<!--
-                            <div class="col-md-6">
-                                <label for="cantidadDisponible" class="form-label">Cantidad disponible</label>
-                                <input type="number" class="form-control" name="cantidadDisponible" id="cantidadDisponible" min="1" required>
-                                <div class="invalid-feedback">Por favor, ingresa una cantidad válida mayor a 0.</div>
-                            </div> --->
+                            <!--
+                                                        <div class="col-md-6">
+                                                            <label for="cantidadDisponible" class="form-label">Cantidad disponible</label>
+                                                            <input type="number" class="form-control" name="cantidadDisponible" id="cantidadDisponible" min="1" required>
+                                                            <div class="invalid-feedback">Por favor, ingresa una cantidad válida mayor a 0.</div>
+                                                        </div> --->
 
                             <div class="col-md-6">
 
@@ -135,13 +135,13 @@
                             </div>
 
                         </div>
-<!--VERIFICARR ESTOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO-->
+                        <!--VERIFICARR ESTOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO-->
                         <div class="row mb-3">
                             <!-- Nombre del Proveedor -->
                             <div class="col-md-6">
                                 <label for="nombreProveedor" class="form-label">Nombre del Proveedor:</label>
                                 <select class="form-select" name="proveedor.idProveedor" id="nombreProveedor">
-                                       <!-- th:classappend="${#fields.hasErrors('proveedores') ? 'is-invalid' : ''}" -->
+                                    <!-- th:classappend="${#fields.hasErrors('proveedores') ? 'is-invalid' : ''}" -->
                                     <option value="">Selecciona un proveedor</option>
                                     <option th:each="proveedor: ${listaProveedores}"
                                             th:value="${proveedor.idProveedor}"
@@ -149,9 +149,9 @@
                                             th:text="${proveedor.nombreProveedor}">
                                     </option>
                                 </select>
-                               <!-- <div class="invalid-feedback" th:if="${#fields.hasErrors('proveedores')}" th:errors="*{proveedores}">
-                                    Mensaje de error de proveedor
-                                </div> -->
+                                <!-- <div class="invalid-feedback" th:if="${#fields.hasErrors('proveedores')}" th:errors="*{proveedores}">
+                                     Mensaje de error de proveedor
+                                 </div> -->
                             </div>
 
                             <!-- Categoría
@@ -191,6 +191,10 @@
                                 <input type="text" class="form-control" id="descripcion" th:field="*{descripcion}"
                                        placeholder="Ingrese la descripción" th:classappend="${#fields.hasErrors('descripcion') ? 'is-invalid' : ''}">
                                 <div class="invalid-feedback" th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}">Mensaje de descripcion</div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Imagen del Producto:</label>
+                                <input type="file" name="image" class="form-control" accept="image/*" />
                             </div>
 
                         </div>

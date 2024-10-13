@@ -445,6 +445,11 @@ public class AgenteController {
     }
 
 
+    @GetMapping("/chat")
+    public String chat(Model model, @RequestParam("id") Integer id) {
+
+        return"Agente/chat_agente";
+    }
 
 
 

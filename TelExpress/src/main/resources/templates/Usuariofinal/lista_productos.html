@@ -57,19 +57,19 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Bootstrap -->
- 	<link type="text/css" rel="stylesheet" href="/assets/css/bootstrap.min.css"/>
+    <link type="text/css" rel="stylesheet" href="/assets/css/bootstrap.min.css"/>
 
     <!-- Estilos personalizados -->
-        <!-- Custom stlylesheet -->
-         <link type="text/css" rel="stylesheet" href="/assets/css/style_products.css"/>
+    <!-- Custom stlylesheet -->
+    <link type="text/css" rel="stylesheet" href="/assets/css/style_products.css"/>
 
-        <!-- fuentes FA -->
- 	    <link type="text/css" rel="stylesheet" href="/assets/css/font-awesome.min.css"/>
+    <!-- fuentes FA -->
+    <link type="text/css" rel="stylesheet" href="/assets/css/font-awesome.min.css"/>
 
-         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.3/font/bootstrap-icons.min.css">
 
     <style>
-       
+
     </style>
 
 </head>
@@ -85,201 +85,195 @@
             <div th:insert="~{Usuariofinal/fragments/navbar.html::navbar}"></div> <!-- este es el navbar -->
 
             <!-- Content wrapper -->
-          <div class="content-wrapper">
-            <!-- Content -->
-            <div class="container-xxl flex-grow-1 container-p-y">
-                <h6 class="desing-title-page">Zona Oeste</h6>
-                
+            <div class="content-wrapper">
+                <!-- Content -->
+                <div class="container-xxl flex-grow-1 container-p-y">
+                    <h6 class="desing-title-page">Zona Oeste</h6>
 
-                <div class="card">
-                    <!-- STORE -->
-					<div id="store" class="col-md-12" style="position: relative;">
-						<!-- store top filter -->
-						<div class="store-filter clearfix align-items-center d-flex justify-content-between card-header">
-							<div class="store-search col-md-2 position-relative" style="flex:1;">
-                                
-                                <input id="search-input" type="text" class="form-control " placeholder="Buscar productos...">
-                                <i class="bx bx-search" style="position: absolute;  transform: translateY(-50%); color: #999; top: 55%; right: 2.5rem; "></i>
-                                
-                            </div>
-                            <div class="d-flex gap-2" style="flex: 2;">
-                                <div class="dropdown">
-                                    <button
-                                    type="button"
-                                    class="btn bx bx-sort form-select"
-                                    data-bs-toggle="dropdown"
-                                    aria-expanded="false"
-                                >
-                                    Categoría
-                                </button>
-                                <ul class="dropdown-menu radio-options ">
-                                    <li><a class="dropdown-item" href="javascript:void(0);">Deporte</a></li>
-                                    <li><a class="dropdown-item" href="javascript:void(0);">Electrónico</a></li>
-                                    <li><a class="dropdown-item" href="javascript:void(0);">Limpieza</a></li>
-                                    <li><a class="dropdown-item" href="javascript:void(0);">Educación</a></li>
-                                </ul>
+
+                    <div class="card">
+                        <!-- STORE -->
+                        <div id="store" class="col-md-12" style="position: relative;">
+                            <!-- store top filter -->
+                            <div class="store-filter clearfix align-items-center d-flex justify-content-between card-header">
+                                <div class="store-search col-md-2 position-relative" style="flex:1;">
+
+                                    <input id="search-input" type="text" class="form-control " placeholder="Buscar productos...">
+                                    <i class="bx bx-search" style="position: absolute;  transform: translateY(-50%); color: #999; top: 55%; right: 2.5rem; "></i>
 
                                 </div>
+                                <div class="d-flex gap-2" style="flex: 2;">
+                                    <div class="dropdown">
+                                        <button
+                                                type="button"
+                                                class="btn bx bx-sort form-select"
+                                                data-bs-toggle="dropdown"
+                                                aria-expanded="false"
+                                        >
+                                            Categoría
+                                        </button>
+                                        <ul class="dropdown-menu radio-options ">
+                                            <li><a class="dropdown-item" href="javascript:void(0);">Deporte</a></li>
+                                            <li><a class="dropdown-item" href="javascript:void(0);">Electrónico</a></li>
+                                            <li><a class="dropdown-item" href="javascript:void(0);">Limpieza</a></li>
+                                            <li><a class="dropdown-item" href="javascript:void(0);">Educación</a></li>
+                                        </ul>
 
-                                <div class="dropdown">
-                                    <button
-                                    type="button"
-                                    class="btn bx bx-sort form-select"
-                                    data-bs-toggle="dropdown"
-                                    aria-expanded="false"
-                                >
-                                    Disponibilidad
-                                </button>
-                                    <ul class="dropdown-menu radio-options ">
-                                        <li>
-                                            <a class="dropdown-item"
-                                               th:href="@{/usuario/lista_productos(filtroStock='stock', page=${currentPage}, size=${size})}">
-                                                Stock
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item"
-                                               th:href="@{/usuario/lista_productos(filtroStock='agotado', page=${currentPage}, size=${size})}">
-                                                Agotado
-                                            </a>
-                                        </li>
-                                    </ul>
+                                    </div>
+
+                                    <div class="dropdown">
+                                        <button
+                                                type="button"
+                                                class="btn bx bx-sort form-select"
+                                                data-bs-toggle="dropdown"
+                                                aria-expanded="false"
+                                        >
+                                            Disponibilidad
+                                        </button>
+                                        <ul class="dropdown-menu radio-options ">
+                                            <li>
+                                                <a class="dropdown-item"
+                                                   th:href="@{/usuario/lista_productos(filtroStock='stock', page=${currentPage}, size=${size})}">
+                                                    Stock
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item"
+                                                   th:href="@{/usuario/lista_productos(filtroStock='agotado', page=${currentPage}, size=${size})}">
+                                                    Agotado
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+
                                 </div>
-                                
-                            </div> 
-                            <div class="">
-                                <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#productModal">
-                                    <span class="tf-icons bx bx-cart"></span>&nbsp; Ver
-                                </button>
+                                <div class="">
+                                    <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#productModal">
+                                        <span class="tf-icons bx bx-cart"></span>&nbsp; Ver
+                                    </button>
 
-                                <!-- Button to open the modal --
-                                <button class="add-to-cart-btn" data-bs-toggle="modal" data-bs-target="#productModal"><i class="bx bx-plus"></i> Agregar</button>-->
-                                        
+                                    <!-- Button to open the modal --
+                                    <button class="add-to-cart-btn" data-bs-toggle="modal" data-bs-target="#productModal"><i class="bx bx-plus"></i> Agregar</button>-->
+
+                                </div>
                             </div>
-						</div>
-                        
-						<!-- /store top filter -->
 
-                        
-						<!-- store products -->
-						<div class="card-body">
-                            <div class="row">
-                                <!-- product -->
-                                <div class="col-md-4 " th:each="producto : ${productos}">
-                                    <div class="product">
-                                        <div class="product-img">
-                                            <img src="/assets/img/elements/1.jpg" alt="">
-                                            <div class="product-label">
-                                                <!--<span class="sale">-30%</span>-->
-                                                <span class="new" >NEW</span> <!--th:if="${producto.new}"-->
+                            <!-- /store top filter -->
+
+
+                            <!-- store products -->
+                            <div class="card-body">
+                                <div class="row">
+                                    <!-- product -->
+                                    <div class="col-md-4" th:each="producto : ${productos}">
+                                        <div class="product">
+                                            <div class="product-img">
+                                                <img th:src="@{/usuario/images/{id}(id=${producto.idProducto})}" alt="Product Image">
+                                                <div class="product-label">
+                                                    <span class="new">NEW</span>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="product-body">
-                                            
-                                            <h3 class="product-name"><a  th:href="@{/usuario/detalle_producto(id=${producto.idProducto})}">[[${producto.nombreProducto}]]</a></h3>
-                                            <h4 class="product-price">$[[${producto.precio}]] <del class="product-old-price">$290.00</del></h4>
-
-                                            <div class="product-btns">
-                                                <!--<button class="quick-view"><i class="bi bi-eye fs-4" th:onclick="'location.href=\'' + '@{/usuario/detalle_producto/' + ${producto.idProducto} + '}\''"></i><span class="tooltipp">Vista rápida</span></button>-->
-                                                <!--<a th:href="@{/usuario/detalle_producto(id=${producto.idProducto})}" >
-                                                    <i class="bi bi-eye fs-4"></i><span class="tooltipp">Vista rápida</span>
-                                                </a>-->
-                                                <button class="quick-view" th:onclick="'location.href=\'' + @{/usuario/detalle_producto(id=${producto.idProducto})} + '\''">
-                                                    <i class="bi bi-eye fs-4"></i> <span class="tooltipp">Vista rápida</span>
-                                                </button>
+                                            <div class="product-body">
+                                                <h3 class="product-name">
+                                                    <a th:href="@{/usuario/detalle_producto(id=${producto.idProducto})}">[[${producto.nombreProducto}]]</a>
+                                                </h3>
+                                                <h4 class="product-price">$[[${producto.precio}]] <del class="product-old-price">$290.00</del></h4>
+                                                <div class="product-btns">
+                                                    <button class="quick-view" th:onclick="'location.href=\'' + @{/usuario/detalle_producto(id=${producto.idProducto})} + '\''">
+                                                        <i class="bi bi-eye fs-4"></i> <span class="tooltipp">Vista rápida</span>
+                                                    </button>
+                                                </div>
                                             </div>
-
-                                        </div>
-                                        <div class="add-to-cart">
-                                            <button class="add-to-cart-btn"><i class="bx bx-cart"></i> agregar</button>
+                                            <div class="add-to-cart">
+                                                <button class="add-to-cart-btn"><i class="bx bx-cart"></i> agregar</button>
+                                            </div>
                                         </div>
                                     </div>
+                                    <!-- /product -->
                                 </div>
-                                <!-- /product -->
-                            </div>
 
-                            <div class="pagination-container-user-products d-flex justify-content-center">
-                                <div class="pagination-container">
-                                    <ul class="pagination">
-                                        <!-- Botón para ir a la página anterior -->
-                                        <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled'">
-                                            <a class="page-link" th:href="@{/usuario/lista_productos(page=${currentPage - 1})}" aria-label="Previous">
-                                                <span aria-hidden="true">&laquo;</span>
-                                            </a>
-                                        </li>
+                                <div class="pagination-container-user-products d-flex justify-content-center">
+                                    <div class="pagination-container">
+                                        <ul class="pagination">
+                                            <!-- Botón para ir a la página anterior -->
+                                            <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled'">
+                                                <a class="page-link" th:href="@{/usuario/lista_productos(page=${currentPage - 1})}" aria-label="Previous">
+                                                    <span aria-hidden="true">&laquo;</span>
+                                                </a>
+                                            </li>
 
-                                        <!-- Mostrar las páginas disponibles -->
-                                        <li class="page-item" th:each="i : ${#numbers.sequence(0, totalPages - 1)}"
-                                            th:classappend="${i == currentPage} ? 'active'">
-                                            <a class="page-link" th:href="@{/usuario/lista_productos(page=${i})}">[[${i + 1}]]</a>
-                                        </li>
+                                            <!-- Mostrar las páginas disponibles -->
+                                            <li class="page-item" th:each="i : ${#numbers.sequence(0, totalPages - 1)}"
+                                                th:classappend="${i == currentPage} ? 'active'">
+                                                <a class="page-link" th:href="@{/usuario/lista_productos(page=${i})}">[[${i + 1}]]</a>
+                                            </li>
 
-                                        <!-- Botón para ir a la página siguiente -->
-                                        <li class="page-item" th:classappend="${currentPage == totalPages - 1} ? 'disabled'">
-                                            <a class="page-link" th:href="@{/usuario/lista_productos(page=${currentPage + 1})}" aria-label="Next">
-                                                <span aria-hidden="true">&raquo;</span>
-                                            </a>
-                                        </li>
-                                    </ul>
+                                            <!-- Botón para ir a la página siguiente -->
+                                            <li class="page-item" th:classappend="${currentPage == totalPages - 1} ? 'disabled'">
+                                                <a class="page-link" th:href="@{/usuario/lista_productos(page=${currentPage + 1})}" aria-label="Next">
+                                                    <span aria-hidden="true">&raquo;</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
-						</div>
-						<!-- /store products -->
+                            <!-- /store products -->
 
-						<!-- store bottom filter -->
-						<!--<div class="store-filter card-footer" style="margin-bottom:1rem">
-							
-							<ul class="store-pagination">
-								<li class="active">1</li>
-								<li><a href="#">2</a></li>
-								<li><a href="#">3</a></li>
-								<li><a href="#">4</a></li>
-								<li><a href="#"><i class="tf-icon bx bx-chevrons-right"></i></a></li>
-							</ul>
-						</div>-->
-                        
-						<!-- /store bottom filter -->
-					</div>
-					<!-- /STORE -->
-                    
+                            <!-- store bottom filter -->
+                            <!--<div class="store-filter card-footer" style="margin-bottom:1rem">
+
+                                <ul class="store-pagination">
+                                    <li class="active">1</li>
+                                    <li><a href="#">2</a></li>
+                                    <li><a href="#">3</a></li>
+                                    <li><a href="#">4</a></li>
+                                    <li><a href="#"><i class="tf-icon bx bx-chevrons-right"></i></a></li>
+                                </ul>
+                            </div>-->
+
+                            <!-- /store bottom filter -->
+                        </div>
+                        <!-- /STORE -->
+
+                    </div>
                 </div>
+
             </div>
-
+            <!-- Content wrapper -->
         </div>
-        <!-- Content wrapper -->
+        <!-- / Layout page -->
     </div>
-    <!-- / Layout page -->
-</div>
 
-<!-- Inicialización de DataTables -->
-<script>
-    $(document).ready(function() {
-        $('#miTable').DataTable({
-            "pagingType": "full_numbers", // Esto muestra los números de página completos
-            "pageLength":3,
-            "language": {
-                "paginate": {
-                    "first": "",
-                    "last": "",
-                    "next": ">>",
-                    "previous": "<<"
-                }
-            },
-            "paging": true,      // Activa la paginación
-            "searching": false,  // Desactiva el buscador
-            "info": false        // Oculta la información de "Showing"
+    <!-- Inicialización de DataTables -->
+    <script>
+        $(document).ready(function() {
+            $('#miTable').DataTable({
+                "pagingType": "full_numbers", // Esto muestra los números de página completos
+                "pageLength":3,
+                "language": {
+                    "paginate": {
+                        "first": "",
+                        "last": "",
+                        "next": ">>",
+                        "previous": "<<"
+                    }
+                },
+                "paging": true,      // Activa la paginación
+                "searching": false,  // Desactiva el buscador
+                "info": false        // Oculta la información de "Showing"
 
+            });
         });
-    });
-</script>
+    </script>
 
 
-<!-- Overlay -->
-<div class="layout-overlay layout-menu-toggle"></div>
+    <!-- Overlay -->
+    <div class="layout-overlay layout-menu-toggle"></div>
 </div>
 <!-- / Layout wrapper -->
 
- 
+
 <!-- Modal -->
 <div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -291,27 +285,27 @@
             <div class="modal-body">
                 <table class="table table-borderless">
                     <thead>
-                        <tr class="border-bottom">
-                            <th>Seleccionar</th>
-                            <th>Imagen</th>
-                            <th>Nombre</th>
-                            <th>Código</th>
-                            <th>Precio</th>
-                            <th>Cantidad</th>
-                            <th>Monto Total</th>
-                        </tr>
+                    <tr class="border-bottom">
+                        <th>Seleccionar</th>
+                        <th>Imagen</th>
+                        <th>Nombre</th>
+                        <th>Código</th>
+                        <th>Precio</th>
+                        <th>Cantidad</th>
+                        <th>Monto Total</th>
+                    </tr>
                     </thead>
                     <tbody>
-                        <tr class="border-bottom">
-                            <td><input type="checkbox"></td>
-                            <td><img src="../../assets/img/elements/product01.png" alt="Producto" class="img-thumbnail" width="100"></td>
-                            <td>Laptop</td>
-                            <td>345678909</td>
-                            <td>$980.00</td>
-                            <td><input type="number" class="form-control" value="1" min="1"></td>
-                            <td>$980.00</td>
-                        </tr>
-                        <!-- Puedes agregar más filas si es necesario -->
+                    <tr class="border-bottom">
+                        <td><input type="checkbox"></td>
+                        <td><img src="../../assets/img/elements/product01.png" alt="Producto" class="img-thumbnail" width="100"></td>
+                        <td>Laptop</td>
+                        <td>345678909</td>
+                        <td>$980.00</td>
+                        <td><input type="number" class="form-control" value="1" min="1"></td>
+                        <td>$980.00</td>
+                    </tr>
+                    <!-- Puedes agregar más filas si es necesario -->
                     </tbody>
                 </table>
                 <!-- Campos adicionales fuera de la tabla, alineados -->
@@ -329,26 +323,26 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger">Eliminar</button>
                 <button type="button" class="btn btn-primary" onclick="window.location.href='pagar.html';">Importar</button>
-                
+
             </div>
         </div>
     </div>
 </div>
 
 
-  <script>
-  // Este script es opcional, solo si necesitas lógica para actualizar el monto total basado en la cantidad.
-document.querySelectorAll('input[type="number"]').forEach(input => {
-    input.addEventListener('change', function() {
-        const row = this.closest('tr');
-        const price = parseFloat(row.cells[4].textContent.replace('$', ''));
-        const quantity = parseInt(this.value);
-        row.cells[6].textContent = `$${(price * quantity).toFixed(2)}`;
-    });
-});</script>
-  
+<script>
+    // Este script es opcional, solo si necesitas lógica para actualizar el monto total basado en la cantidad.
+    document.querySelectorAll('input[type="number"]').forEach(input => {
+        input.addEventListener('change', function() {
+            const row = this.closest('tr');
+            const price = parseFloat(row.cells[4].textContent.replace('$', ''));
+            const quantity = parseInt(this.value);
+            row.cells[6].textContent = `$${(price * quantity).toFixed(2)}`;
+        });
+    });</script>
 
-  
+
+
 
 
 

@@ -2,6 +2,10 @@ package com.example.telexpress.controller;
 import com.example.telexpress.dto.ProductoDTO;
 import com.example.telexpress.entity.*;
 import com.example.telexpress.repository.*;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import com.example.telexpress.repository.DistritoRepository;
@@ -120,7 +124,7 @@ public class UsuarioController {
         ordenPendiente.agregarProducto(producto);
         ordenesRepository.save(ordenPendiente);
 
-       // return "redirect:/usuario/ordenes_pendientes";
+        // return "redirect:/usuario/ordenes_pendientes";
         return "Producto agregado al carrito";
     }
 
@@ -167,7 +171,7 @@ public class UsuarioController {
         //Usuario usuarioActual = usuarioRepository.findById(1L).orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
         String correo = SecurityContextHolder.getContext().getAuthentication().getName();
         Usuario usuarioActual = usuarioRepository.findByCorreo(correo);
-                //.orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
+        //.orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
 
         // Busca la orden pendiente
         Ordenes orden = ordenesRepository.findByUsuarioAndEstadoOrdenes(usuarioActual, "Pendiente")
@@ -327,8 +331,8 @@ public class UsuarioController {
     }
     @GetMapping("/pedidos/borrar")
     public String borrarPedidos(Model model,
-                                  @RequestParam("id") int id,
-                                  RedirectAttributes attr) {
+                                @RequestParam("id") int id,
+                                RedirectAttributes attr) {
 
         Optional<Ordenes> optProduct = ordenesRepository.findById(id);
 
@@ -368,6 +372,18 @@ public class UsuarioController {
         model.addAttribute("filtroStock", filtroStock);
 
         return "Usuariofinal/lista_productos";
+    }
+
+    @GetMapping("/images/{id}")
+    public ResponseEntity<byte[]> getImage(@PathVariable Integer id) {
+        Optional<Producto> producto = productoRepository.findById(id);
+        if (producto.isPresent() && producto.get().getImage() != null) {
+            byte[] image = producto.get().getImage();
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.IMAGE_JPEG); // or MediaType.IMAGE_PNG based on your image type
+            return new ResponseEntity<>(image, headers, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @GetMapping("/pagar")
@@ -528,6 +544,3 @@ public class UsuarioController {
     }
 
 }
-
-
-

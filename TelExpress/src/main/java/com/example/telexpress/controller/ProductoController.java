@@ -12,9 +12,12 @@ import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.IOException;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -37,6 +40,11 @@ public class ProductoController {
         this.zonaRepository = zonaRepository;
         this.productoUsuarioRepository = productoUsuarioRepository;
 
+    }
+
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        binder.setDisallowedFields("image"); // Esto excluye el campo 'image' de la validación.
     }
 
 
@@ -63,15 +71,29 @@ public class ProductoController {
     @PostMapping("/producto/guardar")
     public String guardarProducto(@Valid @ModelAttribute Producto producto,
                                   BindingResult result,
+                                  @RequestParam("image") MultipartFile image,
                                   RedirectAttributes attr,
                                   Model model) {
 
         if (result.hasErrors()) {
+            System.out.println("Errores encontrados: " + result.getAllErrors());
             model.addAttribute("listaProveedores", proveedorRepository.findAll());
             model.addAttribute("listaZona", zonaRepository.findAll());
             return "SuperAdmin/inventario_registrar_producto"; // Volver a la vista de formulario
         }
-        productoRepository.save(producto);
+
+        try {
+            if (!image.isEmpty()) {
+                producto.setImage(image.getBytes());
+            }
+            System.out.println("producto guardado exitosamente");
+            productoRepository.save(producto);
+            attr.addFlashAttribute("success", "Producto guardado exitosamente.");
+        } catch (IOException e) {
+            e.printStackTrace();
+            attr.addFlashAttribute("error", "Error al guardar la imagen del producto.");
+        }
+
         return "redirect:/producto/lista";
     }
 
@@ -135,7 +157,7 @@ public class ProductoController {
     }
     @GetMapping("/producto/buscar")
     public String buscarProducto(@RequestParam("searchField") String searchField,
-                                      Model model) {
+                                 Model model) {
         model.addAttribute("activePage", "inventario");
 
         List<Producto> listaProductos = productoRepository.buscarPorNombreOCategoria(searchField);

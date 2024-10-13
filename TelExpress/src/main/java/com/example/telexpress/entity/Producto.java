@@ -78,4 +78,9 @@ public class Producto {
 
     @OneToMany(mappedBy = "producto")
     private Set<ProductoOrdenes> productoHasOrdenes = new HashSet<>();
+
+
+    @Column(name = "image")
+    @Lob
+    private byte[] image;
 }
