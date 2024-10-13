@@ -75,13 +75,22 @@
                                 <input th:field="*{nombre}" type="text" class="form-control" placeholder="Ingrese el nombre del usuario"
                                        th:classappend="${#fields.hasErrors('nombre') ? 'is-invalid' : ''}">
                                 <div class="invalid-feedback" th:if="${#fields.hasErrors('nombreProveedor')}" th:errors="*{nombre}"></div>
-                            </div>  -->
+                            </div>
 
                             <div class="col-md-6">
                                 <label for="apellido" class="form-label">Apellido:</label>
                                 <input type="text" class="form-control" name="apellido" id = "apellido" placeholder="Ingrese el apellido del usuario">
+                            </div>-->
+
+                            <div class="col-md-6">
+                                <label for="apellido" class="form-label">Apellido:</label>
+                                <input type="text" class="form-control" id="apellido" th:field="*{apellido}"
+                                       placeholder="Ingrese el apellido del usuario" th:classappend="${#fields.hasErrors('apellido') ? 'is-invalid' : ''}">
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('apellido')}" th:errors="*{apellido}">Mensaje de error de apellido</div>
                             </div>
 <!--
+
+
                             <div class="col-md-6">
                                 <label class="form-label">Apellido:</label>
                                 <input th:field="*{apellido}" type="text" class="form-control" placeholder="Ingrese el apellido del usuario"
@@ -91,31 +100,63 @@
                         </div>
 
                         <div class="row mb-3">
-                            <!-- DNI -->
+                            <!-- DNI
                             <div class="col-md-6">
                                 <label for="dni" class="form-label">DNI:</label>
                                 <input type="text" class="form-control" name="dni" id="dni" placeholder="Ingrese el DNI" >
+                            </div>-->
+
+                            <div class="col-md-6">
+                                <label for="dni" class="form-label">DNI:</label>
+                                <input type="text" class="form-control" id="dni" th:field="*{dni}"
+                                       placeholder="Ingrese el DNI del usuario" th:classappend="${#fields.hasErrors('dni') ? 'is-invalid' : ''}">
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('dni')}" th:errors="*{dni}">Mensaje de error de dni</div>
                             </div>
 
-                            <!-- DIRECCION  -->
+                            <!-- DIRECCION
                             <div class="col-md-6">
                                 <label for="direccion" class="form-label">Direcciòn:</label>
                                 <input type="text" class="form-control" id="direccion" name="direccion" placeholder="Ingrese la direccion" >
+                            </div>-->
+
+                            <div class="col-md-6">
+                                <label for="direccion" class="form-label">Dirección:</label>
+                                <input type="text" class="form-control" id="direccion" th:field="*{direccion}"
+                                       placeholder="Ingrese la dirección del usuario" th:classappend="${#fields.hasErrors('direccion') ? 'is-invalid' : ''}">
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('direccion')}" th:errors="*{direccion}">Mensaje de error de direccion</div>
                             </div>
+
                         </div>
 
                         <div class="row mb-3">
-                            <!-- Correo -->
+                            <!-- Correo
                             <div class="col-md-6">
                                 <label for="correo" class="form-label">Correo:</label>
                                 <input type="text" class="form-control" id="correo" name="correo" placeholder="Ingrese el correo">
+                            </div>-->
+
+                            <div class="col-md-6">
+                                <label for="correo" class="form-label">Correo:</label>
+                                <input type="text" class="form-control" id="correo" th:field="*{correo}"
+                                       placeholder="Ingrese el correo del usuario" th:classappend="${#fields.hasErrors('correo') ? 'is-invalid' : ''}">
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('correo')}" th:errors="*{correo}">Mensaje de error de correo</div>
                             </div>
 
-                            <!-- Telefono -->
+
+                            <!-- Telefono
                             <div class="col-md-6">
                                 <label for="telefono" class="form-label">Telèfono:</label>
                                 <input type="text" class="form-control" id="telefono" name="telefono" placeholder="Ingrese el telefono">
+                            </div>-->
+
+                            <div class="col-md-6">
+                                <label for="telefono" class="form-label">Telèfono:</label>
+                                <input type="text" class="form-control" id="telefono" th:field="*{telefono}"
+                                       placeholder="Ingrese el teléfono del usuario" th:classappend="${#fields.hasErrors('telefono') ? 'is-invalid' : ''}">
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('telefono')}" th:errors="*{telefono}">Mensaje de error de telefono</div>
                             </div>
+
+
                         </div>
                         <div class="row mb-3">
                             <!--
