@@ -6,6 +6,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import com.example.telexpress.repository.DistritoRepository;
 import org.springframework.web.bind.annotation.GetMapping;
+import jakarta.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -380,11 +381,18 @@ public class UsuarioController {
         return "Usuariofinal/pago";
     }
 
+    /*
     @GetMapping("/resenia")
     public String resenia(Model model){
         model.addAttribute("activePage", "resenia");
 
         return "Usuariofinal/resenia";
+    }*/
+    @GetMapping("/resenia")
+    public String mostrarResenias(Model model) {
+        List<Resenia> resenias = reseniaRepository.findAll(); // Cargar todas las reseñas desde la base de datos
+        model.addAttribute("resenias", resenias); // Pasar las reseñas al modelo
+        return "Usuariofinal/resenia"; // Nombre de tu archivo HTML de Thymeleaf (resenias.html)
     }
 
     @GetMapping("/respuesta_resenia")
@@ -393,10 +401,35 @@ public class UsuarioController {
     }
 
     @GetMapping("/unete")
-    public String unete(Model model){
+    public String mostrarFormulario() {
 
-        model.addAttribute("activePage", "unete");
-        return "Usuariofinal/unete";
+        return "Usuariofinal/unete"; // Retorna la vista del formulario
+    }
+
+    @PostMapping("/save")
+    public String guardarInformacion(@RequestParam("ruc") String ruc,
+                                     @RequestParam("jurisdiccion") String jurisdiccion,
+                                     @RequestParam("telefono") String telefono,
+                                     @RequestParam("despachador") String despachador,
+                                     @RequestParam("razonSocial") String razonSocial,
+                                     HttpSession session) {
+        // Obtener el usuario autenticado desde la sesión
+        Usuario usuarioEnSesion = (Usuario) session.getAttribute("usuario");
+
+        if (usuarioEnSesion != null) {
+            // Actualizar los valores del formulario
+            usuarioEnSesion.setRuc(ruc);
+            usuarioEnSesion.setJurisdiccion(jurisdiccion);
+            usuarioEnSesion.setTelefono(telefono);
+            usuarioEnSesion.setDespachador(despachador);
+            usuarioEnSesion.setRazonSocial(razonSocial);
+
+
+            // Guardar el usuario actualizado en la base de datos
+            usuarioRepository.save(usuarioEnSesion);
+        }
+
+        return "redirect:/usuario/unete"; // Redirigir al formulario nuevamente
     }
 
     @GetMapping("/editar_perfil")

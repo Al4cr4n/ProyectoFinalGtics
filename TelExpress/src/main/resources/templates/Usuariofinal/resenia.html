@@ -1,25 +1,9 @@
 <!DOCTYPE html>
-
-
-<html
-        lang="en"
-        class="light-style layout-menu-fixed"
-        dir="ltr"
-        data-theme="theme-default"
-        data-assets-path="../../assets/"
-        data-template="vertical-menu-template-free"
-        xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8" />
-    <meta
-            name="viewport"
-            content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
-    />
-
-    <title>Preguntas frecuentes</title>
-
-    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+    <title>Reseñas</title>
 
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="../../assets/img/favicon/favicon.ico" />
@@ -27,15 +11,12 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-            href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
-            rel="stylesheet"
-    />
-
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Icons. Uncomment required icon fonts -->
     <link rel="stylesheet" href="../../assets/vendor/fonts/boxicons.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css">
 
     <!-- Core CSS -->
     <link rel="stylesheet" href="../../assets/vendor/css/core.css" class="template-customizer-core-css" />
@@ -44,267 +25,96 @@
 
     <!-- Vendors CSS -->
     <link rel="stylesheet" href="../../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
-
     <link rel="stylesheet" href="../../assets/vendor/libs/apex-charts/apex-charts.css" />
-
-    <!-- Page CSS -->
 
     <!-- Helpers -->
     <script src="../../assets/vendor/js/helpers.js"></script>
-
-    <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
-    <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="../../assets/js/config.js"></script>
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css">
-
-
 
 </head>
 <body>
 <!-- Layout wrapper -->
 <div class="layout-wrapper layout-content-navbar">
     <div class="layout-container">
-        <div th:insert="~{Usuariofinal/fragments/menu.html::menu}"></div> <!-- este es el menu -->
-
-        <!-- Layout container -->
+        <div th:insert="~{Usuariofinal/fragments/menu.html::menu}"></div>
         <div class="layout-page">
-            <div th:insert="~{Usuariofinal/fragments/navbar.html::navbar}"></div> <!-- este es el navbar -->
+            <div th:insert="~{Usuariofinal/fragments/navbar.html::navbar}"></div>
 
-            <!-- Content wrapper -->
             <div class="content-wrapper">
-                <!-- Aquí se agrega el contenido central -->
                 <div class="container-xxl flex-grow-1 container-p-y">
-                    <h4 style="font-family: 'Poppins', sans-serif; color: #7367F0; font-weight: bold; padding-top: 1rem; padding-bottom: 1rem; margin-bottom: 1rem; text-align: center; font-size: 40px;">
-                        Reseñas
-                    </h4>
+                    <h4>Reseñas</h4>
 
-                    <div class="card">
-                        <div class="nav-align-top mb-4"></div>
-                        <ul class="nav nav-pills mb-3" role="tablist">
-                            <li class="nav-item">
-                                <a
-                                        class="nav-link"
-                                        role="tab"
-                                        id="faqs-tab"
-                                        href="/usuario/FAQS"
-                                        aria-controls="navs-pills-top-home"
-                                        aria-selected="false"
-                                >
-                                    FAQs
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a
-                                        class="nav-link active"
-                                        role="tab"
-                                        id="reseñas-tab"
-                                        href="/usuario/resenia"
-                                        aria-controls="navs-pills-top-profile"
-                                        aria-selected="true"
-                                >
-                                    RESEÑAS
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a
-                                        class="nav-link"
-                                        role="tab"
-                                        id="foro-tab"
-                                        href="/usuario/Foro"
-                                        aria-controls="navs-pills-top-messages"
-                                        aria-selected="false"
-                                >
-                                    FORO
-                                </a>
-                            </li>
-                        </ul>
-
-                        <div class="tab-content">
-
-                            <div class="tab-pane fade show active" id="navs-pills-top-profile" role="tabpanel">
-                                <div class="row">
-                                    <div class="d-flex  justify-content-center align-items-center card-header">
-                                        <div class="col-md-6 position-relative store-search">
-                                            <form class="d-flex" onsubmit="return false">
-                                                <input class="form-control me-1" type="search" placeholder="Buscando..." aria-label="Search" style="width: 50%;"/>
-                                                <button class="btn btn-outline-primary" type="submit">Buscar</button>
-                                            </form>
-                                        </div>
-
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <!-- Blockquote -->
-                                    <div class="accordion mt-3" id="accordionExample">
-                                        <div class="card accordion-item active">
-                                            <h2 class="accordion-header" id="headingOne">
-                                                <button
-                                                        type="button"
-                                                        class="accordion-button"
-                                                        data-bs-toggle="collapse"
-                                                        data-bs-target="#accordionOne"
-                                                        aria-expanded="true"
-                                                        aria-controls="accordionOne"
-                                                >
-                                                    Reseña 1
-                                                </button>
-                                            </h2>
-
-
-                                            <div
-                                                    id="accordionOne"
-                                                    class="accordion-collapse collapse show"
-                                                    data-bs-parent="#accordionExample"
-                                            >
-                                                <div class="accordion-body">
-                                                    <div class="row">
-                                                        <p class="col-md-2">Nombre del Agente </p>
-
-                                                        <div class="product-rating col-md-6">
-                                                            <i class="bi bi-star-fill text-warning "></i>
-                                                            <i class="bi bi-star-fill text-warning "></i>
-                                                            <i class="bi bi-star-fill text-warning "></i>
-                                                            <i class="bi bi-star text-warning "></i>
-                                                            <i class="bi bi-star text-warning "></i>
-                                                        </div>
-
-                                                    </div>
-                                                    DESCRIPCION DE RESEÑAS SOBRE UN PRODUCTO drops chocolate cake gummies carrot cake chupa chups muffin topping. Sesame snaps icing
-                                                    marzipan gummi bears macaroon dragée danish caramels powder. Bear claw dragée pastry topping
-                                                    soufflé. Wafer gummi bears marshmallow pastry pie.
-                                                    <div class="my-2">
-
-                                                    </div>
-
-                                                    <hr class="m-0">
-                                                    <div class="row">
-                                                        <p style="color:#2d56ad">
-                                                            <a href="respuesta_resenia.html" style="text-decoration: underline; color: inherit;">12 respuestas</a>
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-
-                                </div>
-
-                                <div class="row"></div>
-                                <!-- Blockquote -->
-                                <div class="accordion mt-3" id="accordionExample2">
-                                    <div class="card accordion-item active">
-                                        <h2 class="accordion-header" id="headingtwo">
-                                            <button
-                                                    type="button"
-                                                    class="accordion-button"
-                                                    data-bs-toggle="collapse"
-                                                    data-bs-target="#accordiontwo"
-                                                    aria-expanded="true"
-                                                    aria-controls="accordiontwo"
-                                            >
-                                                Reseña 2
-                                            </button>
-                                        </h2>
-
-
-                                        <div
-                                                id="accordiontwo"
-                                                class="accordion-collapse collapse show"
-                                                data-bs-parent="#accordionExample2"
-                                        >
-                                            <div class="accordion-body">
-                                                <div class="row">
-                                                    <p class="col-md-2">Nombre del Agente </p>
-
-                                                    <div class="product-rating col-md-6">
-                                                        <i class="bi bi-star-fill text-warning "></i>
-                                                        <i class="bi bi-star-fill text-warning "></i>
-                                                        <i class="bi bi-star text-warning "></i>
-                                                        <i class="bi bi-star text-warning "></i>
-                                                        <i class="bi bi-star text-warning "></i>
-                                                    </div>
-
-                                                </div>
-                                                DESCRIPCION DE RESEÑAS SOBRE UN PRODUCTO drops chocolate cake gummies carrot cake chupa chups muffin topping. Sesame snaps icing
-                                                marzipan gummi bears macaroon dragée danish caramels powder. Bear claw dragée pastry topping
-                                                soufflé. Wafer gummi bears marshmallow pastry pie.
-                                                <div class="my-2">
-
-                                                </div>
-
-                                                <hr class="m-0">
-                                                <div class="row">
-                                                    <p style="color:#2d56ad">
-                                                        <a href="respuesta_resenia.html" style="text-decoration: underline; color: inherit;">12 respuestas</a>
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-
+                    <!-- Buscador -->
+                    <div class="row">
+                        <div class="d-flex justify-content-center align-items-center card-header">
+                            <div class="col-md-6 position-relative store-search">
+                                <form class="d-flex" onsubmit="return false">
+                                    <input class="form-control me-1" type="search" placeholder="Buscando..." aria-label="Search" style="width: 50%;"/>
+                                    <button class="btn btn-outline-primary" type="submit">Buscar</button>
+                                </form>
                             </div>
-
                         </div>
-
                     </div>
+
+                    <!-- Sección de Reseñas (dinámica con Thymeleaf) -->
+                    <div class="accordion mt-3" id="accordionExample">
+                        <div th:each="resenia : ${resenias}" class="card accordion-item">
+                            <h2 class="accordion-header">
+                                <button
+                                        type="button"
+                                        class="accordion-button"
+                                        data-bs-toggle="collapse"
+                                        th:data-bs-target="'#accordion' + ${resenia.idresenias}"
+                                        th:aria-controls="'accordion' + ${resenia.idresenias}">
+                                    <span th:text="${resenia.tituloresena}"></span>
+                                </button>
+                            </h2>
+                            <div th:id="'accordion' + ${resenia.idresenias}" class="accordion-collapse collapse show">
+                                <div class="accordion-body">
+                                    <div class="row">
+                                        <p class="col-md-2" th:text="${resenia.usuario.nombre}"></p>
+                                        <div class="product-rating col-md-6">
+                                            <!-- Generar estrellas llenas según la puntuación -->
+                                            <i class="bi bi-star-fill text-warning" th:each="i : ${#numbers.sequence(1, resenia.puntuacion)}"></i>
+
+                                            <!-- Generar estrellas vacías solo si la puntuación es menor que 5 -->
+                                            <i class="bi bi-star text-warning" th:if="${resenia.puntuacion < 5}" th:each="i : ${#numbers.sequence(1, 5 - resenia.puntuacion)}"></i>
+                                        </div>
+
+                                    </div>
+
+                                    <!-- Mostrar Imagen -->
+                                    <div class="mb-3">
+                                        <img th:src="@{/images/{filename}(filename=${resenia.foto})}" class="img-fluid" style="max-width: 200px;">
+                                    </div>
+
+                                    <!-- Preguntas de Reseñas -->
+                                    <div class="mb-3">
+                                        <label for="productQuality" class="form-label">El producto es de buena calidad?</label>
+                                        <textarea id="productQuality" class="form-control" th:text="${resenia.calidad}" rows="3"></textarea>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="deliverySpeed" class="form-label">Recibió rápido su producto?</label>
+                                        <textarea id="deliverySpeed" class="form-control" th:text="${resenia.rapidez}" rows="3"></textarea>
+                                    </div>
+
+
+                                    <hr class="m-0">
+                                    <div class="row">
+                                        <p style="color:#2d56ad">
+                                            <a th:href="@{'/resenias/' + ${resenia.idresenias} + '/respuestas'}" style="text-decoration: underline;">12 respuestas</a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
-
-
-
-
-
         </div>
     </div>
-    <!-- /Aquí termina el contenido central -->
-
 </div>
-<!-- / Layout page -->
-</div>
-
-<!-- Overlay -->
-<div class="layout-overlay layout-menu-toggle"></div>
-</div>
-<!-- / Layout wrapper -->
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Deshabilitar botones de pestañas no deseadas
-        document.getElementById('faqs-tab').setAttribute('disabled', 'true');
-        document.getElementById('foro-tab').setAttribute('disabled', 'true');
-
-        // Ocultar pestañas no deseadas
-        document.getElementById('navs-pills-top-home').style.display = 'none';
-        document.getElementById('navs-pills-top-messages').style.display = 'none';
-    });
-</script>
-
-
-
-<!-- Core JS -->
-<!-- build:js assets/vendor/js/core.js -->
-<script src="../../assets/vendor/libs/jquery/jquery.js"></script>
-<script src="../../assets/vendor/libs/popper/popper.js"></script>
-<script src="../../assets/vendor/js/bootstrap.js"></script>
-<script src="../../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
-
-<script src="../../assets/vendor/js/menu.js"></script>
-<!-- endbuild -->
-
-<!-- Vendors JS -->
-<script src="../../assets/vendor/libs/apex-charts/apexcharts.js"></script>
-
-<!-- Main JS -->
-<script src="../../assets/js/main.js"></script>
-
-<!-- Page JS -->
-<script src="../../assets/js/dashboards-analytics.js"></script>
-
-<!-- Place this tag in your head or just before your close body tag. -->
-<script async defer src="https://buttons.github.io/buttons.js"></script>
 </body>
 </html>

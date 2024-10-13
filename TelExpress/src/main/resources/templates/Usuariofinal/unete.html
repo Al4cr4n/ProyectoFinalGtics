@@ -90,70 +90,59 @@
                 <div class="card">
                     <div class="card-body">
                         <!--FORMULARIO-->
-                        <form id="formCrearAgente">
+                        <form id="formCrearAgente" method="post">
                             <div class="row">
-                                
-                                    
-                                    <div class="mb-3 row">
-                                        <label class="form-label col-md-2" for="basic-ruc">RUC:</label>
-                                        <div class="col-md-10">
-                                        <input type="text"  class="form-control"    id="basic-ruc" 
-                                        placeholder="Ingresa el RUC" 
-                                        maxlength="11"
-                                        pattern="\d{11}"
-                                        oninput="this.value = this.value.replace(/\D/g, '')"
-                                        required/>
-                                        </div>
+                                <div class="mb-3 row">
+                                    <label class="form-label col-md-2" for="basic-ruc">RUC:</label>
+                                    <div class="col-md-10">
+                                        <input type="text" class="form-control" id="basic-ruc" name="ruc" placeholder="Ingresa el RUC"
+                                               maxlength="11" pattern="\d{11}" oninput="this.value = this.value.replace(/\D/g, '')" required/>
                                     </div>
-                                    
-                                    <div class="mb-3 row">
-                                        <label class="form-label col-md-2" for="basic-codigo-jurisdiccion">Código de jurisdicción:</label>
-                                        <div class="col-md-10">
-                                            <input type="text" class="form-control" id="basic-codigo-jurisdiccion" placeholder="Ingresa el código de jurisdicción" required/>
-                                        </div>
-                                    </div>
+                                </div>
 
-                                    
-                                    <div class="mb-3 row ">
-                                        <label class="form-label col-md-2" for="basic-telefono">Telefono:</label>
-                                        <div class="col-md-10">
-                                        <input type="text" class="form-control" id="basic-telefono" placeholder="Ingresa el número telefónico"
-                                        maxlength="11"
-                                        oninput="this.value = this.value.replace(/\D/g, '')"
-                                        required/>
-                                        </div>
+                                <div class="mb-3 row">
+                                    <label class="form-label col-md-2" for="basic-codigo-jurisdiccion">Código de jurisdicción:</label>
+                                    <div class="col-md-10">
+                                        <input type="text" class="form-control" id="basic-codigo-jurisdiccion" name="jurisdiccion"
+                                               placeholder="Ingresa el código de jurisdicción" required/>
                                     </div>
-                                    <div class="mb-3 row">
-                                        <label class="form-label col-md-2" for="basic-codigo-despachador">Código despachador:</label>
-                                        <div class="col-md-10">
-                                        <input type="text" class="form-control" id="basic-codigo-desachador" placeholder="Ingresa el código despachador" required/>
-                                        </div>
+                                </div>
+
+                                <div class="mb-3 row">
+                                    <label class="form-label col-md-2" for="basic-telefono">Teléfono:</label>
+                                    <div class="col-md-10">
+                                        <input type="text" class="form-control" id="basic-telefono" name="telefono" placeholder="Ingresa el número telefónico"
+                                               maxlength="9" oninput="this.value = this.value.replace(/\D/g, '')" required/>
                                     </div>
-                                    <div class="mb-3 row">
-                                        <label class="form-label col-md-2" for="basic-razon-social">Razón Social :</label>
-                                        <div class="col-md-10">
-                                        <input type="text" class="form-control" id="basic-razon-social" placeholder="Ingrese la razón social" required/>
-                                        </div>
+                                </div>
+
+                                <div class="mb-3 row">
+                                    <label class="form-label col-md-2" for="basic-codigo-despachador">Código despachador:</label>
+                                    <div class="col-md-10">
+                                        <input type="text" class="form-control" id="basic-codigo-despachador" name="despachador"
+                                               placeholder="Ingresa el código despachador" required/>
                                     </div>
-                                    
-                                    <div class="mb-3 row">
-                                        <label class="form-label col-md-2" for="basic-zona">Zona:</label>
-                                        <div class="col-md-10">
-                                        <input type="text" class="form-control" id="basic-zona" placeholder="Norte" value="Norte"readonly required style="background: linear-gradient(#ffffff75,#d8d8d885,#ffffff);"/>
-                                        </div>
+                                </div>
+
+                                <div class="mb-3 row">
+                                    <label class="form-label col-md-2" for="basic-razon-social">Razón Social:</label>
+                                    <div class="col-md-10">
+                                        <input type="text" class="form-control" id="basic-razon-social" name="razonSocial"
+                                               placeholder="Ingrese la razón social" required/>
                                     </div>
-                            
-                                
+                                </div>
+
                             </div>
+
                             <!-- BOTON DE CREAR AGENTE -->
                             <div class="text-center mt-3">
-                                <button type="submit" class="btn btn-primary " style="background-color: #e89b85; border-color: #e89b85; font-size: 17px; font-family: 'Poppins', sans-serif;">Postular</button>
+                                <button type="submit" class="btn btn-primary" style="background-color: #e89b85; border-color: #e89b85; font-size: 17px; font-family: 'Poppins', sans-serif;">Postular</button>
                                 <div id="errorMessages" class="text-danger mt-2" style="display: none;"></div>
                             </div>
-                            <!--/ BOTON DE CREAR AGENTE -->
                         </form>
+
                         <!--FORMULARIO-->
-                        
+
                     </div>
                 </div>
             </div>
@@ -188,10 +177,10 @@
             </div>
             <div class="modal-footer justify-content-center mx-2">
                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
-                  Cancelar
+                    Cancelar
                 </button>
                 <button type="button" class="btn btn-primary" id="confirm-submit">Confirmar</button>
-              </div>
+            </div>
         </div>
     </div>
 </div>
