@@ -104,17 +104,7 @@
           <!-- Tabla de Usuarios -->
           <h4 style="font-family: 'Poppins', sans-serif; color: #7367F0; font-weight: bold; padding-top: 1rem; padding-bottom: 1rem; margin-bottom: 1rem; text-align: center; font-size: 40px;">
             Usuarios finales</h4>
-          <div class="container mt-4">
-            <!-- Mensaje de éxito -->
-            <div th:if="${success}" class="alert alert-success" role="alert">
-              <span th:text="${success}"></span>
-            </div>
 
-            <!-- Mensaje de error -->
-            <div th:if="${error}" class="alert alert-danger" role="alert">
-              <span th:text="${error}"></span>
-            </div>
-          </div>
 
           <div class="card" style="padding: 0.8rem;">
             <!---------------------------------------------------- NUEVA TABLA ------------------------------------------------------------>
@@ -131,9 +121,21 @@
               </form>
 
               <div class="text-end my-3">
-                <a class="btn btn-primary" th:href="@{/superadmin/crear_usuario}">Crear Nuevo</a>
+                <a class="btn btn-primary" th:href="@{/superadmin/nuevo_usuario}">Crear Nuevo</a>
               </div>
+              <div class="container mt-4">
+                <!-- Mensaje de éxito -->
+                <div th:if="${success}" class="alert alert-success alert-dismissible fade show" role="alert">
+                  <span th:text="${success}"></span>
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
 
+                <!-- Mensaje de error -->
+                <div th:if="${error}" class="alert alert-success alert-dismissible fade show" role="alert">
+                  <span th:text="${error}"></span>
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+              </div>
             </div>
 
             <!--- TABLA   ---->
@@ -165,13 +167,37 @@
                     <a class="btn btn-sm btn-primary" th:href="@{/superadmin/editar/{id}(id=${usuario.id})}">
                       <i class="bx bx-edit-alt"></i>
                     </a>
+                    <!--
                     <a class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#confirmModal" th:attr="data-id=${usuario.id}">
                       <i class="bx bx-trash"></i>
+                    </a> -->
+
+                    <a href="#" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal"
+                       th:attr="onclick='setDeleteUrl(\'/superadmin/eliminar/' + ${usuario.id} + '\')'">
+                      <i class="bx bx-trash"></i>
                     </a>
+
                   </td>
                 </tr>
                 <!-- Más filas de ejemplo... -->
                 </tbody>
+                <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="confirmDeleteLabel">Confirmar Eliminación</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        ¿Estás seguro de que deseas eliminar este usuario?
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancelar</button>
+                        <a href="#" id="confirmDeleteButton" class="btn btn-danger">Eliminar</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </table>
             </div>
             <!-- Paginación -->
@@ -193,24 +219,6 @@
 </div>
 <!-- / Layout wrapper -->
 
-<!-- Modal de Confirmación -->
-<div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="confirmModalLabel">Confirmar eliminación</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        ¿Estás seguro de eliminar al usuario?
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-        <a id="confirmDelete" class="btn btn-primary">Confirmar</a>
-      </div>
-    </div>
-  </div>
-</div>
 
 <!-- Core JS -->
 <script src="/assets/vendor/libs/jquery/jquery.js"></script>
@@ -232,7 +240,11 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
 
-
+<script>
+  function setDeleteUrl(url) {
+    document.getElementById('confirmDeleteButton').setAttribute('href', url);
+  }
+</script>
 <script>
   document.addEventListener("DOMContentLoaded", function() {
     const rowsPerPage = 5; // Número de filas por página

@@ -195,7 +195,7 @@ public class SuperAdminController {
             return "redirect:/superadmin/gestion_usuarios";
         }
     }
-
+/*
     @GetMapping("/crear_usuario")
     public String guardarUsuario(Model model, RedirectAttributes attr) {
         model.addAttribute("activePage", "usuarios");
@@ -205,13 +205,14 @@ public class SuperAdminController {
         model.addAttribute("usuario",new Usuario());
 
         return "SuperAdmin/editar_usuario";
-    }
+    } */
+    /*
     @PostMapping("/guardar_usuario")
     public String guardarUsuario( @ModelAttribute("usuario") @Valid Usuario usuario, BindingResult result, RedirectAttributes attr, @RequestParam("distrito.id") Integer iddist ) {
 
         if (result.hasErrors()) {
             // Si hay errores de validación, volvemos al formulario con los mensajes de error
-            return "SuperAdmin/coordinador_zonal_formulario";  // Vuelve a la página del formulario
+            return "SuperAdmin/crear_usuario";  // Vuelve a la página del formulario
         }
         // Verificar si el DNI, correo o número telefónico ya existen
         Optional<Usuario> usuarioConMismoDni = adminRepository.findByDni(usuario.getDni());
@@ -222,21 +223,21 @@ public class SuperAdminController {
         if (usuarioConMismoDni.isPresent() && !usuarioConMismoDni.get().getId().equals(usuario.getId())) {
             attr.addFlashAttribute("mensaje", "El DNI ya está registrado en otro usuario.");
             attr.addFlashAttribute("tipoMensaje", "danger");
-            return "redirect:/superadmin/gestion_coordinadores";
+            return "redirect:/superadmin/gestion_usuarios";
         }
 
         // Verificar si el correo ya está en uso por otro usuario
         if (usuarioConMismoCorreo.isPresent() && !usuarioConMismoCorreo.get().getId().equals(usuario.getId())) {
             attr.addFlashAttribute("mensaje", "El correo ya está registrado en otro usuario.");
             attr.addFlashAttribute("tipoMensaje", "danger");
-            return "redirect:/superadmin/gestion_coordinadores";
+            return "redirect:/superadmin/gestion_usuarios";
         }
 
         // Verificar si el número telefónico ya está en uso por otro usuario
         if (usuarioConMismoTelefono.isPresent() && !usuarioConMismoTelefono.get().getId().equals(usuario.getId())) {
             attr.addFlashAttribute("mensaje", "El número telefónico ya está registrado en otro usuario.");
             attr.addFlashAttribute("tipoMensaje", "danger");
-            return "redirect:/superadmin/gestion_coordinadores";
+            return "redirect:/superadmin/gestion_usuarios";
         }
 
 
@@ -259,9 +260,60 @@ public class SuperAdminController {
 
 
         return "redirect:/superadmin/gestion_usuarios";
+    } */
+
+
+    @PostMapping("/guardar_usuario")
+    public String guardarUsuario(@ModelAttribute("usuario") @Valid Usuario usuario, BindingResult result, RedirectAttributes attr, @RequestParam("distrito.id") Integer iddist) {
+/*
+        if (result.hasErrors()) {
+            return "SuperAdmin/crear_usuario";  // Vuelve a la página del formulario
+        }
+
+        // Verificar si el DNI, correo o número telefónico ya existen
+        Optional<Usuario> usuarioConMismoDni = adminRepository.findByDni(usuario.getDni());
+        Optional<Usuario> usuarioConMismoCorreo = adminRepository.findByCorreo(usuario.getCorreo());
+        Optional<Usuario> usuarioConMismoTelefono = adminRepository.findByTelefono(usuario.getTelefono());
+
+        if (usuarioConMismoDni.isPresent() && !usuarioConMismoDni.get().getId().equals(usuario.getId())) {
+            attr.addFlashAttribute("mensaje", "El DNI ya está registrado en otro usuario.");
+            attr.addFlashAttribute("tipoMensaje", "danger");
+            return "redirect:/superadmin/gestion_usuarios";
+        }
+
+        if (usuarioConMismoCorreo.isPresent() && !usuarioConMismoCorreo.get().getId().equals(usuario.getId())) {
+            attr.addFlashAttribute("mensaje", "El correo ya está registrado en otro usuario.");
+            attr.addFlashAttribute("tipoMensaje", "danger");
+            return "redirect:/superadmin/gestion_usuarios";
+        }
+
+        if (usuarioConMismoTelefono.isPresent() && !usuarioConMismoTelefono.get().getId().equals(usuario.getId())) {
+            attr.addFlashAttribute("mensaje", "El número telefónico ya está registrado en otro usuario.");
+            attr.addFlashAttribute("tipoMensaje", "danger");
+            return "redirect:/superadmin/gestion_usuarios";
+        } */
+
+        // Asignar el rol de usuario
+        Rol rolusuario = new Rol();
+        rolusuario.setId(4);  // ID correspondiente al rol de usuario, asegúrate de que este ID exista en la base de datos
+        usuario.setRol(rolusuario);  // Asignar el rol al usuario
+
+        // Asignar el distrito
+        Distrito distrito = distritoRepository.findById(iddist).orElse(null);
+        if (distrito != null) {
+            usuario.setDistrito(distrito);
+
+            // Asignar la zona basada en el distrito seleccionado
+            Zona zona = distrito.getZona();  // Obtener la zona desde el distrito
+            usuario.setZona(zona);  // Asignar la zona al usuario
+        }
+
+        // Guardar el usuario
+        adminRepository.save(usuario);
+        attr.addFlashAttribute("success", "Usuario guardado correctamente.");
+
+        return "redirect:/superadmin/gestion_usuarios";
     }
-
-
 
 
     @GetMapping("/eliminar/{id}")
@@ -305,7 +357,10 @@ public class SuperAdminController {
         model.addAttribute("activePage", "usuarios");
 
         model.addAttribute("listaZona", zonaRepository.findAll());
-        return "Superadmin/crear_usuario";
+        List<Distrito> distritos = distritoRepository.findAll();
+        model.addAttribute("distritos",distritos);
+        model.addAttribute("usuario",new Usuario());
+        return "SuperAdmin/crear_usuario";
     }
 
     @GetMapping("/inventario_registrar_producto")

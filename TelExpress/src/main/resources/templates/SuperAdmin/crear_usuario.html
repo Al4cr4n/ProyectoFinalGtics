@@ -52,7 +52,7 @@
                     <h4 class="mb-4">Registrar Nuevo usuario</h4>
 
                     <!-- Formulario -->
-                    <form id="formRegistro" method="post" th:action="@{/superadmin/guardar_usuario}">
+                    <form id="formRegistro" method="post" th:action="@{/superadmin/guardar_usuario}"th:object="${usuario}">
                         <div class="row mb-3">
                             <!-- Nombre del usuario-->
 
@@ -77,7 +77,7 @@
 
                             <!-- DIRECCION  -->
                             <div class="col-md-6">
-                                <label for="direccion" class="form-label">Direccion:</label>
+                                <label for="direccion" class="form-label">Direcciòn:</label>
                                 <input type="text" class="form-control" id="direccion" name="direccion" placeholder="Ingrese la direccion" >
                             </div>
                         </div>
@@ -91,21 +91,41 @@
 
                             <!-- Telefono -->
                             <div class="col-md-6">
-                                <label for="telefono" class="form-label">Telefono:</label>
+                                <label for="telefono" class="form-label">Telèfono:</label>
                                 <input type="text" class="form-control" id="telefono" name="telefono" placeholder="Ingrese el telefono">
                             </div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <label for="zona" class="form-label">Zona:</label>
-                                <select class="form-select" id="zona" name="zona" th:field="*{zona}">
+                                <select class="form-select" id="zona" name="zona.idzona" th:field="*{zona.idzona}">
+                                    <option value="" disabled selected>Seleccione una zona</option>
                                     <option th:each="zona : ${listaZona}" th:value="${zona.idzona}" th:text="${zona.nombre}"></option>
                                 </select>
                             </div>
+                        <!--</div> -->
+
+                            <div class="col-md-6">
+                                <label class="form-label">Distrito:</label>
+                                <select class="form-select" th:field="*{distrito.id}">
+                                    <option value="" disabled selected>Seleccione un distrito</option>
+                                    <option th:each="dist : ${distritos}" th:value="${dist.id}" th:text="${dist.nombredistrito}"></option>
+                                </select>
+                            </div>
+
+                         </div>
+                        <!-- Contraseña Temporal -->
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="contrasenaTemporal" class="form-label">Contraseña Temporal:</label>
+                                <input type="password" class="form-control"
+                                       id="contrasenaTemporal" th:field="*{contrasena}"
+                                       th:placeholder="${usuario.id != null ? '********' : 'Ingrese una contraseña temporal'}"
+                                       th:value="${usuario.id != null ? '' : ''}"
+                                       th:disabled="${usuario.id != null}" />
+                            </div>
+
                         </div>
-
-
-
                         <!--<div class="row mb-3">
 
 
@@ -115,8 +135,6 @@
                             </div>
 
                         </div>-->
-
-
 
                         <div class="text-center d-flex justify-content-center my-3">
                             <button type="button" class="btn btn-primary mx-2" data-bs-toggle="modal" data-bs-target="#confirmModal">Registrar</button>
