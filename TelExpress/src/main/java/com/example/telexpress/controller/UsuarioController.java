@@ -2,6 +2,7 @@ package com.example.telexpress.controller;
 import com.example.telexpress.dto.ProductoDTO;
 import com.example.telexpress.entity.*;
 import com.example.telexpress.repository.*;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import com.example.telexpress.repository.DistritoRepository;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -161,7 +162,10 @@ public class UsuarioController {
     @ResponseBody
     public List<ProductoOrdenes> agregarAlCarrito(@RequestParam("productoId") Integer productoId, @RequestParam("cantidadxproducto") Integer cantidad, Model model ) {
         // Obtener el usuario actual (simulación, debes implementar autenticación)
-        Usuario usuarioActual = usuarioRepository.findById(1L).orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
+        //Usuario usuarioActual = usuarioRepository.findById(1L).orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
+        String correo = SecurityContextHolder.getContext().getAuthentication().getName();
+        Usuario usuarioActual = usuarioRepository.findByCorreo(correo);
+                //.orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
 
         // Busca la orden pendiente
         Ordenes orden = ordenesRepository.findByUsuarioAndEstadoOrdenes(usuarioActual, "Pendiente")

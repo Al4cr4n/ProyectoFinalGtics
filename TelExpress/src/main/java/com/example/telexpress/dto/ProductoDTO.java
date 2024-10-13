@@ -1,14 +1,14 @@
 package com.example.telexpress.dto;
 
 public class ProductoDTO {
-    private int idProducto;
+    private Integer idProducto;
     private String nombreProducto;
     private Double precio;
-    private int cantidadDisponible;
-    private int cantidadxproducto; // cantidad agregada en el carrito
+    private Integer cantidadDisponible;
+    private Integer cantidadxproducto; // cantidad agregada en el carrito
 
     // Constructor
-    public ProductoDTO(int idProducto, String nombreProducto, Double precio, int cantidadDisponible, Integer cantidadxproducto) {
+    public ProductoDTO(Integer idProducto, String nombreProducto, Double precio, Integer cantidadDisponible, Integer cantidadxproducto) {
         this.idProducto = idProducto;
         this.nombreProducto = nombreProducto;
         this.precio = precio;
@@ -41,7 +41,7 @@ public class ProductoDTO {
         this.precio = precio;
     }
 
-    public int getCantidadDisponible() {
+    public Integer getCantidadDisponible() {
         return cantidadDisponible;
     }
 

@@ -106,7 +106,7 @@
           <div class="content-wrapper">
             <!-- Content -->
             <div class="container-xxl flex-grow-1 container-p-y">
-                <h4 class="desing-title-page"> .</h4>
+               <!-- <h4 class="desing-title-page"> .</h4>-->
                 <div id="success-banner" class="alert alert-success text-center" style="display: none;">
                     ¡La solicitud de reposición se ha realizado con éxito!
                   </div>
@@ -239,7 +239,7 @@
                                         <!-- Add to Cart button -->
                                         <form id="addToCartForm" style="margin-top: 1.5rem">
                                             <input type="hidden" id="productoId" th:value="${producto.idProducto}">
-                                            <input type="hidden" id="usuarioId" value="27"> <!-- Cambiar por el usuario actual -->
+                                            <input type="hidden" id="usuarioId" th:value="${session.usuario.id}"> <!-- Cambiar por el usuario actual         <a class="dropdown-item" th:href="@{'/usuario/perfil' + '?id=' + ${session.usuario.id}}">-->
 
                                             <!-- Botón para agregar al carrito -->
                                             <button type="button" class="add-to-cart-btn" onclick="agregarAlCarrito()">Agregar al carrito</button>
@@ -348,7 +348,7 @@
 <script>
     function agregarAlCarrito() {
         const productoId = document.getElementById('productoId').value;
-       // const usuarioId = document.getElementById('usuarioId').value;
+       const usuarioId = document.getElementById('usuarioId').value;
         const cantidadxproducto = document.getElementById('cantidadProducto').value; // Obtén la cantidad seleccionada
         // Obtener el token CSRF del meta tag o el input hidden
         var csrfToken = $("meta[name='_csrf']").attr("content");
@@ -377,7 +377,7 @@
                     carritoHtml += '<td><input type="checkbox"></td>';
                     carritoHtml += '<td><img src="/assets/img/elements/product01.png" alt="Producto" class="img-thumbnail" width="100"></td>';
                     carritoHtml += '<td>' + item.producto.nombreProducto + '</td>';
-                    carritoHtml += '<td>' + item.producto.idproducto + '</td>';
+                    carritoHtml += '<td>' + item.producto.idProducto + '</td>';
                     carritoHtml += '<td>S/. ' + item.producto.precio.toFixed(2) + '</td>';
                     carritoHtml += '<td><input type="number" class="form-control" value="' + item.cantidadxproducto + '" min="1" max="' + item.producto.cantidadDisponible + '" /></td>';
                     carritoHtml += '<td>S/. ' + totalPorProducto.toFixed(2) + '</td>';

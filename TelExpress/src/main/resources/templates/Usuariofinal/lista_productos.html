@@ -5,7 +5,7 @@
         class="light-style layout-menu-fixed"
         dir="ltr"
         data-theme="theme-default"
-        data-assets-path="../../assets/"
+        data-assets-path="/assets/"
         data-template="vertical-menu-template-free"
         xmlns:th="http://www.thymeleaf.org"
 >
@@ -170,13 +170,13 @@
                                         <div class="product-img">
                                             <img src="/assets/img/elements/1.jpg" alt="">
                                             <div class="product-label">
-                                                <span class="sale">-30%</span>
+                                                <!--<span class="sale">-30%</span>-->
                                                 <span class="new" >NEW</span> <!--th:if="${producto.new}"-->
                                             </div>
                                         </div>
                                         <div class="product-body">
                                             
-                                            <h3 class="product-name"><a  th:href="@{/producto/detalle/{id}(id=${producto.idProducto})}">[[${producto.nombreProducto}]]</a></h3>
+                                            <h3 class="product-name"><a  th:href="@{/usuario/detalle_producto(id=${producto.idProducto})}">[[${producto.nombreProducto}]]</a></h3>
                                             <h4 class="product-price">$[[${producto.precio}]] <del class="product-old-price">$290.00</del></h4>
 
                                             <div class="product-btns">
