@@ -14,11 +14,21 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+-- -----------------------------------------------------
+-- Schema db_grupo2
+-- -----------------------------------------------------
+UNLOCK TABLES;
+COMMIT;
+DROP SCHEMA IF EXISTS `db_grupo2` ;
+-- -----------------------------------------------------
+-- Schema db_grupo2
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `db_grupo2` DEFAULT CHARACTER SET utf8mb3 ;
+USE `db_grupo2` ;
 
---
--- Table structure for table `despachador`
---
-
+-- -----------------------------------------------------
+-- Table `db_grupo2`.`despachador`
+-- -----------------------------------------------------
 DROP TABLE IF EXISTS `despachador`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
@@ -37,7 +47,28 @@ CREATE TABLE `despachador` (
 
 LOCK TABLES `despachador` WRITE;
 /*!40000 ALTER TABLE `despachador` DISABLE KEYS */;
-INSERT INTO `despachador` VALUES (43,'DESP001','Habilitado'),(44,'DESP002','Habilitado'),(45,'DESP003','Habilitado'),(46,'DESP004','Habilitado'),(47,'DESP005','Habilitado'),(48,'DESP006','Habilitado'),(49,'DESP007','Habilitado'),(50,'DESP008','Habilitado'),(51,'DESP009','Habilitado'),(52,'DESP010','Habilitado'),(53,'DESP011','Habilitado'),(54,'DESP012','Habilitado'),(55,'DESP013','Habilitado'),(56,'DESP014','Habilitado'),(57,'DESP015','Habilitado'),(58,'DESP016','Habilitado'),(59,'DESP017','Supendido'),(60,'DESP018','Multado'),(61,'DESP019','Anulado'),(62,'DESP020','Multado'),(63,'DESP021','Anulado');
+INSERT INTO `despachador` VALUES 
+(43,'DESP001','Habilitado'),
+(44,'DESP002','Habilitado'),
+(45,'DESP003','Habilitado'),
+(46,'DESP004','Habilitado'),
+(47,'DESP005','Habilitado'),
+(48,'DESP006','Habilitado'),
+(49,'DESP007','Habilitado'),
+(50,'DESP008','Habilitado'),
+(51,'DESP009','Habilitado'),
+(52,'DESP010','Habilitado'),
+(53,'DESP011','Habilitado'),
+(54,'DESP012','Habilitado'),
+(55,'DESP013','Habilitado'),
+(56,'DESP014','Habilitado'),
+(57,'DESP015','Habilitado'),
+(58,'DESP016','Habilitado'),
+(59,'DESP017','Supendido'),
+(60,'DESP018','Multado'),
+(61,'DESP019','Anulado'),
+(62,'DESP020','Multado'),
+(63,'DESP021','Anulado');
 /*!40000 ALTER TABLE `despachador` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -141,7 +172,28 @@ CREATE TABLE `jurisdiccion` (
 
 LOCK TABLES `jurisdiccion` WRITE;
 /*!40000 ALTER TABLE `jurisdiccion` DISABLE KEYS */;
-INSERT INTO `jurisdiccion` VALUES (1,'JURIS001','Habilitado'),(2,'JURIS002','Habilitado'),(3,'JURIS003','Habilitado'),(4,'JURIS004','Habilitado'),(5,'JURIS005','Habilitado'),(6,'JURIS006','Habilitado'),(7,'JURIS007','Habilitado'),(8,'JURIS008','Habilitado'),(9,'JURIS009','Habilitado'),(10,'JURIS010','Habilitado'),(11,'JURIS011','Habilitado'),(12,'JURIS012','Habilitado'),(13,'JURIS013','Habilitado'),(14,'JURIS014','Habilitado'),(15,'JURIS015','Habilitado'),(16,'JURIS016','Habilitado'),(17,'JURIS017','Habilitado'),(18,'JURIS018','Suspendido'),(19,'JURIS019','Anulado'),(20,'JURIS020','Multado'),(21,'JURIS021','Multado');
+INSERT INTO `jurisdiccion` VALUES 
+(1,'JURIS001','Habilitado'),
+(2,'JURIS002','Habilitado'),
+(3,'JURIS003','Habilitado'),
+(4,'JURIS004','Habilitado'),
+(5,'JURIS005','Habilitado'),
+(6,'JURIS006','Habilitado'),
+(7,'JURIS007','Habilitado'),
+(8,'JURIS008','Habilitado'),
+(9,'JURIS009','Habilitado'),
+(10,'JURIS010','Habilitado'),
+(11,'JURIS011','Habilitado'),
+(12,'JURIS012','Habilitado'),
+(13,'JURIS013','Habilitado'),
+(14,'JURIS014','Habilitado'),
+(15,'JURIS015','Habilitado'),
+(16,'JURIS016','Habilitado'),
+(17,'JURIS017','Habilitado'),
+(18,'JURIS018','Suspendido'),
+(19,'JURIS019','Anulado'),
+(20,'JURIS020','Multado'),
+(21,'JURIS021','Multado');
 /*!40000 ALTER TABLE `jurisdiccion` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -155,10 +207,10 @@ DROP TABLE IF EXISTS `ordenes`;
 CREATE TABLE `ordenes` (
   `idordenes` int NOT NULL AUTO_INCREMENT,
   `estadoOrdenes` varchar(45) DEFAULT NULL,
-  `fechaArribo` date DEFAULT NULL,
+  `fechaArribo` date NULL,
   `usuario_idusuario` int NOT NULL,
-  `mesCreacion` varchar(20) DEFAULT NULL,
-  `fechaCreacion` date DEFAULT NULL,
+  `mesCreacion` varchar(20) NULL,
+  `fechaCreacion` date NULL,
   PRIMARY KEY (`idordenes`,`usuario_idusuario`),
   KEY `fk_ordenes_usuario1_idx` (`usuario_idusuario`),
   CONSTRAINT `fk_ordenes_usuario1` FOREIGN KEY (`usuario_idusuario`) REFERENCES `usuario` (`idusuario`)
@@ -171,9 +223,30 @@ CREATE TABLE `ordenes` (
 
 LOCK TABLES `ordenes` WRITE;
 /*!40000 ALTER TABLE `ordenes` DISABLE KEYS */;
-INSERT INTO `ordenes` VALUES (1001,'RECIBIDO','2024-02-13',18,'Enero','2024-01-10'),(1002,'RECIBIDO','2024-02-14',19,'Enero','2024-01-08'),(1003,'RECIBIDO','2024-03-15',20,'Febrero','2024-02-07'),(1004,'ARRIBO AL PA√çS','2024-04-16',21,'Febrero','2024-02-20'),(1005,'ARRIBO AL PA√çS','2024-10-14',22,'Abril','2024-04-28'),(1006,'ARRIBO AL PA√çS','2024-11-15',23,'Mayo','2024-05-29'),(1007,'EN ADUANAS','2024-12-16',24,'Junio','2024-06-30'),(1008,'EN ADUANAS','2024-11-12',25,'Julio','2024-07-28'),(1009,'EN ADUANAS','2024-12-10',26,'Agosto','2024-08-14'),(1010,'EN RUTA','2025-01-02',27,'Setiembre','2024-09-09'),(1011,'EN RUTA','2024-12-15',18,'Abril','2024-04-05'),(1012,'EN RUTA','2024-12-16',19,'Mayo','2024-05-17'),(1013,'EN VALIDACI√ìN','2024-12-17',20,'Junio','2024-06-19'),(1014,'EN VALIDACI√ìN','2025-01-10',21,'Setiembre','2024-09-18'),(1015,'EN VALIDACI√ìN','2025-02-07',22,'Agosto','2024-08-14'),(1016,'CREADO','2025-01-23',23,'Octubre','2024-10-01'),(1017,'CREADO','2025-02-28',24,'Octubre','2024-10-02'),(1018,'EN PROCESO','2025-01-19',25,'Octubre','2024-10-02'),(1019,'EN PROCESO','2025-02-01',26,'Octubre','2024-10-03'),(1020,'Pendiente','2025-02-02',27,'Octubre','2024-10-04'),(1021,'Pendiente','2025-02-03',28,'Octubre','2024-10-05');
+INSERT INTO `ordenes` VALUES (1001,'RECIBIDO','2024-02-13',18,'Enero','2024-01-10'),
+(1002,'RECIBIDO','2024-02-14',19,'Enero','2024-01-08'),
+(1003,'RECIBIDO','2024-03-15',20,'Febrero','2024-02-07'),
+(1004,'ARRIBO AL PA√çS','2024-04-16',21,'Febrero','2024-02-20'),
+(1005,'ARRIBO AL PA√çS','2024-10-14',22,'Abril','2024-04-28'),
+(1006,'ARRIBO AL PA√çS','2024-11-15',23,'Mayo','2024-05-29'),
+(1007,'EN ADUANAS','2024-12-16',24,'Junio','2024-06-30'),
+(1008,'EN ADUANAS','2024-11-12',25,'Julio','2024-07-28'),
+(1009,'EN ADUANAS','2024-12-10',26,'Agosto','2024-08-14'),
+(1010,'EN RUTA','2025-01-02',27,'Setiembre','2024-09-09'),
+(1011,'EN RUTA','2024-12-15',18,'Abril','2024-04-05'),
+(1012,'EN RUTA','2024-12-16',19,'Mayo','2024-05-17'),
+(1013,'EN VALIDACI√ìN','2024-12-17',20,'Junio','2024-06-19'),
+(1014,'EN VALIDACI√ìN','2025-01-10',21,'Setiembre','2024-09-18'),
+(1015,'EN VALIDACI√ìN','2025-02-07',22,'Agosto','2024-08-14'),
+(1016,'CREADO','2025-01-23',23,'Octubre','2024-10-01'),
+(1017,'CREADO','2025-02-28',24,'Octubre','2024-10-02'),
+(1018,'EN PROCESO','2025-01-19',25,'Octubre','2024-10-02'),
+(1019,'EN PROCESO','2025-02-01',26,'Octubre','2024-10-03'),
+(1020,'Pendiente','2025-02-02',27,'Octubre','2024-10-04'),
+(1021,'Pendiente','2025-02-03',28,'Octubre','2024-10-05');
 /*!40000 ALTER TABLE `ordenes` ENABLE KEYS */;
 UNLOCK TABLES;
+
 
 --
 -- Table structure for table `pagos`
@@ -358,9 +431,20 @@ CREATE TABLE `proveedor` (
 
 LOCK TABLES `proveedor` WRITE;
 /*!40000 ALTER TABLE `proveedor` DISABLE KEYS */;
-INSERT INTO `proveedor` VALUES (1,'Tienda Tech','Carlos P√©rez','12345678','20123456781','carlos.perez@tiendatech.com',1,NULL,'Baneado',4.3),(2,'Electr√≥nica Lima','Mar√≠a Garc√≠a','87654321','20234567892','maria.garcia@electroniclima.com',2,NULL,'Activo',3.8),(3,'Muebles del Sur','Jorge L√≥pez','11223344','20345678903','jorge.lopez@mueblesdelsur.com',2,NULL,'Baneado',2.7),(4,'Fashion Store','Ana Torres','22334455','20456789014','ana.torres@fashionstore.com',3,NULL,'Baneado',4.9),(5,'Supermercado Central','Luis Ramos','33445566','20567890125','luis.ramos@supercentral.com',3,NULL,'Activo',1.5),(6,'Tech World','Sof√≠a Mendoza','44556677','20678901236','sofia.mendoza@techworld.com',1,NULL,'Activo',4.1),(7,'Electro Per√∫','Fernando Salas','55667788','20789012347','fernando.salas@electroperu.com',4,NULL,'Activo',3.2),(8,'Construcci√≥n Total','Ra√∫l Vega','66778899','20890123458','raul.vega@construcciontotal.com',4,NULL,'Activo',2.9),(9,'Librer√≠a Escolar','Claudia D√≠az','77889900','20901234569','claudia.diaz@libreriaescolar.com',2,NULL,'Baneado',4.0),(10,'Alimentos Frescos','Ricardo N√∫√±ez','88990011','21012345670','ricardo.nunez@alimentosfrescos.com',3,NULL,'Activo',3.6);
+INSERT INTO `proveedor` VALUES 
+(1,'Tienda Tech','Carlos P√©rez','12345678','20123456781','carlos.perez@tiendatech.com',1,NULL,'Baneado',4.3),
+(2,'Electr√≥nica Lima','Mar√≠a Garc√≠a','87654321','20234567892','maria.garcia@electroniclima.com',2,NULL,'Activo',3.8),
+(3,'Muebles del Sur','Jorge L√≥pez','11223344','20345678903','jorge.lopez@mueblesdelsur.com',2,NULL,'Baneado',2.7),
+(4,'Fashion Store','Ana Torres','22334455','20456789014','ana.torres@fashionstore.com',3,NULL,'Baneado',4.9),
+(5,'Supermercado Central','Luis Ramos','33445566','20567890125','luis.ramos@supercentral.com',3,NULL,'Activo',1.5),
+(6,'Tech World','Sof√≠a Mendoza','44556677','20678901236','sofia.mendoza@techworld.com',1,NULL,'Activo',4.1),
+(7,'Electro Per√∫','Fernando Salas','55667788','20789012347','fernando.salas@electroperu.com',4,NULL,'Activo',3.2),
+(8,'Construcci√≥n Total','Ra√∫l Vega','66778899','20890123458','raul.vega@construcciontotal.com',4,NULL,'Activo',2.9),
+(9,'Librer√≠a Escolar','Claudia D√≠az','77889900','20901234569','claudia.diaz@libreriaescolar.com',2,NULL,'Baneado',4.0),
+(10,'Alimentos Frescos','Ricardo N√∫√±ez','88990011','21012345670','ricardo.nunez@alimentosfrescos.com',3,NULL,'Activo',3.6);
 /*!40000 ALTER TABLE `proveedor` ENABLE KEYS */;
 UNLOCK TABLES;
+
 
 --
 -- Table structure for table `reposicionproductos`
@@ -482,64 +566,6 @@ INSERT INTO `roles` VALUES (1,'Superadmin'),(2,'Coordinador'),(3,'Agente'),(4,'U
 UNLOCK TABLES;
 
 --
--- Table structure for table `spring_session`
---
-
-DROP TABLE IF EXISTS `spring_session`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `spring_session` (
-  `PRIMARY_ID` char(36) NOT NULL,
-  `SESSION_ID` char(36) NOT NULL,
-  `CREATION_TIME` bigint NOT NULL,
-  `LAST_ACCESS_TIME` bigint NOT NULL,
-  `MAX_INACTIVE_INTERVAL` int NOT NULL,
-  `EXPIRY_TIME` bigint NOT NULL,
-  `PRINCIPAL_NAME` varchar(100) DEFAULT NULL,
-  PRIMARY KEY (`PRIMARY_ID`),
-  UNIQUE KEY `SPRING_SESSION_IX1` (`SESSION_ID`),
-  KEY `SPRING_SESSION_IX2` (`EXPIRY_TIME`),
-  KEY `SPRING_SESSION_IX3` (`PRINCIPAL_NAME`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=DYNAMIC;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `spring_session`
---
-
-LOCK TABLES `spring_session` WRITE;
-/*!40000 ALTER TABLE `spring_session` DISABLE KEYS */;
-INSERT INTO `spring_session` VALUES ('03f866ae-2429-4ccb-b714-c618cda0422d','fedf7a62-18b2-42c8-8b3c-f885dd191682',1728805672260,1728805879612,1800,1728807679612,'juan.perez@example.com');
-/*!40000 ALTER TABLE `spring_session` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `spring_session_attributes`
---
-
-DROP TABLE IF EXISTS `spring_session_attributes`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `spring_session_attributes` (
-  `SESSION_PRIMARY_ID` char(36) NOT NULL,
-  `ATTRIBUTE_NAME` varchar(200) NOT NULL,
-  `ATTRIBUTE_BYTES` blob NOT NULL,
-  PRIMARY KEY (`SESSION_PRIMARY_ID`,`ATTRIBUTE_NAME`),
-  CONSTRAINT `SPRING_SESSION_ATTRIBUTES_FK` FOREIGN KEY (`SESSION_PRIMARY_ID`) REFERENCES `spring_session` (`PRIMARY_ID`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=DYNAMIC;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `spring_session_attributes`
---
-
-LOCK TABLES `spring_session_attributes` WRITE;
-/*!40000 ALTER TABLE `spring_session_attributes` DISABLE KEYS */;
-INSERT INTO `spring_session_attributes` VALUES ('03f866ae-2429-4ccb-b714-c618cda0422d','org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository.CSRF_TOKEN',_binary '¨\Ì\0sr\06org.springframework.security.web.csrf.DefaultCsrfTokenZ\Ô∑\»/¢˚\’\0L\0\nheaderNamet\0Ljava/lang/String;L\0\rparameterNameq\0~\0L\0tokenq\0~\0xpt\0X-CSRF-TOKENt\0_csrft\0$a8193096-f206-49d5-9c15-e1b0783ea146'),('03f866ae-2429-4ccb-b714-c618cda0422d','SPRING_SECURITY_CONTEXT',_binary '¨\Ì\0sr\0=org.springframework.security.core.context.SecurityContextImpl\0\0\0\0\0\0l\0L\0authenticationt\02Lorg/springframework/security/core/Authentication;xpsr\0Oorg.springframework.security.authentication.UsernamePasswordAuthenticationToken\0\0\0\0\0\0l\0L\0credentialst\0Ljava/lang/Object;L\0	principalq\0~\0xr\0Gorg.springframework.security.authentication.AbstractAuthenticationToken”™(~nGd\0Z\0\rauthenticatedL\0authoritiest\0Ljava/util/Collection;L\0detailsq\0~\0xpsr\0&java.util.Collections$UnmodifiableList¸%1µ\Ïé\0L\0listt\0Ljava/util/List;xr\0,java.util.Collections$UnmodifiableCollectionB\0Ä\À^˜\0L\0cq\0~\0xpsr\0java.util.ArrayListxÅ\“ô\«aù\0I\0sizexp\0\0\0w\0\0\0sr\0Borg.springframework.security.core.authority.SimpleGrantedAuthority\0\0\0\0\0\0l\0L\0rolet\0Ljava/lang/String;xpt\0\nSuperadminxq\0~\0\rsr\0Horg.springframework.security.web.authentication.WebAuthenticationDetails\0\0\0\0\0\0l\0L\0\rremoteAddressq\0~\0L\0	sessionIdq\0~\0xpt\00:0:0:0:0:0:0:1t\0$8cc20fc9-1c43-4227-8077-a93d5f6340d5psr\02org.springframework.security.core.userdetails.User\0\0\0\0\0\0l\0Z\0accountNonExpiredZ\0accountNonLockedZ\0credentialsNonExpiredZ\0enabledL\0authoritiest\0Ljava/util/Set;L\0passwordq\0~\0L\0usernameq\0~\0xpsr\0%java.util.Collections$UnmodifiableSetÄí—èõÄU\0\0xq\0~\0\nsr\0java.util.TreeSet›òPìï\Ìá[\0\0xpsr\0Forg.springframework.security.core.userdetails.User$AuthorityComparator\0\0\0\0\0\0l\0\0xpw\0\0\0q\0~\0xpt\0juan.perez@example.com'),('03f866ae-2429-4ccb-b714-c618cda0422d','usuario',_binary '¨\Ì\0sr\0%com.example.telexpress.entity.Usuario\0\0\0\0\0\0\0\0\ZL\0apellidot\0Ljava/lang/String;L\0calificaciont\0Ljava/lang/Integer;L\0cantidadcomprasq\0~\0L\0\ncontrasenaq\0~\0L\0correoq\0~\0L\0despachadorq\0~\0L\0	direccionq\0~\0L\0distritot\0(Lcom/example/telexpress/entity/Distrito;L\0dniq\0~\0L\0\restadoUsuarioq\0~\0L\0fechanacimientot\0Ljava/time/LocalDate;L\0idq\0~\0L\0\nidSuperiort\0\'Lcom/example/telexpress/entity/Usuario;L\0isBanq\0~\0L\0jurisdiccionq\0~\0L\0motivoq\0~\0L\0nombreq\0~\0L\0notificacionesq\0~\0L\0ordenest\0Ljava/util/List;L\0	proveedort\0)Lcom/example/telexpress/entity/Proveedor;L\0razonSocialq\0~\0L\0rolt\0#Lcom/example/telexpress/entity/Rol;L\0rucq\0~\0L\0	solicitudq\0~\0L\0telefonoq\0~\0L\0zonat\0$Lcom/example/telexpress/entity/Zona;xpt\0P√©rezpsr\0java.lang.Integer‚†§˜Åá8\0I\0valuexr\0java.lang.NumberÜ¨ïî\‡ã\0\0xp\0\0\0-t\0<$2a$10$m.uauzBWuQVoR7qJge1O3ukcYO2vnIp2wJVTLy6UdDHpkeSAm/WkKt\0juan.perez@example.compt\0Calle Luna 100sr\0&com.example.telexpress.entity.Distrito#¨ß Ç]\0L\0idq\0~\0L\0nombredistritoq\0~\0L\0zonaq\0~\0	xpsq\0~\0\0\0\0t\0Anconsr\0\"com.example.telexpress.entity.Zona\¬?hªäëm†\0L\0idzonaq\0~\0L\0nombreq\0~\0xpq\0~\0t\0Nortet\087654301t\0Activosr\0\rjava.time.Serï]Ñ∫\"H≤\0\0xpw\0\0¡xq\0~\0psq\0~\0\0\0\0\0ppt\0Juant\0Notificaciones Activassr\0*org.hibernate.collection.spi.PersistentBagñ<a#:rAí\0L\0bagq\0~\0L\0providedCollectiont\0Ljava/util/Collection;xr\09org.hibernate.collection.spi.AbstractPersistentCollection3§∞J<F\0Z\0allowLoadOutsideTransactionI\0\ncachedSizeZ\0dirtyZ\0elementRemovedZ\0initializedZ\0\risTempSessionL\0keyt\0Ljava/lang/Object;L\0ownerq\0~\0#L\0roleq\0~\0L\0sessionFactoryUuidq\0~\0L\0storedSnapshott\0Ljava/io/Serializable;xp\0ˇˇˇˇ\0\0\0\0q\0~\0q\0~\0\nt\0-com.example.telexpress.entity.Usuario.ordenespppppt\0\nP√©rez SACsr\0!com.example.telexpress.entity.Rol\œ\\\—Å\È\Œ\0L\0idq\0~\0L\0rolq\0~\0xpq\0~\0t\0\nSuperadmint\020123456701q\0~\0t\0	987654321q\0~\0');
-/*!40000 ALTER TABLE `spring_session_attributes` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `usuario`
 --
 
@@ -637,4 +663,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-10-13  2:55:50
+-- Dump completed on 2024-10-11 15:41:49
