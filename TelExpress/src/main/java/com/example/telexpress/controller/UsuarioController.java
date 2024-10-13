@@ -283,13 +283,18 @@ public class UsuarioController {
 
     @GetMapping("/lista_pedidos")
     public String lista_pedidos(@RequestParam(value = "search", required = false) String search, Model model) {
+        //Obtener el usuario autenticado
+        String correo = SecurityContextHolder.getContext().getAuthentication().getName();
+        Usuario usuarioAutenticado = usuarioRepository.findByCorreo(correo);
+
         List<Ordenes> ordenes;
-        List<Usuario> usuarios = usuarioRepository.findAll();
+        //List<Usuario> usuarios = usuarioRepository.findAll();
         List<String> estadosTodos = Arrays.asList("EN PROCESO", "ARRIBO AL PAÍS", "EN ADUANAS", "EN RUTA", "RECIBIDO", "EN VALIDACIÓN", "CREADO","EN PROCESO");
         ordenes = ordenesRepository.findOrdenesByUsuarioAAndEstadoOrdenes(18, estadosTodos);
 
         // Obtener el agente asignado a cada usuario a través del idsuperior
         Map<Integer, String> agentesMap = new HashMap<>();
+        List<Usuario> usuarios = usuarioRepository.findAll();
         for (Usuario usuario : usuarios) {
             if (usuario.getIdSuperior() != null) {
                 // Obtener el agente directamente del idSuperior
