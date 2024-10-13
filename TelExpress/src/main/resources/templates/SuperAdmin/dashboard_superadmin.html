@@ -156,6 +156,72 @@
 
                                 <div class="col-md-6 col-lg-4">
 
+                                    <!-- Proveedores baneados -->
+                                    <div class="order-2">
+                                        <div class="card h-100">
+                                            <div class="card-header d-flex align-items-center justify-content-between pb-0">
+                                                <div class="card-title mb-0">
+                                                    <h5 class="m-0 me-2">Proveedores</h5>
+                                                </div>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="d-flex justify-content-center flex-column align-items-center gap-2 mb-4">
+                                                    <h2 class="mb-2" th:text="${totalProveedores}"></h2>
+                                                    <span>Proveedores Totales</span>
+                                                </div>
+                                                <ul class="list-unstyled">
+                                                    <li class="d-flex justify-content-between align-items-center mb-3 pb-1">
+                                                        <div class="d-flex align-items-center gap-2">
+                        <span class="avatar-initial rounded bg-label-success">
+                            <i class="bx bx-check-circle"></i>
+                        </span>
+                                                            <h6 class="mb-0">Activos</h6>
+                                                        </div>
+                                                        <small class="fw-semibold" th:text="${proveedoresActivos}"></small>
+                                                    </li>
+                                                    <li class="d-flex justify-content-between align-items-center mb-3 pb-1">
+                                                        <div class="d-flex align-items-center gap-2">
+                        <span class="avatar-initial rounded bg-label-danger">
+                            <i class="bx bx-x-circle"></i>
+                        </span>
+                                                            <h6 class="mb-0">Baneados</h6>
+                                                        </div>
+                                                        <small class="fw-semibold" th:text="${proveedoresBaneados}"></small>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--/ Proveedores baneados -->
+
+
+                                    <!-- Proveedores -->
+                                    <div class="card" style="margin-top: -40px">
+
+                                        <div class="card-body">
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                <tr>
+                                                    <th>Más Solicitados</th>
+                                                    <th>Con Peores Comentarios</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr th:each="proveedor, iterStat : ${topProveedoresPositivos}">
+                                                    <td th:text="${proveedor.nombreTienda}">Proveedor Positivo</td>
+                                                    <td th:text="${#lists.size(topProveedoresNegativos) > iterStat.index ? topProveedoresNegativos[iterStat.index].nombreTienda : ''}">Proveedor Negativo</td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <!--/ Proveedores -->
+
+                                </div>
+
+
+                                <div class="col-md-6 col-lg-4 order-3 mb-4">
+
                                     <!-- Usuarios -->
                                     <div class="order-1">
                                         <div class="card h-100 ">
@@ -163,6 +229,7 @@
                                                 <div class="card-title mb-0">
                                                     <h5 class="m-0 me-2">Usuarios</h5>
                                                 </div>
+                                                <br>
                                             </div>
                                             <div class="card-body">
                                                 <div class="d-flex justify-content-center flex-column align-items-center gap-2 mb-4">
@@ -204,12 +271,13 @@
                                     <!--/ Usuarios -->
 
                                     <!-- Agentes -->
-                                    <div class="order-2" style="margin-top: -31px">
+                                    <div class="order-2" style="margin-top: 70px">
                                         <div class="card h-100">
                                             <div class="card-header d-flex align-items-center justify-content-between pb-0">
                                                 <div class="card-title mb-0">
                                                     <h5 class="m-0 me-2">Agentes</h5>
                                                 </div>
+                                                <br>
                                             </div>
                                             <div class="card-body">
                                                 <div class="d-flex justify-content-center flex-column align-items-center gap-2 mb-4">
@@ -250,72 +318,6 @@
                                     </div>
                                     <!--/ Agentes -->
 
-                                </div>
-
-
-                                <div class="col-md-6 col-lg-4 order-3 mb-4">
-
-
-                                    <!-- Proveedores baneados -->
-                                    <div class="order-2">
-                                        <div class="card h-100">
-                                            <div class="card-header d-flex align-items-center justify-content-between pb-0">
-                                                <div class="card-title mb-0">
-                                                    <h5 class="m-0 me-2">Proveedores</h5>
-                                                </div>
-                                            </div>
-                                            <div class="card-body">
-                                                <div class="d-flex justify-content-center flex-column align-items-center gap-2 mb-4">
-                                                    <h2 class="mb-2" th:text="${totalProveedores}"></h2>
-                                                    <span>Proveedores Totales</span>
-                                                </div>
-                                                <ul class="list-unstyled">
-                                                    <li class="d-flex justify-content-between align-items-center mb-3 pb-1">
-                                                        <div class="d-flex align-items-center gap-2">
-                        <span class="avatar-initial rounded bg-label-success">
-                            <i class="bx bx-check-circle"></i>
-                        </span>
-                                                            <h6 class="mb-0">Activos</h6>
-                                                        </div>
-                                                        <small class="fw-semibold" th:text="${proveedoresActivos}"></small>
-                                                    </li>
-                                                    <li class="d-flex justify-content-between align-items-center mb-3 pb-1">
-                                                        <div class="d-flex align-items-center gap-2">
-                        <span class="avatar-initial rounded bg-label-danger">
-                            <i class="bx bx-x-circle"></i>
-                        </span>
-                                                            <h6 class="mb-0">Baneados</h6>
-                                                        </div>
-                                                        <small class="fw-semibold" th:text="${proveedoresBaneados}"></small>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!--/ Proveedores baneados -->
-
-
-                                    <!-- Proveedores -->
-                                    <div class="card">
-                                        <h5 class="card-header">Proveedores</h5>
-                                        <div class="card-body">
-                                            <table class="table table-bordered">
-                                                <thead>
-                                                <tr>
-                                                    <th>Más Solicitados</th>
-                                                    <th>Con Peores Comentarios</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                <tr th:each="proveedor, iterStat : ${topProveedoresPositivos}">
-                                                    <td th:text="${proveedor.nombreTienda}">Proveedor Positivo</td>
-                                                    <td th:text="${#lists.size(topProveedoresNegativos) > iterStat.index ? topProveedoresNegativos[iterStat.index].nombreTienda : ''}">Proveedor Negativo</td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                    <!--/ Proveedores -->
 
 
 

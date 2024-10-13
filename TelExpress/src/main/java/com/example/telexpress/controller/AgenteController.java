@@ -6,6 +6,7 @@ package com.example.telexpress.controller;
 import com.example.telexpress.entity.Ordenes;
 import com.example.telexpress.entity.Usuario;
 import com.example.telexpress.repository.*;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.ui.Model;
@@ -63,6 +64,8 @@ public class AgenteController {
     @GetMapping("/ordenes")
     public String mostrarOrdenesAgente(@RequestParam(value = "search", required = false) String search, Model model, RedirectAttributes redirectAttributes) {
         model.addAttribute("paginaActual", "ordenes");
+        String correo = SecurityContextHolder.getContext().getAuthentication().getName();
+        Usuario usuarioActual = usuarioRepository.findByCorreo(correo);
 
         List<Ordenes> ordenes;
         List<String> estadosTodos = Arrays.asList("EN PROCESO", "ARRIBO AL PAÍS", "EN ADUANAS", "EN RUTA", "RECIBIDO", "EN VALIDACIÓN", "CREADO","EN PROCESO");
