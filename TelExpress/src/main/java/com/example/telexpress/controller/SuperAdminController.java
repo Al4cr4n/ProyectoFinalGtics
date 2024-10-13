@@ -265,11 +265,11 @@ public class SuperAdminController {
 
     @PostMapping("/guardar_usuario")
     public String guardarUsuario(@ModelAttribute("usuario") @Valid Usuario usuario, BindingResult result, RedirectAttributes attr, @RequestParam("distrito.id") Integer iddist) {
-/*
+
         if (result.hasErrors()) {
             return "SuperAdmin/crear_usuario";  // Vuelve a la página del formulario
         }
-
+/*
         // Verificar si el DNI, correo o número telefónico ya existen
         Optional<Usuario> usuarioConMismoDni = adminRepository.findByDni(usuario.getDni());
         Optional<Usuario> usuarioConMismoCorreo = adminRepository.findByCorreo(usuario.getCorreo());
