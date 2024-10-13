@@ -302,6 +302,7 @@ CREATE TABLE `producto` (
   `cantidadComprada` int DEFAULT NULL,
   `modelo` varchar(45) DEFAULT NULL,
   `color` varchar(45) DEFAULT NULL,
+  `image` BLOB DEFAULT NULL,
   PRIMARY KEY (`idproducto`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
