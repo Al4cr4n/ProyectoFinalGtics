@@ -18,7 +18,7 @@
           content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
   />
 
-  <title>Plantilla</title>
+  <title>Inventario Superadmin</title>
 
   <meta name="description" content="" />
 
@@ -69,17 +69,6 @@
 
       <div class="content-wrapper">
         <div class="container-xxl flex-grow-1 container-p-y">
-          <div class="container mt-4">
-            <!-- Mensaje de éxito -->
-            <div th:if="${success}" class="alert alert-success" role="alert">
-              <span th:text="${success}"></span>
-            </div>
-
-            <!-- Mensaje de error -->
-            <div th:if="${error}" class="alert alert-danger" role="alert">
-              <span th:text="${error}"></span>
-            </div>
-          </div>
 
           <h4 style="font-family: 'Poppins', sans-serif; color: #7367F0; font-weight: bold; padding-top: 1rem; padding-bottom: 1rem; margin-bottom: 1rem; text-align: center; font-size: 40px;">
             Productos</h4>
@@ -97,7 +86,10 @@
                   <div class="input-group">
                     <input type="text" name="searchField" class="form-control" placeholder="Buscar producto o categoría" th:value="${searchField}" />
                     <button class="btn btn-primary" type="submit">Buscar</button>
+                    <!-- Botón de Limpiar -->
+                    <a href="/producto/lista" class="btn btn-secondary">Limpiar</a>
                   </div>
+
                 </form>
 
 
@@ -116,7 +108,20 @@
                   </div>
                 </form>
 
+              <div class="container mt-4">
+                <!-- Mensaje de éxito -->
+                <!-- Mensaje de éxito con botón de cierre -->
+                <div th:if="${success}" class="alert alert-success alert-dismissible fade show" role="alert">
+                  <span th:text="${success}"></span>
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
 
+                <!-- Mensaje de error con botón de cierre -->
+                <div th:if="${error}" class="alert alert-danger alert-dismissible fade show" role="alert">
+                  <span th:text="${error}"></span>
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+              </div>
 
                 <div class="table-responsive text-nowrap">
                   <table class="table table-striped"id="tablaProductos">
@@ -143,14 +148,38 @@
                         <a class="btn btn-sm btn-primary" th:href="@{'/producto/editar?id=' + ${producto.idProducto}}">
                           <i class="bx bx-edit-alt"></i>
                         </a>
+                        <!--
                         <a class="btn btn-sm btn-danger" th:href="@{'/producto/borrar?id=' + ${producto.idProducto}}">
                           <i class="bx bx-trash"></i>
+                        </a> -->
+
+                        <a href="#" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal"
+                           th:attr="onclick='setDeleteUrl(\'/producto/borrar?id=' + ${producto.idProducto} + '\')'">
+                          <i class="bx bx-trash"></i>
                         </a>
+
                       </td>
                     </tr>
 
                     </tbody>
 
+                    <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="confirmDeleteLabel">Confirmar Eliminación</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+                            ¿Estás seguro de que deseas eliminar este producto?
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancelar</button>
+                            <a href="#" id="confirmDeleteButton" class="btn btn-danger">Eliminar</a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </table>
                 </div>
 
@@ -176,7 +205,11 @@
 <!-- / Layout wrapper -->
 
 
-
+<script>
+  function setDeleteUrl(url) {
+    document.getElementById('confirmDeleteButton').setAttribute('href', url);
+  }
+</script>
 <!-- Core JS -->
 <!-- build:js assets/vendor/js/core.js -->
 <script src="/assets/vendor/libs/jquery/jquery.js"></script>

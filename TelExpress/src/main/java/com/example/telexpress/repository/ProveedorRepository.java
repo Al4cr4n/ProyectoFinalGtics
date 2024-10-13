@@ -16,4 +16,6 @@ public interface ProveedorRepository extends JpaRepository<Proveedor, Integer> {
     boolean existsByDni(String dni);
     boolean existsByRuc(String ruc);
     long countByEstadoProveedor(String estado);
+    Proveedor findByDni(String dni);
+    Proveedor findByRuc(String ruc);
 }

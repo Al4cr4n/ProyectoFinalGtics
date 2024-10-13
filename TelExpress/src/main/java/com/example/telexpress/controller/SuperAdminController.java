@@ -831,6 +831,7 @@ public class SuperAdminController {
             return "redirect:/superadmin/proveedor/lista";
         }
     }
+    /*
     @PostMapping("/proveedor/guardar")
     public String guardarProveedor(@Valid @ModelAttribute Proveedor proveedor,
                                    BindingResult result,
@@ -857,7 +858,54 @@ public class SuperAdminController {
         }
         proveedorRepository.save(proveedor);
         return "redirect:/superadmin/proveedor/lista";
+    } */
+
+    @PostMapping("/proveedor/guardar")
+    public String guardarProveedor(@Valid @ModelAttribute Proveedor proveedor,
+                                   BindingResult result,
+                                   RedirectAttributes attr,
+                                   Model model) {
+
+        model.addAttribute("activePage", "proveedores");
+
+        // Verificar si el proveedor es nuevo o está siendo editado
+        boolean esNuevoProveedor = proveedor.getIdProveedor() == null;
+
+        // Si no es un nuevo proveedor (es decir, estamos editando), necesitamos excluir el mismo proveedor en la verificación
+        if (esNuevoProveedor) {
+            // Verificar si el DNI ya existe en otro proveedor
+            if (proveedorRepository.existsByDni(proveedor.getDni())) {
+                result.rejectValue("dni", "error.proveedor", "El DNI ya está en uso.");
+            }
+
+            // Verificar si el RUC ya existe en otro proveedor
+            if (proveedorRepository.existsByRuc(proveedor.getRuc())) {
+                result.rejectValue("ruc", "error.proveedor", "El RUC ya está en uso.");
+            }
+        } else {
+            // Si estamos editando, verificamos si el DNI o RUC ya están en uso por otro proveedor diferente al que se está editando
+            Proveedor existentePorDni = proveedorRepository.findByDni(proveedor.getDni());
+            if (existentePorDni != null && !existentePorDni.getIdProveedor().equals(proveedor.getIdProveedor())) {
+                result.rejectValue("dni", "error.proveedor", "El DNI ya está en uso.");
+            }
+
+            Proveedor existentePorRuc = proveedorRepository.findByRuc(proveedor.getRuc());
+            if (existentePorRuc != null && !existentePorRuc.getIdProveedor().equals(proveedor.getIdProveedor())) {
+                result.rejectValue("ruc", "error.proveedor", "El RUC ya está en uso.");
+            }
+        }
+
+        // Si hay errores de validación, regresar al formulario de edición o creación
+        if (result.hasErrors()) {
+            model.addAttribute("listaZona", zonaRepository.findAll());
+            return esNuevoProveedor ? "SuperAdmin/proveedor_registrar" : "SuperAdmin/proveedor_editar";
+        }
+
+        // Guardar proveedor
+        proveedorRepository.save(proveedor);
+        return "redirect:/superadmin/proveedor/lista";
     }
+
     @GetMapping("/proveedor/borrar")
     public String borrarProveedor(Model model,
                                   @RequestParam("id") int id,
