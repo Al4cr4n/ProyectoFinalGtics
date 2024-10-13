@@ -49,13 +49,15 @@
               </form>
 
               <form action="/superadmin/agente/filtrar" method="GET" class="mb-4">
-                <div class="input-group w-50 mb-3">
-                  <select name="estado" class="form-select" onchange="this.form.submit()">
-                    <!-- Si no se selecciona un estado específico, el valor enviado será vacío -->
-                    <option value="" th:selected="${estadoSeleccionado == null || estadoSeleccionado == ''}">Todos los estados</option>
-                    <option value="Activo" th:selected="${estadoSeleccionado == 'Activo'}">Activo</option>
-                    <option value="Inactivo" th:selected="${estadoSeleccionado == 'Inactivo'}">Inactivo</option>
-                    <option value="Pendiente" th:selected="${estadoSeleccionado == 'Pendiente'}">Pendiente</option>
+
+                <div class="input-group w-25">
+                  <select name="zona" class="form-select" onchange="this.form.submit()">
+                    <option value="0" th:selected="${zonaSeleccionada == null || zonaSeleccionada == 0}">Todas las zonas</option>
+                    <option th:each="zona : ${listaZona}"
+                            th:value="${zona.idzona}"
+                            th:selected="${zona.idzona == zonaSeleccionada}"
+                            th:text="${zona.nombre}">
+                    </option>
                   </select>
                 </div>
               </form>
@@ -77,7 +79,7 @@
                     <th>N°</th>
                     <th>Nombre</th>
                     <th>Apellido</th>
-                    <th>Teléfono</th>
+                    <th>Zona</th>
                     <th>DNI</th>
                     <th>RUC</th>
 
@@ -90,7 +92,7 @@
                     <td th:text="${info.index + 1}"></td>
                     <td th:text="${agente.nombre}"></td>
                     <td th:text="${agente.apellido}"></td>
-                    <td th:text="${agente.telefono}"></td>
+                    <td th:text="${agente.zona.nombre}"></td>
                     <td th:text="${agente.dni}"></td>
                     <td th:text="${agente.ruc}"></td>
 

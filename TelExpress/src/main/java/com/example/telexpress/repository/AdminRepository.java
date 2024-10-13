@@ -15,6 +15,8 @@ public interface AdminRepository extends JpaRepository<Usuario,Integer>{
             nativeQuery= true)
     List<Usuario> buscarUsuarioPorRol(Integer idRol);
 
+    //List<Usuario> findByZonaIdAndRolId(Integer zonaId, Integer rolId);
+
     @Query(value = "SELECT * FROM usuario WHERE idroles = :rolId AND idzona = :idzona", nativeQuery = true)
     List<Usuario> buscarCoordinadoresPorZona(@Param("rolId") Integer rolId, @Param("idzona") Integer idzona);
     //Query para obtener a todos los agentes por su id_rol=3(agente)

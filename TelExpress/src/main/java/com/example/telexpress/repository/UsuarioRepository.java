@@ -17,7 +17,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     long countByZonaAndEstadoUsuario(Zona zona, String estadoUsuario);
 
 
-
+    List<Usuario> findByZonaIdzonaAndRolId(Integer idzona, Integer rolId);
     @Query("SELECT u FROM Usuario u WHERE u.zona.idzona = :idzona ORDER BY u.cantidadcompras DESC")
     List<Usuario> findAllByZonaOrderByCantidadCompras(@Param("idzona") int idzona);
 

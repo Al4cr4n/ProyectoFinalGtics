@@ -547,6 +547,12 @@ public class SuperAdminController {
 
         List<Usuario> lista_agentes = adminRepository.buscarAgentePorRol();
         model.addAttribute("lista_agentes",lista_agentes);
+        // Cargar la lista de zonas
+        List<Zona> listaZona = zonaRepository.findAll();
+        model.addAttribute("listaZona", listaZona);
+
+        // Zona seleccionada por defecto (0 para "todas las zonas")
+        model.addAttribute("zonaSeleccionada", 0);
         return "SuperAdmin/gestion_agentes";
     }
 /*
@@ -675,7 +681,7 @@ public class SuperAdminController {
         model.addAttribute("listaCoordi", adminRepository.buscarUsuarioPorRol(2));
         return "SuperAdmin/gestion_agentes";
     }
-
+/*
     @GetMapping("/agente/filtrar")
     public String filtrarAgentesPorEstado(@RequestParam(value = "estado", required = false) String estado, Model model) {
         model.addAttribute("activePage", "agentes");
@@ -693,7 +699,56 @@ public class SuperAdminController {
         //model.addAttribute("lista_agentes", agentesFiltrados);
         model.addAttribute("estadoSeleccionado", estado);  // Esto ayuda a mantener el valor seleccionado en el HTML
         return "Superadmin/gestion_agentes";
+    } */
+/*
+    @GetMapping("/agente/filtrar")
+    public String filtrarAgentesPorZona(@RequestParam(value = "zona", required = false, defaultValue = "0") Integer zonaId, Model model) {
+        List<Usuario> agentes;
+
+        if (zonaId == 0) {
+            // Mostrar todos los agentes si no se selecciona ninguna zona
+            agentes = usuarioRepository.findByRol_Id(3); // Considerando que el rol ID 3 es para agentes
+        } else {
+            // Filtrar agentes por zona
+            agentes = usuarioRepository.findByZonaIdzonaAndRolId(zonaId, 3); // Rol ID 3 para agentes
+        }
+
+        // Pasar la lista filtrada de agentes y la lista de zonas al modelo
+        model.addAttribute("lista_agentes", agentes);
+        model.addAttribute("listaZona", zonaRepository.findAll());
+        model.addAttribute("zonaSeleccionada", zonaId); // Para mantener la zona seleccionada
+
+        return "SuperAdmin/gestion_agentes"; // Ajusta la vista según tu estructura
     }
+    */
+
+    @GetMapping("/agente/filtrar")
+    public String filtrarPorZonaAgente(@RequestParam(value = "zona", required = false) Integer idzona, Model model) {
+        model.addAttribute("activePage", "agentes");
+
+        System.out.println("ID de la zona seleccionada: " + idzona);  // Verificar el valor que llega
+        List<Usuario> listaAgentes;
+
+        if (idzona == null || idzona == 0) {
+            // Si no se selecciona una zona, se muestran todos los coordinadores
+            listaAgentes = adminRepository.buscarUsuarioPorRol(3);  // Método ya implementado
+        } else {
+            // Si se selecciona una zona, se buscan los coordinadores por esa zona
+            listaAgentes = adminRepository.buscarCoordinadoresPorZona(3, idzona);  // Método para buscar coordinadores por zona
+        }
+
+        // Asegúrate de cargar la lista de zonas **siempre**
+        List<Zona> listaZona = zonaRepository.findAll();
+        model.addAttribute("listaZona", listaZona);  // Cargar todas las zonas
+        // Cargar la lista de zonas para el select
+        //model.addAttribute("listaZona", zonaRepository.findAll());  // Cargar todas las zonas
+
+        model.addAttribute("lista_agentes", listaAgentes);
+        model.addAttribute("zonaSeleccionada", idzona);  // Mantener la zona seleccionada
+
+        return "SuperAdmin/gestion_agentes";  // Nombre de tu plantilla
+    }
+
 
     @GetMapping("/solicitudes")
     public String rolAgenteSolicitudesSuperadmin(Model model) {

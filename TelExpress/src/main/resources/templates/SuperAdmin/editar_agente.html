@@ -97,6 +97,7 @@
                   <!-- Llenar el select con las zonas obtenidas desde el controlador -->
                   <option th:each="zona : ${zonas}" th:value="${zona.idzona}" th:text="${zona.nombre}"></option>
                 </select>
+                <small class="text-muted">Seleccione una zona</small>
               </div>
               <!-- Nombre de tienda
               <div class="col-md-6" th:if="${agente.proveedor.nombreTienda != null}">
