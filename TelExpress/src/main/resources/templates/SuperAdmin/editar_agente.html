@@ -60,14 +60,21 @@
             <div class="row mb-3">
               <!-- Nombre del producto -->
               <div class="col-md-6">
-                <label class="form-label">Nombre </label>
-                <input th:field="*{nombre}" type="text" class="form-control">
+                <label class="form-label">Nombre:</label>
+                <input th:field="*{nombre}" type="text" class="form-control" disabled>
+
+                <!-- Campo oculto para enviar el valor de nombre durante la edición -->
+                <input type="hidden" th:field="*{nombre}" name="nombre">
               </div>
 
-              <!-- Apellido -->
+
+              <!-- Apellido del agente -->
               <div class="col-md-6">
                 <label class="form-label">Apellido:</label>
-                <input th:field="*{apellido}" type="text" class="form-control">
+                <input th:field="*{apellido}" type="text" class="form-control" disabled>
+
+                <!-- Campo oculto para enviar el valor de apellido durante la edición -->
+                <input type="hidden" th:field="*{apellido}" name="apellido">
               </div>
             </div>
 
@@ -77,7 +84,20 @@
                 <label class="form-label">Teléfono:</label>
                 <input th:field="*{telefono}" type="text" class="form-control">
               </div>
+<!--
+              <div class="col-md-6">
+                <label class="form-label">Zona:</label>
+                <input th:field="*{zona.nombre}" type="text" class="form-control">
+              </div> -->
 
+              <div class="col-md-6">
+                <label class="form-label">Zona:</label>
+                <select th:field="*{zona.idzona}" class="form-control">
+                  <option value="" disabled selected>Seleccione una zona</option>
+                  <!-- Llenar el select con las zonas obtenidas desde el controlador -->
+                  <option th:each="zona : ${zonas}" th:value="${zona.idzona}" th:text="${zona.nombre}"></option>
+                </select>
+              </div>
               <!-- Nombre de tienda
               <div class="col-md-6" th:if="${agente.proveedor.nombreTienda != null}">
                 <label class="form-label">Nombre de tienda:</label>

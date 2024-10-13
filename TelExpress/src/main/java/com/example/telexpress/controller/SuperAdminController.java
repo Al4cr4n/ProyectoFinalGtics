@@ -574,6 +574,7 @@ public class SuperAdminController {
             Usuario agente = optUsuario.get();
             model.addAttribute("agente", agente);
             model.addAttribute("distritos", distritoRepository.findAll());
+            model.addAttribute("zonas",zonaRepository.findAll());
 
             return "SuperAdmin/editar_agente";
         }else{
