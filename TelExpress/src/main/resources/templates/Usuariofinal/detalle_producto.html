@@ -224,6 +224,7 @@
                                     </div>
 
                                     <!-- Quantity selector -->
+                                    <form id="addToCartForm" style="margin-top: 1.5rem">
                                     <div class="add-to-cart">
                                         <div class="qty-label">
                                             Cantidad
@@ -237,14 +238,15 @@
                                         </div>
 
                                         <!-- Add to Cart button -->
-                                        <form id="addToCartForm" style="margin-top: 1.5rem">
+
                                             <input type="hidden" id="productoId" th:value="${producto.idProducto}">
                                             <input type="hidden" id="usuarioId" th:value="${session.usuario.id}"> <!-- Cambiar por el usuario actual         <a class="dropdown-item" th:href="@{'/usuario/perfil' + '?id=' + ${session.usuario.id}}">-->
 
                                             <!-- Botón para agregar al carrito -->
                                             <button type="button" class="add-to-cart-btn" onclick="agregarAlCarrito()">Agregar al carrito</button>
-                                        </form>
+
                                     </div>
+                                    </form>
                                     <a class="review-link" href="#"> Reseñas(<span th:text="${cantidadResenias}">0</span>)</a>
                                     <ul class="product-links">
                                         <li>Categoría:</li>
@@ -379,7 +381,7 @@
                     carritoHtml += '<td>' + item.producto.nombreProducto + '</td>';
                     carritoHtml += '<td>' + item.producto.idProducto + '</td>';
                     carritoHtml += '<td>S/. ' + item.producto.precio.toFixed(2) + '</td>';
-                    carritoHtml += '<td><input type="number" class="form-control" value="' + item.cantidadxproducto + '" min="1" max="' + item.producto.cantidadDisponible + '" /></td>';
+                    carritoHtml += '<td><input type="number" class="form-control" value="' + cantidadxproducto + '" min="1" max="' + item.producto.cantidadDisponible + '" /></td>';
                     carritoHtml += '<td>S/. ' + totalPorProducto.toFixed(2) + '</td>';
                     carritoHtml += '</tr>';
                 });
