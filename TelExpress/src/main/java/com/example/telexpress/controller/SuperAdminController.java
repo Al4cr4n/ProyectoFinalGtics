@@ -374,21 +374,19 @@ public class SuperAdminController {
     /* para actualizar datos de coodinador zonal*/
     /* para actualizar datos de coodinador zonal*/
     @PostMapping("/update")
-    public String actualizardatoscoordi(@ModelAttribute("coordinadorzonal") @Valid  Usuario usuario,BindingResult result,
+    public String actualizardatoscoordi(@Valid @ModelAttribute("coordinadorzonal") Usuario usuario,
+                                        BindingResult result,
                                         @RequestParam("zona.idzona") Integer zonaid,
                                         RedirectAttributes rttbtsp,
                                         Model model) {
 
-        // Si hay errores de validación, se regresa al formulario con los mensajes de error
+        // Si hay errores de validación, vuelve al formulario con los mensajes de error
         if (result.hasErrors()) {
-           // rttbtsp.addFlashAttribute("mensaje", "Por favor corrige los errores en el formulario.");
-           // rttbtsp.addFlashAttribute("tipoMensaje", "danger");
             List<Zona> zonas = zonaRepository.findAll();
             model.addAttribute("zonas", zonas);
             model.addAttribute("coordinadorzonal", usuario);
-            return "SuperAdmin/coordinador_zonal_formulario"; // Cambia esta ruta por la ruta del formulario
+            return "SuperAdmin/coordinador_zonal_formulario";
         }
-
         boolean esNuevoCoordinador = usuario.getId() == null;
         // Verificar si el DNI, correo o número telefónico ya existen
         Optional<Usuario> usuarioConMismoDni = adminRepository.findByDni(usuario.getDni());

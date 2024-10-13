@@ -62,26 +62,34 @@
 
                     <!-- Formulario -->
                     <form id="formRegistro" method="post" th:action="${coordinadorzonal.id != null ? '/superadmin/update' : '/superadmin/update'}" th:object="${coordinadorzonal}">
-                    <input type="hidden" th:if="${id != null}" th:field="*{id}" name="id"/>
-                    <div class="row mb-3">
+                        <input type="hidden" th:if="${id != null}" th:field="*{id}" name="id"/>
+                        <div class="row mb-3">
                             <!-- Nombre -->
-                        <!--
-                        <div class="col-md-6">
-                            <label for="nombreCoordinador" class="form-label">Nombre:</label>
-                            <input type="text" class="form-control" id="nombreCoordinador" placeholder="Ingrese el nombre" th:field="*{nombre}" required>
-                            <div class="text-danger" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></div>
-                        </div> -->
+                            <!--
+                            <div class="col-md-6">
+                                <label for="nombreCoordinador" class="form-label">Nombre:</label>
+                                <input type="text" class="form-control" id="nombreCoordinador" placeholder="Ingrese el nombre" th:field="*{nombre}" required>
+                                <div class="text-danger" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></div>
+                            </div> -->
 
 
-                        <div class="col-md-6">
-                            <label class="form-label">Nombre:</label>
-                            <input th:field="*{nombre}" type="text" class="form-control" placeholder="Ingrese el nombre"
-                                   th:classappend="${#fields.hasErrors('nombre')?'is-invalid':''}"/>
-                            <div id="validationServer03Feedback" class="invalid-feedback"
-                                 th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}">
-                                Mensaje de error de nombre
+                            <div class="col-md-6">
+                                <label class="form-label">Nombre:</label>
+
+                                <!-- Campo visible pero deshabilitado solo durante la edición -->
+                                <input th:field="*{nombre}" type="text" class="form-control" placeholder="Ingrese el nombre"
+                                       th:classappend="${#fields.hasErrors('nombre') ? 'is-invalid' : ''}"
+                                       th:disabled="${coordinadorzonal.id != null}" /> <!-- Deshabilitado solo en edición -->
+
+                                <!-- Campo oculto para enviar el valor durante la edición -->
+                                <input type="hidden" th:if="${coordinadorzonal.id != null}" name="nombre" th:value="*{nombre}">
+
+                                <!-- Mensaje de error para validaciones -->
+                                <div id="validationServer03Feedback" class="invalid-feedback"
+                                     th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}">
+                                    Mensaje de error de nombre
+                                </div>
                             </div>
-                        </div>
 
                             <!-- Apellido
                             <div class="col-md-6">
@@ -90,15 +98,23 @@
 
                             </div>-->
 
-                        <div class="col-md-6">
-                            <label class="form-label">Apellido:</label>
-                            <input th:field="*{apellido}" type="text" class="form-control" placeholder="Ingrese el apellido"
-                                   th:classappend="${#fields.hasErrors('apellido')?'is-invalid':''}"/>
-                            <div class="invalid-feedback"
-                                 th:if="${#fields.hasErrors('apellido')}" th:errors="*{apellido}">
-                                Mensaje de error de apellido
+                            <div class="col-md-6">
+                                <label class="form-label">Apellido:</label>
+
+                                <!-- Campo visible pero deshabilitado solo durante la edición -->
+                                <input th:field="*{apellido}" type="text" class="form-control" placeholder="Ingrese el apellido"
+                                       th:classappend="${#fields.hasErrors('apellido') ? 'is-invalid' : ''}"
+                                       th:disabled="${coordinadorzonal.id != null}" /> <!-- Deshabilitado solo en edición -->
+
+                                <!-- Campo oculto para enviar el valor durante la edición -->
+                                <input type="hidden" th:if="${coordinadorzonal.id != null}" name="apellido" th:value="*{apellido}">
+
+                                <!-- Mensaje de error para validaciones -->
+                                <div  class="invalid-feedback"
+                                      th:if="${#fields.hasErrors('apellido')}" th:errors="*{apellido}">
+                                    Mensaje de error de apellido
+                                </div>
                             </div>
-                        </div>
 
 
                         </div>
@@ -115,14 +131,21 @@
 
                             <div class="col-md-6">
                                 <label class="form-label">DNI:</label>
+
+                                <!-- Campo visible pero deshabilitado solo durante la edición -->
                                 <input th:field="*{dni}" type="text" class="form-control" placeholder="Ingrese el DNI"
-                                       th:classappend="${#fields.hasErrors('dni')?'is-invalid':''}"/>
+                                       th:classappend="${#fields.hasErrors('dni') ? 'is-invalid' : ''}"
+                                       th:disabled="${coordinadorzonal.id != null}" /> <!-- Deshabilitado solo en edición -->
+
+                                <!-- Campo oculto para enviar el valor durante la edición -->
+                                <input type="hidden" th:if="${coordinadorzonal.id != null}" name="dni" th:value="*{dni}">
+
+                                <!-- Mensaje de error para validaciones -->
                                 <div class="invalid-feedback"
                                      th:if="${#fields.hasErrors('dni')}" th:errors="*{dni}">
-                                    Mensaje de error de apellido
+                                    Mensaje de error de DNI
                                 </div>
                             </div>
-
 
                             <!-- Teléfono
                             <div class="col-md-6">
@@ -173,23 +196,23 @@
 
                                 </select>
                             </div>
-<!--
-                            <div class="col-md-6">
-                                <label for="zonaCoordinador" class="form-label">Zona:</label>
-                                <select class="form-control" id="zonaCoordinador" th:field="*{zona.idzona}"
-                                        th:classappend="${#fields.hasErrors('zona') ? 'is-invalid' : ''}" required>
-                                    <option value="" disabled
-                                            th:selected="${coordinadorzonal.zona == null}">Escoger una zona</option>
-                                    <option th:each="zona : ${zonas}"
-                                            th:value="${zona.idzona}"
-                                            th:text="${zona.nombre}"
-                                            th:selected="${coordinadorzonal.zona != null and zona.idzona == coordinadorzonal.zona.idzona}">
-                                    </option>
-                                </select>
-                                <div class="invalid-feedback" th:if="${#fields.hasErrors('zona')}" th:errors="*{zona}">
-                                   Mensaje de error específico para el campo zona
-                                </div>
-                            </div>-->
+                            <!--
+                                                        <div class="col-md-6">
+                                                            <label for="zonaCoordinador" class="form-label">Zona:</label>
+                                                            <select class="form-control" id="zonaCoordinador" th:field="*{zona.idzona}"
+                                                                    th:classappend="${#fields.hasErrors('zona') ? 'is-invalid' : ''}" required>
+                                                                <option value="" disabled
+                                                                        th:selected="${coordinadorzonal.zona == null}">Escoger una zona</option>
+                                                                <option th:each="zona : ${zonas}"
+                                                                        th:value="${zona.idzona}"
+                                                                        th:text="${zona.nombre}"
+                                                                        th:selected="${coordinadorzonal.zona != null and zona.idzona == coordinadorzonal.zona.idzona}">
+                                                                </option>
+                                                            </select>
+                                                            <div class="invalid-feedback" th:if="${#fields.hasErrors('zona')}" th:errors="*{zona}">
+                                                               Mensaje de error específico para el campo zona
+                                                            </div>
+                                                        </div>-->
 
 
 
@@ -207,11 +230,18 @@
 
                             <div class="col-md-6">
                                 <label class="form-label">Fecha de Nacimiento:</label>
+
+                                <!-- Campo visible pero deshabilitado solo durante la edición -->
                                 <input th:field="*{fechanacimiento}" type="date" class="form-control"
-                                       th:classappend="${#fields.hasErrors('fechanacimiento')?'is-invalid':''}"/>
-                                <div class="invalid-feedback"
-                                     th:if="${#fields.hasErrors('fechanacimiento')}" th:errors="*{fechanacimiento}">
-                                    Mensaje de error de correo
+                                       th:classappend="${#fields.hasErrors('fechanacimiento') ? 'is-invalid' : ''}"
+                                       th:disabled="${coordinadorzonal.id != null}" /> <!-- Deshabilitado solo en edición -->
+
+                                <!-- Campo oculto para enviar el valor durante la edición -->
+                                <input type="hidden" th:if="${coordinadorzonal.id != null}" name="fechanacimiento" th:value="*{fechanacimiento}">
+
+                                <!-- Mensaje de error para validaciones -->
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('fechanacimiento')}" th:errors="*{fechanacimiento}">
+                                    Mensaje de error de fecha de nacimiento
                                 </div>
                             </div>
 
@@ -241,6 +271,8 @@
                                        th:value="${coordinadorzonal.id != null ? '********' : ''}"
                                        th:readonly="${coordinadorzonal.id != null}"/>
                             </div>
+
+
 
 
 
