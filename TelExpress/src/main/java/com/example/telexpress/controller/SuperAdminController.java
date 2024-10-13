@@ -750,9 +750,9 @@ public class SuperAdminController {
         long usuariosInactivos = usuarioRepository.countByEstadoUsuario("Inactivo");
         long usuariosBaneados = usuarioRepository.countByEstadoUsuario("Baneado");
         long usuariosAgentes = usuarioRepository.countByRol_Id(3);
-        long agentesActivos = usuarioRepository.countByRol_IdAndEstadoUsuario(3, "Activo");
-        long agentesInactivos = usuarioRepository.countByRol_IdAndEstadoUsuario(3, "Inactivos");
-        long agentesBaneados = usuarioRepository.countByRol_IdAndEstadoUsuario(3, "Baneado");
+        long agentesActivos = usuarioRepository.countAgentesActivos(3, "Activo");
+        long agentesInactivos = usuarioRepository.countAgentesActivos(3, "Inactivo");
+        long agentesBaneados = usuarioRepository.countAgentesActivos(3, "Baneado");
         long proveedoresActivos = proveedorRepository.countByEstadoProveedor("activo");
         long proveedoresBaneados = proveedorRepository.countByEstadoProveedor("baneado");
         long ordenesCreado = ordenesRepository.countByEstadoOrdenes("CREADO");
@@ -807,9 +807,9 @@ public class SuperAdminController {
         model.addAttribute("usuariosInactivos", usuariosInactivos);
         model.addAttribute("usuariosBaneados", usuariosBaneados);
         model.addAttribute("usuariosAgentes", usuariosAgentes);
-        model.addAttribute("usuariosAgentesActivos", agentesActivos);
-        model.addAttribute("usuariosAgentesInactivos", agentesInactivos);
-        model.addAttribute("usuariosAgentesBaneados", agentesBaneados);
+        model.addAttribute("agentesActivos", agentesActivos);
+        model.addAttribute("agentesInactivos", agentesInactivos);
+        model.addAttribute("agentesBaneados", agentesBaneados);
 
         model.addAttribute("topProveedoresPositivos", topProveedoresPositivos);
         model.addAttribute("topProveedoresNegativos", topProveedoresNegativos);

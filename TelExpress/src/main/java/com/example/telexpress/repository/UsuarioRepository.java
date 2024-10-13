@@ -24,7 +24,9 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     List<Usuario> findByRol_Id(int rolId);
     //List<Usuario> findByRol_IdAndCodigoDespachador_Estado(int rolId, String estado);
     long countByRol_Id(Integer id);
-    long countByRol_IdAndEstadoUsuario(Integer id, String estadoUsuario);
+    @Query("SELECT COUNT(u) FROM Usuario u WHERE u.rol.id = :idRol AND u.estadoUsuario = :estado")
+    long countAgentesActivos(@Param("idRol") int idRol, @Param("estado") String estado);
+
 
 
 
