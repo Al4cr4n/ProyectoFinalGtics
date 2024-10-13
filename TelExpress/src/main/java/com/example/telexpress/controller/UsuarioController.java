@@ -95,8 +95,9 @@ public class UsuarioController {
     @ResponseBody
     public String agregarProductoAlCarrito(@RequestParam("productoId") Integer productoId, @RequestParam("usuarioId") Integer usuarioId) {
         // Obtener el usuario
-        Usuario usuario = usuarioRepository.findById(Long.valueOf(usuarioId)).orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
-
+        //Usuario usuario = usuarioRepository.findById(Long.valueOf(usuarioId)).orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
+        String correo = SecurityContextHolder.getContext().getAuthentication().getName();
+        Usuario usuario = usuarioRepository.findByCorreo(correo);
         // Buscar la orden pendiente del usuario
         Optional<Ordenes> ordenPendienteOpt = ordenesRepository.findByUsuarioAndEstadoOrdenes(usuario, "Pendiente");
         Ordenes ordenPendiente;
