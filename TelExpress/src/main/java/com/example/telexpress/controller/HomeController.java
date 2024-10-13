@@ -3,6 +3,8 @@ package com.example.telexpress.controller;
 import com.example.telexpress.entity.*;
 import com.example.telexpress.config.EmailService;
 import com.example.telexpress.repository.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.ui.Model;
@@ -23,6 +25,8 @@ public class HomeController {
     private final EmailService emailService;
     final DistritoRepository distritoRepository;
 
+
+
     public HomeController(AdminRepository adminRepository, ZonaRepository zonaRepository,
                           ProductoRepository productoRepository, UsuarioRepository usuarioRepository,
                           ProveedorRepository proveedorRepository, OrdenesRepository ordenesRepository,
@@ -38,6 +42,8 @@ public class HomeController {
         this.emailService = emailService;
         this.distritoRepository = distritoRepository;
     }
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @GetMapping("/login")
     public String login() {
@@ -66,8 +72,9 @@ public class HomeController {
     public String guardarUsuario(@ModelAttribute("usuario") Usuario usuario, RedirectAttributes redirectAttributes) {
         // Asignar el rol de usuario (ID de rol = 1)
         Rol rolUsuario = new Rol();
-        rolUsuario.setId(1); // Asigna el ID 1 al rol de usuario
+        rolUsuario.setId(4); // Asigna el ID 1 al rol de usuario
         usuario.setRol(rolUsuario);
+
 
         // Asignar la zona correspondiente según el distrito
         Distrito distrito = distritoRepository.findById(usuario.getDistrito().getId())
@@ -81,6 +88,11 @@ public class HomeController {
         }
 
         usuario.setZona(zonaAsignada);
+
+        // Hashear la contraseña antes de guardarla
+        String hashedPassword = passwordEncoder.encode(usuario.getContrasena());
+        usuario.setContrasena(hashedPassword);
+
 
         // Guardar el usuario en la base de datos
         usuarioRepository.save(usuario);
