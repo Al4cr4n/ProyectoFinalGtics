@@ -165,90 +165,93 @@
                                                 </div>
                                             </div>
                                             <div class="card-body">
-                                                <div class="d-flex justify-content-between align-items-center mb-3">
-                                                    <div class="d-flex flex-column align-items-center gap-1">
-                                                        <h2 class="mb-2" th:text="${totalUsuarios}"></h2>
-                                                        <span>Usuarios Totales</span>
-                                                    </div>
-                                                    <div id="orderStatisticsChart"></div>
+                                                <div class="d-flex justify-content-center flex-column align-items-center gap-2 mb-4">
+                                                    <h2 class="mb-2" th:text="${totalUsuarios}"></h2>
+                                                    <span>Usuarios Totales</span>
                                                 </div>
-                                                <ul class="p-0 m-0">
-                                                    <li class="d-flex mb-4 pb-1">
-                                                        <div class="avatar flex-shrink-0 me-3">
-                        <span class="avatar-initial rounded bg-label-success">
-                            <i class="bx bx-check-circle"></i>
-                        </span>
+                                                <ul class="list-unstyled">
+                                                    <li class="d-flex justify-content-between align-items-center mb-3 pb-1">
+                                                        <div class="d-flex align-items-center gap-2">
+                            <span class="avatar-initial rounded bg-label-success">
+                                <i class="bx bx-check-circle"></i>
+                            </span>
+                                                            <h6 class="mb-0">Activos</h6>
                                                         </div>
-                                                        <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-                                                            <div class="me-2">
-                                                                <h6 class="mb-0">Activos</h6>
-                                                            </div>
-                                                            <div class="user-progress">
-                                                                <small class="fw-semibold" th:text="${usuariosActivos}"></small>
-                                                            </div>
-                                                        </div>
+                                                        <small class="fw-semibold" th:text="${usuariosActivos}"></small>
                                                     </li>
-                                                    <li class="d-flex mb-4 pb-1">
-                                                        <div class="avatar flex-shrink-0 me-3">
-                        <span class="avatar-initial rounded bg-label-info">
-                            <i class="bx bx-minus-circle"></i>
-                        </span>
+                                                    <li class="d-flex justify-content-between align-items-center mb-3 pb-1">
+                                                        <div class="d-flex align-items-center gap-2">
+                            <span class="avatar-initial rounded bg-label-info">
+                                <i class="bx bx-minus-circle"></i>
+                            </span>
+                                                            <h6 class="mb-0">Inactivos</h6>
                                                         </div>
-                                                        <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-                                                            <div class="me-2">
-                                                                <h6 class="mb-0">Inactivos</h6>
-                                                            </div>
-                                                            <div class="user-progress">
-                                                                <small class="fw-semibold" th:text="${usuariosInactivos}"></small>
-                                                            </div>
-                                                        </div>
+                                                        <small class="fw-semibold" th:text="${usuariosInactivos}"></small>
                                                     </li>
-                                                    <li class="d-flex mb-4 pb-1">
-                                                        <div class="avatar flex-shrink-0 me-3">
-                        <span class="avatar-initial rounded bg-label-danger">
-                            <i class="bx bx-x-circle"></i>
-                        </span>
+                                                    <li class="d-flex justify-content-between align-items-center mb-3 pb-1">
+                                                        <div class="d-flex align-items-center gap-2">
+                            <span class="avatar-initial rounded bg-label-danger">
+                                <i class="bx bx-x-circle"></i>
+                            </span>
+                                                            <h6 class="mb-0">Baneados</h6>
                                                         </div>
-                                                        <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-                                                            <div class="me-2">
-                                                                <h6 class="mb-0">Baneados</h6>
-                                                            </div>
-                                                            <div class="user-progress">
-                                                                <small class="fw-semibold" th:text="${usuariosBaneados}"></small>
-                                                            </div>
-                                                        </div>
+                                                        <small class="fw-semibold" th:text="${usuariosBaneados}"></small>
                                                     </li>
                                                 </ul>
                                             </div>
                                         </div>
                                     </div>
-
                                     <!--/ Usuarios -->
 
                                     <!-- Agentes -->
-                                    <div class=" order-2 " style="margin-top: -31px">
+                                    <div class="order-2" style="margin-top: -31px">
                                         <div class="card h-100">
                                             <div class="card-header d-flex align-items-center justify-content-between pb-0">
                                                 <div class="card-title mb-0">
                                                     <h5 class="m-0 me-2">Agentes</h5>
                                                 </div>
-
-                                                <div class="card-body">
-                                                    <div class="d-flex justify-content-between align-items-center mb-3">
-                                                        <div class="d-flex flex-column align-items-center gap-1">
-                                                            <h2 class="mb-2" th:text="${usuariosAgentes}"> </h2>
-                                                            <span>Agentes Totales</span>
-                                                        </div>
-
-                                                    </div>
-
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="d-flex justify-content-center flex-column align-items-center gap-2 mb-4">
+                                                    <h2 class="mb-2" th:text="${usuariosAgentes}"></h2>
+                                                    <span>Agentes Totales</span>
                                                 </div>
+                                                <ul class="list-unstyled">
+                                                    <li class="d-flex justify-content-between align-items-center mb-3 pb-1">
+                                                        <div class="d-flex align-items-center gap-2">
+                            <span class="avatar-initial rounded bg-label-success">
+                                <i class="bx bx-check-circle"></i>
+                            </span>
+                                                            <h6 class="mb-0">Activos</h6>
+                                                        </div>
+                                                        <small class="fw-semibold" th:text="${agentesActivos}"></small>
+                                                    </li>
+                                                    <li class="d-flex justify-content-between align-items-center mb-3 pb-1">
+                                                        <div class="d-flex align-items-center gap-2">
+                            <span class="avatar-initial rounded bg-label-info">
+                                <i class="bx bx-minus-circle"></i>
+                            </span>
+                                                            <h6 class="mb-0">Inactivos</h6>
+                                                        </div>
+                                                        <small class="fw-semibold" th:text="${agentesInactivos}"></small>
+                                                    </li>
+                                                    <li class="d-flex justify-content-between align-items-center mb-3 pb-1">
+                                                        <div class="d-flex align-items-center gap-2">
+                            <span class="avatar-initial rounded bg-label-danger">
+                                <i class="bx bx-x-circle"></i>
+                            </span>
+                                                            <h6 class="mb-0">Baneados</h6>
+                                                        </div>
+                                                        <small class="fw-semibold" th:text="${agentesBaneados}"></small>
+                                                    </li>
+                                                </ul>
                                             </div>
                                         </div>
                                     </div>
                                     <!--/ Agentes -->
 
                                 </div>
+
 
                                 <div class="col-md-6 col-lg-4 order-3 mb-4">
 
@@ -279,26 +282,42 @@
 
 
                                     <!-- Proveedores baneados -->
-                                    <div class=" order-2 ">
+                                    <div class="order-2">
                                         <div class="card h-100">
                                             <div class="card-header d-flex align-items-center justify-content-between pb-0">
                                                 <div class="card-title mb-0">
                                                     <h5 class="m-0 me-2">Proveedores</h5>
                                                 </div>
-
-                                                <div class="card-body">
-                                                    <div class="d-flex justify-content-between align-items-center mb-3">
-                                                        <div class="d-flex flex-column align-items-center gap-1">
-                                                            <h2 class="mb-2" th:text="${proveedoresBaneados}"> </h2>
-                                                            <span>Proveedores Baneados</span>
-                                                        </div>
-
-                                                    </div>
-
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="d-flex justify-content-center flex-column align-items-center gap-2 mb-4">
+                                                    <h2 class="mb-2" th:text="${totalProveedores}"></h2>
+                                                    <span>Proveedores Totales</span>
                                                 </div>
+                                                <ul class="list-unstyled">
+                                                    <li class="d-flex justify-content-between align-items-center mb-3 pb-1">
+                                                        <div class="d-flex align-items-center gap-2">
+                        <span class="avatar-initial rounded bg-label-success">
+                            <i class="bx bx-check-circle"></i>
+                        </span>
+                                                            <h6 class="mb-0">Activos</h6>
+                                                        </div>
+                                                        <small class="fw-semibold" th:text="${proveedoresActivos}"></small>
+                                                    </li>
+                                                    <li class="d-flex justify-content-between align-items-center mb-3 pb-1">
+                                                        <div class="d-flex align-items-center gap-2">
+                        <span class="avatar-initial rounded bg-label-danger">
+                            <i class="bx bx-x-circle"></i>
+                        </span>
+                                                            <h6 class="mb-0">Baneados</h6>
+                                                        </div>
+                                                        <small class="fw-semibold" th:text="${proveedoresBaneados}"></small>
+                                                    </li>
+                                                </ul>
                                             </div>
                                         </div>
                                     </div>
+
                                     <!--/ Proveedores baneados -->
 
                                 </div>
