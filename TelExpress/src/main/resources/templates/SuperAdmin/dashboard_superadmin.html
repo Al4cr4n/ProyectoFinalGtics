@@ -82,7 +82,7 @@
                             <div class="row mb-5">
                                 <!-- Ordenes -->
                                 <div class="col-md-6 col-lg-4 order-0 mb-4">
-                                    <div class="card h-100">
+                                    <div class="card h-100 border-dark">
                                         <div class="card-header">
                                             <ul class="nav nav-pills" role="tablist">
                                                 <div class="card-title mb-0">
@@ -158,7 +158,7 @@
 
                                     <!-- Usuarios -->
                                     <div class="order-1">
-                                        <div class="card h-100">
+                                        <div class="card h-100 ">
                                             <div class="card-header d-flex align-items-center justify-content-between pb-0">
                                                 <div class="card-title mb-0">
                                                     <h5 class="m-0 me-2">Usuarios</h5>
@@ -255,31 +255,6 @@
 
                                 <div class="col-md-6 col-lg-4 order-3 mb-4">
 
-                                    <!-- Proveedores -->
-                                    <div class="  ">
-                                        <h5 class="card-header">Proveedores</h5>
-                                        <div class="card-body">
-                                            <div class="table-responsive text-nowrap">
-                                                <table class="table table-bordered">
-                                                    <thead>
-                                                    <tr>
-                                                        <th>Más Solicitados</th>
-                                                        <th>Con Peores Comentarios</th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                    <tr th:each="proveedor, iterStat : ${topProveedoresPositivos}">
-                                                        <td th:text="${proveedor.nombreTienda}">Proveedor Positivo</td>
-                                                        <td th:text="${#lists.size(topProveedoresNegativos) > iterStat.index ? topProveedoresNegativos[iterStat.index].nombreTienda : ''}">Proveedor Negativo</td>
-                                                    </tr>
-                                                    </tbody>
-                                                </table>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!--/ Proveedores -->
-
 
                                     <!-- Proveedores baneados -->
                                     <div class="order-2">
@@ -317,8 +292,34 @@
                                             </div>
                                         </div>
                                     </div>
-
                                     <!--/ Proveedores baneados -->
+
+
+                                    <!-- Proveedores -->
+                                    <div class="card">
+                                        <h5 class="card-header">Proveedores</h5>
+                                        <div class="card-body">
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                <tr>
+                                                    <th>Más Solicitados</th>
+                                                    <th>Con Peores Comentarios</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr th:each="proveedor, iterStat : ${topProveedoresPositivos}">
+                                                    <td th:text="${proveedor.nombreTienda}">Proveedor Positivo</td>
+                                                    <td th:text="${#lists.size(topProveedoresNegativos) > iterStat.index ? topProveedoresNegativos[iterStat.index].nombreTienda : ''}">Proveedor Negativo</td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <!--/ Proveedores -->
+
+
+
+
 
                                 </div>
                             </div>
