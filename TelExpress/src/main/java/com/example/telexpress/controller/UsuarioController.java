@@ -425,13 +425,14 @@ public class UsuarioController {
             usuarioEnSesion.setTelefono(telefono);
             usuarioEnSesion.setDespachador(despachador);
             usuarioEnSesion.setRazonSocial(razonSocial);
+            usuarioEnSesion.setSolicitud(1);
 
 
             // Guardar el usuario actualizado en la base de datos
             usuarioRepository.save(usuarioEnSesion);
         }
 
-        return "redirect:/usuario/unete"; // Redirigir al formulario nuevamente
+        return "redirect:/usuario/inicio_usuariofinal"; // Redirigir al formulario nuevamente
     }
 
     @GetMapping("/editar_perfil")
