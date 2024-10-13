@@ -38,12 +38,14 @@ public class Usuario implements Serializable {
     @NotBlank(message = "El correo es obligatorio")
     private String correo;
 
+    @NotBlank(message = "La dirección es obligatoria")
     private String direccion;
 
     @Pattern(regexp = "\\d{8}", message = "El DNI debe tener 8 dígitos")
     private String dni;
 
     @Pattern(regexp = "\\d{9}", message = "El número de teléfono debe tener 9 dígitos")
+    @NotBlank(message = "El teléfono es obligatorio")
     private String telefono;
 
     //@NotBlank(message = "La contraseña es obligatoria")
