@@ -55,10 +55,19 @@
                     <form id="formRegistro" method="post" th:action="@{/superadmin/guardar_usuario}"th:object="${usuario}">
                         <div class="row mb-3">
 
-
+<!--
                             <div class="col-md-6">
                                 <label for="nombre" class="form-label">Nombre:</label>
                                 <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Ingrese el nombre del usuario">
+                            </div> -->
+
+
+
+                            <div class="col-md-6">
+                                <label for="nombre" class="form-label">Nombre:</label>
+                                <input type="text" class="form-control" id="nombre" th:field="*{nombre}"
+                                       placeholder="Ingrese el nombre del usuario" th:classappend="${#fields.hasErrors('nombre') ? 'is-invalid' : ''}">
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}">Mensaje de error de nombre</div>
                             </div>
 <!--
                             <div class="col-md-6">
@@ -66,7 +75,7 @@
                                 <input th:field="*{nombre}" type="text" class="form-control" placeholder="Ingrese el nombre del usuario"
                                        th:classappend="${#fields.hasErrors('nombre') ? 'is-invalid' : ''}">
                                 <div class="invalid-feedback" th:if="${#fields.hasErrors('nombreProveedor')}" th:errors="*{nombre}"></div>
-                            </div> -->
+                            </div>  -->
 
                             <div class="col-md-6">
                                 <label for="apellido" class="form-label">Apellido:</label>

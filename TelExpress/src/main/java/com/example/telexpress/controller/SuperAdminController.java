@@ -264,9 +264,10 @@ public class SuperAdminController {
 
 
     @PostMapping("/guardar_usuario")
-    public String guardarUsuario(@ModelAttribute("usuario") @Valid Usuario usuario, BindingResult result, RedirectAttributes attr, @RequestParam("distrito.id") Integer iddist) {
+    public String guardarUsuario(@ModelAttribute("usuario") @Valid Usuario usuario, BindingResult result, RedirectAttributes attr, @RequestParam("distrito.id") Integer iddist,Model model) {
 
         if (result.hasErrors()) {
+            model.addAttribute("listaZona", zonaRepository.findAll());
             return "SuperAdmin/crear_usuario";  // Vuelve a la página del formulario
         }
 /*
