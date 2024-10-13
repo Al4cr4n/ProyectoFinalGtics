@@ -724,10 +724,24 @@ public class SuperAdminController {
         List<Producto> listaTop = productoRepository.findAll();
         listaTop.sort(Comparator.comparing(Producto::getCantidadComprada).reversed());
 
+        List<Proveedor> topProveedoresPositivos = proveedorRepository.findTop5ByRatingDesc();
+
+        // Obtener el top 5 de proveedores con peor calificación
+        List<Proveedor> topProveedoresNegativos = proveedorRepository.findTop5ByRatingAsc();
+
+
         model.addAttribute("listaTop", listaTop);
 
         if (listaTop.size() > 10) {
             listaTop = listaTop.subList(0, 10);
+        }
+
+        if (topProveedoresPositivos.size() > 5) {
+            topProveedoresPositivos = topProveedoresPositivos.subList(0, 5);
+        }
+
+        if (topProveedoresNegativos.size() > 5) {
+            topProveedoresNegativos = topProveedoresNegativos.subList(0, 5);
         }
 
 
@@ -786,6 +800,9 @@ public class SuperAdminController {
         model.addAttribute("usuariosInactivos", usuariosInactivos);
         model.addAttribute("usuariosBaneados", usuariosBaneados);
         model.addAttribute("usuariosAgentes", usuariosAgentes);
+        model.addAttribute("topProveedoresPositivos", topProveedoresPositivos);
+        model.addAttribute("topProveedoresNegativos", topProveedoresNegativos);
+        model.addAttribute("activePage", "dashboard");
         return "SuperAdmin/dashboard_superadmin";
     }
 

@@ -260,39 +260,18 @@
                                                 <table class="table table-bordered">
                                                     <thead>
                                                     <tr>
-                                                        <th>Más <br> Solicitados</th>
-                                                        <th>Con Peores <br>Comentarios</th>
-
+                                                        <th>Más Solicitados</th>
+                                                        <th>Con Peores Comentarios</th>
                                                     </tr>
                                                     </thead>
                                                     <tbody>
-                                                    <tr>
-                                                        <td>Albert Cook</td>
-                                                        <td>Albert Cook</td>
-
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Albert Cook</td>
-                                                        <td>Albert Cook</td>
-
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Albert Cook</td>
-                                                        <td>Albert Cook</td>
-
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Albert Cook</td>
-                                                        <td>Albert Cook</td>
-
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Albert Cook</td>
-                                                        <td>Albert Cook</td>
-
+                                                    <tr th:each="proveedor, iterStat : ${topProveedoresPositivos}">
+                                                        <td th:text="${proveedor.nombreTienda}">Proveedor Positivo</td>
+                                                        <td th:text="${#lists.size(topProveedoresNegativos) > iterStat.index ? topProveedoresNegativos[iterStat.index].nombreTienda : ''}">Proveedor Negativo</td>
                                                     </tr>
                                                     </tbody>
                                                 </table>
+
                                             </div>
                                         </div>
                                     </div>
@@ -335,10 +314,10 @@
                                                 <th>N°</th>
                                                 <th>Nombre</th>
                                                 <th>Categoría</th>
-                                                <th>Cantidad Disponible</th>
-                                                <th>Cantidad Comprada</th>
+                                                <th>Cantidad<br>Disponible</th>
+                                                <th>Cantidad<br>Comprada</th>
                                                 <th>Precio</th>
-                                                <th>Costo de envío</th>
+                                                <th>Costo<br>de envío</th>
 
                                             </tr>
                                             </thead>

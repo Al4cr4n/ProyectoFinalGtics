@@ -1,14 +1,12 @@
 package com.example.telexpress.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.List;
 
 @Getter
@@ -53,6 +51,11 @@ public class Proveedor implements Serializable {
 
     @ManyToMany(mappedBy = "proveedores")
     private List<Producto> productos;
+
+    @DecimalMin(value = "0.0", message = "El rating no puede ser menor a 0.0")
+    @DecimalMax(value = "5.0", message = "El rating no puede ser mayor a 5.0")
+    @Column(name = "rating")
+    private BigDecimal rating;
 
 
 
