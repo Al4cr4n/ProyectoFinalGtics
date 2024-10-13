@@ -96,6 +96,7 @@
                             </div>
                         </div>
                         <div class="row mb-3">
+                            <!--
                             <div class="col-md-6">
                                 <label for="zona" class="form-label">Zona:</label>
                                 <select class="form-select" id="zona" name="zona.idzona" th:field="*{zona.idzona}">
@@ -103,7 +104,7 @@
                                     <option th:each="zona : ${listaZona}" th:value="${zona.idzona}" th:text="${zona.nombre}"></option>
                                 </select>
                             </div>
-                        <!--</div> -->
+
 
                             <div class="col-md-6">
                                 <label class="form-label">Distrito:</label>
@@ -111,7 +112,25 @@
                                     <option value="" disabled selected>Seleccione un distrito</option>
                                     <option th:each="dist : ${distritos}" th:value="${dist.id}" th:text="${dist.nombredistrito}"></option>
                                 </select>
+                            </div> -->
+                            <div class="col-md-6">
+                                <label for="zona" class="form-label">Zona:</label>
+                                <select class="form-select" id="zona" name="zona.idzona" th:field="*{zona.idzona}" onchange="cargarDistritos()">
+                                    <option value="" disabled selected>Seleccione una zona</option>
+                                    <option th:each="zona : ${listaZona}" th:value="${zona.idzona}" th:text="${zona.nombre}"></option>
+                                </select>
                             </div>
+
+                            <!-- Campo Distrito -->
+                            <div class="col-md-6">
+                                <label for="distrito" class="form-label">Distrito:</label>
+                                <select class="form-select" id="distrito" name="distrito.id">
+                                    <option value="" disabled selected>Seleccione un distrito</option>
+                                    <!-- Aquí se llenarán los distritos dinámicamente -->
+                                </select>
+                            </div>
+
+
 
                          </div>
                         <!-- Contraseña Temporal -->
@@ -185,6 +204,37 @@
 </div>
 
 <!-- Core JS -->
+<script>
+    function cargarDistritos() {
+        var zonaId = document.getElementById("zona").value;
+
+        // Hacer una solicitud AJAX al controlador para obtener los distritos por zona
+        $.ajax({
+            url: '/superadmin/distritosPorZona/' + zonaId, // URL del endpoint creado en el controlador
+            type: 'GET',
+            success: function (data) {
+                var distritoSelect = document.getElementById("distrito");
+                distritoSelect.innerHTML = ""; // Limpiar los distritos actuales
+
+                // Añadir opción "Seleccione un distrito"
+                var option = document.createElement("option");
+                option.value = "";
+                option.text = "Seleccione un distrito";
+                option.disabled = true;
+                option.selected = true;
+                distritoSelect.appendChild(option);
+
+                // Llenar los distritos recibidos
+                data.forEach(function (distrito) {
+                    var option = document.createElement("option");
+                    option.value = distrito.id; // Asigna el ID del distrito
+                    option.text = distrito.nombredistrito; // Asigna el nombre del distrito
+                    distritoSelect.appendChild(option);
+                });
+            }
+        });
+    }
+</script>
 <script src="/assets/vendor/libs/jquery/jquery.js"></script>
 <script src="/assets/vendor/libs/popper/popper.js"></script>
 <script src="/assets/vendor/js/bootstrap.js"></script>

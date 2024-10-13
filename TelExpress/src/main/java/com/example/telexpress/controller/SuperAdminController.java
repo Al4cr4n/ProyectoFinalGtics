@@ -352,6 +352,12 @@ public class SuperAdminController {
         return "redirect:/superadmin/gestion_usuarios";
     }
 
+    @GetMapping("/distritosPorZona/{idzona}")
+    @ResponseBody
+    public List<Distrito> obtenerDistritosPorZona(@PathVariable("idzona") Integer idzona) {
+        return distritoRepository.findByZona_Idzona(idzona); // O el método que utilices para buscar distritos por zona
+    }
+
     @GetMapping("/nuevo_usuario")
     public String nuevoUsuario(Model model){
         model.addAttribute("activePage", "usuarios");
