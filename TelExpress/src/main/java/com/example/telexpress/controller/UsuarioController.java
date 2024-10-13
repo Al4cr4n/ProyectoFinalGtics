@@ -415,6 +415,7 @@ public class UsuarioController {
                                      HttpSession session) {
         // Obtener el usuario autenticado desde la sesión
         Usuario usuarioEnSesion = (Usuario) session.getAttribute("usuario");
+        System.out.println("Usuario: " + usuarioEnSesion.getNombre());
 
         if (usuarioEnSesion != null) {
             // Actualizar los valores del formulario
