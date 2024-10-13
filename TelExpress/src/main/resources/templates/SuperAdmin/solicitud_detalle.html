@@ -71,12 +71,14 @@
                                         <input type="text" id="zonaAgente" class="form-control" th:field="*{zona.nombre}" readonly>
                                     </div>
                                 </div>
+                            </form>
 
 
 
                                 <!-- Formulario para código despachador -->
                                 <form th:action="@{/superadmin/validarDespachador}" method="post">
                                     <input type="hidden" name="id" th:value="${postulante.id}" />
+
                                     <div class="row mb-3">
                                         <div class="col-md-6">
                                             <label for="codigoDespachador" class="form-label">Código despachador:</label>
@@ -111,7 +113,7 @@
                                     <button type="button" class="btn btn-primary mx-2" onclick="window.location.href='/superadmin/solicitudes'">Cancelar</button>
 
                                 </div>
-                            </form>
+
 
 
                         </div>
@@ -154,12 +156,12 @@
 <script src="/assets/js/dashboards-analytics.js"></script>
 <script async defer src="https://buttons.github.io/buttons.js"></script>
 
-<script>
+<!--<script>
     document.addEventListener('DOMContentLoaded', function() {
         document.querySelector('form[action$="/validarDespachador"]').addEventListener('submit', function(e) {
             console.log('Formulario de despachador enviado');
         });
     });
-</script>
+</script>-->
 </body>
 </html>

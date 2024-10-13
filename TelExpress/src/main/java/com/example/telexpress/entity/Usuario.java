@@ -85,7 +85,7 @@ public class Usuario implements Serializable {
     private Proveedor proveedor;
 
     // Relación corregida a String para despachador
-    @Column(name = "despachador", nullable = true)
+    @Column(name = "despachador",length = 50, nullable = true)
     private String despachador;
 
     @ManyToOne
