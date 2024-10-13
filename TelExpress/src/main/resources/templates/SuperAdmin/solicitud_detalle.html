@@ -73,48 +73,51 @@
                                 </div>
                             </form>
 
-
-
                                 <!-- Formulario para código despachador -->
-                                <form th:action="@{/superadmin/validarDespachador}" method="post">
-                                    <input type="hidden" name="id" th:value="${postulante.id}" />
+                            <form th:action="@{/superadmin/validarDespachador}" method="post">
+                                <input type="hidden" name="id" th:value="${postulante.id}" />
 
-                                    <div class="row mb-3">
-                                        <div class="col-md-6">
-                                            <label for="codigoDespachador" class="form-label">Código despachador:</label>
-                                            <input type="text" id="codigoDespachador" name="codigoDespachador" class="form-control" th:value="${postulante.despachador}" readonly>
-                                        </div>
-                                        <div class="col-md-3 align-self-end">
-                                            <button type="submit" class="btn btn-primary w-100">Validar Despachador</button>
-                                        </div>
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <label for="codigoDespachador" class="form-label">Código despachador:</label>
+                                        <input type="text" id="codigoDespachador" name="codigoDespachador" class="form-control" th:value="${postulante.despachador}" readonly>
                                     </div>
-                                </form>
-                                <div th:if="${mensajeDespachador}" class="alert alert-info mt-2" th:text="${mensajeDespachador}"></div>
+                                    <div class="col-md-3 align-self-end">
+                                        <button type="submit" class="btn btn-primary w-100">Validar Despachador</button>
+                                    </div>
+                                </div>
+                            </form>
+                            <div th:if="${mensajeDespachador}" class="alert alert-info mt-2" th:text="${mensajeDespachador}"></div>
 
                                 <!-- Formulario para código de jurisdicción -->
-                                <form th:action="@{/superadmin/validarJurisdiccion}" method="post">
-                                    <input type="hidden" name="id" th:value="${postulante.id}" />
-                                    <div class="row mb-3">
-                                        <div class="col-md-6">
-                                            <label for="codigoJurisdiccion" class="form-label">Código de jurisdicción:</label>
-                                            <input type="text" id="codigoJurisdiccion" name="codigoJurisdiccion" class="form-control" th:value="${postulante.jurisdiccion}" readonly>
-                                        </div>
-                                        <div class="col-md-3 align-self-end">
-                                            <button type="submit" class="btn btn-primary w-100">Validar Jurisdicción</button>
-                                        </div>
+                            <form th:action="@{/superadmin/validarJurisdiccion}" method="post">
+                                <input type="hidden" name="id" th:value="${postulante.id}" />
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <label for="codigoJurisdiccion" class="form-label">Código de jurisdicción:</label>
+                                        <input type="text" id="codigoJurisdiccion" name="codigoJurisdiccion" class="form-control" th:value="${postulante.jurisdiccion}" readonly>
                                     </div>
-                                </form>
-                                <div th:if="${mensajeJurisdiccion}" class="alert alert-info mt-2" th:text="${mensajeJurisdiccion}"></div>
+                                    <div class="col-md-3 align-self-end">
+                                        <button type="submit" class="btn btn-primary w-100">Validar Jurisdicción</button>
+                                    </div>
+                                </div>
+                            </form>
+                            <div th:if="${mensajeJurisdiccion}" class="alert alert-info mt-2" th:text="${mensajeJurisdiccion}"></div>
 
                                 <!-- Botones Aceptar y Denegar -->
-                                <div class="text-center">
-                                    <button type="button" class="btn btn-success mx-2">Aceptar</button>
-                                    <button type="button" class="btn btn-danger mx-2">Denegar</button>
-                                    <button type="button" class="btn btn-primary mx-2" onclick="window.location.href='/superadmin/solicitudes'">Cancelar</button>
+                            <div class="text-center">
+                                <div th:if="${mensajeExito}" class="alert alert-success mt-2" th:text="${mensajeExito}"></div>
+                                <div th:if="${mensajeError}" class="alert alert-danger mt-2" th:text="${mensajeError}"></div>
+                                <div class="d-flex justify-content-center align-items-center">
+                                    <button type="button" class="btn btn-success mx-2" data-bs-toggle="modal" data-bs-target="#confirmModal" th:attr="data-id=${postulante.id}">Aceptar</button>
 
+                                    <button type="button" class="btn btn-danger mx-2" data-bs-toggle="modal" data-bs-target="#denegarModal" th:attr="data-id=${postulante.id}">Denegar</button>
+
+                                    <button type="button" class="btn btn-primary mx-2" onclick="window.location.href='/superadmin/solicitudes'">Cancelar</button>
                                 </div>
 
 
+                            </div>
 
                         </div>
                     </div>
@@ -137,6 +140,51 @@
 
 
 <!-- / Layout wrapper -->
+
+<!-- Modal de Confirmación -->
+<div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmModalLabel">Confirmar Solicitud</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                ¿Estás seguro de aceptar a este usuario como nuevo agente?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                <form th:action="@{/superadmin/actualizarRol}" method="post" class="d-inline">
+                    <input type="hidden" name="id" th:value="${postulante.id}" />
+                    <button type="submit" class="btn btn-primary">Confirmar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de Confirmación para Denegar -->
+<div class="modal fade" id="denegarModal" tabindex="-1" aria-labelledby="denegarModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="denegarModalLabel">Denegación</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                ¿Estás seguro de denegar la solicitud para agente?
+                El usuario tendra que realizar una nueva solicitud.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <form th:action="@{/superadmin/denegarSolicitud}" method="post" class="d-inline">
+                    <input type="hidden" name="id" th:value="${postulante.id}" />
+                    <button type="submit" class="btn btn-danger">Denegar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- Core JS -->
 <script>
 

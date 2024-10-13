@@ -1057,6 +1057,45 @@ public class SuperAdminController {
         }
         return "redirect:/superadmin/solicitud_detalle?id=" + id;
     }
+    @PostMapping("/actualizarRol")
+    public String actualizarRol(@RequestParam("id") Integer id, RedirectAttributes redirectAttributes) {
+        Optional<Usuario> optUsuario = coordinadorRepository.findById(id);
+        if (optUsuario.isPresent()) {
+            Usuario usuario = optUsuario.get();
+            // Comparar el id del rol, no el objeto Rol completo
+            if (usuario.getRol().getId() == 4) {
+                // Cambiar el rol del usuario a un nuevo rol con id 3
+                Rol nuevoRol = new Rol();
+                nuevoRol.setId(3); // Aquí puedes cambiarlo por el rol que necesites
+
+                // Actualizar el campo solicitudAgente a 0
+                usuario.setSolicitud(0);
+                usuario.setRol(nuevoRol);
+                usuarioRepository.save(usuario);
+                redirectAttributes.addFlashAttribute("mensajeExito", "Rol actualizado correctamente a Agente");
+            } else {
+                redirectAttributes.addFlashAttribute("mensajeError", "El usuario no tiene el rol requerido para la actualización");
+            }
+        } else {
+            redirectAttributes.addFlashAttribute("mensajeError", "Usuario no encontrado");
+        }
+        return "redirect:/superadmin/solicitud_detalle?id=" + id;
+    }
+
+    @PostMapping("/denegarSolicitud")
+    public String denegarSolicitud(@RequestParam("id") Integer id, RedirectAttributes redirectAttributes) {
+        Optional<Usuario> optUsuario = coordinadorRepository.findById(id);
+        if (optUsuario.isPresent()) {
+            Usuario usuario = optUsuario.get();
+            usuario.setSolicitud(0);  // Cambiar el valor a 0
+            usuarioRepository.save(usuario);
+            redirectAttributes.addFlashAttribute("mensajeExito", "Solicitud de agente denegada correctamente.");
+        } else {
+            redirectAttributes.addFlashAttribute("mensajeError", "Usuario no encontrado.");
+        }
+        return "redirect:/superadmin/solicitudes";
+    }
+
 
 
 

@@ -110,4 +110,8 @@ public class Usuario implements Serializable {
     @OneToMany(mappedBy = "usuario")
 
     private List<Ordenes> ordenes = new ArrayList<>();
+
+    // Nuevo campo para manejar la solicitud de agente
+    @Column(name = "solicitudAgente")
+    private Integer solicitud;
 }
