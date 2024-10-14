@@ -42,10 +42,11 @@
     /* Estilo para el paginado */
     /*.dataTables_wrapper .dataTables_paginate {
       text-align: center; /* Centra el paginado */
-    margin-top: 1.5rem;  /* Añade margen superior *
+   /* margin-top:1.5rem;  /* Añade margen superior *
     }
 
     /* Estilo de los botones de paginación */
+
     .dataTables_wrapper .dataTables_paginate .paginate_button {
       padding: 0.5em 1em;
       border-radius: 4px;
@@ -82,6 +83,11 @@
     .dataTables_wrapper .dataTables_length {
       display: none;
     }
+    .btn-custom-dark-green {
+      background-color: #006400; /* Verde oscuro */
+      border-color: #006400;     /* Color del borde */
+      color: white;              /* Color del texto */
+    }
 
   </style>
 
@@ -109,7 +115,7 @@
           <div class="card" style="padding: 0.8rem;">
             <!---------------------------------------------------- NUEVA TABLA ------------------------------------------------------------>
             <!--- BUSCADOR||FILTRO||LIMPIAR FILTRO---->
-            <div class="filter-container">
+            <div class="card-header">
 
               <form action="/superadmin/buscadoragente" method="get" class="mb-4">
                 <div class="input-group">
@@ -141,7 +147,7 @@
             <!--- TABLA   ---->
 
             <div class="table-responsive text-nowrap">
-              <table class="table table-striped" id="usuariosTable" style="margin-top: 20px;">
+              <table class="table table-striped" id="usuariosTable">
                 <thead class="table-light">
                 <tr>
                   <th>N°</th>
@@ -162,7 +168,8 @@
                   <td th:text="${usuario.apellido}"></td>
                   <td th:text="${usuario.dni}"></td>
                   <td th:text="${usuario.correo}"></td>
-                  <td><button class="btn btn-sm btn-secondary">Ingresar</button></td>
+                  <!--<td><button class="btn btn-sm btn-success">Ingresar</button></td> -->
+                  <td><button class="btn btn-sm btn-custom-dark-green">Ingresar</button></td>
                   <td>
                     <a class="btn btn-sm btn-primary" th:href="@{/superadmin/editar/{id}(id=${usuario.id})}">
                       <i class="bx bx-edit-alt"></i>

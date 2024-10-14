@@ -53,6 +53,8 @@
 
                     <!-- Formulario -->
                     <form id="formRegistro" method="post" th:action="@{/superadmin/guardar_usuario}"th:object="${usuario}">
+
+                        <input th:field="*{id}" name="id" type="hidden"/>
                         <div class="row mb-3">
 
 <!--
@@ -198,6 +200,13 @@
                          </div>
                         <!-- Contraseña Temporal -->
                         <div class="row mb-3">
+
+                            <div class="col-md-6">
+                                <label for="fechanacimiento" class="form-label">Fecha de nacimiento:</label>
+                                <input type="date" class="form-control" id="fechanacimiento" th:field="*{fechanacimiento}"
+                                       placeholder="Ingrese la fecha de nacimiento del usuario" th:classappend="${#fields.hasErrors('fechanacimiento') ? 'is-invalid' : ''}">
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('fechanacimiento')}" th:errors="*{fechanacimiento}">Mensaje de error de telefono</div>
+                            </div>
                             <div class="col-md-6">
                                 <label for="contrasenaTemporal" class="form-label">Contraseña Temporal:</label>
                                 <input type="password" class="form-control"
@@ -219,7 +228,8 @@
                         </div>-->
 
                         <div class="text-center d-flex justify-content-center my-3">
-                            <button type="button" class="btn btn-primary mx-2" data-bs-toggle="modal" data-bs-target="#confirmModal">Registrar</button>
+                           <!-- <button type="button" class="btn btn-primary mx-2" data-bs-toggle="modal" data-bs-target="#confirmModal">Registrar</button> -->
+                            <button type="submit" class="btn btn-primary" form="formRegistro">Registrar</button>
                             <a class="btn btn-danger mx-2" th:href="@{/superadmin/gestion_usuarios}">Cancelar</a>
                         </div>
                     </form>

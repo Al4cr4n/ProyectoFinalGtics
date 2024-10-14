@@ -189,6 +189,7 @@ public class SuperAdminController {
             Usuario usuario = optUsuario.get();
             model.addAttribute("usuario", usuario);
             model.addAttribute("distritos", distritoRepository.findAll());
+            model.addAttribute("zonas",zonaRepository.findAll());
 
             return "SuperAdmin/editar_usuario";
         }else{
@@ -264,10 +265,16 @@ public class SuperAdminController {
 
 
     @PostMapping("/guardar_usuario")
-    public String guardarUsuario(@ModelAttribute("usuario") @Valid Usuario usuario, BindingResult result, RedirectAttributes attr, @RequestParam("distrito.id") Integer iddist,Model model) {
+    public String guardarUsuario(@ModelAttribute("usuario") @Valid Usuario usuario,
+                                 BindingResult result,
+                                 RedirectAttributes attr,
+                                 @RequestParam("distrito.id") Integer iddist,
+                                 Model model) {
 
         if (result.hasErrors()) {
+            System.out.println("Errores de validación: " + result.getAllErrors());
             model.addAttribute("listaZona", zonaRepository.findAll());
+            model.addAttribute("distritos", distritoRepository.findAll());
             return "SuperAdmin/crear_usuario";  // Vuelve a la página del formulario
         }
 /*
