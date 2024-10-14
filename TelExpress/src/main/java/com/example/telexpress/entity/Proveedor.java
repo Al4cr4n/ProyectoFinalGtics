@@ -4,9 +4,13 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
+//import org.hibernate.mapping.Set;
+import java.util.Set;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+
+import java.util.HashSet;
 import java.util.List;
 
 @Getter
@@ -49,14 +53,16 @@ public class Proveedor implements Serializable {
     @JoinColumn(name = "idzona", nullable = false)
     private Zona zona;
 
-    @ManyToMany(mappedBy = "proveedores")
-    private List<Producto> productos;
+   // @ManyToMany(mappedBy = "proveedores")
+    //private List<Producto> productos;
 
     @DecimalMin(value = "0.0", message = "El rating no puede ser menor a 0.0")
     @DecimalMax(value = "5.0", message = "El rating no puede ser mayor a 5.0")
     @Column(name = "rating")
     private BigDecimal rating;
 
-
+    @ManyToMany(mappedBy = "proveedores")
+    private Set<Producto> productos = new HashSet<>();
+    //private Set <Producto> productos = new HashSet<>();
 
 }

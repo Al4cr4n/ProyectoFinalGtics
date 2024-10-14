@@ -140,7 +140,7 @@
                             <!-- Nombre del Proveedor -->
                             <div class="col-md-6">
                                 <label for="nombreProveedor" class="form-label">Nombre del Proveedor:</label>
-                                <select class="form-select" name="proveedor.idProveedor" id="nombreProveedor">
+                                <select class="form-select" name="proveedores" id="nombreProveedor">
                                     <!-- th:classappend="${#fields.hasErrors('proveedores') ? 'is-invalid' : ''}" -->
                                     <option value="">Selecciona un proveedor</option>
                                     <option th:each="proveedor: ${listaProveedores}"

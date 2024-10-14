@@ -2,6 +2,7 @@ package com.example.telexpress.controller;
 
 import com.example.telexpress.entity.Producto;
 import com.example.telexpress.entity.ProductoUsuario;
+import com.example.telexpress.entity.Proveedor;
 import com.example.telexpress.entity.Zona;
 import com.example.telexpress.repository.ProductoRepository;
 import com.example.telexpress.repository.ProductoUsuarioRepository;
@@ -18,9 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Controller
 public class ProductoController {
@@ -72,6 +71,7 @@ public class ProductoController {
     public String guardarProducto(@Valid @ModelAttribute Producto producto,
                                   BindingResult result,
                                   @RequestParam("image") MultipartFile image,
+                                  @RequestParam("proveedores") List<Integer> proveedoresIds,
                                   RedirectAttributes attr,
                                   Model model) {
 
@@ -81,6 +81,15 @@ public class ProductoController {
             model.addAttribute("listaZona", zonaRepository.findAll());
             return "SuperAdmin/inventario_registrar_producto"; // Volver a la vista de formulario
         }
+
+        // Asociar los proveedores seleccionados al producto
+        Set<Proveedor> proveedores = new HashSet<>();
+        for (Integer proveedorId : proveedoresIds) {
+            Proveedor proveedor = proveedorRepository.findById(proveedorId)
+                    .orElseThrow(() -> new EntityNotFoundException("Proveedor no encontrado con ID: " + proveedorId));
+            proveedores.add(proveedor);
+        }
+        producto.setProveedores(proveedores);
 
         try {
             if (!image.isEmpty()) {

@@ -114,7 +114,7 @@
               <!-- Nombre del Proveedor-->
               <div class="col-md-6">
                 <label class="form-label">Nombre del Proveedor:</label>
-                <select class="form-select" th:field="*{proveedores}" disabled>
+                <select class="form-select" th:field="*{proveedores}" >
                   <option th:each="proveedor : ${listaProveedores}"
                           th:value="${proveedor.idProveedor}"
                           th:text="${proveedor.nombreProveedor}"></option>
@@ -141,12 +141,16 @@
               <!-- Zona-->
               <div class="col-md-6">
                 <label class="form-label">Zona Asignada:</label>
+                <!--
                 <select class="form-select" th:field="*{proveedores}" disabled>
                   <option th:each="zona : ${listaZona}"
                           th:value="${zona.idzona}"
                           th:text="${zona.nombre}">
                   </option>
-                </select>
+                </select> -->
+                <label class="form-label">Zona Asignada:</label>
+                <input type="text" class="form-control" th:value="${producto.proveedores[0].zona.nombre}" readonly />
+
               </div>
 
 

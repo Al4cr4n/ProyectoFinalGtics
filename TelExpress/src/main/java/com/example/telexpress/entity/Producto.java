@@ -69,7 +69,10 @@ public class Producto {
             inverseJoinColumns = @JoinColumn(name = "proveedor_idproveedor")
     )
     //@NotNull(message = "Debe seleccionar un proveedor")
-    private List<Proveedor> proveedores;
+   // private List<Proveedor> proveedores;
+
+    private Set<Proveedor> proveedores = new HashSet<>();
+
 
 
     @ManyToMany(mappedBy = "productos")
