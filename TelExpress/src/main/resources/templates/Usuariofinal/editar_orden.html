@@ -36,26 +36,33 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Icons. Uncomment required icon fonts -->
-    <link rel="stylesheet" href="../../assets/vendor/fonts/boxicons.css" />
+    <link rel="stylesheet" href="/assets/vendor/fonts/boxicons.css" />
 
     <!-- Core CSS -->
-    <link rel="stylesheet" href="../../assets/vendor/css/core.css" class="template-customizer-core-css" />
-    <link rel="stylesheet" href="../../assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
-    <link rel="stylesheet" href="../../assets/css/demo.css" />
+    <link rel="stylesheet" href="/assets/vendor/css/core.css" class="template-customizer-core-css" />
+    <link rel="stylesheet" href="/assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
+    <link rel="stylesheet" href="/assets/css/demo.css" />
 
     <!-- Vendors CSS -->
-    <link rel="stylesheet" href="../../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+    <link rel="stylesheet" href="/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
 
-    <link rel="stylesheet" href="../../assets/vendor/libs/apex-charts/apex-charts.css" />
+    <link rel="stylesheet" href="/assets/vendor/libs/apex-charts/apex-charts.css" />
 
     <!-- Page CSS -->
 
     <!-- Helpers -->
-    <script src="../../assets/vendor/js/helpers.js"></script>
+    <script src="/assets/vendor/js/helpers.js"></script>
 
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
-    <script src="../../assets/js/config.js"></script>
+    <script src="/assets/js/config.js"></script>
+    <style>
+        td.product-name {
+            word-wrap: break-word; /* Permite que las palabras largas se rompan y continúen en la siguiente línea */
+            white-space: normal; /* Asegura que el texto puede saltar de línea */
+            max-width: 150px; /* Establece un ancho máximo para la celda, ajusta según sea necesario */
+        }
+    </style>
 </head>
 <body>
 <!-- Layout wrapper -->
@@ -76,12 +83,12 @@
                             <div class="d-flex justify-content-between align-items-center py-3 mb-2">
                                 <!-- Parte izquierda: Orden -->
                                 <div class="d-flex flex-column">
-                                    <h3 class="fw-bold mb-0">Orden: #10002</h3>
-                                        <h5 class="text-muted">10/02/2024</h5> <!-- Tamaño más pequeño y color gris -->
+                                    <h3 class="fw-bold mb-0">Orden: #<span th:text="${orden.idOrdenes}"></span></h3>
+                                        <h5 class="text-muted"><span th:text="${#dates.format(orden.fechaCreacion, 'dd/MM/yyyy')}"></span></h5> <!-- Tamaño más pequeño y color gris -->
                                 </div>
 
                                 <!-- Parte central: En validación -->
-                                <span class="badge proceso_validacion mx-auto">En validación</span>
+                                <span class="badge proceso_validacion mx-auto" th:text="${orden.estadoOrdenes}"></span>
 
                                 <!-- Parte derecha: Enviar una reseña -->
                                 <a href="enviar_resena.html" class="review-link text-end">Enviar una reseña</a>
@@ -113,13 +120,19 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr>
+                                        <tr th:each="producto : ${productos}">
                                             <td><input type="checkbox"></td>
-                                            <td><img src="zapatilla1.jpeg" alt="Producto" class="product-img-order"> Zapatillas deportivas</td>
-                                            <td>10012</td>
-                                            <td>S/120.00</td>
-                                            <td><select><option>1</option><option>2</option><option>3</option></select></td>
-                                            <td>S/240.00</td>
+                                            <td class="product-name"><img src="zapatilla1.jpeg" alt="Producto" class="product-img-order">
+                                                <span th:text="${producto.nombreProducto}"></span></td>
+                                            <td th:text="${producto.idProducto}">10012</td>
+                                            <td th:text ="'S/. ' + ${producto.precio}">S/120.00</td>
+                                            <td>
+                                                <select name="cantidadProducto_${producto.idproducto}">
+                                                    <option th:each="i : ${#numbers.sequence(1, producto.cantidadDisponible)}"
+                                                            th:value="${i}" th:text="${i}" th:selected="${i == producto.cantidadComprada}"></option>
+                                                </select>
+                                            </td>
+                                            <td th:text="${producto.precio * producto.cantidadComprada}"></td>
                                         </tr>
                                         <!-- Add more rows as needed -->
                                         </tbody>
@@ -128,10 +141,13 @@
                                 <!-- Order Totals -->
                                 <div class="row">
                                     <div class="col-md-6 offset-md-6 text-end">
-                                        <p><strong>Subtotal: </strong> $980.00</p>
-                                        <p><strong>Delivery: </strong> S/. 15.00</p>
+                                        <p><strong>Subtotal: </strong>
+                                            <span th:text="'S/. ' + ${subtotal}"></span></p>
+                                        <p><strong>Delivery: </strong> <span th:text="'S/. ' + ${deliveryCost}"></span></p>
                                         <hr>
-                                        <p><strong>Total General:</strong> S/. 995.00</p>
+                                        <p><strong>Total General:</strong>
+                                            <span th:text="'S/. ' + ${totalGeneral}"></span>
+                                        </p>
                                     </div>
                                 </div>
 
@@ -190,7 +206,7 @@
 
                             <!--seccion de detalle de pago-->
                             <div class="card p-3 details-box">
-                                <h4 class="details-title" >Detalles de Pago</h5>
+                                <h4 class="details-title" >Detalles de Pago</h4>
                                     <form id="payment-details-form">
                                         <div class="mb-3">
                                             <label for="monto-cancelado" class="form-label fw-bold text-dark">Monto Cancelado:</label>
@@ -224,22 +240,22 @@
 
 <!-- Core JS -->
 <!-- build:js assets/vendor/js/core.js -->
-<script src="../../assets/vendor/libs/jquery/jquery.js"></script>
-<script src="../../assets/vendor/libs/popper/popper.js"></script>
-<script src="../../assets/vendor/js/bootstrap.js"></script>
-<script src="../../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+<script src="/assets/vendor/libs/jquery/jquery.js"></script>
+<script src="/assets/vendor/libs/popper/popper.js"></script>
+<script src="/assets/vendor/js/bootstrap.js"></script>
+<script src="/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
 
-<script src="../../assets/vendor/js/menu.js"></script>
+<script src="/assets/vendor/js/menu.js"></script>
 <!-- endbuild -->
 
 <!-- Vendors JS -->
-<script src="../../assets/vendor/libs/apex-charts/apexcharts.js"></script>
+<script src="/assets/vendor/libs/apex-charts/apexcharts.js"></script>
 
 <!-- Main JS -->
-<script src="../../assets/js/main.js"></script>
+<script src="/assets/js/main.js"></script>
 
 <!-- Page JS -->
-<script src="../../assets/js/dashboards-analytics.js"></script>
+<script src="/assets/js/dashboards-analytics.js"></script>
 
 <!-- Place this tag in your head or just before your close body tag. -->
 <script async defer src="https://buttons.github.io/buttons.js"></script>

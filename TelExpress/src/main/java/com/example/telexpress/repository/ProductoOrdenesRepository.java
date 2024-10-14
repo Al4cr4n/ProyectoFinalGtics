@@ -11,5 +11,6 @@ public interface ProductoOrdenesRepository extends JpaRepository<ProductoOrdenes
     List<ProductoOrdenes> findByProductoIdProductoAndOrdenesIdOrdenes(Integer productoId, Integer idOrdenes);
     List<ProductoOrdenes> findByOrdenesIdOrdenes(Integer idOrdenes);
     List<ProductoOrdenes> findByOrdenes(Ordenes ordenes);
+    List<ProductoOrdenes> findByIdOrdenesId(Integer ordenesId);
 
 }

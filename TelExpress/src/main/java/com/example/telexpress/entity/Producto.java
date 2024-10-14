@@ -24,7 +24,7 @@ public class Producto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idproducto")
-    private int idProducto;
+    private Integer idProducto;
 
     @Column(name = "nombreProducto")
     @NotBlank(message = "El nombre del producto es obligatorio")
