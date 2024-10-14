@@ -2,15 +2,14 @@ package com.example.telexpress.controller;
 import com.example.telexpress.config.EmailService;
 import com.example.telexpress.entity.*;
 import com.example.telexpress.repository.*;
+import jakarta.transaction.Transactional;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.security.Principal;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.Optional;
-import java.util.List;
+import java.util.*;
 
 @Controller
 @RequestMapping("/coordinador")
@@ -289,6 +288,24 @@ public class CoordinadorController {
         } else {
             return "redirect:/coordinador";
         }
+    }
+
+    @PostMapping("/actualizarFechaArribo")
+    @Transactional
+    public String actualizarFechaArribo(@RequestParam("productoId") int productoId,
+                                        @RequestParam("fechaArribo") @DateTimeFormat(pattern = "yyyy-MM-dd") Date fechaArribo,
+                                        RedirectAttributes redirectAttributes) {
+        try {
+            int filasActualizadas = productoRepository.actualizarFechaArribo(productoId, fechaArribo);
+            if (filasActualizadas > 0) {
+                redirectAttributes.addFlashAttribute("successMessage", "Fecha de arribo actualizada con éxito");
+            } else {
+                redirectAttributes.addFlashAttribute("warningMessage", "No se encontró el producto para actualizar");
+            }
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Error al actualizar la fecha de arribo: " + e.getMessage());
+        }
+        return "redirect:/coordinador/productos_zonal";
     }
 
 

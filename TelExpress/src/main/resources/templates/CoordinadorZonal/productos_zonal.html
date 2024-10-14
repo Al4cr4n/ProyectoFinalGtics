@@ -119,108 +119,117 @@
             <div th:insert="~{CoordinadorZonal/fragments/navbar.html::navbar}"></div> <!-- este es el navbar -->
 
             <!-- Content wrapper -->
-          <div class="content-wrapper">
-            <!-- Content -->
-            <div class="container-xxl flex-grow-1 container-p-y">
-                <h4 style="font-family: 'Poppins', sans-serif; color: #7367F0; font-weight: bold; padding-top: 1rem; padding-bottom: 1rem; margin-bottom: 1rem; text-align: center; font-size: 40px;">Inventario de Productos</h4>
-                <div id="success-banner" class="alert alert-success text-center" style="display: none;">
-                    ¡La solicitud de reposición se ha realizado con éxito!
-                  </div>
+            <div class="content-wrapper">
+                <!-- Content -->
+                <div class="container-xxl flex-grow-1 container-p-y">
+                    <h4 style="font-family: 'Poppins', sans-serif; color: #7367F0; font-weight: bold; padding-top: 1rem; padding-bottom: 1rem; margin-bottom: 1rem; text-align: center; font-size: 40px;">Inventario de Productos</h4>
+                    <div id="success-banner" class="alert alert-success text-center" style="display: none;">
+                        ¡La solicitud de reposición se ha realizado con éxito!
+                    </div>
 
 
-                <!-- Tabla de productos 2-->
+                    <!-- Tabla de productos 2-->
 
-                <div class="card">
-                    <div class="table-responsive text-nowrap mx-3">
-                        <table class="table" id="miTable" style="margin-top: 20px;">
-                            <thead class="table-light">
-                            <tr>
-                                <th style="color: #058ea3;">N°</th>
-                                <th style="color: #058ea3;">Productos</th>
-                                <th style="color: #058ea3;">Categoria</th>
-                                <th style="color: #058ea3;">Cantidad</th>
-                                <th style="color: #058ea3;">Solicitar Reposición</th>
-                                <th style="color: #058ea3;">Fecha de arribo</th>
-                            </tr>
-                            </thead>
-                            <tbody class="table-border-bottom-0">
-                            <tr th:each="producto, iter : ${producto}">
-                                <td><strong th:text="${iter.count}"></strong></td>
-                                <td th:text="${producto.nombreProducto}"></td>
-                                <td th:text="${producto.categoria}"></td>
-                                <td th:text="${producto.cantidadDisponible}"></td>
-                                <td>
-                                    <button
-                                            type="button"
-                                            class="btn btn-primary"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#modalCenter"
-                                            data-nombre-producto="${producto.nombreProducto}"
-                                            style="background-color: #00b1cc; border-color: #00C8E5;">
-                                        Solicitar
-                                    </button>
-                                    <!--
-                                   <form th:action="@{/solicitarReponer}" method="post">
-                                        <input type="hidden" name="nombreProducto" th:value="${producto.nombreProducto}">
-                                        <input type="hidden" name="categoria" th:value="${producto.categoria}">
-                                        <input type="hidden" name="email" value="telexpress.superadm@gmail.com">
+                    <div class="card">
+                        <div class="table-responsive text-nowrap mx-3">
+                            <table class="table" id="miTable" style="margin-top: 20px;">
+                                <thead class="table-light">
+                                <tr>
+                                    <th style="color: #058ea3;">N°</th>
+                                    <th style="color: #058ea3;">Productos</th>
+                                    <th style="color: #058ea3;">Categoria</th>
+                                    <th style="color: #058ea3;">Cantidad</th>
+                                    <th style="color: #058ea3;">Solicitar Reposición</th>
+                                    <th style="color: #058ea3;">Fecha de arribo</th>
+                                </tr>
+                                </thead>
+                                <tbody class="table-border-bottom-0">
+                                <tr th:each="producto, iter : ${producto}">
+                                    <td><strong th:text="${iter.count}"></strong></td>
+                                    <td th:text="${producto.nombreProducto}"></td>
+                                    <td th:text="${producto.categoria}"></td>
+                                    <td th:text="${producto.cantidadDisponible}"></td>
+                                    <td>
                                         <button
-                                                type="submit"
+                                                type="button"
                                                 class="btn btn-primary"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#modalCenter"
+                                                data-nombre-producto="${producto.nombreProducto}"
                                                 style="background-color: #00b1cc; border-color: #00C8E5;">
                                             Solicitar
                                         </button>
-                                    </form>
-                                    -->
+                                        <!--
+                                       <form th:action="@{/solicitarReponer}" method="post">
+                                            <input type="hidden" name="nombreProducto" th:value="${producto.nombreProducto}">
+                                            <input type="hidden" name="categoria" th:value="${producto.categoria}">
+                                            <input type="hidden" name="email" value="telexpress.superadm@gmail.com">
+                                            <button
+                                                    type="submit"
+                                                    class="btn btn-primary"
+                                                    style="background-color: #00b1cc; border-color: #00C8E5;">
+                                                Solicitar
+                                            </button>
+                                        </form>
+                                        -->
 
-                                </td>
-                                <td>
-                                    <button
-                                            type="button"
-                                            class="btn btn-outline-secondary"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#fechaModal">
-                                        <img src="/assets/img/icons/unicons/editarcalendario.png" alt="Imagen Modal" style="width: 24px; height: 24px;">
-                                    </button>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
+                                    </td>
+                                    <td>
+                                        <button
+                                                type="button"
+                                                class="btn btn-outline-secondary"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#fechaModal"
+                                                th:data-producto-id="${producto.idProducto}"
+                                                th:data-producto-nombre="${producto.nombreProducto}"
+                                                th:data-producto-categoria="${producto.categoria}">
+                                            <img src="/assets/img/icons/unicons/editarcalendario.png" alt="Imagen Modal" style="width: 24px; height: 24px;">
+                                        </button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div th:if="${successMessage}" class="alert alert-success" role="alert">
+                        <span th:text="${successMessage}"></span>
+                    </div>
+                    <div th:if="${errorMessage}" class="alert alert-danger" role="alert">
+                        <span th:text="${errorMessage}"></span>
                     </div>
                 </div>
+
             </div>
-
+            <!-- Content wrapper -->
         </div>
-        <!-- Content wrapper -->
+        <!-- / Layout page -->
     </div>
-    <!-- / Layout page -->
-</div>
 
-<!-- Inicialización de DataTables -->
-<script>
-    $(document).ready(function() {
-        $('#miTable').DataTable({
-            "pagingType": "full_numbers", // Esto muestra los números de página completos
-            "pageLength":5,
-            "language": {
-                "paginate": {
-                    "first": "",
-                    "last": "",
-                    "next": ">>",
-                    "previous": "<<"
-                }
-            },
-            "paging": true,      // Activa la paginación
-            "searching": false,  // Desactiva el buscador
-            "info": false        // Oculta la información de "Showing"
+    <!-- Inicialización de DataTables -->
+    <script>
+        $(document).ready(function() {
+            $('#miTable').DataTable({
+                "pagingType": "full_numbers", // Esto muestra los números de página completos
+                "pageLength":5,
+                "language": {
+                    "paginate": {
+                        "first": "",
+                        "last": "",
+                        "next": ">>",
+                        "previous": "<<"
+                    }
+                },
+                "paging": true,      // Activa la paginación
+                "searching": false,  // Desactiva el buscador
+                "info": false        // Oculta la información de "Showing"
 
+            });
         });
-    });
-</script>
+    </script>
 
 
-<!-- Overlay -->
-<div class="layout-overlay layout-menu-toggle"></div>
+    <!-- Overlay -->
+    <div class="layout-overlay layout-menu-toggle"></div>
 </div>
 <!-- / Layout wrapper -->
 
@@ -286,71 +295,35 @@
 </script>
 
 
-<!-- Modal fecha arribo -->
+<!-- Modal fecha arribo modificado -->
 <div class="modal fade" id="fechaModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="modalCenterTitle">Fecha de descarga</h5>
-                <button
-                        type="button"
-                        class="btn-close"
-                        data-bs-dismiss="modal"
-                        aria-label="Close"
-                ></button>
+                <h5 class="modal-title" id="modalCenterTitle">Fecha de arribo</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <hr class="my-4">
-            <div class="modal-body">
-                <div class="row ">
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label for="nameWithTitle" class="form-label ">Producto:</label>
-                        </div>
-                        <div class="mb-3">
-                            <label for="emailWithTitle" class="form-label ">Categoria:</label>
-                        </div>
-                        <div class="mb-3">
-                            <label for="dobWithTitle" class="form-label ">Fecha de arribo:</label>
-                        </div>
+            <form th:action="@{/coordinador/actualizarFechaArribo}" method="post">
+                <div class="modal-body">
+                    <input type="hidden" id="productoId" name="productoId">
+                    <div class="mb-3">
+                        <label for="nombreProducto" class="form-label">Producto:</label>
+                        <input type="text" id="nombreProducto" class="form-control" readonly>
                     </div>
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <input
-                                    type="text"
-                                    id="nameWithTitle"
-                                    class="form-control"
-                                    placeholder="Cuaderno"
-                                    readonly
-                            />
-                        </div>
-                        <div class="mb-3">
-                            <input
-                                    type="text"
-                                    id="emailWithTitle"
-                                    class="form-control"
-                                    placeholder="Educativo"
-                                    readonly
-                            />
-                        </div>
-                        <div class="mb-3">
-                            <input
-                                    type="date"
-                                    id="dobWithTitle"
-                                    class="form-control"
-                                    placeholder="DD / MM / YY"
-                            />
-                        </div>
+                    <div class="mb-3">
+                        <label for="categoriaProducto" class="form-label">Categoría:</label>
+                        <input type="text" id="categoriaProducto" class="form-control" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label for="fechaArribo" class="form-label">Fecha de arribo:</label>
+                        <input type="date" id="fechaArribo" name="fechaArribo" class="form-control" required>
                     </div>
                 </div>
-
-
-            </div>
-            <div class="modal-footer justify-content-center mx-2">
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
-                    Cancelar
-                </button>
-                <button type="button" class="btn btn-primary" id="duardar-btn" data-bs-dismiss="modal">Guardar</button>
-            </div>
+                <div class="modal-footer justify-content-center mx-2">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -384,6 +357,23 @@
 <!-- DataTables JS -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var fechaModal = document.getElementById('fechaModal');
+        fechaModal.addEventListener('show.bs.modal', function (event) {
+            var button = event.relatedTarget;
+            var productoId = button.getAttribute('data-producto-id');
+            var productoNombre = button.getAttribute('data-producto-nombre');
+            var productoCategoria = button.getAttribute('data-producto-categoria');
+
+            var modal = this;
+            modal.querySelector('#productoId').value = productoId;
+            modal.querySelector('#nombreProducto').value = productoNombre;
+            modal.querySelector('#categoriaProducto').value = productoCategoria;
+        });
+    });
+</script>
 
 </body>
 </html>

@@ -304,6 +304,7 @@ CREATE TABLE `producto` (
   `modelo` varchar(45) DEFAULT NULL,
   `color` varchar(45) DEFAULT NULL,
   `image` BLOB DEFAULT NULL,
+  `fechaArribo` DATE DEFAULT NULL,
   PRIMARY KEY (`idproducto`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -314,16 +315,16 @@ CREATE TABLE `producto` (
 
 LOCK TABLES `producto` WRITE;
 /*!40000 ALTER TABLE `producto` DISABLE KEYS */;
-INSERT INTO `producto` VALUES (1,'Laptop Lenovo','Electrónica',15,'Laptop Lenovo con 16GB RAM, 512GB SSD, pantalla de 15.6 pulgadas.',1200.5,25,1,70,NULL,NULL,null),
-(2,'iPhone 13','Electrónica',20,'iPhone 13 con 128GB, pantalla OLED de 6.1 pulgadas.',999.99,20,2,100,NULL,NULL,null),
-(3,'Samsung Galaxy S21','Electrónica',10,'Samsung Galaxy S21 con 128GB, pantalla de 6.2 pulgadas.',850.75,18,3,200,NULL,NULL,null),
-(4,'Silla Gamer','Muebles',30,'Silla gamer ergonómica con soporte lumbar ajustable.',199.99,15,300,300,NULL,NULL,null),
-(5,'Teclado Mecánico','Accesorios',50,'Teclado mecánico RGB con switches azules.',75,10,200,500,NULL,NULL,null),
-(6,'Monitor 4K','Electrónica',12,'Monitor 4K UHD de 27 pulgadas con HDR.',350,22,80,200,NULL,NULL,null),
-(7,'Cámara Canon EOS','Fotografía',8,'Cámara Canon EOS Rebel T7i con lente de 18-55mm.',700.99,30,50,100,NULL,NULL,null),
-(8,'Auriculares Bluetooth','Accesorios',25,'Auriculares inalámbricos Bluetooth con cancelación de ruido.',150,8,100,400,NULL,NULL,null),
-(9,'Mouse Inalámbrico','Accesorios',60,'Mouse inalámbrico con sensor óptico de alta precisión.',35.99,5,300,700,NULL,NULL,null),
-(10,'Impresora HP LaserJet','Oficina',5,'Impresora HP LaserJet con impresión a doble cara automática.',250.5,12,40,400,NULL,NULL,null);
+INSERT INTO `producto` VALUES (1,'Laptop Lenovo','Electrónica',15,'Laptop Lenovo con 16GB RAM, 512GB SSD, pantalla de 15.6 pulgadas.',1200.5,25,1,70,NULL,NULL,null,'2024-10-09'),
+(2,'iPhone 13','Electrónica',20,'iPhone 13 con 128GB, pantalla OLED de 6.1 pulgadas.',999.99,20,2,100,NULL,NULL,null,null),
+(3,'Samsung Galaxy S21','Electrónica',10,'Samsung Galaxy S21 con 128GB, pantalla de 6.2 pulgadas.',850.75,18,3,200,NULL,NULL,null,'2024-10-15'),
+(4,'Silla Gamer','Muebles',30,'Silla gamer ergonómica con soporte lumbar ajustable.',199.99,15,300,300,NULL,NULL,null,'2024-10-04'),
+(5,'Teclado Mecánico','Accesorios',50,'Teclado mecánico RGB con switches azules.',75,10,200,500,NULL,NULL,null,'2024-10-03'),
+(6,'Monitor 4K','Electrónica',12,'Monitor 4K UHD de 27 pulgadas con HDR.',350,22,80,200,NULL,NULL,null,null),
+(7,'Cámara Canon EOS','Fotografía',8,'Cámara Canon EOS Rebel T7i con lente de 18-55mm.',700.99,30,50,100,NULL,NULL,null,'2024-10-24'),
+(8,'Auriculares Bluetooth','Accesorios',25,'Auriculares inalámbricos Bluetooth con cancelación de ruido.',150,8,100,400,NULL,NULL,null,'2024-10-11'),
+(9,'Mouse Inalámbrico','Accesorios',60,'Mouse inalámbrico con sensor óptico de alta precisión.',35.99,5,300,700,NULL,NULL,null,null),
+(10,'Impresora HP LaserJet','Oficina',5,'Impresora HP LaserJet con impresión a doble cara automática.',250.5,12,40,400,NULL,NULL,null,null);
 /*!40000 ALTER TABLE `producto` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -500,7 +501,7 @@ CREATE TABLE `resenias` (
   `calidad` varchar(45) NOT NULL,
   `rapidez` varchar(45) NOT NULL,
   `puntuacion` int NOT NULL,
-  `foto` blob,
+  `foto` blob NULL,
   `respuesta` varchar(45) DEFAULT NULL,
   `productos_idproductos` int NOT NULL,
   `tituloForo` varchar(200) DEFAULT NULL,
@@ -518,6 +519,27 @@ CREATE TABLE `resenias` (
 --
 -- Dumping data for table `resenias`
 --
+
+LOCK TABLES `resenias` WRITE;
+/*!40000 ALTER TABLE `resenias` DISABLE KEYS */;
+INSERT INTO `resenias` VALUES 
+(1,'Reseña del producto A.','El producto cumple con las expectativas, buena calidad.','Recibí el producto en tiempo récord, muy rápido.',4,NULL,1,'Buena experiencia',1,'Reseña'),
+(2,'Reseña del producto B.','El material es resistente y bien acabado.','Llegó dentro del tiempo esperado, buen servicio.',5,NULL,2,'Excelente compra',2,'Foro'),
+(3,'Reseña del producto C.','La calidad es aceptable por el precio pagado.','Tardó más de lo previsto, pero aún aceptable.',3,NULL,3,'Aceptable',3,'Reseña'),
+(4,'Reseña del producto D.','El producto presenta defectos menores en los detalles.','La entrega fue bastante lenta, no llegó a tiempo.',2,NULL,4,'No muy satisfecho',4,'Foro'),
+(5,'Reseña del producto E.','La calidad no es la mejor, esperaba algo mejor.','Recibí el producto con bastante retraso.',1,NULL,5,'Decepcionante',5,'Reseña'),
+(6,'Reseña del producto F.','Muy buen producto por el precio pagado.','Entrega rápida, dentro del plazo estimado.',4,NULL,6,'Buena relación calidad-precio',6,'Reseña'),
+(7,'Reseña del producto G.','La calidad es excelente, totalmente recomendable.','La entrega fue eficiente y sin contratiempos.',5,NULL,7,'Recomendado',7,'Foro'),
+(8,'Reseña del producto H.','El producto no cumplió con las expectativas, esperaba más.','El envío fue más lento de lo esperado.',2,NULL,8,'No satisfecho',8,'Reseña'),
+(9,'Reseña del producto I.','Producto de calidad media, aceptable para el precio.','El envío tardó un poco más de lo previsto.',3,NULL,9,'Aceptable compra',9,'Foro'),
+(10,'Reseña del producto J.','Excelente calidad, cumple con todo lo anunciado.','El producto llegó antes de lo esperado, muy buen servicio.',5,NULL,10,'Totalmente satisfecho',10,'Reseña'),
+(11,'Reseña del producto K.','El producto tiene algunos defectos, pero es usable.','La entrega fue dentro de lo estimado, sin problemas.',3,NULL,11,'Aceptable',11,'Foro'),
+(12,'Reseña del producto L.','Material de baja calidad, no lo recomiendo.','El envío fue rápido pero el producto no fue lo esperado.',1,NULL,12,'Decepcionante',12,'Reseña'),
+(13,'Reseña del producto M.','Buen producto, pero podría mejorar en algunos detalles.','El tiempo de entrega fue razonable.',4,NULL,13,'Buena compra',13,'Foro'),
+(14,'Reseña del producto N.','El producto no cumple con las características descritas.','La entrega fue tardía, no lo recomiendo.',1,NULL,14,'No recomendable',14,'Reseña'),
+(15,'Reseña del producto O.','Producto de alta calidad, definitivamente recomendado.','El envío fue excelente, sin demoras.',5,NULL,15,'Excelente experiencia',15,'Foro');
+/*!40000 ALTER TABLE `resenias` ENABLE KEYS */;
+UNLOCK TABLES;
 
 LOCK TABLES `resenias` WRITE;
 /*!40000 ALTER TABLE `resenias` DISABLE KEYS */;

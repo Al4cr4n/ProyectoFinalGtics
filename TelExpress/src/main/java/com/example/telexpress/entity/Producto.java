@@ -9,6 +9,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -83,4 +84,10 @@ public class Producto {
     @Column(name = "image")
     @Lob
     private byte[] image;
+
+    @Column(name = "fechaArribo")
+    @Temporal(TemporalType.DATE)
+    private Date fecharribo;
+
+
 }
