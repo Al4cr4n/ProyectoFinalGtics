@@ -170,14 +170,14 @@
                                             <div class="product-img">
                                                 <img th:src="@{/usuario/images/{id}(id=${producto.idProducto})}" alt="Product Image">
                                                 <div class="product-label">
-                                                    <span class="new">NEW</span>
+                                                    <!--<span class="new">NEW</span>-->
                                                 </div>
                                             </div>
                                             <div class="product-body">
                                                 <h3 class="product-name">
                                                     <a th:href="@{/usuario/detalle_producto(id=${producto.idProducto})}">[[${producto.nombreProducto}]]</a>
                                                 </h3>
-                                                <h4 class="product-price">$[[${producto.precio}]] <del class="product-old-price">$290.00</del></h4>
+                                                <h4 class="product-price">$[[${producto.precio}]] <del class="product-old-price">S/. 290.00</del></h4>
                                                 <div class="product-btns">
                                                     <button class="quick-view" th:onclick="'location.href=\'' + @{/usuario/detalle_producto(id=${producto.idProducto})} + '\''">
                                                         <i class="bi bi-eye fs-4"></i> <span class="tooltipp">Vista rápida</span>

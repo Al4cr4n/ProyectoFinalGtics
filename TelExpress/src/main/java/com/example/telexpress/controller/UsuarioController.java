@@ -3,6 +3,7 @@ import com.example.telexpress.dto.ProductoDTO;
 import com.example.telexpress.entity.*;
 import com.example.telexpress.repository.*;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -398,9 +399,33 @@ public class UsuarioController {
         }
     }
     @PostMapping("/pedidos/guardar")
-    public String guardarPedidos(Ordenes ordenes, RedirectAttributes attr) {
-        ordenesRepository.save(ordenes);
-        return "redirect:/usuario/lista_pedidos";
+    public String guardarPedidos(@RequestParam("id") Integer idOrden, RedirectAttributes attr, HttpServletRequest request, Model model) {
+        Optional<Ordenes> optionalOrden = ordenesRepository.findById(idOrden);
+
+        if (optionalOrden.isPresent()) {
+            Ordenes orden = optionalOrden.get();
+
+            // Obtiene la lista de productos asociados a la orden desde la tabla intermedia
+            List<ProductoOrdenes> productosOrdenes = productoOrdenesRepository.findByIdOrdenesId(idOrden);
+
+            // Recorre los productos de la orden
+        for (ProductoOrdenes po : productosOrdenes) {
+            // Para cada producto, obtiene el valor de la cantidad enviada por el formulario
+            String cantidadParam = request.getParameter("cantidadProducto_" + po.getProducto().getIdProducto());
+
+            if (cantidadParam != null) {
+                // Actualiza la cantidad en la tabla intermedia
+                Integer nuevaCantidad = Integer.parseInt(cantidadParam);
+                po.setCantidadxproducto(nuevaCantidad);
+                // Guarda la actualización en la base de datos
+                productoOrdenesRepository.save(po);
+            }
+        }
+        return "redirect:/usuario/pedidos/editar?id=" + idOrden;
+        } else {
+            //ordenesRepository.save(ordenes);
+            return "redirect:/usuario/lista_pedidos";
+        }
     }
     @GetMapping("/pedidos/borrar")
     public String borrarPedidos(Model model,

@@ -98,7 +98,9 @@
                     <div class="row">
 
                         <!--primer bloque, detalle de la orden-->
+
                         <div class="col-md-8">
+                            <form method="POST" th:action="@{'/usuario/pedidos/guardar?id=' + ${orden.idOrdenes}}">
                             <!--<h4 class="fw-bold py-3 mb-4">Orden: #10002
                                 <span class="status-label validacion">En validación</span>
                                 !-- "Enviar una reseña" link redirects to another view (e.g., 'enviar_resena.html') --
@@ -171,15 +173,15 @@
                                     </div>
                                     <div class="col-md-6 text-end">
                                         <button class="btn btn-danger me-2">Eliminar</button>
-                                        <a href="editar_ordenn.html" class="btn btn-primary">Modificar</a>
+                                        <button type="submit" class="btn btn-primary">Modificar</button>
                                     </div>
                                 </div>
-
                             </div>
-
+                            </form>
                         </div>
 
-                        <div class="col-md-4">
+
+                        <div class="col-md-4 row">
 
                             <!--seccion de dtalle de envio-->
                             <div class=" mb-3">
