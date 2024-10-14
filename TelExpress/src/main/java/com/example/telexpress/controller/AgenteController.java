@@ -5,9 +5,11 @@ package com.example.telexpress.controller;
 
 import com.example.telexpress.entity.Ordenes;
 import com.example.telexpress.entity.Usuario;
+import com.example.telexpress.entity.Zona;
 import com.example.telexpress.repository.*;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -69,9 +71,9 @@ public class AgenteController {
         model.addAttribute("paginaActual", "ordenes");
         String correo = SecurityContextHolder.getContext().getAuthentication().getName();
         Usuario usuarioActual = usuarioRepository.findByCorreo(correo);
-
+        Zona zona = usuarioActual.getZona();
+        List<String> estadosTodos = Arrays.asList("EN PROCESO", "ARRIBO AL PAÍS", "EN ADUANAS", "EN RUTA", "RECIBIDO", "EN VALIDACIÓN", "CREADO", "EN PROCESO");
         List<Ordenes> ordenes;
-        List<String> estadosTodos = Arrays.asList("EN PROCESO", "ARRIBO AL PAÍS", "EN ADUANAS", "EN RUTA", "RECIBIDO", "EN VALIDACIÓN", "CREADO","EN PROCESO");
 
         // Si hay un término de búsqueda, primero filtramos por estado y luego por nombre/apellido
         if (search != null && !search.isEmpty()) {
@@ -85,8 +87,8 @@ public class AgenteController {
                 return "redirect:/agente/ordenes";
             }
         } else {
-            // Si no hay búsqueda, mostrar todas las órdenes con los estados permitidos
-            ordenes = ordenesRepository.findByEstadoOrdenesIn(estadosTodos);
+            // Si no hay búsqueda, mostrar todas las órdenes con los estados permitidos para la zona del usuario actual
+            ordenes = ordenesRepository.findByUsuario_ZonaAndEstadoOrdenesIn(zona, estadosTodos);
         }
 
         // Pasar las órdenes filtradas al modelo para la vista
@@ -96,6 +98,7 @@ public class AgenteController {
         // Retornar la vista "ordenes_agente.html"
         return "Agente/ordenes_agente";
     }
+
 
 
 

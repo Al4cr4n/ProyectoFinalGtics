@@ -1,6 +1,7 @@
 package com.example.telexpress.repository;
 import com.example.telexpress.entity.Usuario;
 
+import com.example.telexpress.entity.Zona;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -23,7 +24,7 @@ public interface OrdenesRepository extends JpaRepository<Ordenes, Integer> {
     @Query(value = "select * from ordenes where usuario_idusuario = ?1",
             nativeQuery= true)
     List<Ordenes> findByUsuarioId(Integer id);
-
+    List<Ordenes> findByUsuario_Zona(Zona zona);
 
     // Si necesitas métodos adicionales para búsquedas personalizadas, puedes declararlos aquí.
     List<Ordenes> findByEstadoOrdenes(String estadoOrdenes);
@@ -47,6 +48,8 @@ public interface OrdenesRepository extends JpaRepository<Ordenes, Integer> {
     List<Ordenes> findByEstadoOrdenesIn(List<String> estados);
 
     Optional<Ordenes> findByUsuarioAndEstadoOrdenes(Usuario usuario, String estadoOrdenes);
+
+    List<Ordenes> findByUsuario_ZonaAndEstadoOrdenesIn(Zona zona, List<String> estados);
 
     @Query(value = "SELECT o.idordenes, " +
             "o.estadoOrdenes, " +
