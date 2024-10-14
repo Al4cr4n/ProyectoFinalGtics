@@ -90,6 +90,10 @@ public class AgenteController {
             // Si no hay búsqueda, mostrar todas las órdenes con los estados permitidos para la zona del usuario actual
             ordenes = ordenesRepository.findByUsuario_ZonaAndEstadoOrdenesIn(zona, estadosTodos);
         }
+        // Agregar mensaje si no hay órdenes
+        if (ordenes.isEmpty()) {
+            model.addAttribute("infoMessage", "No hay órdenes en tu zona.");
+        }
 
         // Pasar las órdenes filtradas al modelo para la vista
         model.addAttribute("ordenes", ordenes);
@@ -106,14 +110,17 @@ public class AgenteController {
     public String mostrarOrdenesEnProgreso(@RequestParam(value = "search", required = false) String search, Model model, RedirectAttributes redirectAttributes) {
         model.addAttribute("paginaActual", "ordenes_en_progreso");
 
+        String correo = SecurityContextHolder.getContext().getAuthentication().getName();
+        Usuario usuarioActual = usuarioRepository.findByCorreo(correo);
+        Zona zona = usuarioActual.getZona();
         List<Ordenes> ordenesEnProgreso;
         List<String> estadosPermitidos = Arrays.asList("EN PROCESO", "ARRIBO AL PAÍS", "EN ADUANAS", "EN RUTA");
 
         // Si hay un término de búsqueda, primero filtramos por estado y luego por nombre/apellido
         if (search != null && !search.isEmpty()) {
-            // Realizamos la búsqueda en base a nombre/apellido y estados permitidos
-            ordenesEnProgreso = ordenesRepository.findByEstadoOrdenesInAndUsuarioNombreContainingIgnoreCaseOrUsuarioApellidoContainingIgnoreCase(
-                    estadosPermitidos, search, search);
+            // Realizamos la búsqueda en base a nombre/apellido y estados permitidos, filtrando por zona
+            ordenesEnProgreso = ordenesRepository.findByUsuario_ZonaAndEstadoOrdenesInAndUsuarioNombreContainingIgnoreCaseOrUsuarioApellidoContainingIgnoreCase(
+                    zona, estadosPermitidos, search, search);
 
             // Si no se encuentran resultados, mostrar un mensaje de error
             if (ordenesEnProgreso.isEmpty()) {
@@ -121,8 +128,13 @@ public class AgenteController {
                 return "redirect:/agente/ordenes_en_progreso";
             }
         } else {
-            // Si no hay búsqueda, mostrar todas las órdenes con los estados permitidos
-            ordenesEnProgreso = ordenesRepository.findByEstadoOrdenesIn(estadosPermitidos);
+            // Si no hay búsqueda, mostrar todas las órdenes con los estados permitidos filtrando por zona
+            ordenesEnProgreso = ordenesRepository.findByUsuario_ZonaAndEstadoOrdenesIn(zona, estadosPermitidos);
+
+            // Agregar mensaje si no hay órdenes en progreso
+            if (ordenesEnProgreso.isEmpty()) {
+                model.addAttribute("infoMessage", "No hay órdenes En Progreso en tu zona.");
+            }
         }
 
         // Pasar las órdenes filtradas al modelo para la vista
@@ -136,17 +148,22 @@ public class AgenteController {
 
 
 
+
+
     @GetMapping("/ordenes_pendientes")
     public String mostrarOrdenesPendientes(@RequestParam(value = "search", required = false) String search, Model model, RedirectAttributes redirectAttributes) {
         model.addAttribute("paginaActual", "ordenes_pendientes");
 
+        String correo = SecurityContextHolder.getContext().getAuthentication().getName();
+        Usuario usuarioActual = usuarioRepository.findByCorreo(correo);
+        Zona zona = usuarioActual.getZona();
         List<Ordenes> ordenesEnValidacion;
 
         // Si hay un término de búsqueda, buscar por nombre o apellido solo si el estado es "En Validación"
         if (search != null && !search.isEmpty()) {
-            // Búsqueda de órdenes con estado "En Validación"
-            ordenesEnValidacion = ordenesRepository.findByEstadoOrdenesAndUsuarioNombreContainingIgnoreCaseOrUsuarioApellidoContainingIgnoreCase(
-                    "EN VALIDACIÓN", search, search);
+            // Búsqueda de órdenes con estado "En Validación" y filtrando por zona
+            ordenesEnValidacion = ordenesRepository.findByUsuario_ZonaAndEstadoOrdenesAndUsuarioNombreContainingIgnoreCaseOrUsuarioApellidoContainingIgnoreCase(
+                    zona, "EN VALIDACIÓN", search, search);
 
             // Si no se encuentran resultados, mostrar un mensaje de error
             if (ordenesEnValidacion.isEmpty()) {
@@ -154,10 +171,13 @@ public class AgenteController {
                 return "redirect:/agente/ordenes_pendientes";
             }
         } else {
-            // Si no hay búsqueda, mostrar todas las órdenes en estado "En Validación"
-            ordenesEnValidacion = ordenesRepository.findAll().stream()
-                    .filter(orden -> "EN VALIDACIÓN".equals(orden.getEstadoOrdenes()))
-                    .collect(Collectors.toList());
+            // Si no hay búsqueda, mostrar todas las órdenes en estado "En Validación" filtrando por zona
+            ordenesEnValidacion = ordenesRepository.findByUsuario_ZonaAndEstadoOrdenes(zona, "EN VALIDACIÓN");
+
+            // Agregar mensaje si no hay órdenes en validación
+            if (ordenesEnValidacion.isEmpty()) {
+                model.addAttribute("infoMessage", "No hay órdenes Pendientes en tu zona.");
+            }
         }
 
         // Pasar las órdenes filtradas al modelo para la vista
@@ -170,17 +190,21 @@ public class AgenteController {
 
 
 
+
     @GetMapping("/ordenes_sin_asignar")
     public String mostrarOrdenesSinAsignar(@RequestParam(value = "search", required = false) String search, Model model, RedirectAttributes redirectAttributes) {
         model.addAttribute("paginaActual", "ordenes_sin_asignar");
 
+        String correo = SecurityContextHolder.getContext().getAuthentication().getName();
+        Usuario usuarioActual = usuarioRepository.findByCorreo(correo);
+        Zona zona = usuarioActual.getZona();
         List<Ordenes> ordenesSinAsignar;
 
         // Si hay un término de búsqueda, buscar por nombre o apellido
         if (search != null && !search.isEmpty()) {
-            // Búsqueda de órdenes con estado "CREADO"
-            ordenesSinAsignar = ordenesRepository.findByEstadoOrdenesAndUsuarioNombreContainingIgnoreCaseOrUsuarioApellidoContainingIgnoreCase(
-                    "CREADO", search, search);
+            // Búsqueda de órdenes con estado "CREADO" filtrando por zona
+            ordenesSinAsignar = ordenesRepository.findByUsuario_ZonaAndEstadoOrdenesAndUsuarioNombreContainingIgnoreCaseOrUsuarioApellidoContainingIgnoreCase(
+                    zona, "CREADO", search, search);
 
             // Si no se encuentran resultados, mostrar un mensaje de error
             if (ordenesSinAsignar.isEmpty()) {
@@ -188,10 +212,13 @@ public class AgenteController {
                 return "redirect:/agente/ordenes_sin_asignar";
             }
         } else {
-            // Si no hay búsqueda, mostrar todas las órdenes en estado "CREADO"
-            ordenesSinAsignar = ordenesRepository.findAll().stream()
-                    .filter(orden -> "CREADO".equals(orden.getEstadoOrdenes()))
-                    .collect(Collectors.toList());
+            // Si no hay búsqueda, mostrar todas las órdenes en estado "CREADO" filtrando por zona
+            ordenesSinAsignar = ordenesRepository.findByUsuario_ZonaAndEstadoOrdenes(zona, "CREADO");
+        }
+
+        // Agregar mensaje si no hay órdenes sin asignar
+        if (ordenesSinAsignar.isEmpty()) {
+            model.addAttribute("infoMessage", "No hay órdenes Sin Asignar en tu zona.");
         }
 
         // Pasar las órdenes filtradas al modelo para la vista
@@ -203,17 +230,21 @@ public class AgenteController {
     }
 
 
+
     @GetMapping("/ordenes_resueltas")
     public String mostrarOrdenesResueltas(@RequestParam(value = "search", required = false) String search, Model model, RedirectAttributes redirectAttributes) {
         model.addAttribute("paginaActual", "ordenes_resueltas");
 
+        String correo = SecurityContextHolder.getContext().getAuthentication().getName();
+        Usuario usuarioActual = usuarioRepository.findByCorreo(correo);
+        Zona zona = usuarioActual.getZona();
         List<Ordenes> ordenesResueltas;
 
         // Si hay un término de búsqueda, buscar por nombre o apellido
         if (search != null && !search.isEmpty()) {
-            // Búsqueda de órdenes con estado "RECIBIDO"
-            ordenesResueltas = ordenesRepository.findByEstadoOrdenesAndUsuarioNombreContainingIgnoreCaseOrUsuarioApellidoContainingIgnoreCase(
-                    "RECIBIDO", search, search);
+            // Búsqueda de órdenes con estado "RECIBIDO" filtrando por zona
+            ordenesResueltas = ordenesRepository.findByUsuario_ZonaAndEstadoOrdenesAndUsuarioNombreContainingIgnoreCaseOrUsuarioApellidoContainingIgnoreCase(
+                    zona, "RECIBIDO", search, search);
 
             // Si no se encuentran resultados, mostrar un mensaje de error
             if (ordenesResueltas.isEmpty()) {
@@ -221,10 +252,13 @@ public class AgenteController {
                 return "redirect:/agente/ordenes_resueltas";
             }
         } else {
-            // Si no hay búsqueda, mostrar todas las órdenes en estado "RECIBIDO"
-            ordenesResueltas = ordenesRepository.findAll().stream()
-                    .filter(orden -> "RECIBIDO".equals(orden.getEstadoOrdenes()))
-                    .collect(Collectors.toList());
+            // Si no hay búsqueda, mostrar todas las órdenes en estado "RECIBIDO" filtrando por zona
+            ordenesResueltas = ordenesRepository.findByUsuario_ZonaAndEstadoOrdenes(zona, "RECIBIDO");
+        }
+
+        // Agregar mensaje si no hay órdenes resueltas
+        if (ordenesResueltas.isEmpty()) {
+            model.addAttribute("infoMessage", "No hay órdenes Resueltas en tu zona.");
         }
 
         // Pasar las órdenes filtradas al modelo para la vista
@@ -234,6 +268,8 @@ public class AgenteController {
         // Retornar la vista "ordenes_resueltas.html"
         return "Agente/ordenes_resueltas";
     }
+
+
 
     @GetMapping("/orden/editar")
     public String editarOrden(Model model, @RequestParam("idOrdenes") Integer idOrdenes) {

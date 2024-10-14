@@ -43,9 +43,18 @@ public interface OrdenesRepository extends JpaRepository<Ordenes, Integer> {
     // Buscar por estados permitidos y nombre o apellido
     List<Ordenes> findByEstadoOrdenesInAndUsuarioNombreContainingIgnoreCaseOrUsuarioApellidoContainingIgnoreCase(
             List<String> estados, String nombre, String apellido);
+    List<Ordenes> findByUsuario_ZonaAndEstadoOrdenesInAndUsuarioNombreContainingIgnoreCaseOrUsuarioApellidoContainingIgnoreCase(
+            Zona zona, List<String> estados, String nombre, String apellido);
 
     // Búsqueda de todas las órdenes por estado permitido
     List<Ordenes> findByEstadoOrdenesIn(List<String> estados);
+
+    // Método para buscar órdenes por zona y estado
+    List<Ordenes> findByUsuario_ZonaAndEstadoOrdenes(Zona zona, String estadoOrdenes);
+
+    // Si necesitas el método que busca por nombre o apellido también
+    List<Ordenes> findByUsuario_ZonaAndEstadoOrdenesAndUsuarioNombreContainingIgnoreCaseOrUsuarioApellidoContainingIgnoreCase(
+            Zona zona, String estadoOrdenes, String nombre, String apellido);
 
     Optional<Ordenes> findByUsuarioAndEstadoOrdenes(Usuario usuario, String estadoOrdenes);
 

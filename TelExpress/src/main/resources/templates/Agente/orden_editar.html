@@ -61,7 +61,8 @@
       <div class="content-wrapper">
         <div class="container-xxl flex-grow-1 container-p-y">
           <!-- Título -->
-          <h4 class="mb-4">Editar Proveedor</h4>
+          <h4 class="mb-4">Editar Orden <span th:text="${ordenes.idOrdenes}"></span></h4>
+
 
           <!-- Formulario -->
           <form id="formEdicion" method="post" th:action="@{/agente/orden/guardar}" th:object="${ordenes}">
@@ -71,13 +72,15 @@
               <!-- Nombre del cliente -->
               <div class="col-md-6">
                 <label for="nombreCliente" class="form-label">Nombre del Cliente:</label>
-                <input type="text" class="form-control" id="nombreCliente" th:value="${ordenes.usuario.nombre}" readonly placeholder="Ingrese el nombre del cliente">
+                <input type="text" class="form-control" id="nombreCliente"
+                       th:value="${ordenes.usuario.nombre} + ' ' + ${ordenes.usuario.apellido}"
+                       readonly placeholder="Nombre del cliente">
               </div>
 
-              <!-- Nombre de la tienda -->
+              <!-- Dirección -->
               <div class="col-md-6">
-                <label for="apellidoCliente" class="form-label">Tienda:</label>
-                <input type="text" class="form-control" id="apellidoCliente" th:value="${ordenes.usuario.apellido}" readonly placeholder="Ingrese el apellido del cliente">
+                <label for="direccion" class="form-label">Direccion:</label>
+                <input type="text" class="form-control" id="direccion" th:value="${ordenes.usuario.direccion}" readonly placeholder="Direccion del cliente">
               </div>
             </div>
 

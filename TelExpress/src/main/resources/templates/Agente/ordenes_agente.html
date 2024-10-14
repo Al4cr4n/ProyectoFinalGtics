@@ -68,15 +68,20 @@
                         <div class="card">
                             <div class="p-3 d-flex">
                                 <form th:action="@{/agente/ordenes}" method="get" class="d-flex w-100">
-                                    <input type="text" name="search" class="form-control me-2 search-bar" placeholder="Buscar por cliente o apellido.."
+                                    <input type="text" name="search" class="form-control me-2 search-bar" placeholder="Buscar por nombre o apellido.."
                                            th:value="${search}">
                                     <button type="submit" class="btn btn-primary">Buscar</button>
                                 </form>
 
                             </div>
+                            <!-- Mensaje de información -->
+                            <div th:if="${infoMessage}" class="alert alert-info">
+                                <p th:text="${infoMessage}"></p>
+                            </div>
                             <div class="table-responsive text-nowrap">
                                 <table class="table table-striped" id="ordenesTable">
                                     <thead class="table-light">
+
                                     <tr>
                                         <th>N°</th>
                                         <th>Cliente</th>
@@ -88,6 +93,7 @@
                                     </tr>
                                     </thead>
                                     <tbody>
+
                                     <!-- Iteración sobre las órdenes -->
                                     <tr th:each="orden : ${ordenes}">
                                         <td th:text="${orden.idOrdenes}"></td>

@@ -81,6 +81,10 @@
                     <button type="submit" class="btn btn-primary">Buscar</button>
                   </form>
                 </div>
+                <!-- Mensaje de información -->
+                <div th:if="${infoMessage}" class="alert alert-info">
+                  <p th:text="${infoMessage}"></p>
+                </div>
                 <!-- Mostrar mensaje de error si no se encuentran resultados -->
                 <div th:if="${errorMessage}" class="alert alert-danger" role="alert">
                   <span th:text="${errorMessage}"></span>
@@ -89,6 +93,7 @@
                 <div class="table-responsive text-nowrap">
                   <table class="table table-striped" id="ordenesTable">
                     <thead class="table-light">
+
                     <tr>
                       <th>N°</th>
                       <th>Cliente</th>
@@ -96,19 +101,41 @@
                       <th>Dirección</th>
                       <th>Estado</th>
                       <th>Fecha de Arribo</th>
+                      <th>Editar</th>
                     </tr>
                     </thead>
                     <tbody>
+
+                    <!-- Iteración sobre las órdenes -->
                     <tr th:each="orden : ${ordenes}">
                       <td th:text="${orden.idOrdenes}"></td>
-                      <td th:text="${orden.usuario != null ? orden.usuario.nombre : 'Usuario no disponible'}"></td>
-                      <td th:text="${orden.usuario != null ? orden.usuario.apellido : 'Usuario no disponible'}"></td>
-                      <td th:text="${orden.usuario != null ? orden.usuario.direccion : 'Dirección no disponible'}"></td>
+
+                      <!-- Asegúrate de que el usuario no sea null antes de mostrar el nombre
+                           Porque en la tabla usuario está borrado el id 25 -->
+                      <td th:text="${orden.usuario != null} ? ${orden.usuario.nombre} : 'Usuario no disponible'"></td>
+                      <td th:text="${orden.usuario != null} ? ${orden.usuario.apellido} : 'Usuario no disponible'"></td>
+
+                      <td th:text="${orden.usuario != null} ? ${orden.usuario.direccion} : 'Dirección no disponible'"></td>
                       <td>
-                        <span class="badge bg-label-danger" th:text="${orden.estadoOrdenes}"></span>
+                                            <span th:text="${orden.estadoOrdenes}"
+                                                  th:class="'badge ' + (
+                                                    ${orden.estadoOrdenes == 'CREADO'} ? 'bg-label-warning' :
+                                                    (${orden.estadoOrdenes == 'EN VALIDACIÓN'} ? 'bg-label-danger' :
+                                                    (${orden.estadoOrdenes == 'EN PROCESO'} ? 'bg-label-primary' :
+                                                    (${orden.estadoOrdenes == 'ARRIBO AL PAÍS'} ? 'bg-label-dark' :
+                                                    (${orden.estadoOrdenes == 'EN ADUANAS'} ? 'bg-label-secondary' :
+                                                    (${orden.estadoOrdenes == 'EN RUTA'} ? 'bg-label-info' :
+                                                    (${orden.estadoOrdenes == 'RECIBIDO'} ? 'bg-label-success' :
+                                                    'bg-label-default' )))))))"></span>    </td>
+                      <td th:text="${#dates.format(orden.fechaArribo, 'yyyy-MM-dd')}"></td>
+                      <td>
+                        <a class="btn btn-sm btn-primary" th:href="@{'/agente/orden/editar?idOrdenes=' + ${orden.idOrdenes}}">
+                          <i class="bx bx-edit-alt"></i>
+                        </a>
+
                       </td>
-                      <td th:text="${orden.fechaArribo != null ? #dates.format(orden.fechaArribo, 'yyyy-MM-dd') : 'Fecha no disponible'}"></td>
                     </tr>
+
                     </tbody>
 
                   </table>
