@@ -236,9 +236,33 @@
                                     <td th:text="${agentesMap[orden.idOrdenes]}"></td>
 
                                     <td>
-                                        <a class="btn btn-sm btn-primary" th:href="@{'/usuario/pedidos/editar?id=' + ${orden.idOrdenes}}">
+                                       <!-- <a class="btn btn-sm btn-primary" th:href="@{'/usuario/pedidos/editar?id=' + ${orden.idOrdenes}}">
+                                            <i class="bx bx-edit-alt"></i>
+                                        </a>-->
+                                    <td>
+                                        <!-- Si el estado es 'CREADO' o 'EN VALIDACIÓN', mostrar el botón de editar -->
+                                        <a class="btn btn-sm btn-primary"
+                                           th:if="${orden.estadoOrdenes == 'CREADO' || orden.estadoOrdenes == 'EN VALIDACIÓN'}"
+                                           th:href="@{'/usuario/pedidos/editar?id=' + ${orden.idOrdenes}}">
                                             <i class="bx bx-edit-alt"></i>
                                         </a>
+
+                                        <!-- Si el estado es 'EN PROCESO', 'EN ADUANAS', 'ARRIBO AL PAÍS', mostrar el botón de ver -->
+                                        <a class="btn btn-sm btn-info"
+                                           th:if="${orden.estadoOrdenes == 'EN PROCESO' || orden.estadoOrdenes == 'EN ADUANAS' || orden.estadoOrdenes == 'ARRIBO AL PAÍS'}"
+                                           th:href="@{'/usuario/pedidos/ver?id=' + ${orden.idOrdenes}}">
+                                            <i class="bx bx-show"></i>
+                                        </a>
+
+                                        <!-- Si el estado es 'RECIBIDO', redirigir a otra vista -->
+                                        <a class="btn btn-sm btn-success"
+                                           th:if="${orden.estadoOrdenes == 'RECIBIDO'}"
+                                           th:href="@{'/usuario/pedidos/detallesRecibido?id=' + ${orden.idOrdenes}}">
+                                            <i class="bx bx-detail"></i>
+                                        </a>
+                                    </td>
+
+
                                     </td>
                                     <td>
                                         <a class="btn btn-sm btn-danger" th:href="@{'/usuario/pedidos/borrar?id=' + ${orden.idOrdenes}}">
