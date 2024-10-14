@@ -169,7 +169,13 @@
                   <td th:text="${usuario.dni}"></td>
                   <td th:text="${usuario.correo}"></td>
                   <!--<td><button class="btn btn-sm btn-success">Ingresar</button></td> -->
-                  <td><button class="btn btn-sm btn-custom-dark-green">Ingresar</button></td>
+                  <!--<td><button class="btn btn-sm btn-custom-dark-green">Ingresar</button></td> -->
+
+                  <td>
+                    <a th:href="@{/usuario/iniciarSesion(id=${usuario.id})}" class="btn btn-sm btn-custom-dark-green">
+                      Ingresar
+                    </a>
+                  </td>
                   <td>
                     <a class="btn btn-sm btn-primary" th:href="@{/superadmin/editar/{id}(id=${usuario.id})}">
                       <i class="bx bx-edit-alt"></i>

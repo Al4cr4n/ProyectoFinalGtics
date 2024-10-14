@@ -25,7 +25,7 @@ public class Producto {
     @Column(name = "idproducto")
     private int idProducto;
 
-    @Column(name = "nombreproducto")
+    @Column(name = "nombreProducto")
     @NotBlank(message = "El nombre del producto es obligatorio")
     private String nombreProducto;
 
@@ -33,7 +33,7 @@ public class Producto {
     @NotBlank(message = "La categoría es obligatoria")
     private String categoria;
 
-    @Column(name = "cantidaddisponible")
+    @Column(name = "cantidadDisponible")
     @NotNull(message = "La cantidad disponible es obligatoria")
     //@Min(value = 1, message = "La cantidad debe ser mayor que 0")
     private Integer cantidadDisponible;
@@ -48,7 +48,7 @@ public class Producto {
     //@DecimalMin(value = "0.01", message = "El precio debe ser mayor que 0")
     private Double precio;
 
-    @Column(name = "costoenvio")
+    @Column(name = "costoEnvio")
     @NotNull(message = "El costo de envío es obligatorio")
     //@DecimalMin(value = "0.00", message = "El costo de envío debe ser mayor o igual que 0")
     private Double costoEnvio;

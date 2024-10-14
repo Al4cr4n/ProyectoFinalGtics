@@ -2,6 +2,7 @@ package com.example.telexpress.controller;
 import com.example.telexpress.dto.ProductoDTO;
 import com.example.telexpress.entity.*;
 import com.example.telexpress.repository.*;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -49,14 +50,26 @@ public class UsuarioController {
     private final DistritoRepository distritoRepository;
 
 
-
+/*
     @GetMapping({"","/inicio"})
     public String index(Model model){
         model.addAttribute("activePage", "inicio");
 
         return "Usuariofinal/inicio_usuariofinal";
-    }
+    } */
 
+    @GetMapping("/iniciarSesion")
+    public String iniciarSesion(@RequestParam("id") Long id, HttpSession session) {
+        // Usamos el repositorio directamente para buscar al usuario por ID
+        Usuario usuario = usuarioRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Usuario no encontrado con ID: " + id));
+
+        // Configuramos la sesión del usuario
+        session.setAttribute("usuario", usuario);
+
+        // Redirigimos a la página de inicio del usuario final
+        return "redirect:/usuario/inicio_usuariofinal";
+    }
     @GetMapping("/inicio_usuariofinal")
     public String inicio_usuariofinal(Model model){
 
