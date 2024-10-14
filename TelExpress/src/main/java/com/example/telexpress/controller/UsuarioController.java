@@ -340,6 +340,7 @@ public class UsuarioController {
 
     @GetMapping("/pedidos/editar")
     public String editarPedidos(Model model, @RequestParam("id") int id) {
+        model.addAttribute("activePage", "lista_pedidos");
 
         Optional<Ordenes> optionalOrdenes = ordenesRepository.findById(id);
 
@@ -362,6 +363,7 @@ public class UsuarioController {
     public String borrarPedidos(Model model,
                                 @RequestParam("id") int id,
                                 RedirectAttributes attr) {
+        model.addAttribute("activePage", "lista_pedidos");
 
         Optional<Ordenes> optProduct = ordenesRepository.findById(id);
 
@@ -443,6 +445,7 @@ public class UsuarioController {
     }*/
     @GetMapping("/resenia")
     public String mostrarResenias(Model model) {
+        model.addAttribute("activePage", "resenia");
         List<Resenia> resenias = reseniaRepository.findAll(); // Cargar todas las reseñas desde la base de datos
         model.addAttribute("resenias", resenias); // Pasar las reseñas al modelo
         return "Usuariofinal/resenia"; // Nombre de tu archivo HTML de Thymeleaf (resenias.html)
@@ -451,6 +454,7 @@ public class UsuarioController {
     // Método para mostrar todas las reseñas
     @GetMapping("/mostrarResenias")
     public String mostrarResenias(Model model, @RequestParam(value = "search", required = false) String search) {
+        model.addAttribute("activePage", "resenia");
         List<Resenia> resenias;
 
         // Si se recibe un parámetro de búsqueda, buscar por tituloresena
@@ -468,7 +472,9 @@ public class UsuarioController {
     }
 
     @GetMapping("/respuesta_resenia")
-    public String respuesta_resenia(){
+    public String respuesta_resenia(Model model){
+        model.addAttribute("activePage", "resenia");
+
         return "Usuariofinal/respuesta_resenia";
     }
 
