@@ -38,7 +38,7 @@ public class Usuario implements Serializable {
     @NotBlank(message = "El correo es obligatorio")
     private String correo;
 
-    @NotBlank(message = "La dirección es obligatoria")
+    //@NotBlank(message = "La dirección es obligatoria")
     private String direccion;
 
     @Pattern(regexp = "\\d{8}", message = "El DNI debe tener 8 dígitos")
@@ -75,7 +75,7 @@ public class Usuario implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "distritos_iddistritos", nullable = true)
-    @NotNull(message = "El distrito es obligatorio")
+    //@NotNull(message = "El distrito es obligatorio")
     private Distrito distrito;
 
     @ManyToOne

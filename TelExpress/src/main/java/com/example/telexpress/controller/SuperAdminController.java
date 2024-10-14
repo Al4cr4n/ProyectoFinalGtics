@@ -447,14 +447,16 @@ public class SuperAdminController {
     /* para actualizar datos de coodinador zonal*/
     /* para actualizar datos de coodinador zonal*/
     @PostMapping("/update")
-    public String actualizardatoscoordi( @ModelAttribute("coordinadorzonal")@Valid Usuario usuario,
+    public String actualizardatoscoordi(@Valid @ModelAttribute("coordinadorzonal") Usuario usuario,
                                         BindingResult result,
                                         @RequestParam("zona.idzona") Integer zonaid,
                                         RedirectAttributes rttbtsp,
                                         Model model) {
-
-        // Si hay errores de validación, vuelve al formulario con los mensajes de error
+        // Agregar logs para depuración
         if (result.hasErrors()) {
+            result.getAllErrors().forEach(error -> {
+                System.out.println(error.getDefaultMessage());
+            });
             List<Zona> zonas = zonaRepository.findAll();
             model.addAttribute("zonas", zonas);
             model.addAttribute("coordinadorzonal", usuario);
