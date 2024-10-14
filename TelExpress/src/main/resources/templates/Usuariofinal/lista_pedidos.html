@@ -225,7 +225,8 @@
                                 <tbody>
                                 <!-- Iteración sobre las órdenes -->
                                 <tr th:each="orden : ${ordenes}">
-                                    <td th:text="${orden.idOrdenes}"></td>
+                                    <td th:text="${orden.idOrdenes != null ? orden.idOrdenes : 'Sin ID'}"></td>
+
                                     <!-- Asegúrate de que el usuario no sea null antes de mostrar el nombre
                                          Porque en la tabla usuario está borrado el id 25 -->
                                     <td  th:text="${#dates.format(orden.fechaCreacion, 'yyyy-MM-dd')}"></td>
@@ -308,7 +309,7 @@
                                 <!--<button class="btn-cancel" onclick="closeModal()">Cancelar</button>
                                 <button class="btn-delete">Eliminar</button>-->
                                 <button class="btn cancel" onclick="closeModal()">Cancelar</button>
-                                <a id="confirmDeleteButton" class="btn btn-delete" th:href="@{'/usuario/pedidos/borrar?id=' + ${orden.idOrdenes}}">Eliminar</a>
+                                <a id="confirmDeleteButton" class="btn btn-delete" href="#">Eliminar</a>
 
                             </div>
                         </div>
@@ -396,7 +397,7 @@
 </script>
 <!-- JS for modal and dropdowns -->
 <script>
-    function openDelateModal(orderId) {
+    function openDeleteModal(orderId) {
         // Cambia el href del botón de confirmación del modal
         document.getElementById('confirmDeleteButton').setAttribute('href', '/usuario/pedidos/borrar?id=' + orderId);
         document.getElementById('deleteModal').style.display = 'block';
@@ -440,19 +441,19 @@
 </script>
 <!-- Core JS -->
 <!-- build:js assets/vendor/js/core.js -->
-<script src="../../assets/vendor/libs/jquery/jquery.js"></script>
-<script src="../../assets/vendor/libs/popper/popper.js"></script>
-<script src="../../assets/vendor/js/bootstrap.js"></script>
-<script src="../../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+<script src="/assets/vendor/libs/jquery/jquery.js"></script>
+<script src="/assets/vendor/libs/popper/popper.js"></script>
+<script src="/assets/vendor/js/bootstrap.js"></script>
+<script src="/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
 
-<script src="../../assets/vendor/js/menu.js"></script>
+<script src="/assets/vendor/js/menu.js"></script>
 <!-- endbuild -->
 
 <!-- Vendors JS -->
-<script src="../../assets/vendor/libs/apex-charts/apexcharts.js"></script>
+<script src="/assets/vendor/libs/apex-charts/apexcharts.js"></script>
 
 <!-- Main JS -->
-<script src="../../assets/js/main.js"></script>
+<script src="/assets/js/main.js"></script>
 
 </body>
 </html>

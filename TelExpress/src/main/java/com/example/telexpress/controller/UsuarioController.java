@@ -314,10 +314,15 @@ public class UsuarioController {
         List<String> estadosTodos = Arrays.asList("EN PROCESO", "ARRIBO AL PAÍS", "EN ADUANAS", "EN RUTA", "RECIBIDO", "EN VALIDACIÓN", "CREADO","EN PROCESO");
         ordenes = ordenesRepository.findOrdenesByUsuarioAAndEstadoOrdenes(usuarioAutenticado.getId(), estadosTodos);
 
+        // Verificar y eliminar elementos nulos si existen
+        if (ordenes != null) {
+            ordenes.removeIf(Objects::isNull);
+        }
         // Obtener el agente asignado a cada usuario a través del idsuperior
         Map<Integer, String> agentesMap = new HashMap<>();
         List<Usuario> usuarios = usuarioRepository.findAll();
         for (Ordenes orden : ordenes) {
+            System.out.println("Orden ID: " + (orden != null ? orden.getIdOrdenes() : "null"));
             if (orden.getAgentexorden() != null) {
                 // Obtener el agente directamente del idSuperior
                 //Usuario agente = usuario.getIdSuperior();
