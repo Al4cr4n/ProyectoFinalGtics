@@ -17,4 +17,7 @@ public interface ReseniaRepository extends JpaRepository<Resenia, Integer> {
 
     // Contar las reseñas relacionadas con un producto específico
     Long countByProductoIdProducto(Integer idProducto);
+
+    // Método derivado para buscar reseñas por el título (tituloresena)
+    List<Resenia> findByTituloresenaContainingIgnoreCase(String tituloresena);
 }

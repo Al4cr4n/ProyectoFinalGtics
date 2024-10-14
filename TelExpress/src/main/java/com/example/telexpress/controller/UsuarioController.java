@@ -435,6 +435,25 @@ public class UsuarioController {
         return "Usuariofinal/resenia"; // Nombre de tu archivo HTML de Thymeleaf (resenias.html)
     }
 
+    // Método para mostrar todas las reseñas
+    @GetMapping("/mostrarResenias")
+    public String mostrarResenias(Model model, @RequestParam(value = "search", required = false) String search) {
+        List<Resenia> resenias;
+
+        // Si se recibe un parámetro de búsqueda, buscar por tituloresena
+        if (search != null && !search.isEmpty()) {
+            resenias = reseniaRepository.findByTituloresenaContainingIgnoreCase(search);
+        } else {
+            // Si no se recibe búsqueda, cargar todas las reseñas
+            resenias = reseniaRepository.findAll();
+        }
+
+        // Pasar las reseñas filtradas o todas las reseñas al modelo
+        model.addAttribute("resenias", resenias);
+        model.addAttribute("search", search); // Mantener el valor de búsqueda en la vista
+        return "Usuariofinal/resenia"; // Nombre de tu archivo HTML de Thymeleaf
+    }
+
     @GetMapping("/respuesta_resenia")
     public String respuesta_resenia(){
         return "Usuariofinal/respuesta_resenia";
