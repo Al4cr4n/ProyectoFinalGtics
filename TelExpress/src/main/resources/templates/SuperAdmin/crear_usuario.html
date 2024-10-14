@@ -186,14 +186,27 @@
                                 </select>
                             </div>
 
-                            <!-- Campo Distrito -->
+                            <!-- Campo Distrito-->
+
                             <div class="col-md-6">
                                 <label for="distrito" class="form-label">Distrito:</label>
                                 <select class="form-select" id="distrito" name="distrito.id">
                                     <option value="" disabled selected>Seleccione un distrito</option>
-                                    <!-- Aquí se llenarán los distritos dinámicamente -->
+
                                 </select>
                             </div>
+                            <!--
+                            <div class="col-md-6">
+                                <label for="distrito" class="form-label">Distrito:</label>
+                                <select class="form-select" id="distrito" name="distrito.id" th:field="*{distrito.id}">
+                                    <option value="" disabled selected>Seleccione un distrito</option>
+
+                                </select>
+
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('distrito')}" th:errors="*{distrito}">
+                                    Debe seleccionar un distrito.
+                                </div>
+                            </div> -->
 
 
 
@@ -207,6 +220,7 @@
                                        placeholder="Ingrese la fecha de nacimiento del usuario" th:classappend="${#fields.hasErrors('fechanacimiento') ? 'is-invalid' : ''}">
                                 <div class="invalid-feedback" th:if="${#fields.hasErrors('fechanacimiento')}" th:errors="*{fechanacimiento}">Mensaje de error de telefono</div>
                             </div>
+                            <!--
                             <div class="col-md-6">
                                 <label for="contrasenaTemporal" class="form-label">Contraseña Temporal:</label>
                                 <input type="password" class="form-control"
@@ -214,6 +228,19 @@
                                        th:placeholder="${usuario.id != null ? '********' : 'Ingrese una contraseña temporal'}"
                                        th:value="${usuario.id != null ? '' : ''}"
                                        th:disabled="${usuario.id != null}" />
+                            </div> -->
+                            <div class="col-md-6">
+                                <label for="contrasenaTemporal" class="form-label">Contraseña Temporal:</label>
+                                <div class="input-group">
+                                    <input type="password" class="form-control"
+                                           id="contrasenaTemporal" th:field="*{contrasena}"
+                                           th:placeholder="${usuario.id != null ? '********' : 'Ingrese una contraseña temporal'}"
+                                           th:value="${usuario.id != null ? '' : ''}"
+                                           th:disabled="${usuario.id != null}" />
+                                    <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+                                        <i class="bx bx-show"></i> <!-- Icono del ojo -->
+                                    </button>
+                                </div>
                             </div>
 
                         </div>
@@ -277,6 +304,32 @@
 </div>
 
 <!-- Core JS -->
+<script>
+    document.getElementById('togglePassword').addEventListener('click', function (e) {
+        const passwordField = document.getElementById('contrasenaTemporal');
+        const icon = this.querySelector('i');
+
+        // Cambia el tipo de input entre 'password' y 'text'
+        if (passwordField.type === 'password') {
+            passwordField.type = 'text';
+            icon.classList.remove('bx-show');
+            icon.classList.add('bx-hide'); // Cambia el icono cuando se muestra la contraseña
+        } else {
+            passwordField.type = 'password';
+            icon.classList.remove('bx-hide');
+            icon.classList.add('bx-show'); // Cambia el icono cuando se oculta la contraseña
+        }
+    });
+</script>
+<script>
+    document.getElementById('formRegistro').addEventListener('submit', function (event) {
+        const distritoSelect = document.getElementById('distrito');
+        if (distritoSelect.value === "") {
+            alert('Por favor, coloque todos sus datos dentro del formulario.');
+            event.preventDefault(); // Evita que el formulario se envíe si no hay un distrito seleccionado
+        }
+    });
+</script>
 <script>
     function cargarDistritos() {
         var zonaId = document.getElementById("zona").value;

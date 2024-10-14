@@ -75,6 +75,7 @@ public class Usuario implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "distritos_iddistritos", nullable = true)
+    @NotNull(message = "El distrito es obligatorio")
     private Distrito distrito;
 
     @ManyToOne

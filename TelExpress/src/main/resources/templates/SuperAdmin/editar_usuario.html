@@ -61,14 +61,18 @@
                         <div class="row mb-3">
                             <!-- Nombre  -->
                             <div class="col-md-6">
-                                <label class="form-label">Nommmmbre:</label>
-                                <input th:field="*{nombre}" type="text" class="form-control" >
+                                <label class="form-label">Nombre:</label>
+                                <input th:field="*{nombre}" type="text" class="form-control" disabled>
+                                <!-- Campo oculto para enviar el valor de nombre durante la edición -->
+                                <input type="hidden" th:field="*{nombre}" name="nombre">
                             </div>
 
                             <!-- Apellido -->
                             <div class="col-md-6">
                                 <label class="form-label">Apellido:</label>
-                                <input th:field="*{apellido}" type="text" class="form-control" >
+                                <input th:field="*{apellido}" type="text" class="form-control" disabled >
+                                <!-- Campo oculto para enviar el valor de nombre durante la edición -->
+                                <input type="hidden" th:field="*{apellido}" name="apellido">
                             </div>
                         </div>
 
@@ -76,7 +80,9 @@
                             <!-- DNI -->
                             <div class="col-md-6">
                                 <label class="form-label">DNI:</label>
-                                <input th:field="*{dni}" type="text" class="form-control" >
+                                <input th:field="*{dni}" type="text" class="form-control" disabled>
+                                <!-- Campo oculto para enviar el valor de nombre durante la edición -->
+                                <input type="hidden" th:field="*{dni}" name="dni">
                             </div>
 
                             <!-- Direccion -->
@@ -141,7 +147,9 @@
 
                             <div class="col-md-6">
                                 <label class="form-label">Fecha de nacimiento:</label>
-                                <input th:field="*{fechanacimiento}" type="date" class="form-control">
+                                <input th:field="*{fechanacimiento}" type="date" class="form-control" disabled>
+                                <!-- Campo oculto para enviar el valor de nombre durante la edición -->
+                                <input type="hidden" th:field="*{fechanacimiento}" name="fechanacimiento">
 
                             </div>
                             <div class="col-md-6">
