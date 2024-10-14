@@ -233,7 +233,7 @@
                                                 (${orden.estadoOrdenes == 'EN RUTA'} ? 'bg-label-info' :
                                                 (${orden.estadoOrdenes == 'RECIBIDO'} ? 'bg-label-success' :
                                                 'bg-label-default' )))))))"></span>                                     </td>
-                                    <td th:text="${agentesMap[orden.usuario]}"></td>
+                                    <td th:text="${agentesMap[orden.idOrdenes]}"></td>
 
                                     <td>
                                         <a class="btn btn-sm btn-primary" th:href="@{'/usuario/pedidos/editar?id=' + ${orden.idOrdenes}}">

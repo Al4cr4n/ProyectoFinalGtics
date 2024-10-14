@@ -33,6 +33,9 @@ public class Ordenes {
     @Column(name="estadoOrdenes")
     private String estadoOrdenes;
 
+    @Column(name="agentexorden")
+    private Integer agentexorden;
+
     @ManyToMany
     @JoinTable(
             name = "producto_has_ordenes",

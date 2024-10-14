@@ -2,10 +2,13 @@ package com.example.telexpress.repository;
 import com.example.telexpress.entity.Usuario;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import com.example.telexpress.entity.Ordenes;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.Optional;
 
 import java.util.List;
@@ -60,7 +63,8 @@ public interface OrdenesRepository extends JpaRepository<Ordenes, Integer> {
             "o.fechaArribo, " +
             "o.usuario_idusuario, " +
             "o.mesCreacion, " +
-            "o.fechaCreacion " +
+            "o.fechaCreacion, " +
+            "o.agentexorden " +
             "FROM ordenes o " +
             "WHERE o.usuario_idusuario = :idusuario AND o.estadoOrdenes IN :estados", nativeQuery = true)
     List<Ordenes> findOrdenesByUsuarioAAndEstadoOrdenes(@Param("idusuario") int idusuario,@Param("estados") List<String> estados);
@@ -72,6 +76,15 @@ public interface OrdenesRepository extends JpaRepository<Ordenes, Integer> {
 
     @Query("SELECT o FROM Ordenes o WHERE o.estadoOrdenes IN :estados")
     List<Ordenes> findAllByEstadoIn(@Param("estados") List<String> estados);
+
+    // Native query para actualizar el agente encargado de las órdenes
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE ordenes o SET o.agentexorden = (SELECT u.idsuperior FROM usuario u WHERE u.idusuario = o.usuario_idusuario) " +
+            "WHERE o.usuario_idusuario = :usuarioId " +
+            "AND o.estadoOrdenes IN ('CREADO', 'EN VALIDACION')", nativeQuery = true)
+    void updateAgenteEncargadoByUsuario(
+            @Param("usuarioId") Integer usuarioId);
 
 }
 

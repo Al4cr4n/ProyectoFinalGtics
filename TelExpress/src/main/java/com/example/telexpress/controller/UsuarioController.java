@@ -286,22 +286,32 @@ public class UsuarioController {
         //Obtener el usuario autenticado
         String correo = SecurityContextHolder.getContext().getAuthentication().getName();
         Usuario usuarioAutenticado = usuarioRepository.findByCorreo(correo);
+        // Actualizar el agente encargado solo para las órdenes en los estados 'CREADO', 'EN VALIDACION', 'EN PROCESO'
+        ordenesRepository.updateAgenteEncargadoByUsuario(usuarioAutenticado.getId());
+
 
         List<Ordenes> ordenes;
         //List<Usuario> usuarios = usuarioRepository.findAll();
         List<String> estadosTodos = Arrays.asList("EN PROCESO", "ARRIBO AL PAÍS", "EN ADUANAS", "EN RUTA", "RECIBIDO", "EN VALIDACIÓN", "CREADO","EN PROCESO");
-        ordenes = ordenesRepository.findOrdenesByUsuarioAAndEstadoOrdenes(18, estadosTodos);
+        ordenes = ordenesRepository.findOrdenesByUsuarioAAndEstadoOrdenes(usuarioAutenticado.getId(), estadosTodos);
 
         // Obtener el agente asignado a cada usuario a través del idsuperior
         Map<Integer, String> agentesMap = new HashMap<>();
         List<Usuario> usuarios = usuarioRepository.findAll();
-        for (Usuario usuario : usuarios) {
-            if (usuario.getIdSuperior() != null) {
+        for (Ordenes orden : ordenes) {
+            if (orden.getAgentexorden() != null) {
                 // Obtener el agente directamente del idSuperior
-                Usuario agente = usuario.getIdSuperior();
-                agentesMap.put(usuario.getId(), agente != null ? agente.getNombre() : "Sin Asignar");
+                //Usuario agente = usuario.getIdSuperior();
+                Usuario agente = usuarioRepository.findById(Long.valueOf(orden.getAgentexorden()))
+                        .orElse(null);
+                if (agente != null) {
+                    agentesMap.put(orden.getIdOrdenes(), agente.getNombre());
+                } else {
+                    agentesMap.put(orden.getIdOrdenes(), "Sin Asignar");
+                }
             } else {
-                agentesMap.put(usuario.getId(), "Sin Asignar");
+                // Si no tiene un agente asignado, muestra "Sin Asignar"
+                agentesMap.put(orden.getIdOrdenes(), "Sin Asignar");
             }
         }
 

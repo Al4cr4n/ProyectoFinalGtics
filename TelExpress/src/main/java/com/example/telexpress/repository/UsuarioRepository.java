@@ -3,9 +3,12 @@ package com.example.telexpress.repository;
 import com.example.telexpress.entity.Usuario;
 import com.example.telexpress.entity.Zona;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 
 @Repository
@@ -104,4 +107,13 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 */
     List<Usuario> findByIdSuperior(Usuario idSuperior);
     public Usuario findByCorreo(String Correo);
+
+    // Native query para actualizar el agente encargado de las órdenes
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE ordenes o SET o.agentexorden = (SELECT u.idsuperior FROM usuario u WHERE u.idusuario = o.usuario_idusuario) " +
+            "WHERE o.usuario_idusuario = :usuarioId " +
+            "AND o.estadoOrdenes IN ('CREADO', 'EN VALIDACION', 'EN PROCESO')", nativeQuery = true)
+    void updateAgenteEncargadoByUsuario(
+            @Param("usuarioId") Integer usuarioId);
 }

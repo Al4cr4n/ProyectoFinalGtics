@@ -211,6 +211,7 @@ CREATE TABLE `ordenes` (
   `usuario_idusuario` int NOT NULL,
   `mesCreacion` varchar(20) NULL,
   `fechaCreacion` date NULL,
+  `agentexorden` int default NULL,
   PRIMARY KEY (`idordenes`,`usuario_idusuario`),
   KEY `fk_ordenes_usuario1_idx` (`usuario_idusuario`),
   CONSTRAINT `fk_ordenes_usuario1` FOREIGN KEY (`usuario_idusuario`) REFERENCES `usuario` (`idusuario`)
@@ -223,27 +224,27 @@ CREATE TABLE `ordenes` (
 
 LOCK TABLES `ordenes` WRITE;
 /*!40000 ALTER TABLE `ordenes` DISABLE KEYS */;
-INSERT INTO `ordenes` VALUES (1001,'RECIBIDO','2024-02-13',18,'Enero','2024-01-10'),
-(1002,'RECIBIDO','2024-02-14',19,'Enero','2024-01-08'),
-(1003,'RECIBIDO','2024-03-15',20,'Febrero','2024-02-07'),
-(1004,'ARRIBO AL PAÍS','2024-04-16',21,'Febrero','2024-02-20'),
-(1005,'ARRIBO AL PAÍS','2024-10-14',22,'Abril','2024-04-28'),
-(1006,'ARRIBO AL PAÍS','2024-11-15',23,'Mayo','2024-05-29'),
-(1007,'EN ADUANAS','2024-12-16',24,'Junio','2024-06-30'),
-(1008,'EN ADUANAS','2024-11-12',25,'Julio','2024-07-28'),
-(1009,'EN ADUANAS','2024-12-10',26,'Agosto','2024-08-14'),
-(1010,'EN RUTA','2025-01-02',27,'Setiembre','2024-09-09'),
-(1011,'EN RUTA','2024-12-15',18,'Abril','2024-04-05'),
-(1012,'EN RUTA','2024-12-16',19,'Mayo','2024-05-17'),
-(1013,'EN VALIDACIÓN','2024-12-17',20,'Junio','2024-06-19'),
-(1014,'EN VALIDACIÓN','2025-01-10',21,'Setiembre','2024-09-18'),
-(1015,'EN VALIDACIÓN','2025-02-07',22,'Agosto','2024-08-14'),
-(1016,'CREADO','2025-01-23',23,'Octubre','2024-10-01'),
-(1017,'CREADO','2025-02-28',24,'Octubre','2024-10-02'),
-(1018,'EN PROCESO','2025-01-19',25,'Octubre','2024-10-02'),
-(1019,'EN PROCESO','2025-02-01',26,'Octubre','2024-10-03'),
-(1020,'Pendiente','2025-02-02',27,'Octubre','2024-10-04'),
-(1021,'Pendiente','2025-02-03',28,'Octubre','2024-10-05');
+INSERT INTO `ordenes` VALUES (1001,'RECIBIDO','2024-02-13',18,'Enero','2024-01-10',3),
+(1002,'RECIBIDO','2024-02-14',19,'Enero','2024-01-08',3),
+(1003,'RECIBIDO','2024-03-15',20,'Febrero','2024-02-07',3),
+(1004,'ARRIBO AL PAÍS','2024-04-16',21,'Febrero','2024-02-20',3),
+(1005,'ARRIBO AL PAÍS','2024-10-14',22,'Abril','2024-04-28',3),
+(1006,'ARRIBO AL PAÍS','2024-11-15',23,'Mayo','2024-05-29',3),
+(1007,'EN ADUANAS','2024-12-16',24,'Junio','2024-06-30',null),
+(1008,'EN ADUANAS','2024-11-12',25,'Julio','2024-07-28',null),
+(1009,'EN ADUANAS','2024-12-10',26,'Agosto','2024-08-14',null),
+(1010,'EN RUTA','2025-01-02',27,'Setiembre','2024-09-09',3),
+(1011,'EN RUTA','2024-12-15',18,'Abril','2024-04-05',3),
+(1012,'EN RUTA','2024-12-16',19,'Mayo','2024-05-17',3),
+(1013,'EN VALIDACIÓN','2024-12-17',20,'Junio','2024-06-19',null),
+(1014,'EN VALIDACIÓN','2025-01-10',21,'Setiembre','2024-09-18',null),
+(1015,'EN VALIDACIÓN','2025-02-07',22,'Agosto','2024-08-14',3),
+(1016,'CREADO','2025-01-23',23,'Octubre','2024-10-01',null),
+(1017,'CREADO','2025-02-28',24,'Octubre','2024-10-02',3),
+(1018,'EN PROCESO','2025-01-19',25,'Octubre','2024-10-02',3),
+(1019,'EN PROCESO','2025-02-01',26,'Octubre','2024-10-03',3),
+(1020,'Pendiente','2025-02-02',27,'Octubre','2024-10-04',3),
+(1021,'Pendiente','2025-02-03',28,'Octubre','2024-10-05',3);
 /*!40000 ALTER TABLE `ordenes` ENABLE KEYS */;
 UNLOCK TABLES;
 
