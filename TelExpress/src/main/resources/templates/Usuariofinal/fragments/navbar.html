@@ -172,7 +172,7 @@
                                 <div class="dropdown-divider"></div>
                             </li>
                             <li>
-                                <a class="dropdown-item" href="/agente/cambio_contra_usuario">
+                                <a class="dropdown-item" th:href="@{'/usuario/cambio_contra' + '?id=' + ${session.usuario.id}}">
                                     <i class="bx bx-user me-2"></i>
                                     <span class="align-middle">Cambio de Contraseña</span>
                                 </a>

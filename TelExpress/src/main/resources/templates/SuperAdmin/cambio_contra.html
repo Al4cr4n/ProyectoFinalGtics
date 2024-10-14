@@ -27,7 +27,7 @@
           <h4 class="mb-2" style="font-family: Zilla Slab">TelExpress</h4>
 
           <!-- Formulario de Cambio de Contraseña -->
-          <form id="formAuthentication" class="mb-3" th:action="@{/agente/cambia_contra_agente}" method="post">
+          <form id="formAuthentication" class="mb-3" th:action="@{/superadmin/cambia_contra}" method="post">
             <!-- Contraseña Actual almacenada desde el servidor -->
             <input type="hidden" id="currentPasswordHidden" th:value="${passw}" />
 
@@ -99,4 +99,3 @@
 </script>
 </body>
 </html>
-

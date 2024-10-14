@@ -6,6 +6,7 @@ import com.example.telexpress.repository.*;
 
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -32,13 +33,15 @@ public class SuperAdminController {
 
     final DespachadorRepository despachadorRepository;
     final JurisdiccionRepository jurisdiccionRepository;
+    private final ContrasenaAgenteRespository contrasenaAgenteRespository;
+    private final PasswordEncoder passwordEncoder;
 
     public SuperAdminController(AdminRepository adminRepository, ZonaRepository zonaRepository,
                                 ProductoRepository productoRepository, UsuarioRepository usuarioRepository,
                                 ProveedorRepository proveedorRepository, OrdenesRepository ordenesRepository,
-                                DistritoRepository distritoRepository,CoordinadorRepository coordinadorRepository,
-                                DespachadorRepository despachadorRepository,JurisdiccionRepository jurisdiccionRepository
-                                ) {
+                                DistritoRepository distritoRepository, CoordinadorRepository coordinadorRepository,
+                                DespachadorRepository despachadorRepository, JurisdiccionRepository jurisdiccionRepository,
+                                ContrasenaAgenteRespository contrasenaAgenteRespository, PasswordEncoder passwordEncoder) {
         this.adminRepository=adminRepository; this.zonaRepository=zonaRepository;
         this.productoRepository=productoRepository; this.usuarioRepository=usuarioRepository;
         this.proveedorRepository=proveedorRepository; this.ordenesRepository=ordenesRepository;
@@ -46,7 +49,8 @@ public class SuperAdminController {
         this.coordinadorRepository = coordinadorRepository;
         this.jurisdiccionRepository= jurisdiccionRepository;
         this.despachadorRepository= despachadorRepository;
-
+        this.contrasenaAgenteRespository = contrasenaAgenteRespository;
+        this.passwordEncoder = passwordEncoder;
     }
 
 
@@ -1251,7 +1255,60 @@ public class SuperAdminController {
         return "redirect:/superadmin/solicitudes";
     }
 
+    @GetMapping("/cambio_contra")
+    public String cambioContraAgente(Model model, @RequestParam("id") Integer id) {
 
+        model.addAttribute("id", id);
+        // Obtener la contraseña almacenada en la base de datos
+        return "superadmin/cambio_contra"; // Retornar la vista con el formulario
+    }
+
+    @PostMapping("/cambia_contra")
+    public String ActualizarContraAgente(
+            @ModelAttribute("id") Integer id,
+            @RequestParam("currentPassword") String currentPassword,  // Contraseña actual
+            @RequestParam("newPassword") String newPassword, // Nueva contraseña
+            @RequestParam("confirmPassword") String confirmNewPassword, // Confirmación de la nueva contraseña
+            Model model) {
+
+
+        System.out.println("ID recibido: " + id);
+        // Obtener la contraseña almacenada en la base de datos
+        String storedPassword = contrasenaAgenteRespository.findcontrasena(id);
+        String hashcurrentPassword = passwordEncoder.encode(currentPassword);
+        String hashnewPassword = passwordEncoder.encode(newPassword);
+        String hashconfirmNewPassword = passwordEncoder.encode(confirmNewPassword);
+
+
+        // Verificar que la contraseña actual sea correcta
+        if (!passwordEncoder.matches(currentPassword, storedPassword)) {
+            model.addAttribute("error", "La contraseña actual es incorrecta.");
+            System.out.println("1" + hashnewPassword);
+            model.addAttribute("id", id);
+            return "redirect:/superadmin/inicio_superadmin"; // Redirigir a tu html
+        }
+
+        // Verificar que la nueva contraseña y su confirmación coincidan
+        if (!newPassword.equals(confirmNewPassword)) {
+            model.addAttribute("error", "Las nuevas contraseñas no coinciden.");
+            System.out.println("2" + hashnewPassword);
+            return "redirect:/superadmin/inicio_superadmin"; // Retornar a la vista con mensaje de error
+        }
+
+        // Si la nueva contraseña es igual a la contraseña actual, prevenir el cambio
+        if (currentPassword.equals(newPassword)) {
+            model.addAttribute("error", "La nueva contraseña no puede ser igual a la contraseña actual.");
+            System.out.println("3" + hashnewPassword);
+            return "redirect:/superadmin/inicio_superadmin"; // Retornar a la vista con mensaje de error
+        }
+
+        // Actualizar la contraseña en la base de datos
+        contrasenaAgenteRespository.updatecontrasena(id, hashnewPassword);
+        System.out.println("aaaa" +  newPassword);
+        // Redireccionar al perfil del agente con mensaje de éxito
+        model.addAttribute("success", "Contraseña cambiada exitosamente.");
+        return "redirect:/superadmin/inicio_superadmin"; // Redirigir al perfil
+    }
 
 
 

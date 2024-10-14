@@ -11,14 +11,12 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -41,10 +39,11 @@ public class AgenteController {
     final ProductoRepository productoRepository;
     final ProveedorRepository proveedorRepository;
     private final CoordinadorRepository coordinadorRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public AgenteController(OrdenesRepository ordenesRepository, UsuarioRepository usuarioRepository, AdminRepository adminRepository,
                             ZonaRepository zonaRepository, ProductoRepository productoRepository, ProveedorRepository proveedorRepository,
-                            ContrasenaAgenteRespository contrasenaAgenteRespository, UsuarioPerfilRepository usuarioPerfilRepository, CoordinadorRepository coordinadorRepository) {
+                            ContrasenaAgenteRespository contrasenaAgenteRespository, UsuarioPerfilRepository usuarioPerfilRepository, CoordinadorRepository coordinadorRepository, PasswordEncoder passwordEncoder) {
         this.ordenesRepository = ordenesRepository;
         this.usuarioRepository = usuarioRepository;
         this.adminRepository = adminRepository;
@@ -54,6 +53,7 @@ public class AgenteController {
         this.contrasenaAgenteRespository = contrasenaAgenteRespository;
         this.usuarioPerfilRepository = usuarioPerfilRepository;
         this.coordinadorRepository = coordinadorRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     final ContrasenaAgenteRespository contrasenaAgenteRespository;
@@ -404,85 +404,59 @@ public class AgenteController {
     }
 
     @GetMapping("/cambio_contra_agente")
-    public String cambioContraAgente( Model model) {
-        model.addAttribute("paginaActual", "cambio_contra_agente");
+    public String cambioContraAgente(Model model, @RequestParam("id") Integer id) {
 
-        int id =3;
-        String passw = contrasenaAgenteRespository.findcontrasena(id);
-        model.addAttribute("passw", passw);
-        return "Agente/cambio_contra_agente";
+        model.addAttribute("id", id);
+        // Obtener la contraseña almacenada en la base de datos
+        return "Agente/cambio_contra_agente"; // Retornar la vista con el formulario
     }
-    /*@PostMapping("/cambio_contra_agente")
+
+    @PostMapping("/cambia_contra_agente")
     public String ActualizarContraAgente(
-            @RequestParam("password") String currentPassword,  // Contraseña actual
-            @RequestParam("new-password-again") String newPassword, // Nueva contraseña
-            @RequestParam("new-password") String confirmNewPassword, // Confirmación de la nueva contraseña
+            @ModelAttribute("id") Integer id,
+            @RequestParam("currentPassword") String currentPassword,  // Contraseña actual
+            @RequestParam("newPassword") String newPassword, // Nueva contraseña
+            @RequestParam("confirmPassword") String confirmNewPassword, // Confirmación de la nueva contraseña
             Model model) {
 
-        int id = 3; // ID del agente
 
+        System.out.println("ID recibido: " + id);
         // Obtener la contraseña almacenada en la base de datos
         String storedPassword = contrasenaAgenteRespository.findcontrasena(id);
+        String hashcurrentPassword = passwordEncoder.encode(currentPassword);
+        String hashnewPassword = passwordEncoder.encode(newPassword);
+        String hashconfirmNewPassword = passwordEncoder.encode(confirmNewPassword);
+
 
         // Verificar que la contraseña actual sea correcta
-        if (!currentPassword.equals(storedPassword)) {
+        if (!passwordEncoder.matches(currentPassword, storedPassword)) {
             model.addAttribute("error", "La contraseña actual es incorrecta.");
-            return "Agente/cambio_contra_agente"; // Retornar a la vista con mensaje de error
+            System.out.println("1" + hashnewPassword);
+            model.addAttribute("id", id);
+            return "redirect:/agente/cambio_contra_agente"; // Redirigir a tu html
         }
 
         // Verificar que la nueva contraseña y su confirmación coincidan
         if (!newPassword.equals(confirmNewPassword)) {
             model.addAttribute("error", "Las nuevas contraseñas no coinciden.");
-            return "Agente/cambio_contra_agente"; // Retornar a la vista con mensaje de error
+            System.out.println("2" + hashnewPassword);
+            return "redirect:/agente/inicio"; // Retornar a la vista con mensaje de error
         }
 
         // Si la nueva contraseña es igual a la contraseña actual, prevenir el cambio
         if (currentPassword.equals(newPassword)) {
             model.addAttribute("error", "La nueva contraseña no puede ser igual a la contraseña actual.");
-            return "Agente/cambio_contra_agente"; // Retornar a la vista con mensaje de error
+            System.out.println("3" + hashnewPassword);
+            return "redirect:/agente/inicio"; // Retornar a la vista con mensaje de error
         }
 
         // Actualizar la contraseña en la base de datos
-        contrasenaAgenteRespository.updatecontrasena(id, newPassword);
-        System.out.println(newPassword);
+        contrasenaAgenteRespository.updatecontrasena(id, hashnewPassword);
+        System.out.println("aaaa" +  newPassword);
         // Redireccionar al perfil del agente con mensaje de éxito
         model.addAttribute("success", "Contraseña cambiada exitosamente.");
-        return "Agente/inicio_agente"; // Redirigir al perfil
+        return "redirect:/agente/inicio"; // Redirigir al perfil
     }
-
-    @GetMapping("/perfil_agente")
-    public String perfilAgente(Model model) {
-        model.addAttribute("paginaActual", "perfil_agente");
-
-        int id =3;
-        String nombre;
-        nombre = usuarioPerfilRepository.findnombre(id);
-        model.addAttribute("nombre", nombre);
-
-        String apellido = usuarioPerfilRepository.findapellido(id);
-        model.addAttribute("apellido", apellido);
-
-        String telefono = usuarioPerfilRepository.findtelefono(id);
-        model.addAttribute("telefono", telefono);
-
-        String correo = usuarioPerfilRepository.findcorreo(id);
-        model.addAttribute("correo", correo);
-
-        String codigoDespachador = usuarioPerfilRepository.findcodigoDespachador(id);
-        model.addAttribute("codigoDespachador", codigoDespachador);
-
-
-
-        return "Agente/perfil_agente";
-    }
-
-    @PostMapping("/perfil_agente")
-    public String ActualizarPerfil( @RequestParam("id") int id){
-
-        usuarioPerfilRepository.updatenombre(id);
-        usuarioPerfilRepository.updateapellido(id);
-        return "Agente/perfil_agente";
-    }*/
 
     @GetMapping("/perfil")
     public String verPerfil(Model model, @RequestParam("id") Integer id) {

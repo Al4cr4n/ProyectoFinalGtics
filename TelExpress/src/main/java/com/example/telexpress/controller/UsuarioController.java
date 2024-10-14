@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import com.example.telexpress.repository.DistritoRepository;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,11 +33,13 @@ public class UsuarioController {
     private final ReseniaRepository reseniaRepository;
     private final CoordinadorRepository coordinadorRepository;
     private final ProductoOrdenesRepository productoOrdenesRepository;
+    private final ContrasenaAgenteRespository contrasenaAgenteRespository;
+    private final PasswordEncoder passwordEncoder;
 
 
     public UsuarioController(UsuarioRepository usuarioRepository, ProductoRepository productoRepository, ReseniaRepository reseniaRepository,
-                             OrdenesRepository ordenesRepository, DistritoRepository distritoRepository,CoordinadorRepository coordinadorRepository,
-                             ProductoOrdenesRepository productoOrdenesRepository) {
+                             OrdenesRepository ordenesRepository, DistritoRepository distritoRepository, CoordinadorRepository coordinadorRepository,
+                             ProductoOrdenesRepository productoOrdenesRepository, ContrasenaAgenteRespository contrasenaAgenteRespository, PasswordEncoder passwordEncoder) {
         this.usuarioRepository = usuarioRepository;
         this.productoRepository = productoRepository;
         this.reseniaRepository = reseniaRepository;
@@ -44,6 +47,8 @@ public class UsuarioController {
         this.distritoRepository = distritoRepository;
         this.coordinadorRepository = coordinadorRepository;
         this.productoOrdenesRepository = productoOrdenesRepository;
+        this.contrasenaAgenteRespository = contrasenaAgenteRespository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     private final OrdenesRepository ordenesRepository;
@@ -545,49 +550,59 @@ public class UsuarioController {
         return "Usuariofinal/editar_perfil";
     }
 
-    @GetMapping("/cambiar_contrasena")
-    public String cambiar_contrasena(Model model){
-        int id =4;
-        //String passw = usuarioRepository.findcontrasena(id);
-        //model.addAttribute("passw", passw);
-        return "Usuariofinal/cambiar_contrasena";
+    @GetMapping("/cambio_contra")
+    public String cambioContraAgente(Model model, @RequestParam("id") Integer id) {
+
+        model.addAttribute("id", id);
+        // Obtener la contraseña almacenada en la base de datos
+        return "Usuariofinal/cambio_contra"; // Retornar la vista con el formulario
     }
-    @PostMapping("/cambiar_contrasena")
+
+    @PostMapping("/cambia_contra")
     public String ActualizarContraAgente(
-            @RequestParam("password") String currentPassword,  // Contraseña actual
-            @RequestParam("new-password-again") String newPassword, // Nueva contraseña
-            @RequestParam("new-password") String confirmNewPassword, // Confirmación de la nueva contraseña
+            @ModelAttribute("id") Integer id,
+            @RequestParam("currentPassword") String currentPassword,  // Contraseña actual
+            @RequestParam("newPassword") String newPassword, // Nueva contraseña
+            @RequestParam("confirmPassword") String confirmNewPassword, // Confirmación de la nueva contraseña
             Model model) {
 
-        int id = 4; // ID del agente
 
+        System.out.println("ID recibido: " + id);
         // Obtener la contraseña almacenada en la base de datos
-        //String storedPassword = usuarioRepository.findcontrasena(id);
+        String storedPassword = contrasenaAgenteRespository.findcontrasena(id);
+        String hashcurrentPassword = passwordEncoder.encode(currentPassword);
+        String hashnewPassword = passwordEncoder.encode(newPassword);
+        String hashconfirmNewPassword = passwordEncoder.encode(confirmNewPassword);
+
 
         // Verificar que la contraseña actual sea correcta
-        /*if (!currentPassword.equals(storedPassword)) {
+        if (!passwordEncoder.matches(currentPassword, storedPassword)) {
             model.addAttribute("error", "La contraseña actual es incorrecta.");
-            return "Agente/cambio_contra_agente"; // Retornar a la vista con mensaje de error
-        }*/
+            System.out.println("1" + hashnewPassword);
+            model.addAttribute("id", id);
+            return "redirect:/usuario/inicio_usuariofinal"; // Redirigir a tu html
+        }
 
         // Verificar que la nueva contraseña y su confirmación coincidan
         if (!newPassword.equals(confirmNewPassword)) {
             model.addAttribute("error", "Las nuevas contraseñas no coinciden.");
-            return "Agente/cambio_contra_agente"; // Retornar a la vista con mensaje de error
+            System.out.println("2" + hashnewPassword);
+            return "redirect:/usuario/inicio_usuariofinal"; // Retornar a la vista con mensaje de error
         }
 
         // Si la nueva contraseña es igual a la contraseña actual, prevenir el cambio
         if (currentPassword.equals(newPassword)) {
             model.addAttribute("error", "La nueva contraseña no puede ser igual a la contraseña actual.");
-            return "Agente/cambio_contra_agente"; // Retornar a la vista con mensaje de error
+            System.out.println("3" + hashnewPassword);
+            return "redirect:/usuario/inicio_usuariofinal"; // Retornar a la vista con mensaje de error
         }
 
         // Actualizar la contraseña en la base de datos
-        //usuarioRepository.updatecontrasena(id, newPassword);
-        System.out.println(newPassword);
+        contrasenaAgenteRespository.updatecontrasena(id, hashnewPassword);
+        System.out.println("aaaa" +  newPassword);
         // Redireccionar al perfil del agente con mensaje de éxito
         model.addAttribute("success", "Contraseña cambiada exitosamente.");
-        return "Usuariofinal/cambiar_contrasena"; // Redirigir al perfil
+        return "redirect:/usuario/inicio_usuariofinal"; // Redirigir al perfil
     }
 
     @GetMapping("/perfil")
