@@ -270,10 +270,10 @@
                         <!-- Sidebar for Contacts -->
                         <div class="chat-sidebar">
                             <h4>Contactos</h4>
-                            <div class="contact" onclick="selectContact('UsuarioO1')">UsuarioO1</div>
-                            <div class="contact" onclick="selectContact('UsuarioO2')">UsuarioO2</div>
-                            <div class="contact" onclick="selectContact('UsuarioO3')">UsuarioO3</div>
-                            <div class="contact" onclick="selectContact('UsuarioO4')">UsuarioO4</div>
+                            <div class="contact" onclick="selectContact('Usuario01')">Usuario01</div>
+                            <div class="contact" onclick="selectContact('Usuario02')">Usuario02</div>
+                            <div class="contact" onclick="selectContact('Usuario03')">Usuario03</div>
+                            <div class="contact" onclick="selectContact('Usuario04')">Usuario04</div>
                             <div class="contact" onclick="selectContact('Usuario05')">Usuario05</div>
                         </div>
 
@@ -286,11 +286,9 @@
                                 <!-- Chat messages will be appended here dynamically -->
                             </div>
                             <div class="chat-input-area">
-
-                                <input type="text" class="form-control" id="messageInput" placeholder="Type your message here...">
-
+                                <input type="text" class="form-control" id="message-input" placeholder="Type your message here...">
+                                <button onclick="sendMessage()" class="btn btn-primary mt-3">Send</button>
                             </div>
-                            <button onclick="sendMessage()" class="btn btn-primary mt-3">Send</button>
                         </div>
                     </div>
 

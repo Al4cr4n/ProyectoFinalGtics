@@ -474,7 +474,8 @@ public class AgenteController {
 
 
     @GetMapping("/chat")
-    public String chat(Model model, @RequestParam("id") Integer id) {
+    public String chat(Model model) {
+        model.addAttribute("activePage", "chat");
 
         return"Agente/chat_agente";
     }
