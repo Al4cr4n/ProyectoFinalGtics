@@ -525,7 +525,7 @@ INSERT INTO `resenias` VALUES
 (2,'Reseña del producto B.','El material es resistente y bien acabado.','Llegó dentro del tiempo esperado, buen servicio.',5,NULL,2,'Excelente compra',2,'Foro'),
 (3,'Reseña del producto C.','La calidad es aceptable por el precio pagado.','Tardó más de lo previsto, pero aún aceptable.',3,NULL,3,'Aceptable',3,'Reseña'),
 (4,'Reseña del producto D.','El producto presenta defectos menores en los detalles.','La entrega fue bastante lenta, no llegó a tiempo.',2,NULL,4,'No muy satisfecho',4,'Foro'),
-(5,'Reseña del producto E.','La calidad no es la mejor, esperaba algo mejor.','Recibí el producto con bastante retraso.',1,NULL,5,'Decepcionante',5,'Reseña')
+(5,'Reseña del producto E.','La calidad no es la mejor, esperaba algo mejor.','Recibí el producto con bastante retraso.',1,NULL,5,'Decepcionante',5,'Reseña'),
 (6,'Reseña del producto F.','Muy buen producto por el precio pagado.','Entrega rápida, dentro del plazo estimado.',4,NULL,6,'Buena relación calidad-precio',6,'Reseña'),
 (7,'Reseña del producto G.','La calidad es excelente, totalmente recomendable.','La entrega fue eficiente y sin contratiempos.',5,NULL,7,'Recomendado',7,'Foro'),
 (8,'Reseña del producto H.','El producto no cumplió con las expectativas, esperaba más.','El envío fue más lento de lo esperado.',2,NULL,8,'No satisfecho',8,'Reseña'),
