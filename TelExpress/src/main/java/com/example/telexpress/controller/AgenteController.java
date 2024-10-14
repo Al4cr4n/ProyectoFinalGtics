@@ -7,8 +7,10 @@ import com.example.telexpress.entity.Ordenes;
 import com.example.telexpress.entity.Usuario;
 import com.example.telexpress.repository.*;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -250,22 +252,19 @@ public class AgenteController {
     }
 
     @PostMapping("/orden/guardar")
-    public String guardarOrden(Ordenes ordenes, RedirectAttributes attr, Model model) {
+    public String guardarOrden(@Valid Ordenes ordenes, BindingResult result, RedirectAttributes attr, Model model) {
         model.addAttribute("activePage", "ordenes");
-
-        // Convertir la fecha de arribo desde String a Date
-        String fechaArriboStr = ordenes.getFechaArribo().toString(); // Supongamos que recibes un String
-
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        try {
-            Date fechaArribo = sdf.parse(fechaArriboStr);
-            ordenes.setFechaArribo(fechaArribo);
-        } catch (ParseException e) {
-            // Manejo de error si la conversión falla
-            e.printStackTrace();
-            model.addAttribute("error", "Error al convertir la fecha.");
-            return "agente/ordenes"; // Regresa a la vista actual
+        Optional<Ordenes> optionalOrdenes = ordenesRepository.findById(ordenes.getIdOrdenes());
+        if (result.hasErrors()) {
+            model.addAttribute("error", "Error al guardar la orden. Verifique los campos e intente nuevamente.");
+            return "Agente/orden_editar";
         }
+        Ordenes ordenFromDb = optionalOrdenes.get();
+        ordenFromDb.setEstadoOrdenes(ordenes.getEstadoOrdenes());
+        ordenFromDb.setFechaArribo(ordenes.getFechaArribo());
+        ordenesRepository.save(ordenFromDb);
+
+        attr.addFlashAttribute("success", "Orden guardada exitosamente.");
         return "redirect:/agente/ordenes";
     }
 

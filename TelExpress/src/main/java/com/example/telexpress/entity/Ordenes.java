@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.*;
 
@@ -21,6 +22,7 @@ public class Ordenes {
 
     @Column(name = "fechaArribo")
     @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date fechaArribo;
 
     @Column(name = "mesCreacion")
@@ -28,8 +30,10 @@ public class Ordenes {
 
     @Column(name = "fechaCreacion")
     @Temporal(TemporalType.DATE)
-    private Date fechaCreacion;
 
+
+    private Date fechaCreacion;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name="estadoOrdenes")
     private String estadoOrdenes;
 
