@@ -49,10 +49,16 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
 
 
-    // Método para buscar por nombre o apellido (solo usuarios baneados con motivo no nulo)
-    List<Usuario> findByEstadoUsuarioAndNombreContainingOrApellidoContainingAndMotivoIsNotNull(String estadoUsuario, String nombre, String apellido);
+    // Comparar con el campo id del Usuario superior
+    List<Usuario> findByIdSuperior_IdAndEstadoUsuarioIgnoreCaseInAndNombreContainingIgnoreCaseOrApellidoContainingIgnoreCase(
+            Integer idSuperior, List<String> estados, String nombre, String apellido);
 
-    // Método para obtener todos los usuarios baneados con motivo no nulo
+    List<Usuario> findByIdSuperior_IdAndEstadoUsuarioIgnoreCaseIn(Integer idSuperior, List<String> estados);
+
+    // Métodos existentes para usuarios baneados (no es necesario modificarlos)
+    List<Usuario> findByEstadoUsuarioAndNombreContainingOrApellidoContainingAndMotivoIsNotNull(
+            String estadoUsuario, String nombre, String apellido);
+
     List<Usuario> findByEstadoUsuarioAndMotivoIsNotNull(String estadoUsuario);
 
     List<Usuario> findByZona_Idzona(Integer idzona);

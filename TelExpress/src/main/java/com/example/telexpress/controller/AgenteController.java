@@ -6,6 +6,7 @@ package com.example.telexpress.controller;
 import com.example.telexpress.entity.Ordenes;
 import com.example.telexpress.entity.Usuario;
 import com.example.telexpress.repository.*;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -272,20 +273,31 @@ public class AgenteController {
 
     // Método para mostrar la lista de usuarios en la vista con búsqueda por nombre o apellido
     @GetMapping("/usuarios_agente")
-    public String usuariosAgente(@RequestParam(value = "search", required = false) String search, Model model) {
+    public String usuariosAgente(@RequestParam(value = "search", required = false) String search,
+                                 Model model, HttpSession session) {
         model.addAttribute("paginaActual", "usuarios_agente");
+
+        // Obtener el agente autenticado desde la sesión
+        Usuario agente = (Usuario) session.getAttribute("usuario");
+
+        // Verificar que el agente esté presente en la sesión
+        if (agente == null) {
+            model.addAttribute("mensajeError", "Agente no encontrado en la sesión");
+            return "error";  // Redirigir a una página de error si no se encuentra el agente
+        }
 
         // Crear una lista de estados permitidos
         List<String> estados = Arrays.asList("Activo", "Inactivo");
 
         List<Usuario> usuarios;
 
-        // Si hay un término de búsqueda, buscar por nombre o apellido
+        // Si hay un término de búsqueda, buscar por nombre o apellido y filtrar por idSuperior
         if (search != null && !search.isEmpty()) {
-            usuarios = usuarioRepository.findByEstadoUsuarioIgnoreCaseInAndNombreContainingIgnoreCaseOrApellidoContainingIgnoreCase(estados, search, search);
+            usuarios = usuarioRepository.findByIdSuperior_IdAndEstadoUsuarioIgnoreCaseInAndNombreContainingIgnoreCaseOrApellidoContainingIgnoreCase(
+                    agente.getId(), estados, search, search);
         } else {
-            // Si no hay búsqueda, obtener los usuarios cuyos estados sean "activo" o "inactivo"
-            usuarios = usuarioRepository.findByEstadoUsuarioIgnoreCaseIn(estados);
+            // Si no hay búsqueda, obtener los usuarios con idSuperior igual al id del agente
+            usuarios = usuarioRepository.findByIdSuperior_IdAndEstadoUsuarioIgnoreCaseIn(agente.getId(), estados);
         }
 
         // Pasar la lista de usuarios al modelo para la vista
@@ -297,6 +309,7 @@ public class AgenteController {
         // Retornar la vista "usuarios_agente.html"
         return "Agente/usuarios_agente";
     }
+
 
     // Método para listar los usuarios baneados o buscar por nombre y apellido
     @GetMapping("/usuarios_baneados")
