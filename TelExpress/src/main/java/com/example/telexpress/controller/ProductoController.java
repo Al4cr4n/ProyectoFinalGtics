@@ -173,7 +173,7 @@ public class ProductoController {
         System.out.println("Resultados encontrados: " + listaProductos.size());
         model.addAttribute("lista", listaProductos);
 
-        return "Superadmin/inventario_superadmin";
+        return "SuperAdmin/inventario_superadmin";
     }
 
     @GetMapping("/producto/filtro")
