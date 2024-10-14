@@ -101,7 +101,8 @@
 
             <!-- Órdenes -->
             <!-- Verifica si la página actual es alguna de las relacionadas con "ordenes" -->
-            <li class="menu-item" th:classappend="${paginaActual == 'ordenes' || paginaActual == 'ordenes_sin_asignar' || paginaActual == 'ordenes_pendientes' || paginaActual == 'ordenes_en_progreso' || paginaActual == 'ordenes_resueltas'} ? 'active open'">
+            <li class="menu-item"
+                th:classappend="${paginaActual == 'ordenes' || paginaActual == 'ordenes_sin_asignar' || paginaActual == 'ordenes_pendientes' || paginaActual == 'ordenes_en_progreso' || paginaActual == 'ordenes_resueltas' || paginaActual == 'chat_agente'} ? 'active open'">
                 <a href="javascript:void(0);" class="menu-link menu-toggle">
                     <i class="menu-icon tf-icons bx bx-cart-alt"></i>
                     <div data-i18n="Órdenes">Órdenes</div>
