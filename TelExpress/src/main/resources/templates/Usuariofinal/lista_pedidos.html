@@ -275,12 +275,12 @@
                                         </a>-->
                                         <!-- Si el estado es 'CREADO' o 'EN VALIDACIÓN', mostrar el botón de eliminar que abre el modal -->
                                         <a class="btn btn-sm btn-danger" th:if="${orden.estadoOrdenes == 'CREADO' || orden.estadoOrdenes == 'EN VALIDACIÓN'}"
-                                           th:href="javascript:void(0);" th:onclick="'openDeleteModal(' + ${orden.idOrdenes} + ')'">
+                                           href="javascript:void(0);" th:onclick="'openDeleteModal(' + ${orden.idOrdenes} + ')'">
                                             <i class="bx bx-trash"></i>
                                         </a>
 
                                         <!-- Si el estado no es 'CREADO' o 'EN VALIDACIÓN', no permitir eliminar -->
-                                        <a class="btn btn-sm btn-secondary" th:if="${orden.estadoOrdenes != 'CREADO' && orden.estadoOrdenes != 'EN VALIDACIÓN'}"
+                                        <a class="btn btn-sm btn-danger" th:if="${orden.estadoOrdenes != 'CREADO' && orden.estadoOrdenes != 'EN VALIDACIÓN'}"
                                            onclick="alert('No se puede eliminar esta orden.')">
                                             <i class="bx bx-block"></i>
                                         </a>
@@ -305,8 +305,11 @@
                                 Luego de eliminar la orden se procederá el reembolso correspondiente, por favor espere a que nos comuniquemos con usted por correo electrónico.
                             </div>
                             <div class="modal-footer">
-                                <button class="btn-cancel" onclick="closeModal()">Cancelar</button>
-                                <button class="btn-delete">Eliminar</button>
+                                <!--<button class="btn-cancel" onclick="closeModal()">Cancelar</button>
+                                <button class="btn-delete">Eliminar</button>-->
+                                <button class="btn cancel" onclick="closeModal()">Cancelar</button>
+                                <a id="confirmDeleteButton" class="btn btn-delete" th:href="@{'/usuario/pedidos/borrar?id=' + ${orden.idOrdenes}}">Eliminar</a>
+
                             </div>
                         </div>
                     </div>
@@ -393,8 +396,10 @@
 </script>
 <!-- JS for modal and dropdowns -->
 <script>
-    function openModal() {
-        document.getElementById('deleteModal').style.display = "block";
+    function openDelateModal(orderId) {
+        // Cambia el href del botón de confirmación del modal
+        document.getElementById('confirmDeleteButton').setAttribute('href', '/usuario/pedidos/borrar?id=' + orderId);
+        document.getElementById('deleteModal').style.display = 'block';
     }
     function closeModal() {
         document.getElementById('deleteModal').style.display = "none";

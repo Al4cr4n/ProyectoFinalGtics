@@ -354,7 +354,14 @@ public class UsuarioController {
 
 
         if (optProduct.isPresent()) {
-            ordenesRepository.deleteById(id);
+            //si la orden está en 'CREADO' o 'EN VALIDACIÓN'
+            if (optProduct.get().getEstadoOrdenes().equals("CREADO") || optProduct.get().getEstadoOrdenes().equals("EN VALIDACIÓN")) {
+                ordenesRepository.delete(optProduct.get());
+                attr.addFlashAttribute("success", "Orden eliminada exitosamente.");
+            } else {
+                // Si el estado no permite eliminar
+                attr.addFlashAttribute("error", "No se puede eliminar la orden en el estado actual.");
+            }
         }
         return "redirect:/usuario/lista_pedidos";
 
