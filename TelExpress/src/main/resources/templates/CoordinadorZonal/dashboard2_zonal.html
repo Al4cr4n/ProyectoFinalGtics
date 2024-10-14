@@ -163,13 +163,13 @@
                         <!-- Top 10 Usuarios con Más Importaciones -->
                         <div class="col-md-8">
                             <div class="card mb-4">
-                                <h5 class="card-header" style="font-family: 'Poppins', sans-serif;">Top 10 Usuarios con Más Importaciones</h5>
+                                <h5 class="card-header" style="font-family: 'Poppins', sans-serif;">Top 10 Usuarios con Más Importaciones en tu zona</h5>
                                 <div class="card-body">
                                     <div class="demo-vertical-spacing demo-only-element">
                                         <!-- Iterar sobre la lista de usuarios -->
                                         <div th:each="usuario, iterStat : ${listaTopUsuarios}">
-                                            <!-- Mostrar el nombre del usuario -->
-                                            <h6 style="margin-bottom: 5px;">Usuario [[${iterStat.index + 1}]]: [[${usuario.nombre}]]</h6>
+                                            <!-- Mostrar el nombre y apellido del usuario -->
+                                            <h6 style="margin-bottom: 5px;">Usuario [[${iterStat.index + 1}]]: [[${usuario.nombre}]] [[${usuario.apellido}]]</h6>
 
                                             <!-- Barra de progreso -->
                                             <div class="progress" style="margin-bottom: 10px;">

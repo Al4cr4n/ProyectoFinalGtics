@@ -4,6 +4,7 @@ import com.example.telexpress.entity.*;
 import com.example.telexpress.repository.*;
 import jakarta.transaction.Transactional;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -139,15 +140,28 @@ public class CoordinadorController {
 
     @GetMapping({"/dashboard_zonal"})
     public String dashboardCoordinadorZonal(Model model) {
+        // Obtener el correo del usuario autenticado
+        String correo = SecurityContextHolder.getContext().getAuthentication().getName();
 
-        List<Producto> listaTop = productoRepository.findProductosByZona(2);
+        // Buscar el usuario actual usando el correo
+        Usuario usuarioActual = usuarioRepository.findByCorreo(correo);
+
+        // Obtener la zona asociada al usuario actual
+        Zona zona = usuarioActual.getZona();
+
+        // Asegúrate de que la zona no sea nula
+        if (zona == null) {
+            // Manejar el caso cuando el usuario no tiene zona asignada
+            model.addAttribute("error", "El usuario no tiene una zona asignada.");
+            return "error"; // O la vista que desees mostrar
+        }
+
+        // Obtener la lista de productos para la zona del usuario actual
+        List<Producto> listaTop = productoRepository.findProductosByZona(zona.getIdzona());
         listaTop.sort(Comparator.comparing(Producto::getCantidadComprada).reversed());
         model.addAttribute("listaTop", listaTop);
 
-        // Obtén la instancia de la zona correspondiente
-        Zona zona = zonaRepository.findById(1).orElse(null);
-
-        // Contar usuarios activos e inactivos utilizando el objeto Zona
+        // Contar usuarios activos e inactivos utilizando la zona
         long usuariosActivos = usuarioRepository.countByZonaAndEstadoUsuario(zona, "Activo");
         long usuariosInactivos = usuarioRepository.countByZonaAndEstadoUsuario(zona, "Inactivo");
 
@@ -158,7 +172,7 @@ public class CoordinadorController {
         model.addAttribute("usuariosActivos", usuariosActivos);
         model.addAttribute("usuariosInactivos", usuariosInactivos);
 
-        // Limita la lista de productos a los 10 más vendidos
+        // Limitar la lista de productos a los 10 más vendidos
         if (listaTop.size() > 10) {
             listaTop = listaTop.subList(0, 10);
         }
@@ -181,12 +195,29 @@ public class CoordinadorController {
     }
 
 
+
     @GetMapping("/dashboard2_zonal")
     public String dashboard2CoordinadorZonal(Model model) {
         model.addAttribute("paginaActual", "dashboard");
 
-        // Obtener y ordenar los usuarios por cantidad de compras directamente desde el repositorio
-        List<Usuario> listaTopUsuarios = usuarioRepository.findAllByZonaOrderByCantidadCompras(1);
+        // Obtener el correo del usuario autenticado
+        String correo = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        // Buscar el usuario actual usando el correo
+        Usuario usuarioActual = usuarioRepository.findByCorreo(correo);
+
+        // Obtener la zona asociada al usuario actual
+        Zona zona = usuarioActual.getZona();
+
+        // Asegúrate de que la zona no sea nula
+        if (zona == null) {
+            // Manejar el caso cuando el usuario no tiene zona asignada
+            model.addAttribute("error", "El usuario no tiene una zona asignada.");
+            return "error"; // O la vista que desees mostrar
+        }
+
+        // Obtener y ordenar los usuarios por cantidad de compras para la zona del usuario actual
+        List<Usuario> listaTopUsuarios = usuarioRepository.findAllByZonaOrderByCantidadCompras(zona.getIdzona());
 
         // Limitar la lista a los 10 usuarios con más importaciones
         if (listaTopUsuarios.size() > 10) {
@@ -285,7 +316,16 @@ public class CoordinadorController {
     @GetMapping("/productos_zonal")
     public String productosCoordinadorZonal(Model model) {
         model.addAttribute("paginaActual", "productos");
-        List<Producto> producto = productoRepository.findAll();
+        // Obtener el correo del usuario autenticado
+        String correo = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        // Buscar el usuario actual usando el correo
+        Usuario usuarioActual = usuarioRepository.findByCorreo(correo);
+
+        // Obtener la zona asociada al usuario actual
+        Zona zona = usuarioActual.getZona();
+
+        List<Producto> producto = productoRepository.findProductosByZona(zona.getIdzona());
         producto.sort(Comparator.comparing(Producto::getCantidadDisponible));
         model.addAttribute("producto", producto);
         return "CoordinadorZonal/productos_zonal";
