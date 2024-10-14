@@ -48,14 +48,24 @@
                     <div class="row">
                         <div class="d-flex justify-content-center align-items-center card-header">
                             <div class="col-md-6 position-relative store-search">
-                                <form class="d-flex" th:action="@{/usuario/mostrarResenias}" method="get">
-                                    <input class="form-control me-1" type="search" name="search" placeholder="Buscando..." th:value="${search}" aria-label="Search" style="width: 50%;" />
-                                    <button class="btn btn-outline-primary" type="submit">Buscar</button>
-                                </form>
+                                <form class="d-flex" th:action="@{/usuario/mostrarResenias}" method="get" id="searchForm">
+                                    <!-- Campo de búsqueda -->
+                                    <input class="form-control me-1" type="search" name="search" id="search" placeholder="Buscando..." th:value="${search}" aria-label="Search" style="width: 50%;" />
 
+                                    <!-- Botón Buscar -->
+                                    <button class="btn btn-outline-primary me-1" type="submit">Buscar</button>
+
+                                    <!-- Botón Limpiar como un enlace directo -->
+                                    <a href="/usuario/mostrarResenias" class="btn btn-outline-primary">Limpiar</a>
+                                </form>
                             </div>
                         </div>
                     </div>
+
+
+
+
+
 
                     <!-- Sección de Reseñas (dinámica con Thymeleaf) -->
                     <div class="accordion mt-3" id="accordionExample">
