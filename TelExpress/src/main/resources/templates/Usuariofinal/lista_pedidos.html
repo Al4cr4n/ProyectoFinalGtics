@@ -275,7 +275,7 @@
                                         </a>-->
                                         <!-- Si el estado es 'CREADO' o 'EN VALIDACIÓN', mostrar el botón de eliminar que abre el modal -->
                                         <a class="btn btn-sm btn-danger" th:if="${orden.estadoOrdenes == 'CREADO' || orden.estadoOrdenes == 'EN VALIDACIÓN'}"
-                                           th:href="javascript:void(0)" th:onclick="'openDeleteModal(' + ${orden.idOrdenes} + ')'">
+                                           th:href="javascript:void(0);" th:onclick="'openDeleteModal(' + ${orden.idOrdenes} + ')'">
                                             <i class="bx bx-trash"></i>
                                         </a>
 
