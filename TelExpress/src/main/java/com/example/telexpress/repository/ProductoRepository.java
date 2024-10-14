@@ -29,7 +29,7 @@ public interface ProductoRepository extends JpaRepository<Producto,Integer> {
     Page<Producto> findByCantidadDisponibleGreaterThan(Integer cantidadDisponible, Pageable pageable);
 
 
-    @Query(value = "SELECT p.idproducto, " +
+    /*@Query(value = "SELECT p.idproducto, " +
             "p.nombreProducto, " +
             "p.categoria, " +
             "p.cantidadDisponible, " +
@@ -45,6 +45,10 @@ public interface ProductoRepository extends JpaRepository<Producto,Integer> {
             "JOIN proveedor pr ON php.proveedor_idproveedor = pr.idproveedor " +
             "JOIN zona z ON pr.idzona = z.idzona " +
             "WHERE z.idzona = :idzona", nativeQuery = true)
+    List<Producto> findProductosByZona(@Param("idzona") int idzona);
+
+     */
+    @Query("SELECT p FROM Producto p JOIN p.proveedores pr JOIN pr.zona z WHERE z.idzona = :idzona")
     List<Producto> findProductosByZona(@Param("idzona") int idzona);
 
 
