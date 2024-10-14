@@ -218,6 +218,10 @@ public class CoordinadorController {
                 .filter(producto -> producto.getFecharribo() != null)
                 .collect(Collectors.toList());
 
+        // Imprimir los productos en la consola del servidor para verificar
+        productosConFecha.forEach(producto -> System.out.println(producto.getNombreProducto() + " - " + producto.getFecharribo()));
+
+
         // Añadir la lista de productos al modelo
         model.addAttribute("productos", productosConFecha);
 

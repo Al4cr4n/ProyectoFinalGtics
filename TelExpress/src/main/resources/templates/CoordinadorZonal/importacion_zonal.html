@@ -180,11 +180,12 @@
     $(document).ready(function() {
         // Inicializar el calendario
         $('#calendar').fullCalendar({
+
             locale: 'es',  // Traduce los meses y días a español
             headerToolbar: {
                 left: 'prev,next',  // Botones de navegación a la izquierda
                 center: 'title',    // Título (mes y año) centrado
-                right: ''           // No hay elementos a la derecha
+                right: 'month,agendaWeek,agendaDay'           // No hay elementos a la derecha
             },
             events: [
                 /* Aquí cargamos los productos dinámicamente desde el modelo */
