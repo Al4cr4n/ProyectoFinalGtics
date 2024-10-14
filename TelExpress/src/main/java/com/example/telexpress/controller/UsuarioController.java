@@ -300,7 +300,8 @@ public class UsuarioController {
     }
 
     @GetMapping("/lista_pedidos")
-    public String lista_pedidos(@RequestParam(value = "search", required = false) String search, Model model) {
+    public String lista_pedidos(@RequestParam(value = "estado", required = false) List<String> estados,
+                                @RequestParam(value = "search", required = false) String search, Model model) {
         model.addAttribute("activePage", "lista_pedidos");
         //Obtener el usuario autenticado
         String correo = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -318,6 +319,16 @@ public class UsuarioController {
         if (ordenes != null) {
             ordenes.removeIf(Objects::isNull);
         }
+
+        if (estados != null && !estados.isEmpty()) {
+            // Obtener las órdenes por estado
+            ordenes = ordenesRepository.findByEstadoOrdenesIn(estados);
+        } else {
+            // Si no hay estados seleccionados, obtener todas las órdenes
+            ordenes = ordenesRepository.findOrdenesByUsuarioAAndEstadoOrdenes(usuarioAutenticado.getId(), estadosTodos);
+
+        }
+
         // Obtener el agente asignado a cada usuario a través del idsuperior
         Map<Integer, String> agentesMap = new HashMap<>();
         List<Usuario> usuarios = usuarioRepository.findAll();

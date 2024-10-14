@@ -170,43 +170,46 @@
                     </div>
 
                     <!-- Filters and Sorting -->
+                    <form method="GET" action="/usuario/pedidos/lista_pedidos">
+
                     <div class="mb-4">
                         <!-- Search bar -->
-                        <input type="text" placeholder="Búsqueda" class="form-control" style="width: 200px; display: inline-block;">
+                        <input type="text" id="searchInput" placeholder="Búsqueda" class="form-control" style="width: 200px; display: inline-block;">
                         <i class="bx bx-search" style="margin-left: -30px;"></i>
 
 
                         <!-- Dropdown for Estado -->
-                        <div class="dropdown-container" id="estado-sort" style="margin-left: 10px;">
+                        <!--<div class="dropdown-container" id="estado-sort" style="margin-left: 10px;">
                             <i class="bx bx-sort"></i> Estado
                             <div id="checkbox-options-estado" class="checkbox-options">
                                 <label>
-                                    <input type="checkbox" name="estado" value="validacion"> En validación
+                                    <input type="checkbox" id="estado-validacion" name="estado" value="validacion"> En validación
                                 </label><br>
                                 <label>
-                                    <input type="checkbox" name="estado" value="creado"> Creado
+                                    <input type="checkbox" id="estado-creado" name="estado" value="creado"> Creado
                                 </label><br>
                                 <label>
-                                    <input type="checkbox" name="estado" value="proceso"> En proceso
+                                    <input type="checkbox" id="estado-proceso" name="estado" value="proceso"> En proceso
                                 </label><br>
                                 <label>
-                                    <input type="checkbox" name="estado" value="pais"> Arribo al país
+                                    <input type="checkbox" id="estado-pais" name="estado" value="pais"> Arribo al país
                                 </label><br>
                                 <label>
-                                    <input type="checkbox" name="estado" value="aduanas"> En aduanas
+                                    <input type="checkbox" id="estado-aduanas" name="estado" value="aduanas"> En aduanas
                                 </label><br>
                                 <label>
-                                    <input type="checkbox" name="estado" value="ruta"> En rutas
+                                    <input type="checkbox" id="estado-ruta" name="estado" value="ruta"> En rutas
                                 </label><br>
                                 <label>
-                                    <input type="checkbox" name="estado" value="recibido"> Recibido
+                                    <input type="checkbox" id="estado-recibido" name="estado" value="recibido"> Recibido
                                 </label>
                             </div>
-                        </div>
+                        </div>-->
 
                         <!-- Export button -->
                         <button class="btn btn-outline-primary float-end">Exportar <i class="bx bx-export"></i></button>
                     </div>
+                    </form>
                     <!-- Orders Table -->
                     <div class="card">
                         <h5 class="card-header">Órdenes</h5>
@@ -224,7 +227,7 @@
                                 </thead>
                                 <tbody>
                                 <!-- Iteración sobre las órdenes -->
-                                <tr th:each="orden : ${ordenes}">
+                                <tr th:each="orden : ${ordenes}" th:attr="data-estado=${orden.estadoOrdenes}">
                                     <td th:text="${orden.idOrdenes != null ? orden.idOrdenes : 'Sin ID'}"></td>
 
                                     <!-- Asegúrate de que el usuario no sea null antes de mostrar el nombre
@@ -329,23 +332,24 @@
         const rowsPerPage = 5; // Número de filas por página
         const table = document.getElementById("pedidosTable");
         const tableBody = table.querySelector("tbody");
-        const rows = tableBody.querySelectorAll("tr");
+        const rows =  Array.from(tableBody.querySelectorAll("tr"));
         const pagination = document.getElementById("paginacion");
         let currentPage = 1;
-        const totalPages = Math.ceil(rows.length / rowsPerPage);
+       // const totalPages = Math.ceil(rows.length / rowsPerPage);
 
-        function displayRows(page) {
+        function displayRows(page,filteredRows = rows) {
             const start = (page - 1) * rowsPerPage;
             const end = start + rowsPerPage;
 
             // Ocultar todas las filas y mostrar sólo las de la página actual
-            rows.forEach((row, index) => {
-                row.style.display = (index >= start && index < end) ? "" : "none";
-            });
+            rows.forEach(row => row.style.display = "none"); // Oculta todas
+            filteredRows.slice(start, end).forEach(row => row.style.display = ""); // Muestra solo las filtradas
+
         }
 
-        function setupPagination() {
+        function setupPagination(filteredRows = rows) {
             pagination.innerHTML = "";
+            const totalPagesFiltered = Math.ceil(filteredRows.length / rowsPerPage);
 
             // Botón "Anterior"
             const prevButton = document.createElement("li");
@@ -355,8 +359,8 @@
                 e.preventDefault();
                 if (currentPage > 1) {
                     currentPage--;
-                    displayRows(currentPage);
-                    setupPagination();
+                    displayRows(currentPage, filteredRows);
+                    setupPagination(filteredRows);
                 }
             });
             pagination.appendChild(prevButton);
@@ -369,8 +373,8 @@
                 pageItem.addEventListener("click", function(e) {
                     e.preventDefault();
                     currentPage = i;
-                    displayRows(currentPage);
-                    setupPagination();
+                    displayRows(currentPage,filteredRows);
+                    setupPagination(filteredRows);
                 });
                 pagination.appendChild(pageItem);
             }
@@ -389,10 +393,46 @@
             });
             pagination.appendChild(nextButton);
         }
+        // Función de búsqueda
+        function searchTable() {
+            const searchInput = document.getElementById("searchInput").value.toLowerCase();
+            const filteredRows = Array.from(rows).filter(row => {
+                const rowText = row.innerText.toLowerCase();
+                return rowText.includes(searchInput) || searchInput === "";
+            });
 
-        // Inicializar la tabla y la paginación
-        displayRows(currentPage);
-        setupPagination();
+            // Volver a la primera página y actualizar la tabla y la paginación
+            currentPage = 1;
+            displayRows(currentPage, filteredRows);
+            setupPagination(filteredRows);
+        }
+
+        // Escuchar cambios en el input de búsqueda
+        document.getElementById("searchInput").addEventListener("input", searchTable);
+
+        // Inicializar tabla y paginación
+       displayRows(currentPage);
+       setupPagination();
+
+        function filterOrders() {
+            const selectedStates = Array.from(document.querySelectorAll('input[name="estado"]:checked')).map(cb => cb.value);
+            const filteredRows = Array.from(rows).filter(row => {
+                const estado = row.getAttribute('data-estado');
+                return selectedStates.includes(estado) || selectedStates.length === 0;
+            });
+
+            // Volver a la primera página y actualizar la tabla y la paginación
+            currentPage = 1;
+            displayRows(currentPage, filteredRows);
+            setupPagination(filteredRows);
+        }
+        // Escuchar cambios en los checkboxes
+        const checkboxes = document.querySelectorAll('input[name="estado"]');
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', filterOrders);
+        });
+
+
     });
 </script>
 <!-- JS for modal and dropdowns -->
@@ -438,6 +478,36 @@
             optionsEstado.style.display = 'none';
         }
     });
+
+    /*document.addEventListener("DOMContentLoaded", function() {
+        const searchInput = document.getElementById('searchInput');
+        const table = document.getElementById("pedidosTable");
+        const rows = table.querySelectorAll("tbody tr");
+
+        if (searchInput) {
+        // Filtrar las filas en función del término de búsqueda
+        searchInput.addEventListener("input", function() {
+            const searchTerm = searchInput.value.toLowerCase(); // Convierte a minúsculas para comparación insensible a mayúsculas
+
+            rows.forEach(function(row) {
+                // Obtener el texto de cada fila (puedes elegir las columnas específicas)
+                const orderIdText = row.querySelector('td:nth-child(1)').textContent.toLowerCase();
+                const fechaText = row.querySelector('td:nth-child(2)').textContent.toLowerCase();
+                const estadoText = row.querySelector('td:nth-child(3)').textContent.toLowerCase();
+                const agenteText = row.querySelector('td:nth-child(4)').textContent.toLowerCase();
+
+                // Verificar si el término de búsqueda coincide con alguna columna
+                if (orderIdText.includes(searchTerm) || fechaText.includes(searchTerm) ||
+                    estadoText.includes(searchTerm) || agenteText.includes(searchTerm)) {
+                    row.style.display = ""; // Mostrar la fila si coincide
+                } else {
+                    row.style.display = "none"; // Ocultar la fila si no coincide
+                }
+            });
+        });
+        }
+    });*/
+
 </script>
 <!-- Core JS -->
 <!-- build:js assets/vendor/js/core.js -->
