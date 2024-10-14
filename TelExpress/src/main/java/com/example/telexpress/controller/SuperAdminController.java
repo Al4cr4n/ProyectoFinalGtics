@@ -443,7 +443,7 @@ public class SuperAdminController {
     /* para actualizar datos de coodinador zonal*/
     /* para actualizar datos de coodinador zonal*/
     @PostMapping("/update")
-    public String actualizardatoscoordi(@Valid @ModelAttribute("coordinadorzonal") Usuario usuario,
+    public String actualizardatoscoordi( @ModelAttribute("coordinadorzonal")@Valid Usuario usuario,
                                         BindingResult result,
                                         @RequestParam("zona.idzona") Integer zonaid,
                                         RedirectAttributes rttbtsp,
