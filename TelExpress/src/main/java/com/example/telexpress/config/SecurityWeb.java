@@ -85,7 +85,7 @@ public class SecurityWeb {
         );
         http.authorizeHttpRequests(authorize -> authorize
                 .requestMatchers ("/agente","/agente/**").hasAuthority("Agente") //acceso solo para agentes
-                .requestMatchers("/superadmin","/superadmin/**", "/producto/**","/usuario/**").hasAuthority("Superadmin")  //acceso solo para superadmin
+                .requestMatchers("/superadmin", "/superadmin/**", "/producto/**", "/usuario/**").hasAnyAuthority("Superadmin", "Usuario")
                 .requestMatchers("/coordinador","/coordinador/**").hasAuthority("Coordinador")
                 .requestMatchers("/usuario","/usuario/**").hasAuthority("Usuario")
                 .anyRequest().permitAll()
