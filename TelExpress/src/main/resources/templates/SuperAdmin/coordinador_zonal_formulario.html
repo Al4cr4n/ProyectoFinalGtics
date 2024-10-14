@@ -162,6 +162,8 @@
                                 <label class="form-label">Teléfono:</label>
                                 <input th:field="*{telefono}" type="text" class="form-control" placeholder="Ingrese el número de teléfono"
                                        th:classappend="${#fields.hasErrors('telefono')?'is-invalid':''}"/>
+
+
                                 <div class="invalid-feedback"
                                      th:if="${#fields.hasErrors('telefono')}" th:errors="*{telefono}">
                                     Mensaje de error de telefono
@@ -181,6 +183,7 @@
                                 <label class="form-label">Correo:</label>
                                 <input th:field="*{correo}" type="text" class="form-control" placeholder="Ingrese el correo"
                                        th:classappend="${#fields.hasErrors('correo')?'is-invalid':''}"/>
+
                                 <div class="invalid-feedback"
                                      th:if="${#fields.hasErrors('correo')}" th:errors="*{correo}">
                                     Mensaje de error de correo
@@ -271,6 +274,8 @@
                                        th:placeholder="${coordinadorzonal.id != null ? '********' : 'Ingrese una contraseña temporal'}"
                                        th:value="${coordinadorzonal.id != null ? '********' : ''}"
                                        th:readonly="${coordinadorzonal.id != null}"/>
+                                <!-- Campo oculto para enviar el valor durante la edición -->
+                                <input type="hidden" th:if="${coordinadorzonal.id != null}" name="contrasena" th:value="*{contrasena}">
                             </div>
 
 
