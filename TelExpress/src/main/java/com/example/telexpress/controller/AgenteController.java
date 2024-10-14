@@ -116,11 +116,12 @@ public class AgenteController {
         List<Ordenes> ordenesEnProgreso;
         List<String> estadosPermitidos = Arrays.asList("EN PROCESO", "ARRIBO AL PAÍS", "EN ADUANAS", "EN RUTA");
 
-        // Si hay un término de búsqueda, primero filtramos por estado y luego por nombre/apellido
+
+
         if (search != null && !search.isEmpty()) {
-            // Realizamos la búsqueda en base a nombre/apellido y estados permitidos, filtrando por zona
-            ordenesEnProgreso = ordenesRepository.findByUsuario_ZonaAndEstadoOrdenesInAndUsuarioNombreContainingIgnoreCaseOrUsuarioApellidoContainingIgnoreCase(
-                    zona, estadosPermitidos, search, search);
+            // Realizamos la búsqueda en base a nombre/apellido y estados permitidos
+            ordenesEnProgreso = ordenesRepository.findByEstadoOrdenesInAndUsuarioNombreContainingIgnoreCaseOrUsuarioApellidoContainingIgnoreCase(
+                    estadosPermitidos, search, search);
 
             // Si no se encuentran resultados, mostrar un mensaje de error
             if (ordenesEnProgreso.isEmpty()) {
@@ -160,10 +161,12 @@ public class AgenteController {
         List<Ordenes> ordenesEnValidacion;
 
         // Si hay un término de búsqueda, buscar por nombre o apellido solo si el estado es "En Validación"
+
+
         if (search != null && !search.isEmpty()) {
-            // Búsqueda de órdenes con estado "En Validación" y filtrando por zona
-            ordenesEnValidacion = ordenesRepository.findByUsuario_ZonaAndEstadoOrdenesAndUsuarioNombreContainingIgnoreCaseOrUsuarioApellidoContainingIgnoreCase(
-                    zona, "EN VALIDACIÓN", search, search);
+            // Búsqueda de órdenes con estado "En Validación"
+            ordenesEnValidacion = ordenesRepository.findByEstadoOrdenesAndUsuarioNombreContainingIgnoreCaseOrUsuarioApellidoContainingIgnoreCase(
+                    "EN VALIDACIÓN", search, search);
 
             // Si no se encuentran resultados, mostrar un mensaje de error
             if (ordenesEnValidacion.isEmpty()) {
@@ -203,8 +206,8 @@ public class AgenteController {
         // Si hay un término de búsqueda, buscar por nombre o apellido
         if (search != null && !search.isEmpty()) {
             // Búsqueda de órdenes con estado "CREADO" filtrando por zona
-            ordenesSinAsignar = ordenesRepository.findByUsuario_ZonaAndEstadoOrdenesAndUsuarioNombreContainingIgnoreCaseOrUsuarioApellidoContainingIgnoreCase(
-                    zona, "CREADO", search, search);
+            ordenesSinAsignar = ordenesRepository.findByEstadoOrdenesAndUsuarioNombreContainingIgnoreCaseOrUsuarioApellidoContainingIgnoreCase(
+                    "CREADO", search, search);
 
             // Si no se encuentran resultados, mostrar un mensaje de error
             if (ordenesSinAsignar.isEmpty()) {
@@ -243,8 +246,8 @@ public class AgenteController {
         // Si hay un término de búsqueda, buscar por nombre o apellido
         if (search != null && !search.isEmpty()) {
             // Búsqueda de órdenes con estado "RECIBIDO" filtrando por zona
-            ordenesResueltas = ordenesRepository.findByUsuario_ZonaAndEstadoOrdenesAndUsuarioNombreContainingIgnoreCaseOrUsuarioApellidoContainingIgnoreCase(
-                    zona, "RECIBIDO", search, search);
+            ordenesResueltas = ordenesRepository.findByEstadoOrdenesAndUsuarioNombreContainingIgnoreCaseOrUsuarioApellidoContainingIgnoreCase(
+                    "RECIBIDO", search, search);
 
             // Si no se encuentran resultados, mostrar un mensaje de error
             if (ordenesResueltas.isEmpty()) {
