@@ -283,6 +283,7 @@ public class UsuarioController {
 
     @GetMapping("/lista_pedidos")
     public String lista_pedidos(@RequestParam(value = "search", required = false) String search, Model model) {
+        model.addAttribute("activePage", "lista_pedidos");
         //Obtener el usuario autenticado
         String correo = SecurityContextHolder.getContext().getAuthentication().getName();
         Usuario usuarioAutenticado = usuarioRepository.findByCorreo(correo);
@@ -433,8 +434,8 @@ public class UsuarioController {
     }
 
     @GetMapping("/unete")
-    public String mostrarFormulario() {
-
+    public String mostrarFormulario(Model model) {
+        model.addAttribute("activePage", "unete");
         return "Usuariofinal/unete"; // Retorna la vista del formulario
     }
 
