@@ -525,24 +525,20 @@ INSERT INTO `resenias` VALUES
 (2,'Reseña del producto B.','El material es resistente y bien acabado.','Llegó dentro del tiempo esperado, buen servicio.',5,NULL,2,'Excelente compra',2,'Foro'),
 (3,'Reseña del producto C.','La calidad es aceptable por el precio pagado.','Tardó más de lo previsto, pero aún aceptable.',3,NULL,3,'Aceptable',3,'Reseña'),
 (4,'Reseña del producto D.','El producto presenta defectos menores en los detalles.','La entrega fue bastante lenta, no llegó a tiempo.',2,NULL,4,'No muy satisfecho',4,'Foro'),
-(5,'Reseña del producto E.','La calidad no es la mejor, esperaba algo mejor.','Recibí el producto con bastante retraso.',1,NULL,5,'Decepcionante',5,'Reseña'),
+(5,'Reseña del producto E.','La calidad no es la mejor, esperaba algo mejor.','Recibí el producto con bastante retraso.',1,NULL,5,'Decepcionante',5,'Reseña')
 (6,'Reseña del producto F.','Muy buen producto por el precio pagado.','Entrega rápida, dentro del plazo estimado.',4,NULL,6,'Buena relación calidad-precio',6,'Reseña'),
 (7,'Reseña del producto G.','La calidad es excelente, totalmente recomendable.','La entrega fue eficiente y sin contratiempos.',5,NULL,7,'Recomendado',7,'Foro'),
 (8,'Reseña del producto H.','El producto no cumplió con las expectativas, esperaba más.','El envío fue más lento de lo esperado.',2,NULL,8,'No satisfecho',8,'Reseña'),
 (9,'Reseña del producto I.','Producto de calidad media, aceptable para el precio.','El envío tardó un poco más de lo previsto.',3,NULL,9,'Aceptable compra',9,'Foro'),
 (10,'Reseña del producto J.','Excelente calidad, cumple con todo lo anunciado.','El producto llegó antes de lo esperado, muy buen servicio.',5,NULL,10,'Totalmente satisfecho',10,'Reseña'),
-(11,'Reseña del producto K.','El producto tiene algunos defectos, pero es usable.','La entrega fue dentro de lo estimado, sin problemas.',3,NULL,11,'Aceptable',11,'Foro'),
-(12,'Reseña del producto L.','Material de baja calidad, no lo recomiendo.','El envío fue rápido pero el producto no fue lo esperado.',1,NULL,12,'Decepcionante',12,'Reseña'),
-(13,'Reseña del producto M.','Buen producto, pero podría mejorar en algunos detalles.','El tiempo de entrega fue razonable.',4,NULL,13,'Buena compra',13,'Foro'),
-(14,'Reseña del producto N.','El producto no cumple con las características descritas.','La entrega fue tardía, no lo recomiendo.',1,NULL,14,'No recomendable',14,'Reseña'),
-(15,'Reseña del producto O.','Producto de alta calidad, definitivamente recomendado.','El envío fue excelente, sin demoras.',5,NULL,15,'Excelente experiencia',15,'Foro');
+(11,'Reseña del producto K.','El producto tiene algunos defectos, pero es usable.','La entrega fue dentro de lo estimado, sin problemas.',3,NULL,5,'Aceptable',11,'Foro'),
+(12,'Reseña del producto L.','Material de baja calidad, no lo recomiendo.','El envío fue rápido pero el producto no fue lo esperado.',1,NULL,4,'Decepcionante',12,'Reseña'),
+(13,'Reseña del producto M.','Buen producto, pero podría mejorar en algunos detalles.','El tiempo de entrega fue razonable.',4,NULL,3,'Buena compra',13,'Foro'),
+(14,'Reseña del producto N.','El producto no cumple con las características descritas.','La entrega fue tardía, no lo recomiendo.',1,NULL,2,'No recomendable',14,'Reseña'),
+(15,'Reseña del producto O.','Producto de alta calidad, definitivamente recomendado.','El envío fue excelente, sin demoras.',5,NULL,1,'Excelente experiencia',15,'Foro');
 /*!40000 ALTER TABLE `resenias` ENABLE KEYS */;
 UNLOCK TABLES;
 
-LOCK TABLES `resenias` WRITE;
-/*!40000 ALTER TABLE `resenias` DISABLE KEYS */;
-/*!40000 ALTER TABLE `resenias` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `respuestas`

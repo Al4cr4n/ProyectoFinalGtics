@@ -51,4 +51,7 @@ public interface ProductoRepository extends JpaRepository<Producto,Integer> {
     @Modifying
     @Query("UPDATE Producto p SET p.fecharribo = :fechaArribo WHERE p.idProducto = :idProducto")
     int actualizarFechaArribo(@Param("idProducto") int idProducto, @Param("fechaArribo") Date fechaArribo);
+
+    // Opcional: si deseas obtener directamente los productos con fecha de arribo
+    List<Producto> findByFecharriboIsNotNull();
 }

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.security.Principal;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/coordinador")
@@ -207,15 +208,31 @@ public class CoordinadorController {
         return "CoordinadorZonal/dashboard2_zonal";
     }
 
+    @GetMapping("/importacion_zonal")
+    public String mostrarCalendario(Model model) {
+
+        model.addAttribute("paginaActual", "importaciones");
+        // Obtener la lista de productos con fecha de arribo definida
+        List<Producto> productosConFecha = productoRepository.findAll()
+                .stream()
+                .filter(producto -> producto.getFecharribo() != null)
+                .collect(Collectors.toList());
+
+        // Añadir la lista de productos al modelo
+        model.addAttribute("productos", productosConFecha);
+
+        return "CoordinadorZonal/importacion_zonal";  // Nombre de tu vista HTML
+    }
 
 
 
-    @GetMapping({"/importacion_zonal"})
+
+    /*@GetMapping({"/importacion_zonal"})
     public String importacionCoordinadorZonal(Model model) {
         model.addAttribute("paginaActual", "importaciones");
 
         return "CoordinadorZonal/importacion_zonal";
-    }
+    }*/
 
     @GetMapping({"/listaagente_zonal"})
     public String listaAgenteCoordinadorZonal(Model model, Principal principal) {
