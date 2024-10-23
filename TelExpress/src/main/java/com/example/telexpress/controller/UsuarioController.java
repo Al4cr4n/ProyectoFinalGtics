@@ -185,46 +185,80 @@ public class UsuarioController {
 
     @PostMapping("/agregarCarrito")
     @ResponseBody
-    public List<ProductoOrdenes> agregarAlCarrito(@RequestParam("productoId") Integer productoId, @RequestParam("cantidadxproducto") Integer cantidad, Model model ) {
+    public Map<String, Object> agregarAlCarrito(@RequestBody Map<String, Object> datos, Model model ) {
         // Obtener el usuario actual (simulación, debes implementar autenticación)
         //Usuario usuarioActual = usuarioRepository.findById(1L).orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
         String correo = SecurityContextHolder.getContext().getAuthentication().getName();
         Usuario usuarioActual = usuarioRepository.findByCorreo(correo);
         //.orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
+        Integer productoId = Integer.parseInt((String)  datos.get("productoId"));
+        Integer cantidad = Integer.parseInt((String)  datos.get("cantidadxproducto"));
+        Integer usuarioId = Integer.parseInt((String)  datos.get("usuarioId"));
 
-        // Busca la orden pendiente
-        Ordenes orden = ordenesRepository.findByUsuarioAndEstadoOrdenes(usuarioActual, "Pendiente")
-                .orElseGet(() -> {
-                    Ordenes nuevaOrden = new Ordenes();
-                    nuevaOrden.setUsuario(usuarioActual);
-                    nuevaOrden.setEstadoOrdenes("Pendiente");
-                    //nuevaOrden.setFechaCreacion(new Date());
-                    //nuevaOrden.setMesCreacion(new SimpleDateFormat("MM").format(new Date()));
-                    return ordenesRepository.save(nuevaOrden);
-                });
-        // Asegurarse de que el ID de la orden está generado antes de proceder
-        if (orden.getIdOrdenes() == null) {
-            orden = ordenesRepository.save(orden); // Esto asegura que la orden tiene un ID generado
-        }
-        // Buscar el producto
+        //verificación de si el producto y la cantidad son válidos
         Producto producto = productoRepository.findById(productoId)
                 .orElseThrow(() -> new IllegalArgumentException("Producto no encontrado"));
+        //crear o encontrar una orden pendiente para el usuario
+        Ordenes ordenPendiente = ordenesRepository.findByUsuarioAndEstadoOrdenes(usuarioActual, "Pendiente")
+                .orElseGet(() -> {
+                   Ordenes ordenPendientenew = new Ordenes();
+                   ordenPendientenew.setEstadoOrdenes("Pendiente");
+                   ordenPendientenew.setUsuario(usuarioActual);
+                    //nuevaOrden.setFechaCreacion(new Date());
+                    //nuevaOrden.setMesCreacion(new SimpleDateFormat("MM").format(new Date()));
+                    return ordenesRepository.save(ordenPendientenew);
+                });
+        // Asegurarse de que el ID de la orden está generado antes de proceder
+       /* if (ordenPendiente.getIdOrdenes() == null) {
+            ordenPendiente = ordenesRepository.save(ordenPendiente); // Esto asegura que la orden tiene un ID generado
+        }*/
 
         // Crear la clave compuesta
-        ProductoOrdenesId productoOrdenesId = new ProductoOrdenesId(producto.getIdProducto(), orden.getIdOrdenes());
+        ProductoOrdenesId productoOrdenesId = new ProductoOrdenesId(producto.getIdProducto(), ordenPendiente.getIdOrdenes());
 
         // Crear o actualizar el producto en la orden
-        ProductoOrdenes productoEnOrden = new ProductoOrdenes();
-        productoEnOrden.setId(productoOrdenesId);  // Asegúrate de asignar la clave compuesta
-        productoEnOrden.setProducto(producto);
-        productoEnOrden.setOrdenes(orden);
-        productoEnOrden.setCantidadxproducto(cantidad);
-        productoOrdenesRepository.save(productoEnOrden);
+        ProductoOrdenes productosHasOrdenes = productoOrdenesRepository.findById(productoOrdenesId)
+                .orElseGet(() -> {
+                    ProductoOrdenes nuevoProductoOrdenes = new ProductoOrdenes();
+                    nuevoProductoOrdenes.setId(productoOrdenesId);
+                    nuevoProductoOrdenes.setProducto(producto);
+                    nuevoProductoOrdenes.setOrdenes(ordenPendiente);
+                    nuevoProductoOrdenes.setCantidadxproducto(cantidad);
+                    return nuevoProductoOrdenes;
+                });
 
-        //ordenPendiente.agregarProducto(producto, cantidad);
-        //ordenesRepository.save(ordenPendiente);
+        //si el producto ya existe en la orden, actualiza la cantidad
+        if (productosHasOrdenes.getId() != null){
+            productosHasOrdenes.setCantidadxproducto(cantidad);
+        }
+        //ahora se procede a guardar los cambios del producto en la orden
+        productoOrdenesRepository.save(productosHasOrdenes);
+        //ahora se obtiene la lista de todos los productos de la ordenpendiente(carrito)
+        List<ProductoOrdenes> productosEnOrden = productoOrdenesRepository.findByIdOrdenesId(ordenPendiente.getIdOrdenes());
+        //se crea la lista de productos que se enviará al frontend
+        List<Map<String, Object>> listaProductos = new ArrayList<>();
+        double precioTotalOrden = 0.0;
 
-        return productoOrdenesRepository.findByOrdenes(orden);
+        for (ProductoOrdenes po : productosEnOrden){
+            Map<String, Object> productoInfo = new HashMap<>();
+            productoInfo.put("nombreProducto", po.getProducto().getNombreProducto());
+            productoInfo.put("codigoProducto", po.getProducto().getIdProducto());
+            productoInfo.put("cantidad", po.getCantidadxproducto());
+            productoInfo.put("precio", po.getProducto().getPrecio());
+            productoInfo.put("precioTotal", po.getProducto().getPrecio() * po.getCantidadxproducto());
+
+            precioTotalOrden += po.getProducto().getPrecio() * po.getCantidadxproducto();
+
+            listaProductos.add(productoInfo);
+        }
+
+        //devolvemos los datos necesarios para el modal
+        Map<String, Object> respuesta =new HashMap<>();
+        respuesta.put("success", true);
+        respuesta.put("productos", listaProductos);
+        respuesta.put("subtotal", precioTotalOrden);
+
+        return respuesta;
     }
 
 

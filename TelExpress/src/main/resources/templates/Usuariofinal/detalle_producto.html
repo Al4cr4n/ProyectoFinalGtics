@@ -330,7 +330,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-6 offset-md-6 text-end">
-                            <p><strong>Precio Total:</strong> <span id="precioTotal">S/. 0.00</span>12</p>
+                            <p><strong>Subtotal:</strong> <span id="precioTotal">S/. 0.00</span>12</p>
                             <p><strong>Delivery:</strong> S/. 15.00</p>
                             <hr>
                             <p><strong>Total General:</strong><span id="totalGeneral">S/. 0.00</span> S/. 5.00</p>
@@ -349,88 +349,58 @@
 
 <script>
     function agregarAlCarrito() {
-        const productoId = document.getElementById('productoId').value;
-       const usuarioId = document.getElementById('usuarioId').value;
-        const cantidadxproducto = document.getElementById('cantidadProducto').value; // Obtén la cantidad seleccionada
+        var productoId = document.getElementById('productoId').value;
+        var usuarioId = document.getElementById('usuarioId').value;
+        var cantidadxproducto = document.getElementById('cantidadProducto').value; // Obtén la cantidad seleccionada
         // Obtener el token CSRF del meta tag o el input hidden
-        var csrfToken = $("meta[name='_csrf']").attr("content");
-        var csrfHeader = $("meta[name='_csrf_header']").attr("content");
+        var csrfToken = document.querySelector("meta[name='_csrf']").getAttribute("content");
+        var csrfHeader = document.querySelector("meta[name='_csrf_header']").getAttribute("content");
         // Hacer la llamada AJAX para agregar el producto al carrito
-        $.ajax({
-            type: 'POST',
-            url: '/usuario/agregarCarrito',  // Este es el endpoint donde agregas productos al carrito
-            data: {
+        fetch("/usuario/agregarCarrito", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                [csrfHeader]: csrfToken
+            },
+            body: JSON.stringify({
                 productoId: productoId,
-                cantidadxproducto: cantidadxproducto
-            },
-            beforeSend: function(xhr) {
-                // Incluir el token CSRF en la cabecera
-                xhr.setRequestHeader(csrfHeader, csrfToken);
-            },
-            success: function (response) {
-                // Actualizar el contenido del carrito en el modal
-                var carritoHtml = '';
-                var precioTotal = 0;
-                response.forEach(function (item) {
-                    var totalPorProducto = item.producto.precio * item.cantidadxproducto;
-                    precioTotal += totalPorProducto;
-
-                    carritoHtml += '<tr class="border-bottom">';
-                    carritoHtml += '<td><input type="checkbox"></td>';
-                    carritoHtml += '<td><img src="/assets/img/elements/product01.png" alt="Producto" class="img-thumbnail" width="100"></td>';
-                    carritoHtml += '<td>' + item.producto.nombreProducto + '</td>';
-                    carritoHtml += '<td>' + item.producto.idProducto + '</td>';
-                    carritoHtml += '<td>S/. ' + item.producto.precio.toFixed(2) + '</td>';
-                    carritoHtml += '<td><input type="number" class="form-control" value="' + cantidadxproducto + '" min="1" max="' + item.producto.cantidadDisponible + '" /></td>';
-                    carritoHtml += '<td>S/. ' + totalPorProducto.toFixed(2) + '</td>';
-                    carritoHtml += '</tr>';
-                });
-                $('#CartBody').html(carritoHtml);
-                $('#precioTotal').text('S/. ' + precioTotal.toFixed(2));
-                var delivery = 15.00;  // Por ejemplo, un costo de delivery fijo
-                var totalGeneral = precioTotal + delivery;
-                $('#totalGeneral').text('S/. ' + totalGeneral.toFixed(2));
-
-                // Mostrar el modal después de actualizar el contenido
-                $('#productModal').modal('show');
-            },
-            error: function (xhr, status, error) {
-                console.error('Error al agregar el producto al carrito: ', error);
-            }
-        });
-    }
-    /*function cargarProductosCarrito() {
-        const usuarioId = document.getElementById('usuarioId').value;
-
-        // Hacer la llamada AJAX para obtener los productos del carrito
-        fetch(`/usuario/productos_carrito?usuarioId=${usuarioId}`)
+                cantidadxproducto: cantidadxproducto,
+                usuarioId: usuarioId,
+            }),
+        })
             .then(response => response.json())
-            .then(productos => {
-                const modalBody = document.querySelector('#productModal .modal-body tbody');
-                modalBody.innerHTML = ''; // Limpiar el contenido del modal
+            .then(data => {
+                if(data.success) {
+                    // Mostrar el modal
+                    $('#productModal').modal('show');
+                    //document.getElementById("productModal").style.display = "block";
 
-                // Llenar el modal con los productos del carrito
-                productos.forEach(producto => {
-                    const row = `
-                <tr class="border-bottom">
-                    <td><input type="checkbox"></td>
-                    <td><img src="/assets/img/elements/product01.png" alt="Producto" class="img-thumbnail" width="100"></td>
-                    <td>${producto.nombreProducto}</td>
-                    <td>${producto.idProducto}</td>
-                    <td>${producto.precio}</td>
-                    <td><input type="number" class="form-control" min="1" max="${producto.cantidadDisponible}" value="1"></td>
-                    <td>${producto.precio}</td>
-                </tr>
-            `;
-                    modalBody.insertAdjacentHTML('beforeend', row);
-                });
+                    //limpiar el contenido anterior del modal
+                    const productosContainer = document.getElementById("CartBody");
+                    productosContainer.innerHTML = "";
 
-                // Mostrar el modal
-                const modal = new bootstrap.Modal(document.getElementById('productModal'));
-                modal.show();
+                    //iterar sobre los productos devueltos y agregar la información al modal
+                    data.productos.forEach(producto => {
+                        let productoHTML = `
+                        <tr class="border-bottom">
+                        <td><input type="checkbox"></td>
+                        <td><img src="/assets/img/elements/product01.png" alt="Producto" class="img-thumbnail" width="100"></td>
+                        <td>${producto.nombreProducto}</td>
+                        <td>${producto.codigoProducto}</td>
+                        <td>${producto.precio.toFixed(2)}</td>
+                        <td>${producto.cantidad}</td>
+                        <td>S/. ${producto.precioTotal.toFixed(2)}</td>
+                        </tr>
+                        `;
+                        productosContainer.innerHTML += productoHTML;
+                    });
+                    //mostrar el precio final de la orden
+                    document.getElementById("precioTotal").innerHTML = "S/. " + data.subtotal.toFixed(2);
+                    document.getElementById("totalGeneral").innerHTML = "S/. " + (data.subtotal + 5.00).toFixed(2);
+                }
             })
-            .catch(error => console.error('Error:', error));
-    }*/
+            .catch(error => console.error("Error: ", error));
+    }
 </script>
 
 
