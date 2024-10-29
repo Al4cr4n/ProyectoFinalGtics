@@ -17,6 +17,10 @@
     <link rel="stylesheet" href="/assets/vendor/libs/apex-charts/apex-charts.css" />
     <script src="/assets/vendor/js/helpers.js"></script>
     <script src="/assets/js/config.js"></script>
+
+    <!--tokens para uso de ajax (token)-->
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <!--TelExpress fuente de letra-->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
@@ -74,8 +78,8 @@
                             </form>
 
                                 <!-- Formulario para código despachador -->
-                            <form th:action="@{/superadmin/validarDespachador}" method="post">
-                                <input type="hidden" name="id" th:value="${postulante.id}" />
+                            <!--<form th:action="@{/superadmin/validarDespachador}" method="post">
+                                <input type="hidden" name="id" th:value="${postulante.id}" />-->
 
                                 <div class="row mb-3">
                                     <div class="col-md-6">
@@ -83,26 +87,26 @@
                                         <input type="text" id="codigoDespachador" name="codigoDespachador" class="form-control" th:value="${postulante.despachador}" readonly>
                                     </div>
                                     <div class="col-md-3 align-self-end">
-                                        <button type="submit" class="btn btn-primary w-100">Validar Despachador</button>
+                                        <button type="button" class="btn btn-primary w-100" onclick="validarDespachador()">Validar Despachador</button>
                                     </div>
                                 </div>
-                            </form>
-                            <div th:if="${mensajeDespachador}" class="alert alert-info mt-2" th:text="${mensajeDespachador}"></div>
+                            <!--</form-->
+                            <div id="mensajeDespachador" class="alert alert-info mt-2" style="display: none;"></div>
 
                                 <!-- Formulario para código de jurisdicción -->
-                            <form th:action="@{/superadmin/validarJurisdiccion}" method="post">
-                                <input type="hidden" name="id" th:value="${postulante.id}" />
+                            <!--<form th:action="@{/superadmin/validarJurisdiccion}" method="post">
+                                <input type="hidden" name="id" th:value="${postulante.id}" />-->
                                 <div class="row mb-3">
                                     <div class="col-md-6">
                                         <label for="codigoJurisdiccion" class="form-label">Código de jurisdicción:</label>
                                         <input type="text" id="codigoJurisdiccion" name="codigoJurisdiccion" class="form-control" th:value="${postulante.jurisdiccion}" readonly>
                                     </div>
                                     <div class="col-md-3 align-self-end">
-                                        <button type="submit" class="btn btn-primary w-100">Validar Jurisdicción</button>
+                                        <button type="button" class="btn btn-primary w-100" onclick="validarJurisdiccion()">Validar Jurisdicción</button>
                                     </div>
                                 </div>
-                            </form>
-                            <div th:if="${mensajeJurisdiccion}" class="alert alert-info mt-2" th:text="${mensajeJurisdiccion}"></div>
+                            <!--</form-->
+                            <div id="mensajeJurisdiccion" class="alert alert-info mt-2" style="display: none;"></div>
 
                                 <!-- Botones Aceptar y Denegar -->
                             <div class="text-center">
@@ -187,7 +191,52 @@
 </div>
 <!-- Core JS -->
 <script>
-
+    function validarDespachador() {
+        const id = document.querySelector("input[name='id']").value;
+        const codigoDespachador = document.getElementById("codigoDespachador").value;
+        const csrfToken =document.querySelector("meta[name='_csrf']").getAttribute("content");
+        const csrfHeader =document.querySelector("meta[name='_csrf_header']").getAttribute("content");
+        fetch("/superadmin/validarDespachador",{
+            method:"POST",
+            headers:{
+                "Content-Type": "application/x-www-form-urlencoded",
+                [csrfHeader]: csrfToken
+            },
+            body: new URLSearchParams({
+                id:id,
+                codigoDespachador: codigoDespachador
+            })
+        })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("mensajeDespachador").innerText = data.mensajeDespachador;
+                document.getElementById("mensajeDespachador").style.display="block";
+            })
+            .catch(error => console.error("Error",error));
+    }
+    function validarJurisdiccion(){
+        const id = document.querySelector("input[name='id']").value;
+        const codigoJurisdiccion = document.getElementById("codigoJurisdiccion").value;
+        const csrfToken =document.querySelector("meta[name='_csrf']").getAttribute("content");
+        const csrfHeader =document.querySelector("meta[name='_csrf_header']").getAttribute("content");
+        fetch("/superadmin/validarJurisdiccion",{
+            method:"POST",
+            headers:{
+                "Content-Type": "application/x-www-form-urlencoded",
+                [csrfHeader]:csrfToken
+            },
+            body: new URLSearchParams({
+                id:id,
+                codigoJurisdiccion:codigoJurisdiccion
+            })
+        })
+            .then(response => response.json())
+            .then(data =>{
+                document.getElementById("mensajeJurisdiccion").innerText = data.mensajeJurisdiccion;
+                document.getElementById("mensajeJurisdiccion").style.display="block";
+            })
+            .catch(error => console.error("Error: ",error));
+    }
 </script>
 
 <script src="/assets/vendor/libs/jquery/jquery.js"></script>
