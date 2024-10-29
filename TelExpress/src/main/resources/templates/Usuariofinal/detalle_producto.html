@@ -339,7 +339,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger">Eliminar</button>
+                <button type="button" class="btn btn-danger" onclick="eliminarProductosSeleccionados()">Eliminar</button>
                 <button type="button" class="btn btn-primary">Importar</button>
 
             </div>
@@ -383,7 +383,8 @@
                     data.productos.forEach(producto => {
                         let productoHTML = `
                         <tr class="border-bottom">
-                        <td><input type="checkbox"></td>
+                        <!-- Se asigna el código del producto al simbolo del checkbox para que tenga un valor -->
+                        <td><input type="checkbox" value="${producto.codigoProducto}"></td>
                         <td><img src="/assets/img/elements/product01.png" alt="Producto" class="img-thumbnail" width="100"></td>
                         <td>${producto.nombreProducto}</td>
                         <td>${producto.codigoProducto}</td>
@@ -396,14 +397,63 @@
                     });
                     //mostrar el precio final de la orden
                     document.getElementById("precioTotal").innerHTML = "S/. " + data.subtotal.toFixed(2);
-                    document.getElementById("totalGeneral").innerHTML = "S/. " + (data.subtotal + 5.00).toFixed(2);
+                    document.getElementById("totalGeneral").innerHTML = "S/. " + (data.subtotal + 15.00).toFixed(2);
                 }
             })
             .catch(error => console.error("Error: ", error));
     }
 </script>
 
+<script>
+    function eliminarProductosSeleccionados() {
+        //los checkboxes seleccionados
+        const productosIds = Array.from(document.querySelectorAll('#CartBody input[type="checkbox"]:checked'))
+            .map(checkbox => parseInt(checkbox.value));
+        if(productosIds.length === 0){
+            alert("Por favor, seleccione al menos un producto para eliminar.");
+            return;
+        }
+        // Obtener el token CSRF del meta tag o el input hidden
+        var csrfToken = document.querySelector("meta[name='_csrf']").getAttribute("content");
+        var csrfHeader = document.querySelector("meta[name='_csrf_header']").getAttribute("content");
+        // Hacer la llamada AJAX para agregar el producto al carrito
+        fetch("/usuario/eliminarDelCarrito", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                [csrfHeader]: csrfToken
+            },
+            body: JSON.stringify(productosIds),
+        })
+            .then(response => response.json())
+            .then(data => {
+                if(data.success) {
+                    // se actualiza el contenido del modal despues de limpiar el contenido anterior
+                    const productosContainer = document.getElementById("CartBody");
+                    productosContainer.innerHTML="";
+                    data.productos.forEach(producto => {
+                        let productoHTML = `
+                        <tr class="border-bottom">
+                        <td><input type="checkbox" value="${producto.codigoProducto}"></td>
+                        <td><img src="/assets/img/elements/product01.png" alt="Producto" class="img-thumbnail" width="100"></td>
+                        <td>${producto.nombreProducto}</td>
+                        <td>${producto.codigoProducto}</td>
+                        <td>${producto.precio.toFixed(2)}</td>
+                        <td>${producto.cantidad}</td>
+                        <td>S/. ${producto.precioTotal.toFixed(2)}</td>
+                        </tr>
+                         `;
+                        productosContainer.innerHTML += productoHTML;
+                    })
 
+                    //mostrar el precio final de la orden
+                    document.getElementById("precioTotal").innerHTML = "S/. " + data.subtotal.toFixed(2);
+                    document.getElementById("totalGeneral").innerHTML = "S/. " + (data.subtotal + 15.00).toFixed(2);
+                }
+            })
+            .catch(error => console.error("Error: ", error));
+    }
+</script>
 
   <script>
   // Este script es opcional, solo si necesitas lógica para actualizar el monto total basado en la cantidad.

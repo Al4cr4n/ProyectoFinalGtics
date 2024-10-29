@@ -261,53 +261,42 @@ public class UsuarioController {
         return respuesta;
     }
 
-
-    /*@Transactional
-    @PostMapping("/agregar_al_carrito")
-    public String agregarAlCarrito(@RequestParam("idProducto") Integer idProducto, @RequestParam("cantidad") Integer cantidad, Model model) {
-        // Obtener el usuario actual (simulación, debes implementar autenticación)
-        Usuario usuarioActual = usuarioRepository.findById(1L).orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
-
-        // Verificar si hay una orden pendiente
-        Optional<Ordenes> ordenPendienteOpt = ordenesRepository.findByUsuarioIdusuarioAndEstadoOrdenes(usuarioActual.getId(), "pendiente");
-
-        Ordenes ordenPendiente;
-        if (ordenPendienteOpt.isPresent()) {
-            ordenPendiente = ordenPendienteOpt.get();
-        } else {
-            // Si no hay una orden pendiente, crear una nueva
-            ordenPendiente = new Ordenes();
-            ordenPendiente.setUsuario(usuarioActual);
-            ordenPendiente.setEstadoOrdenes("pendiente");
-            ordenesRepository.save(ordenPendiente);
+    @PostMapping("/eliminarDelCarrito")
+    @ResponseBody
+    public Map<String, Object> eliminarDelCarrito(@RequestBody List<Integer> productosIds,
+                                                  Model model) {
+        String correo = SecurityContextHolder.getContext().getAuthentication().getName();
+        Usuario usuarioActual = usuarioRepository.findByCorreo(correo);
+        //ya se realizó la actualización, ahora se procede a obtener la orden con estado pendiente del usuario
+        Ordenes ordenPendiente = ordenesRepository.findByUsuarioAndEstadoOrdenes(usuarioActual,"Pendiente")
+                .orElseThrow(() -> new IllegalArgumentException("Orden pendiente no encontrada"));
+        //ahora se procede a eliminar el producto de la orden
+        for(Integer productoId : productosIds){
+            ProductoOrdenesId productoOrdenesId = new ProductoOrdenesId(productoId, ordenPendiente.getIdOrdenes());
+            productoOrdenesRepository.deleteById(productoOrdenesId);
         }
+        //ahora se procede a actualizar la lista de productos de la orden Pendiente(carrito)
+        List<ProductoOrdenes> productosEnLaOrden = productoOrdenesRepository.findByIdOrdenesId(ordenPendiente.getIdOrdenes());
+        List<Map<String, Object>> listaDeProductos = new ArrayList<>();
+        double precioTotalOrden = 0.0;
+        for (ProductoOrdenes po : productosEnLaOrden){
+            Map<String, Object> productoInfo = new HashMap<>();
+            productoInfo.put("nombreProducto", po.getProducto().getNombreProducto());
+            productoInfo.put("codigoProducto", po.getProducto().getIdProducto());
+            productoInfo.put("cantidad", po.getCantidadxproducto());
+            productoInfo.put("precio", po.getProducto().getPrecio());
+            productoInfo.put("precioTotal", po.getProducto().getPrecio() * po.getCantidadxproducto());
+            precioTotalOrden += po.getProducto().getPrecio() * po.getCantidadxproducto();
 
-        // Agregar el producto a la orden
-        Producto producto = productoRepository.findById(idProducto)
-                .orElseThrow(() -> new IllegalArgumentException("Producto no encontrado"));
-
-        ordenPendiente.agregarProducto(producto, cantidad);
-        ordenesRepository.save(ordenPendiente);
-
-        return "redirect:/usuario/ordenes_pendientes";
-    }*/
-
-    /*@GetMapping("/ordenes_pendientes")
-    public String verOrdenesPendientes(Model model) {
-        // Obtener el usuario actual
-        Usuario usuarioActual = usuarioRepository.findById(1).orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
-
-        // Obtener la orden pendiente del usuario
-        Optional<Ordenes> ordenPendiente = ordenesRepository.findByUsuarioIdusuarioAndEstadoOrdenes(usuarioActual.getIdusuario(), "pendiente");
-
-        if (ordenPendiente.isPresent()) {
-            model.addAttribute("productosOrden", ordenPendiente.get().getProductos());
-        } else {
-            model.addAttribute("productosOrden", List.of()); // Vacío si no hay productos
+            listaDeProductos.add(productoInfo);
         }
-
-        return "Usuariofinal/ordenes_pendientes";
-    }*/
+        //lo que se devuelve a la vista
+        Map<String, Object> respuesta = new HashMap<>();
+        respuesta.put("success", true);
+        respuesta.put("productos", listaDeProductos);
+        respuesta.put("subtotal", precioTotalOrden);
+        return respuesta;
+    }
 
     @GetMapping("/editar_orden")
     public String editar_orden(){
