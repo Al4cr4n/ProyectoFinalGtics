@@ -90,7 +90,7 @@
                                                 </div>
                                             </ul>
                                         </div>
-                                        <div class="card-body px-0">
+                                        <div class="card-body px-0" style="margin-top: -30px">
                                             <div class="tab-content p-0">
                                                 <div class="tab-pane fade show active" id="navs-tabs-line-card-income"
                                                      role="tabpanel">
@@ -101,11 +101,12 @@
                                                             <div class="card">
 
                                                                 <div class="table-responsive text-nowrap">
-                                                                    <table class="table table-borderless">
+                                                                    <!-- Tabla de Estados -->
+                                                                    <table class="table table-borderless" style="table-layout: fixed; width: 100%;">
                                                                         <thead>
                                                                         <tr>
-                                                                            <th>Estado</th>
-                                                                            <th>Cantidad</th>
+                                                                            <th style="width: 55%;">Estado</th>
+                                                                            <th style="width: 45%;">Cantidad</th>
                                                                         </tr>
                                                                         </thead>
                                                                         <tbody>
@@ -139,11 +140,13 @@
                                                                         </tr>
                                                                         </tbody>
                                                                     </table>
-                                                                    <table class="table table-borderless">
+
+                                                                    <!-- Tabla de Meses -->
+                                                                    <table class="table table-borderless" style="table-layout: fixed; width: 100%;">
                                                                         <thead>
                                                                         <tr>
-                                                                            <th>Mes</th>
-                                                                            <th>Cantidad Total</th>
+                                                                            <th style="width: 55%;">Mes</th>
+                                                                            <th style="width: 45%;">Total</th>
                                                                         </tr>
                                                                         </thead>
                                                                         <tbody>
@@ -169,11 +172,12 @@
                                                                         </tr>
                                                                         <tr>
                                                                             <td><span class="badge bg-label-dark me-1">Noviembre</span></td>
-                                                                            <td  th:text="${ordenesNoviembre}"></td>
+                                                                            <td th:text="${ordenesNoviembre}"></td>
                                                                         </tr>
                                                                         </tbody>
                                                                     </table>
                                                                 </div>
+
                                                             </div>
                                                             <!--/ Borderless Table -->
                                                         </div>
@@ -196,7 +200,7 @@
                                                     <h5 class="m-0 me-2">Proveedores</h5>
                                                 </div>
                                             </div>
-                                            <div class="card-body">
+                                            <div class="card-body" style="margin-top: 20px">
                                                 <div class="d-flex justify-content-center flex-column align-items-center gap-2 mb-4">
                                                     <h2 class="mb-2" th:text="${totalProveedores}"></h2>
                                                     <span>Proveedores Totales</span>
@@ -228,7 +232,7 @@
 
 
                                     <!-- Proveedores -->
-                                    <div class="card" style="margin-top: -40px">
+                                    <div class="card" style="margin-top: 20px">
 
                                         <div class="card-body">
                                             <table class="table table-bordered">
@@ -261,9 +265,8 @@
                                                 <div class="card-title mb-0">
                                                     <h5 class="m-0 me-2">Usuarios</h5>
                                                 </div>
-                                                <br>
                                             </div>
-                                            <div class="card-body">
+                                            <div class="card-body" style="margin-top: 20px">
                                                 <div class="d-flex justify-content-center flex-column align-items-center gap-2 mb-4">
                                                     <h2 class="mb-2" th:text="${totalUsuarios}"></h2>
                                                     <span>Usuarios Totales</span>
