@@ -1113,7 +1113,7 @@ public class SuperAdminController {
         model.addAttribute("listaProveedores", listaProveedores);
         model.addAttribute("listaZona", zonaRepository.findAll());  // Cargar zonas nuevamente para el select
         model.addAttribute("zonaSeleccionada", idzona);  // Esto asegura que el valor seleccionado se manteng
-        return "Superadmin/gestion_proveedores";
+        return "SuperAdmin/gestion_proveedores";
     }
 
     /*
