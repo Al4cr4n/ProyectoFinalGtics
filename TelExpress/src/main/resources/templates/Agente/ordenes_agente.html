@@ -97,7 +97,7 @@
                                             </a>
                                         </li>
 
-                                        <li><a class="dropdown-item" href="#" onclick="exportToPDF()">
+                                        <li><a class="dropdown-item" href="/agente/export/pdf" >
                                                 <i class="bx bxs-file-pdf me-2"></i>
                                                 <span class="align-middle">PDF</span>
                                             </a>
@@ -290,6 +290,26 @@
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
+    }
+
+    // Función para exportar la tabla a PDF
+    function exportToPDF() {
+        const table = document.getElementById("productTable").outerHTML;
+        const style = `
+            <style>
+                table { width: 100%; border-collapse: collapse; }
+                th, td { padding: 8px; border: 1px solid #ddd; text-align: left; }
+            </style>
+        `;
+
+        const pdfWindow = window.open("", "", "height=700,width=900");
+        pdfWindow.document.write("<html><head><title>Tabla en PDF</title>");
+        pdfWindow.document.write(style);
+        pdfWindow.document.write("</head><body>");
+        pdfWindow.document.write(table);
+        pdfWindow.document.write("</body></html>");
+        pdfWindow.document.close();
+        pdfWindow.print();
     }
 </script>
 <!-- Core JS -->
