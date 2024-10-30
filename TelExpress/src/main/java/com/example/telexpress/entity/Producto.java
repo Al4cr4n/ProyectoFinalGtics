@@ -36,7 +36,7 @@ public class Producto {
 
     @Column(name = "cantidadDisponible")
     @NotNull(message = "La cantidad disponible es obligatoria")
-    //@Min(value = 1, message = "La cantidad debe ser mayor que 0")
+    @Min(value = 0, message = "La cantidad debe ser mayor que 0")
     private Integer cantidadDisponible;
 
     @Column(name = "descripcion")
@@ -46,14 +46,13 @@ public class Producto {
 
     @Column(name = "precio")
     @NotNull(message = "El precio es obligatorio")
-    //@DecimalMin(value = "0.01", message = "El precio debe ser mayor que 0")
+    @DecimalMin(value = "0.01", message = "El precio debe ser mayor que 0")  // Descomenta esta línea
     private Double precio;
 
     @Column(name = "costoEnvio")
     @NotNull(message = "El costo de envío es obligatorio")
-    //@DecimalMin(value = "0.00", message = "El costo de envío debe ser mayor o igual que 0")
+    @DecimalMin(value = "0.00", message = "El costo de envío debe ser mayor o igual que 0")  // Descomenta esta línea
     private Double costoEnvio;
-
 
 
     @Column(name = "cantidadComprada")

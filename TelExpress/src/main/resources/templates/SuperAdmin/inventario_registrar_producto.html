@@ -87,14 +87,18 @@
                                                         </div> --->
 
                             <div class="col-md-6">
-
-
                                 <label class="form-label">Cantidad disponible:</label>
 
-                                <input th:field="*{cantidadDisponible}" type="number" class="form-control" placeholder="Ingrese la cantidad disponible"
+                                <input th:field="*{cantidadDisponible}"
+                                       type="number"
+                                       class="form-control"
+                                       placeholder="Ingrese la cantidad disponible"
+                                       min="0"
+                                       step="1"
                                        th:classappend="${#fields.hasErrors('cantidadDisponible')?'is-invalid':''}"/>
                                 <div class="invalid-feedback"
-                                     th:if="${#fields.hasErrors('cantidadDisponible')}" th:errors="*{cantidadDisponible}">
+                                     th:if="${#fields.hasErrors('cantidadDisponible')}"
+                                     th:errors="*{cantidadDisponible}">
                                     Mensaje de error de cantidadDisponible
                                 </div>
                             </div>
@@ -106,32 +110,36 @@
                             <div class="col-md-6">
                                 <label class="form-label">Precio:</label>
 
-                                <input th:field="*{precio}" type="number" class="form-control" placeholder="Ingrese el precio" step="0.01"
+                                <input th:field="*{precio}"
+                                       type="number"
+                                       class="form-control"
+                                       placeholder="Ingrese el precio"
+                                       step="0.01"
+                                       min="0"
                                        th:classappend="${#fields.hasErrors('precio')?'is-invalid':''}"/>
                                 <div class="invalid-feedback"
-                                     th:if="${#fields.hasErrors('precio')}" th:errors="*{precio}">
+                                     th:if="${#fields.hasErrors('precio')}"
+                                     th:errors="*{precio}">
                                     Mensaje de error de precio
                                 </div>
-                                <!--<input type="number" class="form-control" name="precio" id="precio" placeholder="Ingrese el precio" step="0.01"> -->
                             </div>
 
-
-                            <!-- Costo de envío
-                            <div class="col-md-6">
-                                <label for="costoEnvio" class="form-label">Costo de envío:</label>
-                                <input type="number" class="form-control" id="costoEnvio" name="costoEnvio" placeholder="Ingrese el costo de envío" step="0.01">
-                            </div>-->
-
+                            <!-- Costo de envío -->
                             <div class="col-md-6">
                                 <label class="form-label">Costo de envío:</label>
 
-                                <input th:field="*{costoEnvio}" type="number" class="form-control" placeholder="Ingrese el costo de envío" step="0.01"
+                                <input th:field="*{costoEnvio}"
+                                       type="number"
+                                       class="form-control"
+                                       placeholder="Ingrese el costo de envío"
+                                       step="0.01"
+                                       min="0"
                                        th:classappend="${#fields.hasErrors('costoEnvio')?'is-invalid':''}"/>
                                 <div class="invalid-feedback"
-                                     th:if="${#fields.hasErrors('costoEnvio')}" th:errors="*{costoEnvio}">
+                                     th:if="${#fields.hasErrors('costoEnvio')}"
+                                     th:errors="*{costoEnvio}">
                                     Mensaje de error de costoEnvio
                                 </div>
-                                <!--<input type="number" class="form-control" name="precio" id="precio" placeholder="Ingrese el precio" step="0.01"> -->
                             </div>
 
                         </div>
