@@ -1,4 +1,4 @@
-/*package com.example.telexpress.controller;
+package com.example.telexpress.controller;
 
 import com.example.telexpress.entity.Ordenes;
 import com.example.telexpress.entity.Usuario;
@@ -52,8 +52,28 @@ public class ExportController {
         int rowNum = 1;
         for (Ordenes orden : ordenes){
             Row row = sheet.createRow(rowNum++);
-            row.createCell(0).
+            row.createCell(0).setCellValue(orden.getIdOrdenes());
+            row.createCell(1).setCellValue(orden.getUsuario().getNombre());
+            row.createCell(2).setCellValue(orden.getUsuario().getApellido());
+            row.createCell(3).setCellValue(orden.getUsuario().getDireccion());
+            row.createCell(4).setCellValue(orden.getEstadoOrdenes());
+            row.createCell(5).setCellValue(orden.getFechaArribo().toString());
         }
+        // Ajuste automático del ancho de columnas
+        for (int i = 0; i < columnas.length; i++) {
+            sheet.autoSizeColumn(i);
+        }
+        workbook.write(response.getOutputStream());
+        workbook.close();
+    }
+    // Método para aplicar estilo a los encabezados
+    private CellStyle createHeaderStyle(Workbook workbook) {
+        CellStyle style = workbook.createCellStyle();
+        Font font = workbook.createFont();
+        font.setBold(true);
+        style.setFont(font);
+        style.setFillForegroundColor(IndexedColors.LIGHT_BLUE.getIndex());
+        style.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+        return style;
     }
 }
-*/
