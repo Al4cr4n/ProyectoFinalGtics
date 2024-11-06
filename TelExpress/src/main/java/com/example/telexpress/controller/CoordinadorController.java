@@ -140,6 +140,8 @@ public class CoordinadorController {
 
     @GetMapping({"/dashboard_zonal"})
     public String dashboardCoordinadorZonal(Model model) {
+        model.addAttribute("paginaActual", "dashboard");
+
         // Obtener el correo del usuario autenticado
         String correo = SecurityContextHolder.getContext().getAuthentication().getName();
 
