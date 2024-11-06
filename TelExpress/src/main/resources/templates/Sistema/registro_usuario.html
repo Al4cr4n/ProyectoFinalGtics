@@ -15,24 +15,24 @@
     <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700&display=swap" rel="stylesheet" />
 
     <!-- Icons. Uncomment required icon fonts -->
-    <link rel="stylesheet" href="../assets/vendor/fonts/boxicons.css" />
+    <link rel="stylesheet" href="/assets/vendor/fonts/boxicons.css" />
 
     <!-- Core CSS -->
-    <link rel="stylesheet" href="../assets/vendor/css/core.css" class="template-customizer-core-css" />
-    <link rel="stylesheet" href="../assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
-    <link rel="stylesheet" href="../assets/css/demo.css" />
+    <link rel="stylesheet" href="/assets/vendor/css/core.css" class="template-customizer-core-css" />
+    <link rel="stylesheet" href="/assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
+    <link rel="stylesheet" href="/assets/css/demo.css" />
 
     <!-- Vendors CSS -->
-    <link rel="stylesheet" href="../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+    <link rel="stylesheet" href="/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
 
     <!-- Page CSS -->
     <!-- Page -->
-    <link rel="stylesheet" href="../assets/vendor/css/pages/page-auth.css" />
+    <link rel="stylesheet" href="/assets/vendor/css/pages/page-auth.css" />
     <!-- Helpers -->
-    <script src="../assets/vendor/js/helpers.js"></script>
+    <script src="/assets/vendor/js/helpers.js"></script>
 
     <!-- Config -->
-    <script src="../assets/js/config.js"></script>
+    <script src="/assets/js/config.js"></script>
 
     <!--FUENTE DEL TITULO-->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap" rel="stylesheet">
@@ -62,15 +62,15 @@
                     <form id="formAuthentication" method="post" th:action="@{/registro_usuario}" th:object="${usuario}" class="mb-3">
                         <div class="mb-3">
                             <label class="form-label">Nombre</label>
-                            <input th:field="*{nombre}" type="text" class="form-control" placeholder="Ingresa tu nombre" autofocus />
+                            <input th:field="*{nombre}" type="text" id="nombre" name="nombre" class="form-control" placeholder="Ingresa tu nombre" autofocus />
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Apellido</label>
-                            <input th:field="*{apellido}" type="text" class="form-control" placeholder="Ingresa tu apellido" />
+                            <input th:field="*{apellido}" type="text" id="apellido" name="apellido" class="form-control" placeholder="Ingresa tu apellido" />
                         </div>
                         <div class="mb-3">
                             <label class="form-label">DNI</label>
-                            <input th:field="*{dni}" type="text" class="form-control" placeholder="Ingresa tu DNI" />
+                            <input th:field="*{dni}" type="text" id="dni" name="dni" class="form-control" placeholder="Ingresa tu DNI" />
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Correo electrónico</label>
@@ -128,14 +128,14 @@
 </div>
 
 <!-- Core JS -->
-<script src="../assets/vendor/libs/jquery/jquery.js"></script>
-<script src="../assets/vendor/libs/popper/popper.js"></script>
-<script src="../assets/vendor/js/bootstrap.js"></script>
-<script src="../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
-<script src="../assets/vendor/js/menu.js"></script>
+<script src="/assets/vendor/libs/jquery/jquery.js"></script>
+<script src="/assets/vendor/libs/popper/popper.js"></script>
+<script src="/assets/vendor/js/bootstrap.js"></script>
+<script src="/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+<script src="/assets/vendor/js/menu.js"></script>
 
 <!-- Vendors JS -->
-<script src="../assets/js/main.js"></script>
+<script src="/assets/js/main.js"></script>
 
 <!-- JavaScript para validar contraseñas -->
 <script>
@@ -153,6 +153,21 @@
             e.preventDefault(); // Evita el envío del formulario si las contraseñas no coinciden
             alert("Las contraseñas no coinciden.");
         }
+    });
+</script>
+<script>
+    document.getElementById("dni").addEventListener("blur",function() {
+        var dni = this.value;
+        fetch(`/api/usuario/dni/${dni}`)
+            .then(response => {
+                if(!response.ok) throw new Error("No se encontrarron datos para el DNI ingresado");
+                return response.json();
+            })
+            .then(data => {
+                document.getElementById("nombre").value = data.nombres;
+                document.getElementById("apellido").value = `${data.apellidoPaterno} ${data.apellidoMaterno}`;
+            })
+            .catch(error => console.error("Error al obtener datos del usuario",error));
     });
 </script>
 

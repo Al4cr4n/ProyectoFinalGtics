@@ -97,10 +97,15 @@
                             <!-- store top filter -->
                             <div class="store-filter clearfix align-items-center d-flex justify-content-between card-header">
                                 <div class="store-search col-md-2 position-relative" style="flex:1;">
-
-                                    <input id="search-input" type="text" class="form-control " placeholder="Buscar productos...">
-                                    <i class="bx bx-search" style="position: absolute;  transform: translateY(-50%); color: #999; top: 55%; right: 2.5rem; "></i>
-
+                                    <form th:action="@{/usuario/lista_productos}" method="get">
+                                        <input id="search-input" type="text" class="form-control " name="search" placeholder="Buscar productos..."
+                                        th:value="${search}">
+                                        <i class="bx bx-search" style="position: absolute;  transform: translateY(-50%); color: #999; top: 55%; right: 2.5rem; "
+                                        onclick="this.closest('form').submit();"></i>
+                                        <input type="hidden" name="filtroStock" th:value="${filtroStock}">
+                                        <input type="hidden" name="page" th:value="${currentPage}">
+                                        <input type="hidden" name="size" th:value="${size}">
+                                    </form>
                                 </div>
                                 <div class="d-flex gap-2" style="flex: 2;">
                                     <div class="dropdown">

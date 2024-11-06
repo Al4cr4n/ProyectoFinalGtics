@@ -475,18 +475,21 @@ public class UsuarioController {
 
     @GetMapping("/lista_productos")
     public String lista_productos(Model model,
-                                  @RequestParam(value = "page", defaultValue = "0") int page,
-                                  @RequestParam(value = "size", defaultValue = "9") int size,
-                                  @RequestParam(value = "filtroStock", required = false) String filtroStock){
+                                  @RequestParam(value = "page", defaultValue = "0") Integer page,
+                                  @RequestParam(value = "size", defaultValue = "9") Integer size,
+                                  @RequestParam(value = "filtroStock", required = false) String filtroStock,
+                                  @RequestParam(value="search", required = false) String search){
         model.addAttribute("activePage", "lista_productos");
 
         // Definir el paginador
         Pageable pageable = PageRequest.of(page, size);
         // Obtener los productos paginados desde el servicio
         Page<Producto> pagproductos = productoRepository.findAll(pageable);
-
+        if(search!= null && !search.isEmpty()){
+          pagproductos = productoRepository.findByNombreProductoContainingOrDescripcionContaining(search, search, pageable);
+        }
         // Filtrar productos según el valor del filtro de stock
-        if ("agotado".equals(filtroStock)) {
+        else if ("agotado".equals(filtroStock)) {
             // Si se selecciona "agotado", mostrar solo productos sin stock
             pagproductos = productoRepository.findByCantidadDisponible(0, pageable);
         } else {
