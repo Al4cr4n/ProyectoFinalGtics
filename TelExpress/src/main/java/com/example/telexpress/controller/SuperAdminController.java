@@ -1,9 +1,11 @@
 package com.example.telexpress.controller;
 
+import com.example.telexpress.config.DashboardService;
 import com.example.telexpress.entity.*;
 import com.example.telexpress.repository.*;
 
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -34,13 +36,15 @@ public class SuperAdminController {
     final JurisdiccionRepository jurisdiccionRepository;
     private final ContrasenaAgenteRespository contrasenaAgenteRespository;
     private final PasswordEncoder passwordEncoder;
+    private final DashboardService dashboardService;
 
     public SuperAdminController(AdminRepository adminRepository, ZonaRepository zonaRepository,
                                 ProductoRepository productoRepository, UsuarioRepository usuarioRepository,
                                 ProveedorRepository proveedorRepository, OrdenesRepository ordenesRepository,
                                 DistritoRepository distritoRepository, CoordinadorRepository coordinadorRepository,
                                 DespachadorRepository despachadorRepository, JurisdiccionRepository jurisdiccionRepository,
-                                ContrasenaAgenteRespository contrasenaAgenteRespository, PasswordEncoder passwordEncoder) {
+                                ContrasenaAgenteRespository contrasenaAgenteRespository, PasswordEncoder passwordEncoder,
+                                DashboardService dashboardService) {
         this.adminRepository=adminRepository; this.zonaRepository=zonaRepository;
         this.productoRepository=productoRepository; this.usuarioRepository=usuarioRepository;
         this.proveedorRepository=proveedorRepository; this.ordenesRepository=ordenesRepository;
@@ -50,6 +54,7 @@ public class SuperAdminController {
         this.despachadorRepository= despachadorRepository;
         this.contrasenaAgenteRespository = contrasenaAgenteRespository;
         this.passwordEncoder = passwordEncoder;
+        this.dashboardService=dashboardService;
     }
 
 
@@ -849,6 +854,18 @@ public class SuperAdminController {
     @GetMapping({ "/dashboard_superadmin"})
     public String listasDashboard(Model model) {
         model.addAttribute("activePage", "dashboard");
+
+        //se hace el llamado al servicio "dashboardservice"
+        Map<String,Integer>  ordenesPorMes = dashboardService.obtenerCantidadOrdenesPorMes();
+        System.out.println("ordenesDelMes: " + ordenesPorMes);
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            String ordenesPorMesJson = mapper.writeValueAsString(ordenesPorMes);
+            model.addAttribute("ordenesPorMesJson",  ordenesPorMesJson);
+            System.out.println("ordenesPorMesJson: " + ordenesPorMesJson);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         List<Producto> listaTop = productoRepository.findAll();
         listaTop.sort(Comparator.comparing(Producto::getCantidadComprada).reversed());
 

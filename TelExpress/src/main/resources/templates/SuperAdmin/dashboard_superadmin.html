@@ -90,10 +90,14 @@
                                                 </div>
                                             </ul>
                                         </div>
-                                        <div class="card-body px-0" style="margin-top: -30px">
+                                        <div class="card-body px-0">
                                             <div class="tab-content p-0">
                                                 <div class="tab-pane fade show active" id="navs-tabs-line-card-income"
                                                      role="tabpanel">
+
+                                                    <div id="ordenesDataJson" th:utext="${ordenesPorMesJson}" style="display: none;"></div>
+                                                    <!-- Aquí añadimos el contenedor del gráfico -->
+                                                    <div id="ordenesChart" style="height: 300px;"></div>
                                                     <div class="d-flex justify-content-center pt-4 gap-2">
 
                                                         <div>
@@ -101,12 +105,11 @@
                                                             <div class="card">
 
                                                                 <div class="table-responsive text-nowrap">
-                                                                    <!-- Tabla de Estados -->
-                                                                    <table class="table table-borderless" style="table-layout: fixed; width: 100%;">
+                                                                    <table class="table table-borderless">
                                                                         <thead>
                                                                         <tr>
-                                                                            <th style="width: 55%;">Estado</th>
-                                                                            <th style="width: 45%;">Cantidad</th>
+                                                                            <th>Estado</th>
+                                                                            <th>Cantidad</th>
                                                                         </tr>
                                                                         </thead>
                                                                         <tbody>
@@ -140,44 +143,7 @@
                                                                         </tr>
                                                                         </tbody>
                                                                     </table>
-
-                                                                    <!-- Tabla de Meses -->
-                                                                    <table class="table table-borderless" style="table-layout: fixed; width: 100%;">
-                                                                        <thead>
-                                                                        <tr>
-                                                                            <th style="width: 55%;">Mes</th>
-                                                                            <th style="width: 45%;">Total</th>
-                                                                        </tr>
-                                                                        </thead>
-                                                                        <tbody>
-                                                                        <tr>
-                                                                            <td><span class="badge bg-label-dark me-1">Mayo</span></td>
-                                                                            <td th:text="${ordenesMayo}"></td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td><span class="badge bg-label-dark me-1">Junio</span></td>
-                                                                            <td th:text="${ordenesJunio}"></td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td><span class="badge bg-label-dark me-1">Julio</span></td>
-                                                                            <td th:text="${ordenesJulio}"></td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td><span class="badge bg-label-dark me-1">Agosto</span></td>
-                                                                            <td th:text="${ordenesAgosto}"></td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td><span class="badge bg-label-dark me-1">Septiembre</span></td>
-                                                                            <td th:text="${ordenesSeptiembre}"></td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td><span class="badge bg-label-dark me-1">Noviembre</span></td>
-                                                                            <td th:text="${ordenesNoviembre}"></td>
-                                                                        </tr>
-                                                                        </tbody>
-                                                                    </table>
                                                                 </div>
-
                                                             </div>
                                                             <!--/ Borderless Table -->
                                                         </div>
@@ -200,7 +166,7 @@
                                                     <h5 class="m-0 me-2">Proveedores</h5>
                                                 </div>
                                             </div>
-                                            <div class="card-body" style="margin-top: 20px">
+                                            <div class="card-body">
                                                 <div class="d-flex justify-content-center flex-column align-items-center gap-2 mb-4">
                                                     <h2 class="mb-2" th:text="${totalProveedores}"></h2>
                                                     <span>Proveedores Totales</span>
@@ -232,7 +198,7 @@
 
 
                                     <!-- Proveedores -->
-                                    <div class="card" style="margin-top: 20px">
+                                    <div class="card" style="margin-top: -40px">
 
                                         <div class="card-body">
                                             <table class="table table-bordered">
@@ -265,8 +231,9 @@
                                                 <div class="card-title mb-0">
                                                     <h5 class="m-0 me-2">Usuarios</h5>
                                                 </div>
+                                                <br>
                                             </div>
-                                            <div class="card-body" style="margin-top: 20px">
+                                            <div class="card-body">
                                                 <div class="d-flex justify-content-center flex-column align-items-center gap-2 mb-4">
                                                     <h2 class="mb-2" th:text="${totalUsuarios}"></h2>
                                                     <span>Usuarios Totales</span>
@@ -441,27 +408,31 @@
 
 <!-- Place this tag in your head or just before your close body tag. -->
 <script async defer src="https://buttons.github.io/buttons.js"></script>
-<script>
-    // Ordenes Chart - Area chart
-    const ordenesChartEl = document.querySelector('#ordenesChart'),
-        ordenesChartConfig = {
+<script th:inline="javascript">
+    document.addEventListener("DOMContentLoaded", function() {
+        //console.log("ApexCharts:", typeof ApexCharts !== 'undefined' ? "Loaded" : "Not Loaded");
+        //asignación de JSON
+        const ordenesData = JSON.parse(document.getElementById("ordenesDataJson").textContent);  // Proporciona un objeto JSON como cadena de respaldo "{}"
+        //const parsedOrdenesData = JSON.parse(ordenesData); // Convertimos el JSON a objeto JavaScript
 
+        // Depuración: verificar el contenido de ordenesData
+        console.log("ordenesData:", ordenesData);
+        //se debe convertir el map de ordenesdata en un array para el gráfico
+        const seriesData = Object.values(ordenesData); //valores de cantidad
+        const categories = Object.keys(ordenesData); //nombres de meses
+        console.log("seriesData (debe ser solo números):", seriesData);
+        console.log("categories (debe ser solo texto):", categories);
+
+        console.log("seriesData:", seriesData);
+        console.log("categories:", categories);
+
+        // Ordenes Chart - Area chart
+        const ordenesChartEl = document.querySelector('#ordenesChart');
+        const ordenesChartConfig = {
             series: [
                 {
                     name: 'Cantidad',
-                    data: [ '', 530, 322, 540, 296, 435, 529]
-
-                    /*data: [
-
-                        '',
-                        [[${ordenesEnero}]],
-                        [[${ordenesFebrero}]],
-                        [[${ordenesMarzo}]],
-                        [[${ordenesAbril}]],
-                        [[${ordenesMayo}]],
-                        [[${ordenesJunio}]],
-                        [[${ordenesJulio}]]
-                    ]*/
+                    data: seriesData
                 }
             ],
             chart: {
@@ -474,7 +445,7 @@
                 type: 'area'
             },
             dataLabels: {
-                enabled: false
+                enabled: true
             },
             stroke: {
                 width: 2,
@@ -484,7 +455,7 @@
                 show: false
             },
             markers: {
-                size: 6,
+                size: 4,
                 colors: 'transparent',
                 strokeColors: 'transparent',
                 strokeWidth: 4,
@@ -525,7 +496,7 @@
                 }
             },
             xaxis: {
-                categories: ['', 'Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul'],
+                categories: categories,
                 axisBorder: {
                     show: false
                 },
@@ -545,15 +516,18 @@
                     show: false
                 },
                 min: 0,
-                max: 700,
+                max: Math.max(...seriesData) + 5, //se modifica parq que varie acorde el valor que corresponda
                 tickAmount: 5
             }
         };
 
-    if (ordenesChartEl !== undefined && ordenesChartEl !== null) {
-        const ordenesChart = new ApexCharts(ordenesChartEl, ordenesChartConfig);
-        ordenesChart.render();
-    }
+        if (ordenesChartEl !== undefined && ordenesChartEl !== null) {
+            const ordenesChart = new ApexCharts(ordenesChartEl, ordenesChartConfig);
+            ordenesChart.render();
+        } else {
+            console.warn("El elemento #ordenesChart no está presente en el DOM.");
+        }
+    });
 </script>
 
 </body>

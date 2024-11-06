@@ -97,6 +97,7 @@ public interface OrdenesRepository extends JpaRepository<Ordenes, Integer> {
             "AND o.estadoOrdenes IN ('CREADO', 'EN VALIDACION')", nativeQuery = true)
     void updateAgenteEncargadoByUsuario(
             @Param("usuarioId") Integer usuarioId);
-
+    @Query(value= "SELECT MONTH(fechaCreacion) as mes, COUNT(*) as cantidad FROM Ordenes o GROUP BY MONTH (fechaCreacion)", nativeQuery = true)
+    List<Object[]> obtenerCantidadOrdenesPorMes();
 }
 
