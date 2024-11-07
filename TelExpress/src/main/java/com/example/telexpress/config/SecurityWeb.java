@@ -84,6 +84,7 @@ public class SecurityWeb {
                 .expiredUrl("/login?expired")
         );
         http.authorizeHttpRequests(authorize -> authorize
+                .requestMatchers("/login","/").permitAll()
                 .requestMatchers ("/agente","/agente/**").hasAuthority("Agente") //acceso solo para agentes
                 .requestMatchers("/superadmin", "/superadmin/**", "/producto/**").hasAuthority("Superadmin")
                 .requestMatchers("/coordinador","/coordinador/**").hasAuthority("Coordinador")

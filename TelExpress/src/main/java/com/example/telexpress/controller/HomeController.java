@@ -49,6 +49,10 @@ public class HomeController {
     public String login() {
         return "Sistema/Login";
     }
+    @GetMapping("/")
+    public String redirigiALogin(){
+        return "redirect:/login";
+    }
 
     @GetMapping("cambio_contraseña")
     public String cambioContrasena() {
