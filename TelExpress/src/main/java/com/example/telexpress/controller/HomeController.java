@@ -46,7 +46,10 @@ public class HomeController {
     private PasswordEncoder passwordEncoder;
 
     @GetMapping("/login")
-    public String login() {
+    public String login(@RequestParam(value="error",required = false) String error, Model model) {
+        if ("accessDenied".equals(error)){
+            model.addAttribute("message","Usted no tiene acceso a esta direccion, es necesario loguearse.");
+        }
         return "Sistema/Login";
     }
     @GetMapping("/")

@@ -91,6 +91,11 @@ public class SecurityWeb {
                 .requestMatchers("/usuario","/usuario/**").hasAnyAuthority("Superadmin", "Usuario")
                 .anyRequest().permitAll()
         );
+        http.exceptionHandling(exception -> exception
+                .authenticationEntryPoint((request, response, authException) ->{
+                    response.sendRedirect("/login?error=accessDenied");
+                })
+        );
         return http.build();
     }
 
