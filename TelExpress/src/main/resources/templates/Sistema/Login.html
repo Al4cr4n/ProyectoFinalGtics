@@ -83,8 +83,8 @@
     <div class="container-xxl">
       <div class="authentication-wrapper authentication-basic container-p-y">
         <div class="authentication-inner">
-          <div th:if="${message}" class="alert alert-danger" style="margin-bottom: 20px;">
-            <p th:text="${message}"></p>
+          <div th:if="${accessMessage}" class="alert alert-danger" style="margin-bottom: 20px;">
+            <p th:text="${accessMessage}"></p>
           </div>
           <!-- Register -->
           <div class="card">
@@ -134,8 +134,8 @@
                     <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
                   </div>
                 </div>
-                <div th:if="${param.error}">
-                  <div class="alert alert-danger">El correo o la contraseña es errónea</div>
+                <div th:if="${loginError}" class="alert alert-danger" style="margin-bottom: 20px;">
+                  <p th:text="${loginError}"></p>
                 </div>
                 <div class="mb-3">
                   <button class="btn btn-primary d-grid w-100" type="submit">Iniciar sesión</button>

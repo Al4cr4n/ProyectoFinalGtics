@@ -48,12 +48,14 @@ public class HomeController {
     @GetMapping("/login")
     public String login(@RequestParam(value="error",required = false) String error, Model model) {
         if ("accessDenied".equals(error)){
-            model.addAttribute("message","Usted no tiene acceso a esta direccion, es necesario loguearse.");
+            model.addAttribute("accessMessage","Usted no tiene acceso a esta direccion, es necesario loguearse.");
+        }else if("invalidCredentials".equals(error)){
+            model.addAttribute("loginError","El correo o la contrsaseña es errónea");
         }
         return "Sistema/Login";
     }
     @GetMapping("/")
-    public String redirigiALogin(){
+    public String redirigirALogin(){
         return "redirect:/login";
     }
 

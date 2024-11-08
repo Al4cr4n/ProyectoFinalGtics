@@ -66,6 +66,7 @@ public class SecurityWeb {
         http.formLogin(form -> form
                 .loginPage("/login")
                 .loginProcessingUrl("/procesologueo")
+                .failureUrl("/login?error=invalidCredentials") //en caso las credenciales ingresadas sean erroneas
                 .usernameParameter("email")
                 .successHandler(authenticationSuccessHandler()) // Llama a un método separado
                 .permitAll()  // Usar el formulario de login por defecto de Spring Security
@@ -176,29 +177,3 @@ public class SecurityWeb {
         };
     }
 }
-
-/*return new JdbcUserDetailsManager(dataSource) {
-            @Override
-            public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-                UserDetails userDetails = super.loadUserByUsername(username);
-                String plainPassword = userDetails.getPassword();
-
-                // Verifica si la contraseña no está hasheada
-                if (!plainPassword.startsWith("$2a$")) { // Contraseña no hasheada
-                    String hashedPassword = passwordEncoder.encode(plainPassword);
-
-                    // Actualiza la contraseña directamente en la base de datos
-                    String updateSql = "UPDATE usuario SET contrasena = ? WHERE correo = ?";
-                    try (Connection conn = dataSource.getConnection(); PreparedStatement ps = conn.prepareStatement(updateSql)) {
-                        ps.setString(1, hashedPassword);
-                        ps.setString(2, username);
-                        ps.executeUpdate();
-                    } catch (SQLException e) {
-                        throw new RuntimeException("Error al actualizar la contraseña en la base de datos", e);
-                    }
-                }
-
-
-                return userDetails;
-            }
-        };*/

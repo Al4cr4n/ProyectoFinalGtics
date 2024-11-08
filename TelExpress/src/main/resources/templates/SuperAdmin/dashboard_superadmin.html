@@ -97,7 +97,7 @@
 
                                                     <div id="ordenesDataJson" th:utext="${ordenesPorMesJson}" style="display: none;"></div>
                                                     <!-- Aquí añadimos el contenedor del gráfico -->
-                                                    <div id="ordenesChart" style="height: 300px;"></div>
+                                                    <div id="ordenesChart" style="height: auto;"></div>
                                                     <div class="d-flex justify-content-center pt-4 gap-2">
 
                                                         <div>
@@ -410,21 +410,60 @@
 <script async defer src="https://buttons.github.io/buttons.js"></script>
 <script th:inline="javascript">
     document.addEventListener("DOMContentLoaded", function() {
-        //console.log("ApexCharts:", typeof ApexCharts !== 'undefined' ? "Loaded" : "Not Loaded");
+        // Obtener la fecha y hora actual
+        const currentDate = new Date();
+
+// Obtener los componentes de la fecha
+        const day = currentDate.getDate(); // Día del mes (1-31)
+        const month = currentDate.getMonth() + 1; // Mes (0-11) - se le suma 1 para obtener (1-12)
+        const year = currentDate.getFullYear(); // Año (por ejemplo, 2024)
+        const hours = currentDate.getHours(); // Horas (0-23)
+        const minutes = currentDate.getMinutes(); // Minutos (0-59)
+        const seconds = currentDate.getSeconds(); // Segundos (0-59)
+
+// Formatear la fecha y hora como una cadena
+        const formattedDate = `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
+
+// Imprimir en la consola
+        console.log("Día y hora actual:", formattedDate);
+
+        // Obtener el mes y a;o actual
+        const currentMonthIndex = new Date().getMonth();
+        const currentYear = new Date().getFullYear();
+        console.log("mesactual:",currentMonthIndex);
+        console.log("anioactual: ",currentYear);
+        const monthOrder = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Setiembre','Octubre','Noviembre','Diciembre'];
+        // Reorganizar los meses para que el mes actual esté al final y los anteriores a la izquierda
+        //const sortedMonths = monthOrder.slice(currentMonthIndex + 1).concat(monthOrder.slice(0, currentMonthIndex + 1));
+        // Ajustar para mostrar los últimos 12 meses incluyendo cambio de año
+
         //asignación de JSON
         const ordenesData = JSON.parse(document.getElementById("ordenesDataJson").textContent);  // Proporciona un objeto JSON como cadena de respaldo "{}"
-        //const parsedOrdenesData = JSON.parse(ordenesData); // Convertimos el JSON a objeto JavaScript
+        // Completar ordenesData con todos los meses si no existen
+        monthOrder.forEach(month => {
+            if (!ordenesData.hasOwnProperty(month)) {
+                ordenesData[month] = 0; // Asignar 0 si el mes no tiene datos
+            }
+        });
+        const adjustedCategories = [];
+        for (let i = 0; i < 12; i++) {
+            const monthIndex = (currentMonthIndex - i + 12) % 12;
+            adjustedCategories.unshift(monthOrder[monthIndex]);
+        }
 
-        // Depuración: verificar el contenido de ordenesData
-        console.log("ordenesData:", ordenesData);
-        //se debe convertir el map de ordenesdata en un array para el gráfico
-        const seriesData = Object.values(ordenesData); //valores de cantidad
-        const categories = Object.keys(ordenesData); //nombres de meses
-        console.log("seriesData (debe ser solo números):", seriesData);
-        console.log("categories (debe ser solo texto):", categories);
+        // Filtrar y organizar los datos según los meses ajustados
+        const orderedCategories = adjustedCategories;
+        const orderedSeriesData = orderedCategories.map(month => ordenesData[month] !== undefined ? ordenesData[month] : 0);
 
-        console.log("seriesData:", seriesData);
-        console.log("categories:", categories);
+        // Encuentra el índice del mes actual en las categorías ordenadas
+        const currentMonthName = monthOrder[currentMonthIndex];
+        const currentMonthMarkerIndex = orderedCategories.indexOf(currentMonthName);
+
+        console.log("orderedCategories:", orderedCategories);
+        console.log("orderedSeriesData:", orderedSeriesData);
+
+        //console.log("seriesData:", seriesData);
+        //console.log("categories:", categories);
 
         // Ordenes Chart - Area chart
         const ordenesChartEl = document.querySelector('#ordenesChart');
@@ -432,7 +471,7 @@
             series: [
                 {
                     name: 'Cantidad',
-                    data: seriesData
+                    data: orderedSeriesData
                 }
             ],
             chart: {
@@ -445,7 +484,7 @@
                 type: 'area'
             },
             dataLabels: {
-                enabled: true
+                enabled: false
             },
             stroke: {
                 width: 2,
@@ -455,23 +494,24 @@
                 show: false
             },
             markers: {
-                size: 4,
+                size: 0,
                 colors: 'transparent',
                 strokeColors: 'transparent',
-                strokeWidth: 4,
-                discrete: [
-                    {
-                        fillColor: '#fff',
-                        seriesIndex: 0,
-                        dataPointIndex: 7,
-                        strokeColor: '#7367f0',
-                        strokeWidth: 2,
-                        size: 6,
-                        radius: 8
-                    }
-                ],
+                strokeWidth: 2,
+                //discrete: [
+                //    {
+                //        fillColor: '#fff',
+                //        seriesIndex: 0,
+                //        dataPointIndex: currentMonthMarkerIndex,
+                //        strokeColor: '#7367f0',
+                //        strokeWidth: 2,
+                //        size: 6,
+                //        radius: 8
+                //    }
+                //],
                 hover: {
-                    size: 7
+                    size: 7,
+                    shape: 'circle'
                 }
             },
             colors: ['#7367f0'],
@@ -496,7 +536,7 @@
                 }
             },
             xaxis: {
-                categories: categories,
+                categories: orderedCategories,
                 axisBorder: {
                     show: false
                 },
@@ -516,7 +556,7 @@
                     show: false
                 },
                 min: 0,
-                max: Math.max(...seriesData) + 5, //se modifica parq que varie acorde el valor que corresponda
+                max: Math.max(...orderedSeriesData) + 5, //se modifica parq que varie acorde el valor que corresponda
                 tickAmount: 5
             }
         };

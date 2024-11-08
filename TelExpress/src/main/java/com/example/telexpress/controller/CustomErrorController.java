@@ -24,11 +24,11 @@ public class CustomErrorController implements ErrorController {
 
         if (status != null) {
             Integer statusCode = Integer.valueOf(status.toString());
-            // Manejar el caso de acceso denegado (403)
-            if (statusCode == HttpStatus.FORBIDDEN.value()) {
+            // Manejar el caso de acceso denegado (401 y 403)
+            if (statusCode == HttpStatus.UNAUTHORIZED.value() || statusCode == HttpStatus.FORBIDDEN.value()) {
                 return "redirect:/login?error=accessDenied";
             }
-            
+
             // Diferentes códigos de error
             if (statusCode == HttpStatus.NOT_FOUND.value()) {
                 model.addAttribute("errorMessage", "Página no encontrada");
