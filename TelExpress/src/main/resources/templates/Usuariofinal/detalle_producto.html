@@ -327,14 +327,15 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" onclick="eliminarProductosSeleccionados()">Eliminar</button>
-                <button type="button" class="btn btn-primary">Importar</button>
-
+                <!--<button type="button" class="btn btn-primary" th:href="@{/usuario/orden/pagar}">Importar</button>-->
+                <button type="button" class="btn btn-primary" onclick="redirigirAPagar()">Importar</button>
             </div>
         </div>
     </div>
 </div>
 
 <script>
+    let ordenId; //variable global que se usará para almacenar el id de la orden
     function agregarAlCarrito() {
         var productoId = document.getElementById('productoId').value;
         var usuarioId = document.getElementById('usuarioId').value;
@@ -358,6 +359,7 @@
             .then(response => response.json())
             .then(data => {
                 if(data.success) {
+                    ordenId=data.ordenId; //se almacena el Id de la orden
                     // Mostrar el modal
                     $('#productModal').modal('show');
                     //document.getElementById("productModal").style.display = "block";
@@ -388,6 +390,15 @@
                 }
             })
             .catch(error => console.error("Error: ", error));
+    }
+</script>
+<script>
+    function redirigirAPagar(){
+        if(ordenId){
+            window.location.href = `/usuario/orden/pagar?ordenId=${ordenId}`;
+        }else {
+            alert("No se generó una orden.");
+        }
     }
 </script>
 

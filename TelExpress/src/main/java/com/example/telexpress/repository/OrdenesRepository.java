@@ -21,6 +21,9 @@ public interface OrdenesRepository extends JpaRepository<Ordenes, Integer> {
     long countByEstadoOrdenes(String estado);
     long countByMesCreacion(String mesCreacion);
 
+    // Método para buscar una orden  por id
+    Optional<Ordenes> findByIdOrdenes(Integer idOrdenes);
+
     @Query(value = "select * from ordenes where usuario_idusuario = ?1",
             nativeQuery= true)
     List<Ordenes> findByUsuarioId(Integer id);

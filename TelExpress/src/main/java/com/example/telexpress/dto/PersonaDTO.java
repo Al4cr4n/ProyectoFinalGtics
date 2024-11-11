@@ -13,5 +13,4 @@ public class PersonaDTO {
     private String apellidoMaterno; //apellido materno
     private String tipoDocumento; //dni o ruc
     private String numeroDocumento; //el numero de dni o ruc
-
 }

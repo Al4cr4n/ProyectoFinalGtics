@@ -50,5 +50,6 @@ public class ProductoDTO {
     }
     public Integer getCantidadxproducto(){return cantidadxproducto;}
     public void setCantidadxproducto(Integer cantidadxproducto){this.cantidadxproducto=cantidadxproducto;}
+//POR AHORA NO ESTÁ EN USO, PERO NO SE BORRA POR PRECAUCIÓN
 }
 

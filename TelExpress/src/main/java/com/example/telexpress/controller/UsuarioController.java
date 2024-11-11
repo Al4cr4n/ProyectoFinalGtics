@@ -146,8 +146,8 @@ public class UsuarioController {
         // return "redirect:/usuario/ordenes_pendientes";
         return "Producto agregado al carrito";
     }
-
-    @GetMapping("/productos_carrito")
+ //NO SIRVE O MEJOR DICHO, NO SE USA
+   /* @GetMapping("/productos_carrito")
     @ResponseBody
     public List<ProductoDTO> verOrdenesPendientes(@RequestParam("usuarioId") Integer usuarioId, Model model) {
         // Obtener el usuario
@@ -181,7 +181,7 @@ public class UsuarioController {
             return new ArrayList<>(); // Si no hay productos
         }
         //return "Usuariofinal/ordenes_pendientes";
-    }
+    }*/
 
     @PostMapping("/agregarCarrito")
     @ResponseBody
@@ -257,7 +257,7 @@ public class UsuarioController {
         respuesta.put("success", true);
         respuesta.put("productos", listaProductos);
         respuesta.put("subtotal", precioTotalOrden);
-
+        respuesta.put("ordenId",ordenPendiente.getIdOrdenes());
         return respuesta;
     }
 
@@ -518,8 +518,38 @@ public class UsuarioController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping("/pagar")
-    public String pagar(){
+    /*redireccion a la pagina para pagar la orden*/
+    @GetMapping("/orden/pagar")
+    public String verDetalleOrdenaPagar(Model model , @RequestParam Integer ordenId, RedirectAttributes attr) {
+        model.addAttribute("activePage", "orden_pagar");
+        Ordenes orden =ordenesRepository.findById(ordenId).orElseThrow(()-> new IllegalArgumentException("Orden no encontrada"));
+        //Ordenes orden = ordenesRepository.findByIdOrdenes(ordenId).orElseThrow(() -> new IllegalArgumentException("Orden no encontrada"));
+
+        List<ProductoOrdenes> productosEnOrden = productoOrdenesRepository.findByIdOrdenesId(ordenId);
+        /*Double precioSubtotalenOrden = productosEnOrden.stream()
+                .mapToDouble(po -> po.getProducto().getPrecio()*po.getCantidadxproducto())
+                .sum();*/
+        // Cargar los productos y sus detalles
+        final double[] subtotal = {0.0};
+        List<Producto> productos = new ArrayList<>();
+        for (ProductoOrdenes po : productosEnOrden) {
+            Optional<Producto> producto = productoRepository.findById(po.getProducto().getIdProducto());
+            producto.ifPresent(p -> {
+                p.setCantidadComprada(po.getCantidadxproducto());
+                productos.add(p);
+                subtotal[0] += p.getPrecio() * po.getCantidadxproducto(); /// Agregar la cantidad de la tabla intermedia
+
+            });
+        }
+        double deliveryCost = 15.00; // Suponiendo un costo de envío fijo
+        double totalGeneral = subtotal[0] + deliveryCost;
+
+        // Añadir la lista de productos al modelo
+       model.addAttribute("orden", orden);
+       model.addAttribute("productosDeOrden", productos);
+        model.addAttribute("precioSubtotal", subtotal[0]);
+        model.addAttribute("deliveryCost", deliveryCost);
+        model.addAttribute("totalGeneral", totalGeneral);
         return "Usuariofinal/pagar";
     }
 

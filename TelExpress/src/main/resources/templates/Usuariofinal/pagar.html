@@ -5,7 +5,7 @@
         class="light-style layout-menu-fixed"
         dir="ltr"
         data-theme="theme-default"
-        data-assets-path="../../assets/"
+        data-assets-path="/assets/"
         data-template="vertical-menu-template-free"
 >
 <head>
@@ -20,7 +20,7 @@
     <meta name="description" content="" />
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="../../assets/img/favicon/favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="/assets/img/favicon/favicon.ico" />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -31,39 +31,39 @@
     />
 
     <!-- Icons. Uncomment required icon fonts -->
-    <link rel="stylesheet" href="../../assets/vendor/fonts/boxicons.css" />
+    <link rel="stylesheet" href="/assets/vendor/fonts/boxicons.css" />
 
     <!-- Core CSS -->
-    <link rel="stylesheet" href="../../assets/vendor/css/core.css" class="template-customizer-core-css" />
-    <link rel="stylesheet" href="../../assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
-    <link rel="stylesheet" href="../../assets/css/demo.css" />
+    <link rel="stylesheet" href="/assets/vendor/css/core.css" class="template-customizer-core-css" />
+    <link rel="stylesheet" href="/assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
+    <link rel="stylesheet" href="/assets/css/demo.css" />
 
     <!-- Vendors CSS -->
-    <link rel="stylesheet" href="../../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+    <link rel="stylesheet" href="/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
 
-    <link rel="stylesheet" href="../../assets/vendor/libs/apex-charts/apex-charts.css" />
+    <link rel="stylesheet" href="/assets/vendor/libs/apex-charts/apex-charts.css" />
 
     <!-- Page CSS -->
 
     <!-- Helpers -->
-    <script src="../../assets/vendor/js/helpers.js"></script>
+    <script src="/assets/vendor/js/helpers.js"></script>
 
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
-    <script src="../../assets/js/config.js"></script>
+    <script src="/assets/js/config.js"></script>
 
     <!--TelExpress fuente de letra-->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Bootstrap -->
- 	<link type="text/css" rel="stylesheet" href="../../assets/css/bootstrap.min.css"/>
+ 	<link type="text/css" rel="stylesheet" href="/assets/css/bootstrap.min.css"/>
 
     <!-- Estilos personalizados -->
         <!-- Custom stlylesheet -->
-         <link type="text/css" rel="stylesheet" href="../../assets/css/style_products.css"/>
+         <link type="text/css" rel="stylesheet" href="/assets/css/style_products.css"/>
 
         <!-- fuentes FA -->
- 	    <link type="text/css" rel="stylesheet" href="../../assets/css/font-awesome.min.css"/>
+ 	    <link type="text/css" rel="stylesheet" href="/assets/css/font-awesome.min.css"/>
 
          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.3/font/bootstrap-icons.min.css">
 
@@ -102,6 +102,24 @@
                 font-size: 100px; /* Tamaño del ícono */
                 color: #79e97de3; /* Verde claro (puedes cambiar el color aquí)*/ 
             }
+            .custom-btn{
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 0.5rem;
+                font-size: 0.875rem;
+            }
+            /* Ajuste de margen superior del card */
+           .card-header {
+                padding-top: 0.25rem; /* Reducir el espacio superior */
+               padding-bottom: 0.5rem; /* Reduce el padding inferior */
+               margin-top: 0; /* Asegúrate de que no haya margen superior adicional */
+           }
+
+            /* Margen para el card en pantallas pequeñas */
+            .card {
+                margin-top: 0.5rem; /* Ajusta el espacio entre el borde superior */
+            }
           </style>
 
 </head>
@@ -120,35 +138,34 @@
             <div class="content-wrapper">
                 <!-- Content -->
                 <div class="container-xxl flex-grow-1 container-p-y">
-                    <h4 class="desing-title-page">Zona Oeste</h4>
-                
+                    <!--<h4 class="desing-title-page">Zona Oeste</h4>-->
 
                     <div class="card">
                         <div class="row">
                         <div class="col-md-7" style="border-right: 1px solid #dee2e6;">
                             <div class="card-header row align-items-center justify-content-center ">
                                 <div class="card-header row g-5 align-items-center">
-                                    <div class="row g-3">
+                                    <div class="row g-3 justify-content-between">
                                     <div class="col-md-4 col-lg-5">
                                         <button class="btn custom-btn btn-outline-secondary d-flex align-items-center w-100">
-                                        <input type="checkbox" id="checkbox1" class="checkbox me-4">
-                                        <label for="checkbox1" class="d-flex align-items-center gap-4 form-check-label">
-                                            <a href="../../assets/img/icons/unicons/visa.png" target="_blank" class="icon-link me-2">
-                                            <img src="../../assets/img/icons/unicons/visa.png" alt="Icono" class="icon-image">
+                                        <input type="checkbox" id="checkbox1" class="checkbox me-2">
+                                        <label for="checkbox1" class="d-flex align-items-center gap-2 form-check-label">
+                                            <a href="/assets/img/icons/unicons/visa.png" target="_blank" class="icon-link me-2">
+                                            <img src="/assets/img/icons/unicons/visa.png" alt="Icono" class="icon-image me-2">
                                             </a>
-                                            <span>Tarjeta</span>
+                                            <span class="btn-text">Tarjeta</span>
                                         </label>
                                         </button>
                                     </div>
                                 
                                     <div class="col-md-4 col-lg-5 align-items-center justify-content-between ">
                                         <button class="btn custom-btn btn-outline-secondary d-flex align-items-center w-100">
-                                        <input type="checkbox" id="checkbox2" class="checkbox me-4">
-                                        <label for="checkbox2" class="d-flex align-items-center gap-4 form-check-label">
-                                            <a href="../../assets/img/icons/unicons/paypal.png" target="_blank" class="icon-link me-2">
-                                            <img src="../../assets/img/icons/unicons/paypal.png" alt="Icono" class="icon-image">
+                                        <input type="checkbox" id="checkbox2" class="checkbox me-2">
+                                        <label for="checkbox2" class="d-flex align-items-center gap-2 form-check-label">
+                                            <a href="/assets/img/icons/unicons/paypal.png" target="_blank" class="icon-link me-2">
+                                            <img src="/assets/img/icons/unicons/paypal.png" alt="Icono" class="icon-image me-2">
                                             </a>
-                                            <span>PayPal</span>
+                                            <span class="btn-text">PayPal</span>
                                         </label>
                                         </button>
                                     </div>
@@ -186,7 +203,7 @@
                                 
                                     <div class="col-md-6">
                                         <div class="mb-3">
-                                            <label for="inputdirectio" class="form-label">Direccion</label>
+                                            <label for="inputdirection" class="form-label">Direccion</label>
                                             <input type="text" class="form-control" id="inputdirection" placeholder="Direccion" aria-describedby="direccionlp">
                                         </div>
                                     </div>
@@ -235,10 +252,10 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr style="border-bottom: 1px solid #dee2e6;">
-                                            <td>2</td>
-                                            <td>Producto A</td>
-                                            <td>25.00</td>
+                                        <tr style="border-bottom: 1px solid #dee2e6;" th:each="productodeorden : ${productosDeOrden}">
+                                            <td th:text="${productodeorden.cantidadComprada}"></td>
+                                            <td th:text="${productodeorden.nombreProducto}"></td>
+                                            <td th:text="'$' + ${#numbers.formatDecimal(productodeorden.precio, 2)}"></td>
                                         </tr>
                                         <tr style="border-bottom: 1px solid #dee2e6;">
                                             <td>1</td>
@@ -257,15 +274,15 @@
                                 <div class="d-flex justify-content-between align-items-center mt-2 mx-3">
                                     <div></div>
                                     <div class="text-end">
-                                        <div>
-                                            <span class="fw-bold">Subtotal:</span> S/. 135.00
+                                        <!--<div>
+                                            <span class="fw-bold">Subtotal:</span> S/. <span th:text="${#numbers.formatDecimal(precioSubtotal,2)}">0.00</span>
                                         </div>
                                         <div>
-                                            <span class="fw-bold">Delivery:</span> S/. 15.00
+                                            <span class="fw-bold">Delivery:</span> S/.  <span th:text="${#numbers.formatDecimal(15.00,2)}">0.00</span>
                                         </div>
                                         <div>
-                                            <span class="fw-bold">Total:</span> S/. 150.00
-                                        </div>
+                                            <span class="fw-bold">Total:</span> S/. <span th:text="${#numbers.formatDecimal(precioSubtotal+15.00,2)}">0.00</span>
+                                        </div>-->
                                     </div>
                                 </div>
                                 
@@ -333,26 +350,25 @@
 
 <!-- Core JS -->
 <!-- build:js assets/vendor/js/core.js -->
-<script src="../../assets/vendor/libs/jquery/jquery.js"></script>
-<script src="../../assets/vendor/libs/popper/popper.js"></script>
-<script src="../../assets/vendor/js/bootstrap.js"></script>
-<script src="../../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+<script src="/assets/vendor/libs/jquery/jquery.js"></script>
+<script src="/assets/vendor/libs/popper/popper.js"></script>
+<script src="/assets/vendor/js/bootstrap.js"></script>
+<script src="/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
 
-<script src="../../assets/vendor/js/menu.js"></script>
+<script src="/assets/vendor/js/menu.js"></script>
 <!-- endbuild -->
 
 <!-- Vendors JS -->
-<script src="../../assets/vendor/libs/apex-charts/apexcharts.js"></script>
+<script src="/assets/vendor/libs/apex-charts/apexcharts.js"></script>
 
 <!-- Main JS -->
-<script src="../../assets/js/main.js"></script>
+<script src="/assets/js/main.js"></script>
 
 <!-- Page JS -->
-<script src="../../assets/js/dashboards-analytics.js"></script>
+<script src="/assets/js/dashboards-analytics.js"></script>
 
 <!-- Place this tag in your head or just before your close body tag. -->
 <script async defer src="https://buttons.github.io/buttons.js"></script>
 
-<
 </body>
 </html>
