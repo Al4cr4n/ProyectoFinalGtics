@@ -9,6 +9,7 @@ import org.springframework.context.annotation.*;
 
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetailsService;
 //import org.springframework.security.authorization.AuthenticatedAuthorizationManager.authenticated;
@@ -63,7 +64,8 @@ public class SecurityWeb {
                 .permitAll()
         );*/
         //http.formLogin();
-        http.formLogin(form -> form
+        http.csrf(AbstractHttpConfigurer::disable)
+                .formLogin(form -> form
                 .loginPage("/login")
                 .loginProcessingUrl("/procesologueo")
                 .failureUrl("/login?error=invalidCredentials") //en caso las credenciales ingresadas sean erroneas
@@ -86,10 +88,10 @@ public class SecurityWeb {
         );
         http.authorizeHttpRequests(authorize -> authorize
                 .requestMatchers("/login","/").permitAll()
-                .requestMatchers ("/agente","/agente/**").hasAuthority("Agente") //acceso solo para agentes
+                .requestMatchers ("/agente","/agente/**", "/api/**").hasAuthority("Agente") //acceso solo para agentes
                 .requestMatchers("/superadmin", "/superadmin/**", "/producto/**").hasAuthority("Superadmin")
                 .requestMatchers("/coordinador","/coordinador/**").hasAuthority("Coordinador")
-                .requestMatchers("/usuario","/usuario/**").hasAnyAuthority("Superadmin", "Usuario")
+                .requestMatchers("/usuario","/usuario/**", "/api/**").hasAnyAuthority("Superadmin", "Usuario")
                 .anyRequest().permitAll()
         );
         http.exceptionHandling(exception -> exception
