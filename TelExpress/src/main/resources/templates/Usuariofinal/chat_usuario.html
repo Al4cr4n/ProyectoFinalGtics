@@ -23,10 +23,10 @@
 <!-- Layout wrapper -->
 <div class="layout-wrapper layout-content-navbar">
     <div class="layout-container">
-        <div th:insert="~{Agente/fragments/menu.html::menu}"></div> <!-- este es el menu -->
+        <div th:insert="~{Usuariofinal/fragments/menu.html::menu}"></div> <!-- este es el menu -->
         <!-- Layout container -->
         <div class="layout-page">
-            <div th:insert="~{Agente/fragments/navbar.html::navbar}"></div> <!-- este es el navbar -->
+            <div th:insert="~{Usuariofinal/fragments/navbar.html::navbar}"></div> <!-- este es el navbar -->
             <!-- Content wrapper -->
             <div class="content-wrapper">
                 <!-- Aquí se agrega el contenido central -->
@@ -39,7 +39,7 @@
                             <div id="user-list" style="margin-bottom: 20px;">
                                 <!-- List of users to chat with -->
                                 <button onclick="openChat(1)">User 1</button>
-                                <button onclick="openChat(2)">User 2</button>
+                                <button onclick="openChat(2)">ChatBot</button>
                                 <!-- Add more users as needed -->
                             </div>
                             <div id="chat-container" style="display: flex; flex-direction: column; height: 500px; border: 1px solid #ccc; padding: 10px;">

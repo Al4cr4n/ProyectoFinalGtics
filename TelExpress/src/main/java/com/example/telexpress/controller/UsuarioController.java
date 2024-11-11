@@ -2,6 +2,7 @@ package com.example.telexpress.controller;
 import com.example.telexpress.dto.ProductoDTO;
 import com.example.telexpress.entity.*;
 import com.example.telexpress.repository.*;
+import com.example.telexpress.service.ChatRoomService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpHeaders;
@@ -18,6 +19,7 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import com.example.telexpress.repository.UsuarioRepository;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Page;
@@ -36,11 +38,12 @@ public class UsuarioController {
     private final ProductoOrdenesRepository productoOrdenesRepository;
     private final ContrasenaAgenteRespository contrasenaAgenteRespository;
     private final PasswordEncoder passwordEncoder;
+    private final ChatRoomService chatRoomService;
 
 
     public UsuarioController(UsuarioRepository usuarioRepository, ProductoRepository productoRepository, ReseniaRepository reseniaRepository,
                              OrdenesRepository ordenesRepository, DistritoRepository distritoRepository, CoordinadorRepository coordinadorRepository,
-                             ProductoOrdenesRepository productoOrdenesRepository, ContrasenaAgenteRespository contrasenaAgenteRespository, PasswordEncoder passwordEncoder) {
+                             ProductoOrdenesRepository productoOrdenesRepository, ContrasenaAgenteRespository contrasenaAgenteRespository, PasswordEncoder passwordEncoder, ChatRoomService chatRoomService) {
         this.usuarioRepository = usuarioRepository;
         this.productoRepository = productoRepository;
         this.reseniaRepository = reseniaRepository;
@@ -50,6 +53,7 @@ public class UsuarioController {
         this.productoOrdenesRepository = productoOrdenesRepository;
         this.contrasenaAgenteRespository = contrasenaAgenteRespository;
         this.passwordEncoder = passwordEncoder;
+        this.chatRoomService = chatRoomService;
     }
 
     private final OrdenesRepository ordenesRepository;
@@ -83,13 +87,6 @@ public class UsuarioController {
         return "Usuariofinal/inicio_usuariofinal";
     }
 
-    @GetMapping("/chat")
-    public String chat(Model model){
-
-        model.addAttribute("activePage", "chat");
-
-        return "Usuariofinal/chat";
-    }
 
     @GetMapping("/detalle_producto")
     public String detalle_producto(Model model, @RequestParam("id")  Integer id){
@@ -706,6 +703,14 @@ public class UsuarioController {
         } else {
             return "redirect:/usuario";
         }
+    }
+    @GetMapping("/chat")
+    public ModelAndView getMonitorPage(Model model) {
+        model.addAttribute("paginaActual", "chat_usuario");
+        ModelAndView modelAndView = new ModelAndView("Usuariofinal/chat_usuario"); // Crea un ModelAndView con la vista correcta
+        Set<String> activeRooms = chatRoomService.getActiveRooms(); // Obtiene las salas activas
+        modelAndView.addObject("activeRooms", activeRooms); // Agrega las salas activas al modelo
+        return modelAndView; // Devuelve el ModelAndView
     }
 
 }
