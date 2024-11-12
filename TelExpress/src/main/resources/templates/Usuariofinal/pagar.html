@@ -69,6 +69,10 @@
 
     <!--uso para el llamado de pago de stripe -->
     <script src="https://js.stripe.com/v3/"></script>
+    <!--uso de token dinamico-->
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+
     <style>
             .btn {
               height: 100%;
@@ -149,20 +153,21 @@
                                 <div class="card-header row g-5 align-items-center">
                                     <div class="row g-3 justify-content-between">
                                     <div class="col-md-4 col-lg-5">
-                                        <button class="btn custom-btn btn-outline-secondary d-flex align-items-center w-100">
-                                        <input type="checkbox" id="checkbox1" class="checkbox me-2">
-                                        <label for="checkbox1" class="d-flex align-items-center gap-2 form-check-label">
-                                            <a href="/assets/img/icons/unicons/visa.png" target="_blank" class="icon-link me-2">
+                                        <button  id="checkbox1" class="btn custom-btn btn-outline-secondary d-flex align-items-center w-100" type="button">
+                                        <!--<input type="checkbox" id="checkbox1" class="checkbox me-2">-->
+                                        <!--<label for="checkbox1" class="d-flex align-items-center gap-2 form-check-label">-->
+                                            <!--<a href="/assets/img/icons/unicons/visa.png" target="_blank" class="icon-link me-2">
                                             <img src="/assets/img/icons/unicons/visa.png" alt="Icono" class="icon-image me-2">
-                                            </a>
+                                            </a>-->
+                                            <img src="/assets/img/icons/unicons/visa.png" alt="Icono" class="icon-image me-2">
                                             <span class="btn-text">Tarjeta</span>
-                                        </label>
+                                        <!--</label>-->
                                         </button>
                                     </div>
                                 
                                     <div class="col-md-4 col-lg-5 align-items-center justify-content-between ">
-                                        <button class="btn custom-btn btn-outline-secondary d-flex align-items-center w-100">
-                                        <input type="checkbox" id="checkbox2" class="checkbox me-2">
+                                        <button id="checkbox2" class="btn custom-btn btn-outline-secondary d-flex align-items-center w-100" type="button">
+                                        <!--<input type="checkbox" id="checkbox2" class="checkbox me-2">-->
                                         <label for="checkbox2" class="d-flex align-items-center gap-2 form-check-label">
                                             <a href="/assets/img/icons/unicons/paypal.png" target="_blank" class="icon-link me-2">
                                             <img src="/assets/img/icons/unicons/paypal.png" alt="Icono" class="icon-image me-2">
@@ -213,32 +218,37 @@
                         
                                 <hr class="m-0" style="margin-bottom:0.5rem">
                                 <h3 style="margin-top:0.8rem">Información de Tarjeta</h3>
+                                <form id="formularioPago" th:action="@{/usuario/orden/pago/tarjeta}" method="post">
                                 <div class="row g-3">
-                                    <div class="col-md-20">
-                                        <div class="mb-3">
-                                            <label for="inputtarjet" class="form-label">Numero de Tarjeta</label>
-                                            <input type="text" class="form-control" id="inputtarjet" placeholder="xxxx-xxxx-xxxx-xxxx" aria-describedby="inputtarjet">
+                                        <input type="hidden" name="ordenId" th:value="${orden.idOrdenes}">
+                                        <input type="hidden" name="monto" th:value="${totalGeneral}">
+                                        <div class="col-md-20">
+                                            <div class="mb-3">
+                                                <label for="numeroTarjeta" class="form-label">Numero de Tarjeta</label>
+                                                <input type="text" class="form-control" id="numeroTarjeta" placeholder="xxxx-xxxx-xxxx-xxxx" aria-describedby="numeroTarjetaHelp" required>
+                                                <div id="numeroTarjetaHelp" class="form-text">Introduce el número completo de tu tarjeta sin espacios.</div>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="mb-3">
-                                            <label for="inputnombre" class="form-label">Nombre</label>
-                                            <input type="text" class="form-control" id="inputnombre" placeholder="Guillermo perez" aria-describedby="inputnombre">
+                                        <div class="col-md-4">
+                                            <div class="mb-3">
+                                                <label for="inputnombre" class="form-label">Nombre</label>
+                                                <input type="text" class="form-control" id="inputnombre" placeholder="Guillermo perez" aria-describedby="inputnombre" required>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="mb-3">
-                                            <label for="inputfecha" class="form-label">Fecha</label>
-                                            <input type="text" class="form-control" id="inputfecha" placeholder="00/00" aria-describedby="inputfecha">
+                                        <div class="col-md-4">
+                                            <div class="mb-3">
+                                                <label for="fechaExpiracion" class="form-label">Fecha Expiración</label>
+                                                <input type="text" class="form-control" id="fechaExpiracion" placeholder="MM/YY" aria-describedby="fechaExpiracion" required>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="mb-3">
-                                            <label for="inputcvv" class="form-label">CVV</label>
-                                            <input type="text" class="form-control" id="inputcvv" placeholder="XXX" aria-describedby="inputcvv">
+                                        <div class="col-md-4">
+                                            <div class="mb-3">
+                                                <label for="cvv" class="form-label">CVV</label>
+                                                <input type="text" class="form-control" id="cvv" placeholder="123" aria-describedby="cvv">
+                                            </div>
                                         </div>
-                                    </div>
                                 </div>
+                                </form>
                             </div>
                         </div>
 
@@ -286,7 +296,7 @@
                                 </div>
                                 
                                 <div class="d-flex justify-content-center mt-4">
-                                    <button type="button" class="btn btn-primary justify-content-center" data-bs-toggle="modal" data-bs-target="#paymentModal">Proceder con el pago</button>
+                                    <button type="button" id="btnProcederPago" class="btn btn-primary justify-content-center" data-bs-toggle="modal" data-bs-target="#paymentModal" onclick="procederConPago()">Proceder con el pago</button>
                                 </div>
                                 <div class="justify-content-center mt-3">
                                     <p>Al aceptar "Proceder con el pago" acepta nuestras Politicas de privacidad de datos del usuario </p>
@@ -340,8 +350,75 @@
         </div>
     </div>
 </div>
-  
 
+<script>
+    let metodoPagoSeleccionado = null;
+   /* document.getElementById("checkbox1").addEventListener("change", function(event) {
+        if (event.target.checked) {
+            procesarPagoConTarjeta();
+        }
+    });*/
+    document.getElementById("checkbox1").addEventListener("click", function() {
+        metodoPagoSeleccionado = "tarjeta";
+        document.getElementById("checkbox2").checked = false; // deselecciona PayPal si Tarjeta es seleccionada
+    });
+    document.getElementById("checkbox2").addEventListener("click", function() {
+        metodoPagoSeleccionado = "paypal";
+        document.getElementById("checkbox1").checked = false; // deselecciona Tarjeta si PayPal es seleccionada
+    });
+
+    function procederConPago() {
+        const ordenId = document.querySelector("input[name='ordenId']").value;
+        const monto = document.querySelector("input[name='monto']").value;
+        // Obtener el token CSRF y el nombre del encabezado desde los meta tags
+        const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute("content");
+        const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute("content");
+
+        if (metodoPagoSeleccionado === "tarjeta"){
+            fetch("/usuario/orden/pago/tarjeta", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    [csrfHeader]: csrfToken // Agregar el token CSRF con el nombre del encabezado dinámico
+                },
+                body: JSON.stringify({
+                    ordenId: ordenId,
+                    monto: monto
+                })
+            })
+                .then(response => response.text())
+                .then(result => {
+                    alert(result); // Muestra un mensaje de éxito o error
+                    if (result.includes("exitosamente")) {
+                        // Opcional: Redirigir a otra página o actualizar la interfaz
+                    }
+                })
+                .catch(error => console.error("Error en el pago:", error));
+        }else if (metodoPagoSeleccionado === "paypal") {
+            // Llama al endpoint para procesar el pago con PayPal
+            fetch("/usuario/orden/pago/paypal", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    ordenId: ordenId,
+                    monto: monto
+                })
+            })
+                .then(response => response.text())
+                .then(result => {
+                    alert(result); // Muestra mensaje de éxito o error
+                    if (result.includes("exitosamente")) {
+                        // Opcional: Redirigir o actualizar interfaz
+                    }
+                })
+                .catch(error => console.error("Error en el pago:", error));
+        } else {
+            alert("Por favor, seleccione un método de pago antes de continuar.");
+        }
+    }
+</script>
   
 
 

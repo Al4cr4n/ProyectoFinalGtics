@@ -1,9 +1,12 @@
 package com.example.telexpress.controller;
+import com.example.telexpress.dao.StripePaymentDAO;
+import com.example.telexpress.dto.PaymentResponseDTO;
 import com.example.telexpress.dto.ProductoDTO;
 import com.example.telexpress.entity.*;
 import com.example.telexpress.repository.*;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -54,7 +57,8 @@ public class UsuarioController {
 
     private final OrdenesRepository ordenesRepository;
     private final DistritoRepository distritoRepository;
-
+    @Autowired
+    private StripePaymentDAO stripePaymentDAO;
 
 /*
     @GetMapping({"","/inicio"})
@@ -452,7 +456,7 @@ public class UsuarioController {
     }
     @GetMapping("/pedidos/borrar")
     public String borrarPedidos(Model model,
-                                @RequestParam("id") int id,
+                                @RequestParam("id") Integer id,
                                 RedirectAttributes attr) {
         model.addAttribute("activePage", "lista_pedidos");
 
@@ -538,7 +542,7 @@ public class UsuarioController {
             producto.ifPresent(p -> {
                 p.setCantidadComprada(po.getCantidadxproducto());
                 productos.add(p);
-                subtotal[0] += p.getPrecio() * po.getCantidadxproducto(); /// Agregar la cantidad de la tabla intermedia
+                subtotal[0] += p.getPrecio() * po.getCantidadxproducto(); // Agregar la cantidad de la tabla intermedia
 
             });
         }
@@ -553,10 +557,27 @@ public class UsuarioController {
         model.addAttribute("totalGeneral", totalGeneral);
         return "Usuariofinal/pagar";
     }
-    /*@PostMapping("/orden/pago/tarjeta")
+    @PostMapping("/orden/pago/tarjeta")
     @ResponseBody
-    public Map<String,Object> procesarPagoConTarjeta(@RequestParam Integer ordenid, @RequestBody Map<String, Object> tarjetaInfo){
+    public ResponseEntity<String> procesarPagoConTarjeta(@RequestBody PaymentResponseDTO pagoRequest){
+        //se obtiene la orden a procesar
+        //Ordenes orden = ordenesRepository.findById(ordenid).orElseThrow(()-> new IllegalArgumentException("Orden no encontrada"));
+        //Crear el intento de pago en stripe
+        try{
+            //se obtiene el monto en la mínima moneda existente(centimos)
+            stripePaymentDAO.crearPago(pagoRequest);
+            return ResponseEntity.ok("Pago realizado exitosamente");
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error en el pago(bad_request): "+e.getMessage());
+        }
+    }
 
+    // Método POST para procesar el pago con PayPal (implementación pendiente)
+    /*@PostMapping("/pago/paypal")
+    @ResponseBody
+    public ResponseEntity<String> procesarPagoConPayPal(@RequestBody PagoRequest pagoRequest) {
+        // Aquí se integraría la lógica para PayPal
+        return ResponseEntity.ok("Pago realizado exitosamente con PayPal (simulación)");
     }*/
 
     @GetMapping("/pago")
