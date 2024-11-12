@@ -471,6 +471,7 @@ public class AgenteController {
     @GetMapping("/chat")
     public ModelAndView getMonitorPage(Model model) {
         model.addAttribute("paginaActual", "chat_agente");
+
         ModelAndView modelAndView = new ModelAndView("Agente/chat_agente"); // Crea un ModelAndView con la vista correcta
         Set<String> activeRooms = chatRoomService.getActiveRooms(); // Obtiene las salas activas
         modelAndView.addObject("activeRooms", activeRooms); // Agrega las salas activas al modelo
