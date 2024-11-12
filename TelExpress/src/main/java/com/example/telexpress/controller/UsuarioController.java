@@ -522,6 +522,7 @@ public class UsuarioController {
     @GetMapping("/orden/pagar")
     public String verDetalleOrdenaPagar(Model model , @RequestParam Integer ordenId, RedirectAttributes attr) {
         model.addAttribute("activePage", "orden_pagar");
+        //Optional<Ordenes> optionalOrdenes = ordenesRepository.findById(id);
         Ordenes orden =ordenesRepository.findById(ordenId).orElseThrow(()-> new IllegalArgumentException("Orden no encontrada"));
         //Ordenes orden = ordenesRepository.findByIdOrdenes(ordenId).orElseThrow(() -> new IllegalArgumentException("Orden no encontrada"));
 
@@ -552,6 +553,11 @@ public class UsuarioController {
         model.addAttribute("totalGeneral", totalGeneral);
         return "Usuariofinal/pagar";
     }
+    /*@PostMapping("/orden/pago/tarjeta")
+    @ResponseBody
+    public Map<String,Object> procesarPagoConTarjeta(@RequestParam Integer ordenid, @RequestBody Map<String, Object> tarjetaInfo){
+
+    }*/
 
     @GetMapping("/pago")
     public String pago(Model model){
