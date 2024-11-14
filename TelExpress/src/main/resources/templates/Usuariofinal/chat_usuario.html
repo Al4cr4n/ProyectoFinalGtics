@@ -36,17 +36,28 @@
                             <h4 style="font-family: 'Poppins', sans-serif; color: #7367F0; font-weight: bold; padding-top: 1rem; padding-bottom: 1rem; margin-bottom: 1rem; text-align: center; font-size: 40px;">
                                 Chat
                             </h4>
-                            <div id="user-list" style="margin-bottom: 20px;">
+                            <div id="user-list" style="margin-bottom: 20px;" th:each="idAgente : ${idAgente}" >
                                 <!-- List of users to chat with -->
-                                <button onclick="openChat(1)">User 1</button>
+                                <button th:onclick="'openChat(' + ${idAgente} + ')'"
+                                        type="button"
+                                        class="user-button"
+                                        th:text="'Usuario ' + ${idAgente}">Usuario</button>
                                 <button onclick="openChat(2)">ChatBot</button>
                                 <!-- Add more users as needed -->
                             </div>
-                            <div id="chat-container" style="display: flex; flex-direction: column; height: 500px; border: 1px solid #ccc; padding: 10px;">
-                                <div id="response" style="flex-grow: 1; overflow-y: auto;"></div>
-                                <div style="display: flex; margin-top: 10px;">
-                                    <input type="text" id="message" placeholder="Escribe tu mensaje..." style="flex-grow: 1; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
-                                    <button onclick="sendMessage()" style="margin-left: 10px; padding: 10px 20px; background-color: #7367F0; color: white; border: none; border-radius: 5px;">Enviar</button>
+                            <div th:each="idUsuario : ${idAgente}" th:attr="id='chat-container-' + ${idUsuario}" class="card chat-container" style="display: none;">
+                                <div class="card-body">
+                                    <h4 style="font-family: 'Poppins', sans-serif; color: #7367F0; font-weight: bold; padding-top: 1rem; padding-bottom: 1rem; margin-bottom: 1rem; text-align: center; font-size: 40px;">
+                                        Chat con Usuario <span th:text="${idUsuario}"></span>
+                                    </h4>
+                                    <div class="chat-box" style="display: flex; flex-direction: column; height: 500px; border: 1px solid #ccc; padding: 10px;">
+                                        <!-- Asigna un ID único para cada contenedor de respuesta -->
+                                        <div th:attr="id='response-' + ${idUsuario}" style="flex-grow: 1; overflow-y: auto;"></div>
+                                        <div style="display: flex; margin-top: 10px;">
+                                            <input type="text" th:attr="id='message-' + ${idUsuario}" placeholder="Escribe tu mensaje..." style="flex-grow: 1; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+                                            <button th:attr="onclick='sendMessage(' + ${idUsuario} + ')'" style="margin-left: 10px; padding: 10px 20px; background-color: #7367F0; color: white; border: none; border-radius: 5px;">Enviar</button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -60,87 +71,43 @@
     <!-- Overlay -->
     <div class="layout-overlay layout-menu-toggle"></div>
 </div>
-<!-- / Layout wrapper -->
+
+
 <script src="/assets/vendor/libs/jquery/jquery.js"></script>
-<script src="/assets/vendor/libs/popper/popper.js"></script>
-<script src="/assets/vendor/js/bootstrap.js"></script>
-<script src="/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
-<script src="/assets/vendor/js/menu.js"></script>
-<script src="/assets/vendor/libs/apex-charts/apexcharts.js"></script>
-<script src="/assets/js/main.js"></script>
-<script src="/assets/js/dashboards-analytics.js"></script>
-<script async defer src="https://buttons.github.io/buttons.js"></script>
 <script>
-    var currentChatUser = 1;
-    var chatMessages = {};
+    var chatMessages = {}; // Para almacenar mensajes de cada usuario
 
     function openChat(userId) {
-        currentChatUser = userId;
-        document.getElementById('response').innerHTML = chatMessages[userId] || '';
-        startLongPolling();
+        // Oculta todos los contenedores de chat
+        document.querySelectorAll('.chat-container').forEach(function(container) {
+            container.style.display = 'none';
+        });
+        // Muestra el contenedor de chat del usuario seleccionado
+        document.getElementById('chat-container-' + userId).style.display = 'block';
+
+        // Carga mensajes anteriores para el usuario
+        var responseContainer = document.getElementById('response-' + userId);
+        responseContainer.innerHTML = chatMessages[userId] || '';
     }
 
-    function sendMessage() {
-        var messageContent = document.getElementById('message').value;
+    function sendMessage(userId) {
+        var messageContent = document.getElementById('message-' + userId).value;
         if (!messageContent.trim()) {
             alert('Por favor, escribe un mensaje.');
             return;
         }
-        $.ajax({
-            type: 'POST',
-            url: '/api/chat/send',
-            data: {
-                sourceuser: getMonitorPage, // Replace with actual source user ID
-                destinationuser: 1, // Replace with actual destination user ID
-                message: messageContent
-            },
-            success: function(response) {
-                showMessage(response);
-                document.getElementById('message').value = '';
-            },
-            error: function(error) {
-                console.error('Error sending message:', error);
-            }
-        });
-    }
 
-    function showMessage(message) {
-        var response = document.getElementById('response');
+        var responseContainer = document.getElementById('response-' + userId);
         var p = document.createElement('p');
-        p.appendChild(document.createTextNode(message.sourceuser + ': ' + message.message));
-        response.appendChild(p);
-        response.scrollTop = response.scrollHeight;
+        p.textContent = 'Usuario ' + userId + ': ' + messageContent;
+        responseContainer.appendChild(p);
 
-        if (!chatMessages[message.destinationuser]) {
-            chatMessages[message.destinationuser] = '';
-        }
-        chatMessages[message.destinationuser] += p.outerHTML;
+        // Almacena el mensaje para mantener historial
+        chatMessages[userId] = responseContainer.innerHTML;
+
+        // Limpia el campo de mensaje
+        document.getElementById('message-' + userId).value = '';
     }
-
-    function startLongPolling() {
-        //if (currentChatUser === null) return;
-        $.ajax({
-            type: 'GET',
-            url: '/api/chat/longPoll',
-            data: {
-                destinationuser: 1, // Replace with actual destination user ID
-            },
-            success: function(response) {
-                if (response && response.message) {
-                    showMessage(response);
-                }
-                startLongPolling(); // Restart long polling
-            },
-            error: function(error) {
-                console.error('Error during long polling:', error);
-                setTimeout(startLongPolling, 5000); // Retry after 5 seconds on error
-            }
-        });
-    }
-
-    window.onload = function() {
-        startLongPolling();
-    };
 </script>
 </body>
 </html>

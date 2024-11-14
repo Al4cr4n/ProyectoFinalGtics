@@ -705,11 +705,17 @@ public class UsuarioController {
         }
     }
     @GetMapping("/chat")
-    public ModelAndView getMonitorPage(Model model) {
+    public ModelAndView getMonitorPage(Model model, HttpSession session) {
         model.addAttribute("paginaActual", "chat_usuario");
+        Usuario usuarioFinal = (Usuario) session.getAttribute("usuario");
+        Integer idUsuario = usuarioFinal.getId();
+        Integer idAgente = usuarioFinal.getIdSuperior().getId();
+
         ModelAndView modelAndView = new ModelAndView("Usuariofinal/chat_usuario"); // Crea un ModelAndView con la vista correcta
         Set<String> activeRooms = chatRoomService.getActiveRooms(); // Obtiene las salas activas
         modelAndView.addObject("activeRooms", activeRooms); // Agrega las salas activas al modelo
+        modelAndView.addObject("idAgente", idAgente);
+        modelAndView.addObject("idUsuario", idUsuario);
         return modelAndView; // Devuelve el ModelAndView
     }
 
