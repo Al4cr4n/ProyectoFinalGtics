@@ -72,29 +72,25 @@ public class SecurityWeb {
                 .usernameParameter("email")
                 .successHandler(authenticationSuccessHandler()) // Llama a un método separado
                 .permitAll()  // Usar el formulario de login por defecto de Spring Security
-        );
-        http.logout(logout -> logout
+        ).logout(logout -> logout
                 .logoutUrl("/logout")
                 //.logoutSuccessUrl("/login?logout")
                 .invalidateHttpSession(true)             // Invalida la sesión actual
                 .deleteCookies("JSESSIONID")             // Elimina la cookie de sesión JSESSIONID
                 .permitAll()  // Permitir a todos realizar logout
-        );
-
-        http.sessionManagement(session -> session
+        ).sessionManagement(session -> session
                 .maximumSessions(1)                      // Solo permite una sesión activa por usuario
                 .maxSessionsPreventsLogin(false)         // Si se intenta iniciar sesión nuevamente, invalida la sesión anterior
                 .expiredUrl("/login?expired")
-        );
-        http.authorizeHttpRequests(authorize -> authorize
+        ).authorizeHttpRequests(authorize -> authorize
                 .requestMatchers("/login","/").permitAll()
-                .requestMatchers ("/agente","/agente/**", "/api/**").hasAuthority("Agente") //acceso solo para agentes
+                .requestMatchers ("/agente","/agente/**").hasAuthority("Agente") //acceso solo para agentes
                 .requestMatchers("/superadmin", "/superadmin/**", "/producto/**").hasAuthority("Superadmin")
                 .requestMatchers("/coordinador","/coordinador/**").hasAuthority("Coordinador")
-                .requestMatchers("/usuario","/usuario/**", "/api/**").hasAnyAuthority("Superadmin", "Usuario")
+                .requestMatchers("/usuario","/usuario/**").hasAnyAuthority("Superadmin", "Usuario")
+                .requestMatchers("/api/**").hasAnyAuthority("Superadmin", "Usuario", "Agente")
                 .anyRequest().permitAll()
-        );
-        http.exceptionHandling(exception -> exception
+        ).exceptionHandling(exception -> exception
                 .authenticationEntryPoint((request, response, authException) ->{
                     response.sendRedirect("/login?error=accessDenied");
                 })
