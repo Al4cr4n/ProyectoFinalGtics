@@ -14,7 +14,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <!-- Icons. Uncomment required icon fonts -->
+    <!-- Icons -->
     <link rel="stylesheet" href="../../assets/vendor/fonts/boxicons.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css">
 
@@ -31,6 +31,45 @@
     <script src="../../assets/vendor/js/helpers.js"></script>
     <script src="../../assets/js/config.js"></script>
 
+    <style>
+        /* Estilo del botón "Crear" */
+        .btn-crear {
+            background-color: #d4e2fc; /* Color pastel azul */
+            color: #333;
+            border: none;
+            border-radius: 5px;
+            padding: 8px 16px;
+            font-weight: 500;
+            font-family: 'Poppins', sans-serif;
+            transition: background-color 0.3s;
+        }
+
+        .btn-crear:hover {
+            background-color: #b3ccfa; /* Color pastel azul más oscuro */
+        }
+
+        /* Estilo para el textarea no editable */
+        textarea[readonly] {
+            resize: none; /* Desactiva el cambio de tamaño */
+        }
+
+        /* Alineación y tamaño ajustado del buscador y botones */
+        .search-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .search-container input[type="search"] {
+            flex: 1;
+            max-width: 300px; /* Limita el ancho del campo de búsqueda */
+        }
+
+        .search-container .btn {
+            padding: 8px 16px;
+            font-size: 14px;
+        }
+    </style>
 </head>
 <body>
 <!-- Layout wrapper -->
@@ -43,15 +82,15 @@
 
             <div class="content-wrapper">
                 <div class="container-xxl flex-grow-1 container-p-y">
-                    <h4>Reseñas</h4>
+                    <h6 class="desing-title-page">Reseñas</h6>
 
-                    <!-- Buscador -->
+                    <!-- Buscador y Botón Crear -->
                     <div class="row">
                         <div class="d-flex justify-content-center align-items-center card-header">
-                            <div class="col-md-6 position-relative store-search">
+                            <div class="search-container">
                                 <form class="d-flex" th:action="@{/usuario/mostrarResenias}" method="get" id="searchForm">
                                     <!-- Campo de búsqueda -->
-                                    <input class="form-control me-1" type="search" name="search" id="search" placeholder="Buscando..." th:value="${search}" aria-label="Search" style="width: 50%;" />
+                                    <input class="form-control me-1" type="search" name="search" id="search" placeholder="Buscando..." th:value="${search}" aria-label="Search" />
 
                                     <!-- Botón Buscar -->
                                     <button class="btn btn-outline-primary me-1" type="submit">Buscar</button>
@@ -59,14 +98,12 @@
                                     <!-- Botón Limpiar como un enlace directo -->
                                     <a href="/usuario/mostrarResenias" class="btn btn-outline-primary">Limpiar</a>
                                 </form>
+
+                                <!-- Botón Crear -->
+                                <button class="btn btn-crear">Crear</button>
                             </div>
                         </div>
                     </div>
-
-
-
-
-
 
                     <!-- Sección de Reseñas (dinámica con Thymeleaf) -->
                     <div class="accordion mt-3" id="accordionExample">
@@ -92,7 +129,6 @@
                                             <!-- Generar estrellas vacías solo si la puntuación es menor que 5 -->
                                             <i class="bi bi-star text-warning" th:if="${resenia.puntuacion < 5}" th:each="i : ${#numbers.sequence(1, 5 - resenia.puntuacion)}"></i>
                                         </div>
-
                                     </div>
 
                                     <!-- Mostrar Imagen -->
@@ -103,14 +139,13 @@
                                     <!-- Preguntas de Reseñas -->
                                     <div class="mb-3">
                                         <label for="productQuality" class="form-label">El producto es de buena calidad?</label>
-                                        <textarea id="productQuality" class="form-control" th:text="${resenia.calidad}" rows="3"></textarea>
+                                        <textarea id="productQuality" class="form-control" th:text="${resenia.calidad}" rows="3" readonly></textarea>
                                     </div>
 
                                     <div class="mb-3">
                                         <label for="deliverySpeed" class="form-label">Recibió rápido su producto?</label>
-                                        <textarea id="deliverySpeed" class="form-control" th:text="${resenia.rapidez}" rows="3"></textarea>
+                                        <textarea id="deliverySpeed" class="form-control" th:text="${resenia.rapidez}" rows="3" readonly></textarea>
                                     </div>
-
 
                                     <hr class="m-0">
                                     <div class="row">
