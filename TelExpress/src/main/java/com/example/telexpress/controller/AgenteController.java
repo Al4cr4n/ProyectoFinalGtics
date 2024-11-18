@@ -473,8 +473,9 @@ public class AgenteController {
         model.addAttribute("paginaActual", "chat_agente");
         Usuario agente = (Usuario) session.getAttribute("usuario");
         Integer idAgente = agente.getId() ;
+        //Usuario name =  ;
         ArrayList<Integer> listUsuario= new ArrayList<>();
-        listUsuario.add(3);
+        listUsuario.add(18);
         listUsuario.add(4);
         listUsuario.add(5);
         listUsuario.add(6);
@@ -483,6 +484,7 @@ public class AgenteController {
         Set<String> activeRooms = chatRoomService.getActiveRooms(); // Obtiene las salas activas
         modelAndView.addObject("activeRooms", activeRooms);
         modelAndView.addObject("listUsuario", listUsuario);
+        //modelAndView.addObject("name", name);
         modelAndView.addObject("idAgente", idAgente);// Agrega las salas activas al modelo
         return modelAndView; // Devuelve el ModelAndView
     }

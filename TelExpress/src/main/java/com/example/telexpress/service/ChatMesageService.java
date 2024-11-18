@@ -5,6 +5,8 @@ import com.example.telexpress.repository.ChatMessageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ChatMesageService {
 
@@ -21,5 +23,9 @@ public class ChatMesageService {
 
     public ChatMessage getLastMessageByDestination(Integer sourceuser) {
         return chatMessageRepository.findLastMessageByDestination(sourceuser);
+    }
+
+    public List<ChatMessage> getChatHistory(Long userId, Long agentId) {
+        return chatMessageRepository.findChatHistoryByUserIdAndAgentId(userId, agentId);
     }
 }

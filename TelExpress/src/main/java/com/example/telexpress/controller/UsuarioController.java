@@ -710,6 +710,7 @@ public class UsuarioController {
         Usuario usuarioFinal = (Usuario) session.getAttribute("usuario");
         Integer idUsuario = usuarioFinal.getId();
         Integer idAgente = usuarioFinal.getIdSuperior().getId();
+        System.out.println("Id agente: " + idAgente);
 
         ModelAndView modelAndView = new ModelAndView("Usuariofinal/chat_usuario"); // Crea un ModelAndView con la vista correcta
         Set<String> activeRooms = chatRoomService.getActiveRooms(); // Obtiene las salas activas
