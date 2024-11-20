@@ -1,4 +1,5 @@
 package com.example.telexpress.config;
+import com.example.telexpress.entity.Usuario;
 import com.example.telexpress.repository.UsuarioRepository;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -35,6 +36,7 @@ import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.Collection;
 
 
@@ -66,39 +68,52 @@ public class SecurityWeb {
         //http.formLogin();
         http.csrf(AbstractHttpConfigurer::disable)
                 .formLogin(form -> form
-                .loginPage("/login")
-                .loginProcessingUrl("/procesologueo")
-                .failureUrl("/login?error=invalidCredentials") //en caso las credenciales ingresadas sean erroneas
-                .usernameParameter("email")
-                .successHandler(authenticationSuccessHandler()) // Llama a un método separado
-                .permitAll()  // Usar el formulario de login por defecto de Spring Security
-        );
-        http.logout(logout -> logout
-                .logoutUrl("/logout")
-                //.logoutSuccessUrl("/login?logout")
-                .invalidateHttpSession(true)             // Invalida la sesión actual
-                .deleteCookies("JSESSIONID")             // Elimina la cookie de sesión JSESSIONID
-                .permitAll()  // Permitir a todos realizar logout
-        );
+                        .loginPage("/login")
+                        .loginProcessingUrl("/procesologueo")
+                        .failureUrl("/login?error=invalidCredentials") // En caso las credenciales ingresadas sean erróneas
+                        .usernameParameter("email")
+                        .successHandler(authenticationSuccessHandler()) // Llama a un método separado
+                        .permitAll() // Usar el formulario de login por defecto de Spring Security
+                )
+                .logout(logout -> logout
+                        .logoutUrl("/logout")
+                        .logoutSuccessHandler((request, response, authentication) -> {
+                            if (authentication != null && authentication.getName() != null) {
+                                // Obtener el usuario por correo
+                                Usuario usuario = usuarioRepository.findByCorreo(authentication.getName());
+                                if (usuario != null) {
+                                    usuario.setLastLogin(LocalDateTime.now()); // Actualiza el último login
+                                    usuario.setEstadoUsuario("Inactivo"); // Cambia el estado a "Inactivo"
+                                    usuarioRepository.save(usuario); // Guarda los cambios
+                                    System.out.println("Usuario " + usuario.getCorreo() + " cerró sesión. Último login registrado.");
+                                }
+                            }
+                            // Redirigir a la página de login después del logout
+                            response.sendRedirect("/login?logout");
+                        })
+                        .invalidateHttpSession(true) // Invalida la sesión actual
+                        .deleteCookies("JSESSIONID") // Elimina la cookie de sesión JSESSIONID
+                        .permitAll() // Permitir a todos realizar logout
+                )
+                .sessionManagement(session -> session
+                        .maximumSessions(1) // Solo permite una sesión activa por usuario
+                        .maxSessionsPreventsLogin(false) // Si se intenta iniciar sesión nuevamente, invalida la sesión anterior
+                        .expiredUrl("/login?expired") // Redirige si la sesión expira
+                )
+                .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers("/login", "/").permitAll()
+                        .requestMatchers("/agente", "/agente/**", "/api/**").hasAuthority("Agente") // Acceso solo para agentes
+                        .requestMatchers("/superadmin", "/superadmin/**", "/producto/**").hasAuthority("Superadmin")
+                        .requestMatchers("/coordinador", "/coordinador/**").hasAuthority("Coordinador")
+                        .requestMatchers("/usuario", "/usuario/**", "/api/**").hasAnyAuthority("Superadmin", "Usuario")
+                        .anyRequest().permitAll()
+                )
+                .exceptionHandling(exception -> exception
+                        .authenticationEntryPoint((request, response, authException) -> {
+                            response.sendRedirect("/login?error=accessDenied");
+                        })
+                );
 
-        http.sessionManagement(session -> session
-                .maximumSessions(1)                      // Solo permite una sesión activa por usuario
-                .maxSessionsPreventsLogin(false)         // Si se intenta iniciar sesión nuevamente, invalida la sesión anterior
-                .expiredUrl("/login?expired")
-        );
-        http.authorizeHttpRequests(authorize -> authorize
-                .requestMatchers("/login","/").permitAll()
-                .requestMatchers ("/agente","/agente/**", "/api/**").hasAuthority("Agente") //acceso solo para agentes
-                .requestMatchers("/superadmin", "/superadmin/**", "/producto/**").hasAuthority("Superadmin")
-                .requestMatchers("/coordinador","/coordinador/**").hasAuthority("Coordinador")
-                .requestMatchers("/usuario","/usuario/**", "/api/**").hasAnyAuthority("Superadmin", "Usuario")
-                .anyRequest().permitAll()
-        );
-        http.exceptionHandling(exception -> exception
-                .authenticationEntryPoint((request, response, authException) ->{
-                    response.sendRedirect("/login?error=accessDenied");
-                })
-        );
         return http.build();
     }
 
@@ -146,14 +161,23 @@ public class SecurityWeb {
             @Override
             public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
                     throws IOException, ServletException {
+                // Obtener el usuario autenticado por su correo
+                String correo = authentication.getName();
+                Usuario usuario = usuarioRepository.findByCorreo(correo);
+
+                if (usuario != null) {
+                    // Actualizar lastLogin y estadoUsuario
+                    usuario.setLastLogin(LocalDateTime.now());
+                    usuario.setEstadoUsuario("Activo");
+                    usuarioRepository.save(usuario); // Guardar los cambios en la base de datos
+                }
+
+                // Guardar el usuario en la sesión (ya estaba en tu código original)
+                HttpSession session = request.getSession();
+                session.setAttribute("usuario", usuario);
+
                 // Verificar si existe una URL guardada en la sesión (DefaultSavedRequest)
                 DefaultSavedRequest savedRequest = (DefaultSavedRequest) request.getSession().getAttribute("SPRING_SECURITY_SAVED_REQUEST");
-
-                HttpSession session = request.getSession();
-                session.setAttribute("usuario",usuarioRepository.findByCorreo(authentication.getName()));
-
-
-
                 if (savedRequest != null) {
                     String targetURL = savedRequest.getRedirectUrl();
                     redirectStrategy.sendRedirect(request, response, targetURL);
@@ -166,16 +190,17 @@ public class SecurityWeb {
                         response.sendRedirect("/superadmin/inicio_superadmin");
                     } else if (authorities.stream().anyMatch(role -> role.getAuthority().equals("Coordinador"))) {
                         response.sendRedirect("/coordinador/inicio_coordinador_zonal");
-                    }else if (authorities.stream().anyMatch(role -> role.getAuthority().equals("Agente"))) {
+                    } else if (authorities.stream().anyMatch(role -> role.getAuthority().equals("Agente"))) {
                         response.sendRedirect("/agente/inicio");
-                    }else if (authorities.stream().anyMatch(role -> role.getAuthority().equals("Usuario"))) {
-                    response.sendRedirect("/usuario/inicio_usuariofinal");
+                    } else if (authorities.stream().anyMatch(role -> role.getAuthority().equals("Usuario"))) {
+                        response.sendRedirect("/usuario/inicio_usuariofinal");
                     } else {
                         // Si no tiene ningún rol específico, redirige a una página por defecto
                         response.sendRedirect("/usuario/resenia");
                     }
                 }
             }
+
         };
     }
 }

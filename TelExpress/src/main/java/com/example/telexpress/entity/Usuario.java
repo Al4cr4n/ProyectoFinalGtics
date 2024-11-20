@@ -13,6 +13,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.ArrayList;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -117,4 +118,8 @@ public class Usuario implements Serializable {
     // Nuevo campo para manejar la solicitud de agente
     @Column(name = "solicitudAgente")
     private Integer solicitud;
+
+    @Column(name = "lastLogin")
+    private LocalDateTime lastLogin;
+
 }

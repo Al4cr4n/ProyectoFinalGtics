@@ -9,10 +9,13 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
+
+
 
     // Contar usuarios por estado
     long countByEstadoUsuario(String estadoUsuario);
@@ -107,6 +110,9 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 */
     List<Usuario> findByIdSuperior(Usuario idSuperior);
     public Usuario findByCorreo(String Correo);
+
+    List<Usuario> findByLastLoginBeforeAndEstadoUsuario(LocalDateTime lastLogin, String estadoUsuario);
+
 
     // Native query para actualizar el agente encargado de las órdenes
     @Modifying
