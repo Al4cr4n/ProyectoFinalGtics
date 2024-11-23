@@ -452,9 +452,10 @@ CREATE TABLE IF NOT EXISTS `db_grupo2`.`chatmessage` (
   `idchatmessage` INT NOT NULL AUTO_INCREMENT,
   `destinationuser` INT NULL,
   `sourceuser` INT NULL,
-  `message` VARCHAR(45) NULL,
-  PRIMARY KEY (`idchatmessage`))
-ENGINE = InnoDB;
+  `message` TEXT NULL,
+  PRIMARY KEY (`idchatmessage`)
+) ENGINE = InnoDB;
+
 
 -- despachador
 LOCK TABLES `despachador` WRITE;
