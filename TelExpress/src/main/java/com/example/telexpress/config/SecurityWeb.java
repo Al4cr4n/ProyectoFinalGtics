@@ -99,17 +99,16 @@ public class SecurityWeb {
                         .maximumSessions(1) // Solo permite una sesión activa por usuario
                         .maxSessionsPreventsLogin(false) // Si se intenta iniciar sesión nuevamente, invalida la sesión anterior
                         .expiredUrl("/login?expired") // Redirige si la sesión expira
-                )
-                .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/login", "/").permitAll()
-                        .requestMatchers("/agente", "/agente/**", "/api/**").hasAuthority("Agente") // Acceso solo para agentes
+                ).authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers("/login","/").permitAll()
+                        .requestMatchers ("/agente","/agente/**").hasAuthority("Agente") //acceso solo para agentes
                         .requestMatchers("/superadmin", "/superadmin/**", "/producto/**").hasAuthority("Superadmin")
-                        .requestMatchers("/coordinador", "/coordinador/**").hasAuthority("Coordinador")
-                        .requestMatchers("/usuario", "/usuario/**", "/api/**").hasAnyAuthority("Superadmin", "Usuario")
+                        .requestMatchers("/coordinador","/coordinador/**").hasAuthority("Coordinador")
+                        .requestMatchers("/usuario","/usuario/**").hasAnyAuthority("Superadmin", "Usuario")
+                        .requestMatchers("/api/**").hasAnyAuthority("Superadmin", "Usuario", "Agente")
                         .anyRequest().permitAll()
-                )
-                .exceptionHandling(exception -> exception
-                        .authenticationEntryPoint((request, response, authException) -> {
+                ).exceptionHandling(exception -> exception
+                        .authenticationEntryPoint((request, response, authException) ->{
                             response.sendRedirect("/login?error=accessDenied");
                         })
                 );

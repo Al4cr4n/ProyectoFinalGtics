@@ -469,12 +469,23 @@ public class AgenteController {
 
 
     @GetMapping("/chat")
-    public ModelAndView getMonitorPage(Model model) {
+    public ModelAndView getMonitorPage(Model model, HttpSession session) {
         model.addAttribute("paginaActual", "chat_agente");
+        Usuario agente = (Usuario) session.getAttribute("usuario");
+        Integer idAgente = agente.getId() ;
+        //Usuario name =  ;
+        ArrayList<Integer> listUsuario= new ArrayList<>();
+        listUsuario.add(18);
+        listUsuario.add(4);
+        listUsuario.add(5);
+        listUsuario.add(6);
 
         ModelAndView modelAndView = new ModelAndView("Agente/chat_agente"); // Crea un ModelAndView con la vista correcta
         Set<String> activeRooms = chatRoomService.getActiveRooms(); // Obtiene las salas activas
-        modelAndView.addObject("activeRooms", activeRooms); // Agrega las salas activas al modelo
+        modelAndView.addObject("activeRooms", activeRooms);
+        modelAndView.addObject("listUsuario", listUsuario);
+        //modelAndView.addObject("name", name);
+        modelAndView.addObject("idAgente", idAgente);// Agrega las salas activas al modelo
         return modelAndView; // Devuelve el ModelAndView
     }
 

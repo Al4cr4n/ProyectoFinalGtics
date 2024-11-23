@@ -22,11 +22,14 @@
 <body>
 <!-- Layout wrapper -->
 <div class="layout-wrapper layout-content-navbar">
+
     <div class="layout-container">
         <div th:insert="~{Agente/fragments/menu.html::menu}"></div> <!-- este es el menu -->
+
         <!-- Layout container -->
         <div class="layout-page">
             <div th:insert="~{Agente/fragments/navbar.html::navbar}"></div> <!-- este es el navbar -->
+
             <!-- Content wrapper -->
             <div class="content-wrapper">
                 <!-- Aquí se agrega el contenido central -->
@@ -36,19 +39,28 @@
                             <h4 style="font-family: 'Poppins', sans-serif; color: #7367F0; font-weight: bold; padding-top: 1rem; padding-bottom: 1rem; margin-bottom: 1rem; text-align: center; font-size: 40px;">
                                 Chat
                             </h4>
-
-                            <form></form>
-                            <div id="user-list" style="margin-bottom: 20px;">
+                            <div id="user-list" style="margin-bottom: 20px;" th:each="idUsuario : ${listUsuario}" th:attr="id='chat-container-' + ${idAgente}">
                                 <!-- List of users to chat with -->
-                                <button onclick="openChat(1)">User 1</button>
-                                <button onclick="openChat(2)">User 2</button>
+                                <button th:onclick="'openChat(' + ${idUsuario} + ', ' + ${idAgente} + ')'"
+                                        type="button"
+                                        class="user-button"
+                                        th:text="'Usuario ' + ${idUsuario}">Usuario</button>
+                                <button onclick="openChat(2)">ChatBot</button>
                                 <!-- Add more users as needed -->
                             </div>
-                            <div id="chat-container" style="display: flex; flex-direction: column; height: 500px; border: 1px solid #ccc; padding: 10px;">
-                                <div id="response" style="flex-grow: 1; overflow-y: auto;"></div>
-                                <div style="display: flex; margin-top: 10px;">
-                                    <input type="text" id="message" placeholder="Escribe tu mensaje..." style="flex-grow: 1; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
-                                    <button onclick="sendMessage()" style="margin-left: 10px; padding: 10px 20px; background-color: #7367F0; color: white; border: none; border-radius: 5px;">Enviar</button>
+                            <div th:each="idUsuario : ${listUsuario}" th:attr="id='chat-container-' + ${idUsuario}" class="card chat-container" style="display: none;">
+                                <div class="card-body">
+                                    <h4 style="font-family: 'Poppins', sans-serif; color: #7367F0; font-weight: bold; padding-top: 1rem; padding-bottom: 1rem; margin-bottom: 1rem; text-align: center; font-size: 40px;">
+                                        Chat con Usuario <span th:text="${idUsuario}"></span>
+                                    </h4>
+                                    <div class="chat-box" style="display: flex; flex-direction: column; height: 500px; border: 1px solid #ccc; padding: 10px;">
+                                        <!-- Asigna un ID único para cada contenedor de respuesta -->
+                                        <div th:attr="id='response-' + ${idUsuario}" style="flex-grow: 1; overflow-y: auto;"></div>
+                                        <div style="display: flex; margin-top: 10px;">
+                                            <input type="text" th:attr="id='message-' + ${idUsuario}" placeholder="Escribe tu mensaje..." style="flex-grow: 1; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+                                            <button th:attr="onclick='sendMessage(' + ${idUsuario} + ', ' + ${idAgente} + ')'" style="margin-left: 10px; padding: 10px 20px; background-color: #7367F0; color: white; border: none; border-radius: 5px;">Enviar</button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -72,33 +84,73 @@
 <script src="/assets/js/main.js"></script>
 <script src="/assets/js/dashboards-analytics.js"></script>
 <script async defer src="https://buttons.github.io/buttons.js"></script>
-<script>
+<script th:inline="javascript" >
     var currentChatUser = 1;
     var chatMessages = {};
+    var idAgente = [[${idAgente}]];
 
-    function openChat(userId) {
-        currentChatUser = userId;
-        document.getElementById('response').innerHTML = chatMessages[userId] || '';
-        startLongPolling();
+
+    function openChat(userId, agentId) {
+        console.log('openChat called with userId:', userId);
+        // Oculta todos los contenedores de chat
+        document.querySelectorAll('.chat-container').forEach(function(container) {
+            container.style.display = 'none';
+        });
+        // Muestra el contenedor de chat del usuario seleccionado
+        var chatContainer = document.getElementById('chat-container-' + userId);
+        if (chatContainer) {
+            chatContainer.style.display = 'block';
+        } else {
+            console.error('Chat container not found for userId:', userId);
+            return;
+        }
+
+        // Carga mensajes anteriores para el usuario
+        var responseContainer = document.getElementById('response-' + userId);
+        responseContainer.innerHTML = chatMessages[userId] || '';
+
+        $.ajax({
+            type: 'GET',
+            url: '/api/chat/history',
+            data: {
+                userId: userId,
+                agentId: agentId // Reemplaza con el ID del agente actual
+            },
+            success: function(messages) {
+                responseContainer.innerHTML = ''; // Limpia el contenedor de respuestas
+                messages.forEach(function(message) {
+                    var p = document.createElement('p');
+                    p.appendChild(document.createTextNode(message.sourceuser + ': ' + message.message));
+                    responseContainer.appendChild(p);
+                });
+                responseContainer.scrollTop = responseContainer.scrollHeight;
+            },
+            error: function(error) {
+                console.error('Error loading chat history:', error);
+            }
+        });
     }
 
-    function sendMessage() {
-        var messageContent = document.getElementById('message').value;
+    function sendMessage(userId, agentId) {
+        console.log('sendMessage called with userId:', userId);
+        var messageInput = document.getElementById('message-' + userId);
+        var messageContent = messageInput.value;
         if (!messageContent.trim()) {
             alert('Por favor, escribe un mensaje.');
             return;
         }
+
         $.ajax({
             type: 'POST',
             url: '/api/chat/send',
             data: {
-                sourceuser: getMonitorPage, // Replace with actual source user ID
-                destinationuser: 1, // Replace with actual destination user ID
+                sourceuser: agentId, // El agente es quien envía
+                destinationuser: userId, // El usuario es quien recibe
                 message: messageContent
             },
             success: function(response) {
                 showMessage(response);
-                document.getElementById('message').value = '';
+                messageInput.value = ''; // Limpia el input correcto
             },
             error: function(error) {
                 console.error('Error sending message:', error);
@@ -107,36 +159,55 @@
     }
 
     function showMessage(message) {
-        var response = document.getElementById('response');
-        var p = document.createElement('p');
-        p.appendChild(document.createTextNode(message.sourceuser + ': ' + message.message));
-        response.appendChild(p);
-        response.scrollTop = response.scrollHeight;
-
-        if (!chatMessages[message.destinationuser]) {
-            chatMessages[message.destinationuser] = '';
+        // Obtener el contenedor de respuesta correcto usando el ID del usuario
+        var response = document.getElementById('response-' + message.destinationuser);
+        if (!response) {
+            response = document.getElementById('response-' + message.sourceuser);
         }
-        chatMessages[message.destinationuser] += p.outerHTML;
+
+        if (response) {
+            var p = document.createElement('p');
+            console.log(message.sourceuser + ': ' + message.message);
+            p.appendChild(document.createTextNode(message.sourceuser + ': ' + message.message));
+            response.appendChild(p);
+            response.scrollTop = response.scrollHeight;
+
+            if (!chatMessages[message.destinationuser]) {
+                chatMessages[message.destinationuser] = '';
+            }
+            chatMessages[message.destinationuser] += p.outerHTML;
+        } else {
+            console.error('No se encontró el contenedor de respuesta para el usuario:', message.destinationuser);
+        }
     }
 
     function startLongPolling() {
-        //if (currentChatUser === null) return;
         $.ajax({
             type: 'GET',
             url: '/api/chat/longPoll',
             data: {
-                destinationuser: 1, // Replace with actual destination user ID
+                destinationuser: idAgente
             },
             success: function(response) {
-                if (response && response.message) {
-                    showMessage(response);
+                // Si recibimos un mensaje, lo mostramos
+                if (response) {
+                    console.log('Mensaje recibido:', response);
+                    showMessage(response, response.sourceuser);
                 }
-                startLongPolling(); // Restart long polling
+                // Inmediatamente iniciamos la siguiente solicitud
+                startLongPolling();
             },
-            error: function(error) {
-                console.error('Error during long polling:', error);
-                setTimeout(startLongPolling, 5000); // Retry after 5 seconds on error
-            }
+            error: function(xhr, status, error) {
+                if (xhr.status === 204) {
+                    // No Content - inmediatamente iniciamos la siguiente solicitud
+                    startLongPolling();
+                } else {
+                    // En caso de error, esperamos 5 segundos antes de reintentar
+                    console.error('Error en long polling:', error);
+                    setTimeout(startLongPolling, 5000);
+                }
+            },
+            timeout: 35000 // Timeout mayor que el del servidor (30s)
         });
     }
 
