@@ -79,7 +79,7 @@
                 <div class="container-xxl flex-grow-1 container-p-y">
                     <!-- Aquí se agrega el contenido central -->
                     <div class="row">
-                        <div class="col-md-8">
+                        <div class="col-md-9">
                             <div class="d-flex justify-content-between align-items-center py-3 mb-2">
                                 <!-- Parte izquierda: Orden -->
                                 <div class="d-flex flex-column">
@@ -99,7 +99,7 @@
 
                         <!--primer bloque, detalle de la orden-->
 
-                        <div class="col-md-8">
+                        <div class="col-md-9">
                             <form method="POST" th:action="@{'/usuario/pedidos/guardar?id=' + ${orden.idOrdenes}}">
                             <!--<h4 class="fw-bold py-3 mb-4">Orden: #10002
                                 <span class="status-label validacion">En validación</span>
@@ -109,52 +109,54 @@
 
                             <div class="card">
                                 <h5 class="card-header">Productos</h5>
-                                <div class="table-responsive text-nowrap">
-                                    <table class="table">
-                                        <thead class="table-light">
-                                        <tr>
-                                            <th><input type="checkbox"></th>
-                                            <th>Productos</th>
-                                            <th>Código</th>
-                                            <th>Precio</th>
-                                            <th>Cantidad</th>
-                                            <th>Total</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr th:each="producto : ${productos}">
-                                            <td><input type="checkbox"></td>
-                                            <td class="product-name"><img src="zapatilla1.jpeg" alt="Producto" class="product-img-order">
-                                                <span th:text="${producto.nombreProducto}"></span></td>
-                                            <td th:text="${producto.idProducto}">10012</td>
-                                            <td th:text ="'S/. ' + ${producto.precio}">S/120.00</td>
-                                            <td>
-                                                <select name="cantidadProducto_${producto.idproducto}">
-                                                    <option th:each="i : ${#numbers.sequence(1, producto.cantidadDisponible)}"
-                                                            th:value="${i}" th:text="${i}" th:selected="${i == producto.cantidadComprada}"></option>
-                                                </select>
-                                            </td>
-                                            <td th:text="${producto.precio * producto.cantidadComprada}"></td>
-                                        </tr>
-                                        <!-- Add more rows as needed -->
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <!-- Order Totals -->
-                                <div class="row">
-                                    <div class="col-md-6 offset-md-6 text-end">
-                                        <p><strong>Subtotal: </strong>
-                                            <span th:text="'S/. ' + ${subtotal}"></span></p>
-                                        <p><strong>Delivery: </strong> <span th:text="'S/. ' + ${deliveryCost}"></span></p>
-                                        <hr>
-                                        <p><strong>Total General:</strong>
-                                            <span th:text="'S/. ' + ${totalGeneral}"></span>
-                                        </p>
+                                <div class="card-body">
+                                    <div class="table-responsive text-nowrap">
+                                        <table class="table ">
+                                            <thead class="table-light">
+                                            <tr>
+                                                <th><input type="checkbox"></th>
+                                                <th>Productos</th>
+                                                <!--<th>Código</th>-->
+                                                <th>Precio</th>
+                                                <th>Cantidad</th>
+                                                <th>Total</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr th:each="producto : ${productos}">
+                                                <td><input type="checkbox"></td>
+                                                <td class="product-name"><img src="zapatilla1.jpeg" alt="Producto" class="product-img-order">
+                                                    <span th:text="${producto.nombreProducto}"></span></td>
+                                                <!--<td th:text="${producto.idProducto}">10012</td>-->
+                                                <td th:text ="'S/. ' + ${producto.precio}">S/120.00</td>
+                                                <td>
+                                                    <select name="cantidadProducto_${producto.idproducto}">
+                                                        <option th:each="i : ${#numbers.sequence(1, producto.cantidadDisponible)}"
+                                                                th:value="${i}" th:text="${i}" th:selected="${i == producto.cantidadComprada}"></option>
+                                                    </select>
+                                                </td>
+                                                <td th:text="'S/.'+${producto.precio * producto.cantidadComprada}"></td>
+                                            </tr>
+                                            <!-- Add more rows as needed -->
+                                            </tbody>
+                                        </table>
                                     </div>
-                                </div>
+                                    <!-- Order Totals -->
+                                    <div class="row  ">
+                                        <div class="col-md-6 offset-md-6 text-end">
+                                            <p><strong>Subtotal: </strong>
+                                                <span th:text="'S/. ' + ${subtotal}"></span></p>
+                                            <p><strong>Delivery: </strong> <span th:text="'S/. ' + ${deliveryCost}"></span></p>
+                                            <hr>
+                                            <p><strong>Total General:</strong>
+                                                <span th:text="'S/. ' + ${totalGeneral}"></span>
+                                            </p>
+                                        </div>
+                                    </div>
+                            </div>
 
                                 <!-- Communication Section -->
-                                <div class="row mt-4">
+                                <div class=" card-footer d-flex justify-content-between align-items-center">
                                     <!--<div class="communication-section justify-content-between ">
                                         <div style="margin-left: 2rem;">
                                             <p>Comunicarse con un agente:</p>
@@ -181,11 +183,11 @@
                         </div>
 
 
-                        <div class="col-md-4 row">
+                        <div class="col-md-3 row">
 
                             <!--seccion de dtalle de envio-->
-                            <div class=" mb-3">
-                                <div class="details-box card p-4">
+                            <!--<div class=" mb-3">-->
+                                <div class="details-box card p-3">
                                     <h4 class="details-title" >Detalles de Envío</h4>
                                         <form id="shipping-details-form mt-3">
                                             <div class="mb-3">
@@ -200,11 +202,10 @@
                                                 <label for="agente" class="form-label fw-bold text-dark">Agente a cargo:</label>
                                                 <p class="input-text" id="agente" name="agente">Aún no cuenta con un agente</p>
                                             </div>
-
                                         </form>
                                 </div>
 
-                            </div>
+                            <!--/div>-->
 
                             <!--seccion de detalle de pago-->
                             <div class="card p-3 details-box">

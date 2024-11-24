@@ -171,6 +171,11 @@
                                         <span class="tf-icons bx bx-cart"></span>&nbsp; Ver
                                     </button>
                                 </div>
+                                <div>
+                                    <a type="button" class="btn btn-secondary" th:href="@{/usuario/productos-carrito-compras}">
+                                        <span class="tf-icons bx bx-cart"></span>&nbsp; Ver
+                                    </a>
+                                </div>
                             </div>
                             <!-- /store top filter -->
 
@@ -191,7 +196,7 @@
                                                 <h4 class="product-price">$[[${producto.precio}]] <del class="product-old-price">S/. 290.00</del></h4>
                                                 <div class="product-btns">
                                                     <button class="quick-view"
-                                                            th:onclick="|location.href='@{/usuario/detalle_producto(id=${producto.idProducto})}'|">
+                                                            th:onclick="'location.href=\'' + @{/usuario/detalle_producto(id=${producto.idProducto})}+ '\''">
                                                         <i class="bi bi-eye fs-4"></i> <span class="tooltipp">Vista rápida</span>
                                                     </button>
                                                 </div>

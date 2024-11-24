@@ -136,9 +136,6 @@ public class SecurityWeb {
     public UserDetailsManager userDetailsManager(){
         JdbcUserDetailsManager users = new JdbcUserDetailsManager(dataSource);
 
-        //obtencion de datos y estado del usuarioisBan=0
-        //String sql1 = "select correo as username, contrasena as password, (CASE WHEN isBan = 0 THEN 1  ELSE 0 END) as enabled FROM usuario WHERE correo = ?" ;
-        //obtencion del rol y acceso cuando isBan es 0
         //String sql2 = "select u.correo as username, r.rol as authority FROM usuario u INNER JOIN roles r ON u.idroles = r.idRoles WHERE u.correo = ? AND u.isBan = 0";
         //String sql1 = "select correo , contrasena , (CASE WHEN isBan = 0 THEN 1 ELSE 0 END) as activo FROM usuario WHERE correo = ?" ;
         //String sql2 = "select u.correo , r.rol  FROM usuario u INNER JOIN roles r ON u.idroles = r.idRoles WHERE u.correo = ? AND u.isBan = 0";

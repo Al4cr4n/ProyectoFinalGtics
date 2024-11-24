@@ -503,6 +503,11 @@ public class UsuarioController {
         return "Usuariofinal/lista_productos";
     }
 
+    @GetMapping("/productos-carrito-compras")
+    public String verCarrito(){
+        return "Usuariofinal/ver_carrito";
+    }
+
     @GetMapping("/images/{id}")
     public ResponseEntity<byte[]> getImage(@PathVariable Integer id) {
         Optional<Producto> producto = productoRepository.findById(id);
