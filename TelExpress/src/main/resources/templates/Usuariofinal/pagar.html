@@ -145,7 +145,6 @@
                 <!-- Content -->
                 <div class="container-xxl flex-grow-1 container-p-y">
                     <!--<h4 class="desing-title-page">Zona Oeste</h4>-->
-
                     <div class="card">
                         <div class="row">
                         <div class="col-md-7" style="border-right: 1px solid #dee2e6;">
@@ -360,11 +359,17 @@
     });*/
     document.getElementById("checkbox1").addEventListener("click", function() {
         metodoPagoSeleccionado = "tarjeta";
-        document.getElementById("checkbox2").checked = false; // deselecciona PayPal si Tarjeta es seleccionada
+        this.classList.add("active"); // Añade el estado activo al botón "Tarjeta" (aspecto visual)
+        document.getElementById("checkbox2").classList.remove("active"); // Remueve el aspecto visual de "PayPal"
+        document.getElementById("checkbox2").checked = false; // deselecciona PayPal si Tarjeta es seleccionada(aspecto de lógica)
+        this.checked = true;//marca esta opcion de forma lógica
     });
     document.getElementById("checkbox2").addEventListener("click", function() {
         metodoPagoSeleccionado = "paypal";
+        this.classList.add("active");
+        document.getElementById("checkbox1").classList.remove("active");
         document.getElementById("checkbox1").checked = false; // deselecciona Tarjeta si PayPal es seleccionada
+        this.checked = true;
     });
 
     function procederConPago() {

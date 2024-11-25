@@ -4,6 +4,7 @@ import com.example.telexpress.dto.PaymentResponseDTO;
 import com.example.telexpress.dto.ProductoDTO;
 import com.example.telexpress.entity.*;
 import com.example.telexpress.repository.*;
+import com.stripe.exception.StripeException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -567,11 +568,45 @@ public class UsuarioController {
             //se obtiene el monto en la mínima moneda existente(centimos)
             stripePaymentDAO.crearPago(pagoRequest);
             return ResponseEntity.ok("Pago realizado exitosamente");
-        }catch (Exception e){
+        }catch (StripeException e) {
+            // Manejar errores específicos de Stripe
+            if (e instanceof com.stripe.exception.AuthenticationException) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Error: Autenticación fallida (401). Verifique su API key.");
+            } else if (e instanceof com.stripe.exception.InvalidRequestException) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error en el pago (400): " + e.getMessage());
+            } else if (e instanceof com.stripe.exception.PermissionException) {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Error: No tiene permisos para realizar esta operación (403).");
+            } else if (e instanceof com.stripe.exception.RateLimitException) {
+                return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS).body("Error: Demasiadas solicitudes. Intente nuevamente más tarde (429).");
+            } else {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error en el servidor (500): " + e.getMessage());
+            }
+
+        } catch (Exception e){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error en el pago(bad_request): "+e.getMessage());
         }
     }
-
+/*try {
+  // Use Stripe's library to make requests...
+} catch (CardException e) {
+  // Since it's a decline, CardException will be caught
+  System.out.println("Status is: " + e.getCode());
+  System.out.println("Message is: " + e.getMessage());
+} catch (RateLimitException e) {
+  // Too many requests made to the API too quickly
+} catch (InvalidRequestException e) {
+  // Invalid parameters were supplied to Stripe's API
+} catch (AuthenticationException e) {
+  // Authentication with Stripe's API failed
+  // (maybe you changed API keys recently)
+} catch (APIConnectionException e) {
+  // Network communication with Stripe failed
+} catch (StripeException e) {
+  // Display a very generic error to the user, and maybe send
+  // yourself an email
+} catch (Exception e) {
+  // Something else happened, completely unrelated to Stripe
+}*/
     // Método POST para procesar el pago con PayPal (implementación pendiente)
     /*@PostMapping("/pago/paypal")
     @ResponseBody

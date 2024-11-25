@@ -80,25 +80,30 @@ public class StripePaymentDAO {
     }
 
     public void crearPago(PaymentResponseDTO pagoRequest) throws StripeException{
+        try{
+            PaymentIntentCreateParams createParams = PaymentIntentCreateParams.builder()
+                    .setAmount((long) (pagoRequest.getMonto() * 100))
+                    .setCurrency("usd")
+                    .addPaymentMethodType("card")
+                    .putMetadata("ordenId", pagoRequest.getOrdenId().toString())
+                    .build();
+            //PaymentIntent.create(createParams);
 
-        PaymentIntentCreateParams createParams = PaymentIntentCreateParams.builder()
-                .setAmount((long) (pagoRequest.getMonto() * 100))
-                .setCurrency("usd")
-                .addPaymentMethodType("card")
-                .putMetadata("ordenId", pagoRequest.getOrdenId().toString())
-                .build();
-        //PaymentIntent.create(createParams);
+            // Crear el PaymentIntent
+            PaymentIntent paymentIntent = PaymentIntent.create(createParams);
+            System.out.println("PaymentIntent creado con ID: " + paymentIntent.getId());
+            // Confirmar el PaymentIntent
+            PaymentIntentConfirmParams confirmParams = PaymentIntentConfirmParams.builder()
+                    .setPaymentMethod("pm_card_visa") // Asegúrate de tener un método de pago válido
+                    .build();
 
-        // Crear el PaymentIntent
-        PaymentIntent paymentIntent = PaymentIntent.create(createParams);
-        System.out.println("PaymentIntent creado con ID: " + paymentIntent.getId());
-        // Confirmar el PaymentIntent
-        PaymentIntentConfirmParams confirmParams = PaymentIntentConfirmParams.builder()
-                .setPaymentMethod("pm_card_visa") // Asegúrate de tener un método de pago válido
-                .build();
+            paymentIntent = paymentIntent.confirm(confirmParams);
+            System.out.println("PaymentIntent confirmado. Estado actual: " + paymentIntent.getStatus());
+        } catch (StripeException e) {
+            System.out.println("Error de Stripe: " + e.getMessage());
+            throw e;
+        }
 
-        paymentIntent = paymentIntent.confirm(confirmParams);
-        System.out.println("PaymentIntent confirmado. Estado actual: " + paymentIntent.getStatus());
     }
 }
 
