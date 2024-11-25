@@ -15,6 +15,10 @@
           name="viewport"
           content="width=device-width, initial-scale=1.0, user-scalable=yes "
   />
+  <!--tokens para uso de ajax (token)-->
+  <meta name="_csrf" th:content="${_csrf.token}" />
+  <meta name="_csrf_header" th:content="${_csrf.headerName}" />
+
 
   <title>Inicio Usuario</title>
 
@@ -47,6 +51,10 @@
   <link rel="stylesheet" href="/assets/vendor/libs/apex-charts/apex-charts.css" />
 
   <!-- Page CSS -->
+  <link type="text/css" rel="stylesheet" href="/assets/css/bootstrap.min.css"/>
+  <link type="text/css" rel="stylesheet" href="/assets/css/style_products.css"/>
+  <link type="text/css" rel="stylesheet" href="/assets/css/font-awesome.min.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.3/font/bootstrap-icons.min.css">
 
   <!-- Helpers -->
   <script src="/assets/vendor/js/helpers.js"></script>
@@ -77,61 +85,62 @@
         <div class="container-xxl flex-grow-1 container-p-y">
           <!-- Aquí se agrega el contenido central -->
           <div class="row">
-            <div class="col-md-9">
-              <div class="d-flex justify-content-between align-items-center py-3 mb-2">
+              <div class="d-flex justify-content-between align-items-center py-1 mb-0">
                 <h5 >Carrito</h5>
               </div>
-            </div>
           </div>
           <div class="row">
-
             <!--primer bloque, detalle de la orden-->
-
             <div class="col-md-9 ">
-              <!--<form method="POST" th:action="@{'/usuario/pedidos/guardar?id=' + ${orden.idOrdenes}}">-->
-                <!--<h4 class="fw-bold py-3 mb-4">Orden: #10002
-                    <span class="status-label validacion">En validación</span>
-                    !-- "Enviar una reseña" link redirects to another view (e.g., 'enviar_resena.html') --
-                    <a href="enviar_resena.html" class="review-link">Enviar una reseña</a>
-                </h4>-->
                 <div class="card details-box ">
-                  <div class="card-body">
+                  <div class="card-header">
+                    <div class="d-flex align-items-center">
+                      <input type="checkbox" id="selectAll" onclick="toggleAllCheckboxes(this)" class="me-2">
+                      <label for="selectAll" class="mb-0">Seleccionar todo <span class="text-sm" style="font-size: 0.825rem;">(seleccione lo que desee eliminar del carrito)</span></label>
+                    </div>
+                    <hr style="margin: 0.5rem 0;">
+                  </div>
+                  <div class="card-body" id="productosCarrito" >
+                    <!--<div th:each="producto : ${productos}">
+                      <div class="row align-items-center">
+                        <div class="col-1 col-md-1 text-center">
+                          <input type="checkbox" class="product-checkbox" th:value="${producto.idProducto}">
+                        </div>
+                        <div class="col-3 col-md-3 text-center">
+                          <img th:src="@{/usuario/images/{id}(id=${producto.idProducto})}" alt="Producto" class="img-fluid">
+                        </div>
+                        <div class="col-md-8 col-8 flex-column">
+                          <div class="mb-1 d-flex justify-content-between">
+                            <strong class="col-md-9" th:text="${producto.nombreProducto}">Nombre del producto</strong>
+                            <p class="col-md-3" th:text="'S/.'+${producto.precio}">S/ 10.39 </p>
+                          </div>
+                          <div class="mb-1">
+                            --<p class="product-price">asas<span class="original-price">Sas</span> <span class="discount">-as</span></p>-
+                            <p class="product-name">stock o no stock /1 pieza de Pluma estilográfica de Metal mate 1 pieza de Pluma estilográfica de Metal mate</p>
+                            <p class="product-attributes">Color: Dorado</p>
+                          </div>
+                          <div class="mb-1 d-flex flex-row align-items-center  gap-2">
+                            <p class="mb-0">Cantidad: </p>
+                            <select class="form-select form-select-sm w-auto ">
+                              <option th:each="i : ${#numbers.sequence(1, producto.cantidadDisponible)}"
+                                      th:value="${i}"
+                                      th:text="${i}"
+                                      th:selected="${i == producto.cantidadxproducto}">
+                                1
+                              </option>
+                            </select>
+                            <a  class="  btn btn-modificar btn-sm text-lightest">Modificar</a>
+                          </div>
+                        </div>
+                      </div>
+                      <div>
+                        <hr style="height: 1px; background-color: #e0e0e0">
+                      </div>
+                    </div>-->
+
                     <div class="row align-items-center">
                       <div class="col-1 col-md-1 text-center">
-                        <input type="checkbox">
-                      </div>
-                      <div class="col-3 col-md-3 text-center">
-                        <img src="/assets/img/elements/product06.png" alt="Producto" class="img-fluid">
-                      </div>
-                      <div class="col-md-8 col-8 flex-column">
-                        <div class="mb-1 d-flex justify-content-between">
-                          <strong class="col-md-9">Nombre del producto</strong>
-                          <p class="col-md-3">S/ 10.39 </p>
-                        </div>
-                        <div class="mb-1">
-                          <p class="product-price">asas<span class="original-price">Sas</span> <span class="discount">-as</span></p>
-                          <p class="product-name">stock o no stock /1 pieza de Pluma estilográfica de Metal mate 1 pieza de Pluma estilográfica de Metal mate</p>
-                          <p class="product-attributes">Color: Dorado</p>
-                        </div>
-                        <div class="mb-1 d-flex flex-row align-items-center  gap-2">
-                          <p class="mb-0">Cantidad: </p>
-                          <select class="form-select form-select-sm w-auto ">
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                          </select>
-                          <a  class="btn btn-primary btn-sm">Modificar</a>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div>
-                      <hr style="height: 1px; background-color: #e0e0e0">
-                    </div>
-
-                    <div class="row align-items-center">
-                      <div class="col-1 col-md-1 text-center">
-                        <input type="checkbox">
+                        <input type="checkbox" class="product-checkbox">
                       </div>
                       <div class="col-3 col-md-3 text-center">
                         <img src="/assets/img/elements/product06.png" alt="Producto" class=" img-fluid">
@@ -158,16 +167,14 @@
                       </div>
                     </div>
                     <div>
-                      <hr>
+                      <hr style="margin:0;">
                     </div>
-                    <!-- Order Totals -->
+
                   </div>
 
                   <!-- Communication Section -->
                   <div class=" card-footer d-flex justify-content-end align-items-center">
-                    <div class="col-md-6 text-end">
                       <button class="btn btn-danger me-2">Eliminar</button>
-                    </div>
                   </div>
                 </div>
               <!--</form>-->
@@ -198,6 +205,62 @@
                 <small class="text-muted d-block mt-2">
                   La disponibilidad y el precio de los artículos no están garantizados hasta que se finalice el pago.
                 </small>
+              </div >
+              <!--acceso a la lista de productos, solo muestra algunos(los más recientes?)-->
+              <div class="details-box card p-2 h-auto">
+                <div id="productCarousel" class="carousel slide" data-bs-ride="carousel">
+                  <ol class="carousel-indicators">
+                    <li data-bs-target="#productCarousel" data-bs-slide-to="0" class="active"></li>
+                    <li data-bs-target="#productCarousel" data-bs-slide-to="1"></li>
+                    <li data-bs-target="#productCarousel" data-bs-slide-to="2"></li>
+                  </ol>
+                  <div class="carousel-inner">
+                    <div class="carousel-item active">
+                      <div class="product text-center ">
+                        <div class="product-img h-auto">
+                          <img src="/assets/img/elements/product06.png" alt="Product Image" class="img-fluid mx-auto d-block">
+                        </div>
+                        <div class="product-body mt-0">
+                          <h3 class="product-name text-dark">
+                            nombreProducto
+                          </h3>
+                          <h4 class="product-price text-primary">precio<del class="text-muted">S/. 290.00</del></h4>
+                          <button class="btn btn-success mt-1">Agregar</button>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="carousel-item">
+                      <div class="product text-center">
+                        <div class="product-img h-auto">
+                          <img src="/assets/img/elements/product06.png" alt="Product Image" class="img-fluid mx-auto d-block">
+                        </div>
+                        <div class="product-body mt-0">
+                          <h3 class="product-name text-dark">
+                            Producto2
+                          </h3>
+                          <h4 class="product-price text-primary">precio<del class="text-muted">S/. 280.00</del></h4>
+                          <button class="btn btn-success mt-1">Agregar</button>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="carousel-item">
+                      <img class="d-block w-100" src="../assets/img/elements/18.jpg" alt="Third slide" />
+                      <div class="carousel-caption d-none d-md-block">
+                        <h3>Third slide</h3>
+                        <p>Lorem ipsum dolor sit amet, virtute consequat ea qui, minim graeco mel no.</p>
+                      </div>
+                    </div>
+                  </div>
+                  <a class="carousel-control-prev" href="#productCarousel" role="button" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Anterior</span>
+                  </a>
+                  <a class="carousel-control-next" href="#productCarousel" role="button" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Siguiente</span>
+                  </a>
+                </div>
               </div>
 
             </div>
@@ -214,7 +277,125 @@
   <div class="layout-overlay layout-menu-toggle"></div>
 </div>
 <!-- / Layout wrapper -->
+<script>
+  function toggleAllCheckboxes(masterCheckbox) {
+  const checkboxes = document.querySelectorAll(".product-checkbox");
+  checkboxes.forEach(checkbox => {
+  checkbox.checked = masterCheckbox.checked;
+  });
+  }
+</script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const csrfToken = document.querySelector('meta[name="_csrf"]').content;
+    const csrfHeader = document.querySelector('meta[name="_csrf_header"]').content;
 
+    fetch("/usuario/productos-carrito-compras")
+            .then(response => {
+              if (!response.ok) {
+                throw new Error("Error en la respuesta del servidor");
+              }
+              return response.json(); // Convertir la respuesta a JSON
+            }) //.then(response => response.Json() //este permite verlo como en postman
+            .then(productos => {
+              // Obtener el contenedor donde se mostrarán los productos
+              const contenedorProductos = document.getElementById("productosCarrito");
+              // Limpiar el contenedor antes de renderizar
+              contenedorProductos.innerHTML = "";
+              // Verificar si hay productos en el carrito
+              if (productos.length > 0) {
+                // Recorrer los productos y renderizarlos
+                productos.forEach(producto => {
+                  const productoHtml = `
+                    <div class="row align-items-center">
+                      <div class="col-1 col-md-1 text-center">
+                        <input type="checkbox" class="product-checkbox" value="${producto.idProducto}">
+                      </div>
+                      <div class="col-3 col-md-3 text-center">
+                        <img src="/assets/img/elements/product06.png" alt="${producto.nombreProducto}" class="img-fluid">
+                      </div>
+                      <div class="col-md-8 col-8 flex-column">
+                        <div class="mb-1 d-flex justify-content-between">
+                          <strong class="col-md-9">${producto.nombreProducto}</strong>
+                          <p class="col-md-3">S/ ${producto.precio.toFixed(2)}</p>
+                        </div>
+                        <div class="mb-1">
+                          <p class="product-status">${producto.estadoStock}</p> <!-- Mostrar el estado del stock -->
+                          <p class="product-name">stock o no stock /1 pieza de Pluma estilográfica de Metal mate 1 pieza de Pluma estilográfica de Metal mate</p>
+                          <p class="product-attributes">Color: Dorado</p>
+                        </div>
+                        <div class="mb-1 d-flex flex-row align-items-center  gap-2">
+                          <p class="mb-0">Cantidad: </p>
+                          <select class="form-select form-select-sm w-auto combobox-cantidad " data-producto-id="${producto.idProducto}">
+                             ${Array.from({ length: producto.cantidadDisponible }, (_, i) => `
+                                <option value="${i + 1}" ${producto.cantidadxproducto === i + 1 ? "selected" : ""}>${i + 1}</option>
+                               `).join("")}
+                          </select>
+                             <button class="btn btn-modificar btn-sm modificar-btn"
+                                data-producto-id="${producto.idProducto}"
+                                style="display: none;">Modificar</button>
+                        </div>
+                      </div>
+                    </div>
+                      <hr style="height: 1px; background-color: #e0e0e0;">
+                     `;
+                  contenedorProductos.innerHTML += productoHtml; // Agregar el producto al contenedor
+                });
+                // para agregar eventos dinámicamente después de renderizar el HTML
+                agregarEventos(csrfToken, csrfHeader);
+              } else {
+                // Mostrar mensaje si el carrito está vacío
+                contenedorProductos.innerHTML = "<p>No hay productos en el carrito</p>";
+              }
+            })
+            .catch(error => {
+              console.error("Error al cargar los productos del carrito:", error);
+              alert("Hubo un error al cargar los productos. Intenta de nuevo más tarde.");
+            });
+  });
+</script>
+<script>
+  // Función para agregar eventos dinámicos
+  function agregarEventos(csrfToken, csrfHeader) {
+    document.querySelectorAll(".combobox-cantidad").forEach(combobox => {
+      combobox.addEventListener("change", function () {
+        const productoId = this.dataset.productoId;
+        const botonModificar = document.querySelector(`.modificar-btn[data-producto-id="${productoId}"]`);
+        botonModificar.style.display = "inline-block";
+      });
+    });
+    document.querySelectorAll(".modificar-btn").forEach(boton => {
+      boton.addEventListener("click", function () {
+        const productoId = this.dataset.productoId;
+        const combobox = document.querySelector(`.combobox-cantidad[data-producto-id="${productoId}"]`);
+        const nuevaCantidad = combobox.value;
+        fetch("/usuario/actualizar-cantidad", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+            [csrfHeader]: csrfToken,
+          },
+          body: `idProducto=${productoId}&nuevaCantidad=${nuevaCantidad}`,
+        })
+                .then(response => {
+                  if (!response.ok) {
+                    throw new Error("Error al actualizar la cantidad");
+                  }
+                  return response.text();
+                })
+                .then(data => {
+                  console.log(data);
+                  alert("Cantidad actualizada exitosamente");
+                  boton.style.display = "none";
+                })
+                .catch(error => {
+                  console.error("Error al actualizar la cantidad:", error);
+                  alert("Hubo un error al actualizar la cantidad. Intenta de nuevo.");
+                });
+      });
+    });
+  }
+</script>
 
 
 <!-- Core JS -->

@@ -254,7 +254,7 @@ public class UsuarioController {
         respuesta.put("success", true);
         respuesta.put("productos", listaProductos);
         respuesta.put("subtotal", precioTotalOrden);
-
+        respuesta.put("ordenId",ordenPendiente.getIdOrdenes());
         return respuesta;
     }
 
@@ -503,10 +503,91 @@ public class UsuarioController {
         return "Usuariofinal/lista_productos";
     }
 
-    @GetMapping("/productos-carrito-compras")
-    public String verCarrito(){
-        return "Usuariofinal/ver_carrito";
+
+    @GetMapping("/ver_carrito")
+    public String verCarritohtml(Model model) {
+        /*String correo=SecurityContextHolder.getContext().getAuthentication().getName();
+        Usuario usuariodesesion =usuarioRepository.findByCorreo(correo);
+        //se obtiene los productos de la orden "pendiente"
+        Optional<Ordenes> ordenPendienteOpt = ordenesRepository.findByUsuarioAndEstadoOrdenes(usuariodesesion, "Pendiente");
+        if (ordenPendienteOpt.isPresent()) {
+            List<ProductoOrdenes> productosdeOrden = productoOrdenesRepository.findByIdOrdenesId(ordenPendienteOpt.get().getIdOrdenes());
+            List<ProductoDTO> productospendientesDTO = productosdeOrden.stream()
+                    .map(p -> new ProductoDTO(
+                            p.getProducto().getIdProducto(),
+                            p.getProducto().getNombreProducto(),
+                            p.getProducto().getPrecio(),
+                            p.getProducto().getCantidadDisponible(),
+                            p.getCantidadxproducto()
+                    ))
+                    .collect(Collectors.toList());
+            model.addAttribute("productos", productospendientesDTO);
+        } else {
+            model.addAttribute("productos", new ArrayList<>()); // No hay productos
+        }*/
+        return "Usuariofinal/ver_carrito"; // Ruta a la plantilla HTML
     }
+
+
+    @GetMapping("/productos-carrito-compras")
+    @ResponseBody
+    public List<Map<String, Object>> verCarrito() {
+
+        String correo=SecurityContextHolder.getContext().getAuthentication().getName();
+        Usuario usuariodesesion =usuarioRepository.findByCorreo(correo);
+        //se obtiene los productos de la orden "pendiente"
+        Optional<Ordenes> ordenPendienteOpt = ordenesRepository.findByUsuarioAndEstadoOrdenes(usuariodesesion, "Pendiente");
+        if (ordenPendienteOpt.isPresent()) {
+            List<ProductoOrdenes> productosDeOrden = productoOrdenesRepository.findByIdOrdenesId(ordenPendienteOpt.get().getIdOrdenes());
+
+            return productosDeOrden.stream()
+                    .map(p -> {
+                        Map<String, Object> productoMap = new HashMap<>();
+                        productoMap.put("idProducto", p.getProducto().getIdProducto());
+                        productoMap.put("nombreProducto", p.getProducto().getNombreProducto());
+                        productoMap.put("precio", p.getProducto().getPrecio());
+                        productoMap.put("cantidadDisponible", p.getProducto().getCantidadDisponible());
+                        productoMap.put("cantidadxproducto", p.getCantidadxproducto());
+
+                        // Calcular el estado del stock en tiempo real
+                        String estadoStock;
+                        if (p.getProducto().getCantidadDisponible() == 0) {
+                            estadoStock = "Sin Stock";
+                        } else if (p.getProducto().getCantidadDisponible() < 10) {
+                            estadoStock = "Por Agotarse";
+                        } else {
+                            estadoStock = "Stock";
+                        }
+                        productoMap.put("estadoStock", estadoStock);
+
+                        return productoMap;
+                    })
+                    .collect(Collectors.toList());
+        } else {
+            return new ArrayList<>(); //en caso de estar vacio la orden
+        }
+    }
+
+    @PostMapping("/actualizar-cantidad")
+    @ResponseBody
+    public ResponseEntity<String> actualizarCantidad(
+            @RequestParam("idProducto") Integer idProducto,
+            @RequestParam("nuevaCantidad") Integer nuevaCantidad) {
+
+        Optional<ProductoOrdenes> productoOrdenOpt = productoOrdenesRepository.findByProductoIdProductoAndOrdenesEstadoOrdenes(
+                idProducto, "Pendiente");
+
+        if (productoOrdenOpt.isPresent()) {
+            ProductoOrdenes productoOrden = productoOrdenOpt.get();
+            productoOrden.setCantidadxproducto(nuevaCantidad); // Actualizar la cantidad
+            productoOrdenesRepository.save(productoOrden); // Guardar cambios
+
+            return ResponseEntity.ok("Cantidad actualizada exitosamente");
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Producto no encontrado en la orden");
+        }
+    }
+
 
     @GetMapping("/images/{id}")
     public ResponseEntity<byte[]> getImage(@PathVariable Integer id) {
@@ -520,8 +601,39 @@ public class UsuarioController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping("/pagar")
-    public String pagar(){
+    /*redireccion a la pagina para pagar la orden*/
+    @GetMapping("/orden/pagar")
+    public String verDetalleOrdenaPagar(Model model , @RequestParam Integer ordenId, RedirectAttributes attr) {
+        model.addAttribute("activePage", "orden_pagar");
+        //Optional<Ordenes> optionalOrdenes = ordenesRepository.findById(id);
+        Ordenes orden =ordenesRepository.findById(ordenId).orElseThrow(()-> new IllegalArgumentException("Orden no encontrada"));
+        //Ordenes orden = ordenesRepository.findByIdOrdenes(ordenId).orElseThrow(() -> new IllegalArgumentException("Orden no encontrada"));
+
+        List<ProductoOrdenes> productosEnOrden = productoOrdenesRepository.findByIdOrdenesId(ordenId);
+        /*Double precioSubtotalenOrden = productosEnOrden.stream()
+                .mapToDouble(po -> po.getProducto().getPrecio()*po.getCantidadxproducto())
+                .sum();*/
+        // Cargar los productos y sus detalles
+        final double[] subtotal = {0.0};
+        List<Producto> productos = new ArrayList<>();
+        for (ProductoOrdenes po : productosEnOrden) {
+            Optional<Producto> producto = productoRepository.findById(po.getProducto().getIdProducto());
+            producto.ifPresent(p -> {
+                p.setCantidadComprada(po.getCantidadxproducto());
+                productos.add(p);
+                subtotal[0] += p.getPrecio() * po.getCantidadxproducto(); // Agregar la cantidad de la tabla intermedia
+
+            });
+        }
+        double deliveryCost = 15.00; // Suponiendo un costo de envío fijo
+        double totalGeneral = subtotal[0] + deliveryCost;
+
+        // Añadir la lista de productos al modelo
+        model.addAttribute("orden", orden);
+        model.addAttribute("productosDeOrden", productos);
+        model.addAttribute("precioSubtotal", subtotal[0]);
+        model.addAttribute("deliveryCost", deliveryCost);
+        model.addAttribute("totalGeneral", totalGeneral);
         return "Usuariofinal/pagar";
     }
 

@@ -5209,7 +5209,7 @@ textarea.form-control-lg {
   justify-content: center;
   width: 14%;
   padding: 0;
-  color: #fff;
+  color: rgba(117, 117, 117, 0.73);
   text-align: center;
   background: none;
   border: 0;
@@ -5225,7 +5225,7 @@ textarea.form-control-lg {
 .carousel-control-prev:hover, .carousel-control-prev:focus,
 .carousel-control-next:hover,
 .carousel-control-next:focus {
-  color: #fff;
+  color: #999999;
   text-decoration: none;
   outline: 0;
   opacity: 1;
@@ -5289,7 +5289,7 @@ textarea.form-control-lg {
   margin-left: 3px;
   text-indent: -999px;
   cursor: pointer;
-  background-color: #fff;
+  background-color: #757575BA;
   background-clip: padding-box;
   border: 0;
   border-top: 10px solid transparent;
@@ -5313,7 +5313,7 @@ textarea.form-control-lg {
   left: 15%;
   padding-top: 1.25rem;
   padding-bottom: 1.25rem;
-  color: #fff;
+  color: #757575BA;
   text-align: center;
 }
 
@@ -6387,6 +6387,40 @@ label.btn {
   border-color: #fff;
   color: #8592a3;
 }
+/*añadiendo un nuevo boton*/
+
+.btn-modificar {
+  color: #fff !important;
+  background-color: #37B6DDFF; /*#71dd37*/
+  border-color: #37B6DDFF;
+  box-shadow: 0 0.125rem 0.25rem 0 rgba(113, 221, 55, 0.4);
+}
+.btn-modificar:hover {
+  color: #fff;
+  background-color: #2d96b6;
+  border-color: #2d96b6;
+  transform: translateY(-1px);
+}
+.btn-check:focus + .btn-modificar, .btn-modificar:focus, .btn-modificar.focus {
+  color: #fff;
+  background-color: #66c732;
+  border-color: #66c732;
+  transform: translateY(0);
+  box-shadow: none;
+}
+.btn-check:checked + .btn-modificar, .btn-check:active + .btn-modificar, .btn-modificar:active, .btn-modificar.active, .show > .btn-modificar.dropdown-toggle {
+  color: #fff;
+  background-color: #60bc2f;
+  border-color: #60bc2f;
+}
+.btn-check:checked + .btn-modificar:focus, .btn-check:active + .btn-modificar:focus, .btn-modificar:active:focus, .btn-modificar.active:focus, .show > .btn-modificar.dropdown-toggle:focus {
+  box-shadow: none;
+}
+.btn-modificar.disabled, .btn-modificar:disabled {
+  box-shadow: none;
+}
+
+/*--end--*/
 
 .btn-success {
   color: #fff;

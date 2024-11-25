@@ -235,15 +235,11 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr style="border-bottom: 1px solid #dee2e6;">
-                                            <td>2</td>
-                                            <td>Producto A</td>
-                                            <td>25.00</td>
-                                        </tr>
-                                        <tr style="border-bottom: 1px solid #dee2e6;">
-                                            <td>1</td>
-                                            <td>Producto B</td>
-                                            <td>50.00</td>
+                                        <tr style="border-bottom: 1px solid #dee2e6;" th:each="productodeorden : ${productosDeOrden}">
+                                            <td th:text="${productodeorden.cantidadComprada}"></td>
+                                            <td th:text="${productodeorden.nombreProducto}"></td>
+                                            <!--<td th:text="'$' + ${#numbers.formatDecimal(productodeorden.precio, 2)}"></td>-->
+                                            <td th:text ="'S/. ' + ${productodeorden.precio}">S/120.00</td>
                                         </tr>
                                         <tr style="border-bottom: 1px solid #dee2e6;">
                                             <td>3</td>
@@ -258,13 +254,13 @@
                                     <div></div>
                                     <div class="text-end">
                                         <div>
-                                            <span class="fw-bold">Subtotal:</span> S/. 135.00
+                                            <span class="fw-bold">Subtotal:</span> S/. <span th:text="${precioSubtotal}">0.00</span>
                                         </div>
                                         <div>
-                                            <span class="fw-bold">Delivery:</span> S/. 15.00
+                                            <span class="fw-bold">Delivery:</span> S/.  <span th:text="${deliveryCost}">0.00</span>
                                         </div>
                                         <div>
-                                            <span class="fw-bold">Total:</span> S/. 150.00
+                                            <span class="fw-bold">Total:</span> S/. <span th:text="${totalGeneral}">0.00</span>
                                         </div>
                                     </div>
                                 </div>
