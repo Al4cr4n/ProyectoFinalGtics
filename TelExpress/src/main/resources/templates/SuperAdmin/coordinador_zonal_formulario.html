@@ -266,20 +266,30 @@
                                 </div>
                             </div>-->
 
-
+<!--
                             <div class="col-md-6">
                                 <label for="contrasenaTemporal" class="form-label">Contraseña Temporal:</label>
                                 <input type="password" class="form-control"
                                        id="contrasenaTemporal"  th:field="*{contrasena}"
                                        th:placeholder="${coordinadorzonal.id != null ? '********' : 'Ingrese una contraseña temporal'}"
                                        th:value="${coordinadorzonal.id != null ? '********' : ''}"
-                                       th:readonly="${coordinadorzonal.id != null}"/>
+                                       th:readonly="${coordinadorzonal.id != null}"/> -->
                                 <!-- Campo oculto para enviar el valor durante la edición -->
-                                <input type="hidden" th:if="${coordinadorzonal.id != null}" name="contrasena" th:value="*{contrasena}">
+                              <!--  <input type="hidden" th:if="${coordinadorzonal.id != null}" name="contrasena" th:value="*{contrasena}">
+                            </div> -->
+
+                            <!-- Contraseña Generada (solo para ver en el formulario, no recomendable en producción) -->
+                            <div  class="col-md-6" th:if="${coordinadorzonal.id == null}">
+                                <!-- Solo mostrar la contraseña en el registro, no en la edición -->
+
+                                    <label for="contrasenaTemporal" class="form-label">Contraseña Temporal:</label>
+                                    <input type="text" class="form-control" id="contrasenaTemporal" readonly
+                                           th:value="${coordinadorzonal.contrasena != null ? '**********' : ''}" />
+                                    <div class="invalid-feedback" th:if="${#fields.hasErrors('contrasena')}" th:errors="*{contrasena}">
+                                        La contraseña es obligatoria y debe tener al menos 6 caracteres.
+                                    </div>
+
                             </div>
-
-
-
 
 
                         </div>
@@ -326,8 +336,23 @@
                         form.submit();
                     });
                 </script>
+                <script>
+                    function generarContrasena() {
+                        const caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()';
+                        let contrasena = '';
+                        for (let i = 0; i < 10; i++) {
+                            const indice = Math.floor(Math.random() * caracteres.length);
+                            contrasena += caracteres[indice];
+                        }
+                        // Asigna la contraseña generada al campo de contraseña en el formulario
+                        document.getElementById('contrasenaTemporal').value = contrasena;
+                    }
 
-
+                    // Llama a la función cuando el formulario se carga
+                    window.onload = function() {
+                        generarContrasena();
+                    };
+                </script>
                 <!-- Bootstrap JS and dependencies (Popper.js and Bootstrap JS) -->
                 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
                 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
