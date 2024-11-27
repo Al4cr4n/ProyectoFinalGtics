@@ -126,15 +126,27 @@
                 <label class="form-label">Categoría:</label>
                 <input th:field="*{categoria}" type="text" class="form-control">
               </div>-->
-
+<!--
               <div class="col-md-6">
                 <label class="form-label">Categoría:</label>
                 <input th:field="*{categoria}" type="text" class="form-control" placeholder="Ingrese la categoría"
                        th:classappend="${#fields.hasErrors('categoria') ? 'is-invalid' : ''}">
                 <div class="invalid-feedback" th:if="${#fields.hasErrors('categoria')}" th:errors="*{categoria}"></div>
               </div>
+              -->
 
 
+              <div class="col-md-6">
+                <label class="form-label">Categoría:</label>
+                <select th:field="*{categoria}" class="form-select">
+                  <option value="" disabled>Selecciona una categoría</option>
+                  <option th:each="categoria : ${categorias}"
+                          th:value="${categoria}"
+                          th:text="${categoria}"
+                          th:selected="${producto.categoria == categoria}">
+                  </option>
+                </select>
+              </div>
             </div>
 
             <div class="row mb-3">
@@ -167,9 +179,21 @@
                 <div class="invalid-feedback" th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}"></div>
               </div>
 
+              <!--
+
               <div class="col-md-6">
                 <label class="form-label">Imagen del Producto:</label>
                 <input type="file" name="image" class="form-control" accept="image/*" />
+              </div> -->
+
+              <div class="col-md-6">
+                <label class="form-label">Imagen del Producto (Formato .jpg):</label>
+                <div>
+                  <img th:if="${imageUrl != null}" th:src="${imageUrl}" alt="Imagen del producto" class="img-fluid mb-3" style="max-width: 200px;" />
+                  <p th:if="${imageUrl == null}">No hay imagen cargada para este producto.</p>
+                </div>
+                <input type="file" name="image" class="form-control" accept="image/*" />
+                <small class="text-muted">La imagen actual se mantendrá si no seleccionas un nuevo archivo.</small>
               </div>
 
             </div>

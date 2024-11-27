@@ -167,7 +167,7 @@
                                 <label for="categoria" class="form-label">Categoría:</label>
                                 <input type="text" class="form-control" id="categoria" name="categoria" placeholder="Ingrese la categoría">
                             </div>-->
-
+<!--
                             <div class="col-md-6">
                                 <label class="form-label">Categoría:</label>
 
@@ -175,6 +175,23 @@
                                        th:classappend="${#fields.hasErrors('categoria')?'is-invalid':''}"/>
                                 <div class="invalid-feedback"
                                      th:if="${#fields.hasErrors('categoria')}" th:errors="*{categoria}">
+                                    Mensaje de error de categoria
+                                </div>
+                            </div> -->
+
+
+                            <div class="col-md-6">
+                                <label class="form-label">Categoría:</label>
+                                <select th:field="*{categoria}" class="form-select" required>
+                                    <option value="">Selecciona una categoría</option>
+                                    <option value="Electrónica">Electrónica</option>
+                                    <option value="Hogar">Hogar</option>
+                                    <option value="Ropa">Ropa</option>
+                                    <option value="Juguetes">Juguetes</option>
+                                    <option value="Deportes">Deportes</option>
+                                    <option value="Libros">Libros</option>
+                                </select>
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('categoria')}" th:errors="*{categoria}">
                                     Mensaje de error de categoria
                                 </div>
                             </div>
@@ -201,7 +218,7 @@
                                 <div class="invalid-feedback" th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}">Mensaje de descripcion</div>
                             </div>
                             <div class="col-md-6">
-                                <label class="form-label">Imagen del Producto:</label>
+                                <label class="form-label">Imagen del Producto (Formato .jpg):</label>
                                 <input type="file" name="image" class="form-control" accept="image/*" />
                             </div>
 

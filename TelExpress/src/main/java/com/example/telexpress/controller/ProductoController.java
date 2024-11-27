@@ -94,6 +94,12 @@ public class ProductoController {
         try {
             if (!image.isEmpty()) {
                 producto.setImage(image.getBytes());
+            }else {
+                // Si no se subió una nueva imagen, conserva la existente
+                Optional<Producto> existingProducto = productoRepository.findById(producto.getIdProducto());
+                if (existingProducto.isPresent()) {
+                    producto.setImage(existingProducto.get().getImage());
+                }
             }
             System.out.println("producto guardado exitosamente");
             productoRepository.save(producto);
@@ -115,6 +121,15 @@ public class ProductoController {
         if (optProduct.isPresent()) {
             Producto producto = optProduct.get();
             model.addAttribute("producto", producto);
+
+            // Genera una URL para la imagen si existe
+            String imageUrl = producto.getImage() != null ? "/producto/imagen/" + producto.getIdProducto() : null;
+            model.addAttribute("imageUrl", imageUrl);
+
+            // Lista de categorías
+            List<String> categorias = Arrays.asList("Electrónica", "Hogar", "Ropa", "Juguetes", "Deportes", "Libros");
+            model.addAttribute("categorias", categorias);
+
             model.addAttribute("listaProveedores", proveedorRepository.findAll());
             model.addAttribute("listaZona", zonaRepository.findAll());
             return "SuperAdmin/inventario_editar_producto";
@@ -123,6 +138,15 @@ public class ProductoController {
         }
     }
 
+
+    // Endpoint para servir imágenes desde la base de datos
+    @GetMapping("/producto/imagen/{id}")
+    @ResponseBody
+    public byte[] obtenerImagenProducto(@PathVariable int id) {
+        Producto producto = productoRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Producto no encontrado con ID: " + id));
+        return producto.getImage();
+    }
     @GetMapping("/producto/borrar")
     public String borrarProducto(Model model,
                                  @RequestParam("id") int id,
