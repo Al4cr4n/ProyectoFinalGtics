@@ -137,13 +137,11 @@
 
 
               <div class="col-md-6">
-                <label class="form-label">Categoría:</label>
-                <select th:field="*{categoria}" class="form-select">
-                  <option value="" disabled>Selecciona una categoría</option>
-                  <option th:each="categoria : ${categorias}"
-                          th:value="${categoria}"
-                          th:text="${categoria}"
-                          th:selected="${producto.categoria == categoria}">
+                <label for="categoria" class="form-label">Categoria:</label>
+                <select class="form-select" name="categorias.idcategoria" id="categoria">
+                  <option value="">Seleccione una Categoría:</option>
+                  <!--<option th:each="cat: ${listaCategoria}" th:value="${zona.idzona}" th:text="${zona.nombre}" th:selected="${zona.idzona == proveedor.zona.idzona}"> -->
+                  <option th:each="cat: ${listaCategoria}" th:value="${cat.idcategoria}" th:text="${cat.nombre}" th:selected="${cat.idcategoria == producto.categorias.idcategoria}">
                   </option>
                 </select>
               </div>
@@ -160,7 +158,6 @@
                           th:text="${zona.nombre}">
                   </option>
                 </select> -->
-                <label class="form-label">Zona Asignada:</label>
                 <input type="text" class="form-control" th:value="${producto.proveedores[0].zona.nombre}" readonly />
 
               </div>

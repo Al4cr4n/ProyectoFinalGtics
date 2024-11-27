@@ -29,10 +29,16 @@ public class Producto {
     @Column(name = "nombreProducto")
     @NotBlank(message = "El nombre del producto es obligatorio")
     private String nombreProducto;
-
+/*
     @Column(name = "categoria")
     @NotBlank(message = "La categoría es obligatoria")
-    private String categoria;
+    private String categoria; */
+
+    @ManyToOne
+    @JoinColumn(name = "categoria_id")
+    @NotNull(message = "Debe seleccionar una categoria")
+    private Categorias categorias;
+
 
     @Column(name = "cantidadDisponible")
     @NotNull(message = "La cantidad disponible es obligatoria")

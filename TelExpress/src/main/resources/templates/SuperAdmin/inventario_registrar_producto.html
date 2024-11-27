@@ -181,20 +181,17 @@
 
 
                             <div class="col-md-6">
-                                <label class="form-label">Categoría:</label>
-                                <select th:field="*{categoria}" class="form-select" required>
-                                    <option value="">Selecciona una categoría</option>
-                                    <option value="Electrónica">Electrónica</option>
-                                    <option value="Hogar">Hogar</option>
-                                    <option value="Ropa">Ropa</option>
-                                    <option value="Juguetes">Juguetes</option>
-                                    <option value="Deportes">Deportes</option>
-                                    <option value="Libros">Libros</option>
+                                <label class="form-label">Zona</label>
+                                <select class="form-select" th:field="*{categorias.idcategoria}">
+                                    <option value="">Seleccione una Categoría:</option>
+                                    <option th:each="cat : ${listaCategoria}"
+                                            th:value="${cat.idcategoria}"
+                                            th:text="${cat.nombre}">
+                                    </option>
                                 </select>
-                                <div class="invalid-feedback" th:if="${#fields.hasErrors('categoria')}" th:errors="*{categoria}">
-                                    Mensaje de error de categoria
-                                </div>
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('categorias')}" th:errors="*{categorias}"></div>
                             </div>
+
 
                         </div>
 

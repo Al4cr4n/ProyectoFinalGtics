@@ -4,10 +4,7 @@ import com.example.telexpress.entity.Producto;
 import com.example.telexpress.entity.ProductoUsuario;
 import com.example.telexpress.entity.Proveedor;
 import com.example.telexpress.entity.Zona;
-import com.example.telexpress.repository.ProductoRepository;
-import com.example.telexpress.repository.ProductoUsuarioRepository;
-import com.example.telexpress.repository.ProveedorRepository;
-import com.example.telexpress.repository.ZonaRepository;
+import com.example.telexpress.repository.*;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -29,16 +26,20 @@ public class ProductoController {
     final ZonaRepository zonaRepository;
 
     final ProductoUsuarioRepository productoUsuarioRepository;
+    private final CategoriasRepository categoriasRepository;
+
     public ProductoController(ProductoRepository productoRepository,
                               ProveedorRepository proveedorRepository,
                               ZonaRepository zonaRepository,
-                              ProductoUsuarioRepository productoUsuarioRepository) {
+                              ProductoUsuarioRepository productoUsuarioRepository,
+                              CategoriasRepository categoriasRepository) {
 
         this.productoRepository = productoRepository;
         this.proveedorRepository = proveedorRepository;
         this.zonaRepository = zonaRepository;
         this.productoUsuarioRepository = productoUsuarioRepository;
 
+        this.categoriasRepository = categoriasRepository;
     }
 
     @InitBinder
@@ -64,6 +65,7 @@ public class ProductoController {
         model.addAttribute("listaProveedores",proveedorRepository.findAll());
         //model.addAttribute("listaDepartamentos", departmentRepository.findAll());
         model.addAttribute("listaZona", zonaRepository.findAll());
+        model.addAttribute("listaCategoria",categoriasRepository.findAll());
         return "SuperAdmin/inventario_registrar_producto";
     }
 
@@ -78,6 +80,7 @@ public class ProductoController {
         if (result.hasErrors()) {
             System.out.println("Errores encontrados: " + result.getAllErrors());
             model.addAttribute("listaProveedores", proveedorRepository.findAll());
+            model.addAttribute("listaCategoria",categoriasRepository.findAll());
             model.addAttribute("listaZona", zonaRepository.findAll());
             return "SuperAdmin/inventario_registrar_producto"; // Volver a la vista de formulario
         }
@@ -126,9 +129,7 @@ public class ProductoController {
             String imageUrl = producto.getImage() != null ? "/producto/imagen/" + producto.getIdProducto() : null;
             model.addAttribute("imageUrl", imageUrl);
 
-            // Lista de categorías
-            List<String> categorias = Arrays.asList("Electrónica", "Hogar", "Ropa", "Juguetes", "Deportes", "Libros");
-            model.addAttribute("categorias", categorias);
+            model.addAttribute("listaCategoria",categoriasRepository.findAll());
 
             model.addAttribute("listaProveedores", proveedorRepository.findAll());
             model.addAttribute("listaZona", zonaRepository.findAll());

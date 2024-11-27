@@ -22,7 +22,9 @@ public interface ProductoRepository extends JpaRepository<Producto,Integer> {
 
     // Ordenar por precio descendente
     List<Producto> findAllByOrderByPrecioDesc();
-    @Query("SELECT p FROM Producto p WHERE p.nombreProducto LIKE %:keyword% OR p.categoria LIKE %:keyword%")
+   // @Query("SELECT p FROM Producto p WHERE p.nombreProducto LIKE %:keyword% OR p.categoria LIKE %:keyword%")
+
+    @Query("SELECT p FROM Producto p WHERE p.nombreProducto LIKE %:keyword%")
     List<Producto> buscarPorNombreOCategoria(@Param("keyword") String keyword);
 
     //usados para la vista de lista de productos, el "pageable" establece el tama;o de la pagina (uso de empaginado)
