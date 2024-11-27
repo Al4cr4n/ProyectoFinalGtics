@@ -121,8 +121,10 @@ public class CoordinadorController {
 
             // Asignar el rol de agente (ID de rol = 3)
             Rol rolAgente = new Rol();
-            rolAgente.setId(3); // Asigna el ID 3 al rol de agente
+            rolAgente.setId(4); // Asigna el ID 3 al rol de agente
+
             agenteNuevo.setRol(rolAgente);
+            agenteNuevo.setSolicitud(1);//Postula para la validacion
 
             // Si el agente tiene un proveedor asociado, se guarda el proveedor
             if (agenteNuevo.getProveedor() != null && agenteNuevo.getProveedor().getNombreTienda() != null) {
@@ -294,7 +296,7 @@ public class CoordinadorController {
         }
 
         // Obtener los agentes de compra que pertenecen a la misma zona del usuario logueado
-        List<Usuario> listaAgentesZonal = coordinadorRepository.buscarAgentePorZona(zonaUsuario.getIdzona());
+        List<Usuario> listaAgentesZonal = coordinadorRepository.buscarAgentePorIdSuperior(usuarioLogueado.getId());
 
         // Pasar la lista de agentes al modelo
         model.addAttribute("lista_agentes_zonal", listaAgentesZonal);

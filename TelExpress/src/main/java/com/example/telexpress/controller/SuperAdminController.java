@@ -18,6 +18,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.*;
 import java.time.format.DateTimeFormatter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+
+
 
 @Controller
 @RequestMapping("/superadmin")
@@ -511,6 +515,14 @@ public class SuperAdminController {
         } else {
             rttbtsp.addFlashAttribute("mensaje", "Los datos del coordinador fueron actualizados con éxito.");
         }
+        //Contraseña
+        if (usuario.getContrasena() == null || usuario.getContrasena().isEmpty()) {
+            usuario.setContrasena("contrasenapordefecto123"); // Cambia esto por lógica más segura
+        }
+        //Hashear
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        usuario.setContrasena(passwordEncoder.encode(usuario.getContrasena()));
+
         rttbtsp.addFlashAttribute("tipoMensaje", "success");
         // Mensaje de éxito
         //rttbtsp.addFlashAttribute("mensaje", "Los datos del coordinador fueron actualizados con éxito.");

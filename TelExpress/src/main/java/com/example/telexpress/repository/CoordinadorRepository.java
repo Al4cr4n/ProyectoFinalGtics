@@ -13,4 +13,8 @@ public interface CoordinadorRepository extends JpaRepository<Usuario, Integer> {
 
     @Query(value = "SELECT u.* FROM usuario u WHERE u.idroles = 3 AND u.idzona = :idzona", nativeQuery = true)
     List<Usuario> buscarAgentePorZona(@Param("idzona") Integer idzona);
+
+
+    @Query(value = "SELECT u.* FROM usuario u WHERE u.idroles = 3 AND u.idsuperior = :idsuperior", nativeQuery = true)
+    List<Usuario> buscarAgentePorIdSuperior(@Param("idsuperior") Integer idsuperior);
 }

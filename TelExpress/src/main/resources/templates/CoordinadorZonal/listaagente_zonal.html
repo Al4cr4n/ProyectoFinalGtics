@@ -53,11 +53,23 @@
             <div class="container-xxl flex-grow-1 container-p-y">
                 <h4 style="font-family: 'Poppins', sans-serif; color: #7367F0; font-weight: bold; padding-top: 1rem; padding-bottom: 1rem; margin-bottom: 1rem; text-align: center; font-size: 40px;">Lista de agentes de compra</h4>
 
-                <!--BOTON DE CREAR AGENTE-->
-                <div class="d-flex justify-content-start" style="margin-bottom: 1rem; margin-top:-30px">
-                    <a href="/coordinador/crearagente_zonal" class="btn btn-primary" style="background-color: #e89b85; border-color: #e89b85;">Crear Agente</a>
+                <!-- BOTON DE CREAR AGENTE -->
+                <div class="d-flex justify-content-start align-items-center" style="margin-bottom: 1rem; margin-top:-30px">
+                    <a href="/coordinador/crearagente_zonal"
+                       class="btn btn-primary"
+                       style="background-color: #e89b85; border-color: #e89b85; margin-right: 10px;"
+                       th:classappend="${#lists.size(lista_agentes_zonal) >= 3} ? 'disabled' : ''"
+                       th:href="${#lists.size(lista_agentes_zonal) < 3} ? '/coordinador/crearagente_zonal' : '#'">
+                        Crear Agente
+                    </a>
+
+                    <!-- Mensaje de máximo agentes -->
+                    <div th:if="${#lists.size(lista_agentes_zonal) >= 3}" style="color: #00c4ff; font-weight: bold; margin-left: 10px;">
+                        Máximo de agentes alcanzado, no puede crear más.
+                    </div>
                 </div>
-                <!--BOTON DE CREAR AGENTE-->
+                <!-- FIN BOTON DE CREAR AGENTE -->
+
 
                 <div class="card">
                     <div class="card-body">
