@@ -155,7 +155,7 @@
                                                 class="btn btn-primary"
                                                 data-bs-toggle="modal"
                                                 data-bs-target="#modalCenter"
-                                                data-nombre-producto="${producto.nombreProducto}"
+                                                th:data-nombre-producto="${producto.nombreProducto}"
                                                 style="background-color: #00b1cc; border-color: #00C8E5;">
                                             Solicitar
                                         </button>
@@ -238,7 +238,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="modalCenterTitle" style="font-family: 'Poppins', sans-serif; font-size: 20px; text-align: center;">
+                <h5 class="modal-title" id="modalCenterTitle1" style="font-family: 'Poppins', sans-serif; font-size: 20px; text-align: center;">
                     Solicitar reposición al Administrador
                 </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -268,10 +268,23 @@
     modalSolicitar.addEventListener('show.bs.modal', function(event) {
         // Obtener el botón que activó el modal
         const button = event.relatedTarget;
-        // Obtener el valor del atributo data-nombre-producto
-        const nombreProducto = button.getAttribute('data-nombre-producto');
-        // Actualizar el contenido del label con el nombre del producto
-        productoSolicitadoLabel.textContent = 'Se enviará una notificación o un email para la reposición del producto: ' + nombreProducto;
+
+        // Validar que el botón contiene el atributo 'data-nombre-producto'
+        if (button && button.hasAttribute('data-nombre-producto')) {
+            // Obtener el valor del atributo data-nombre-producto
+            const nombreProducto = button.getAttribute('data-nombre-producto');
+
+            // Validar que el nombre del producto no está vacío
+            if (nombreProducto && productoSolicitadoLabel) {
+                // Actualizar el contenido del label con el nombre del producto
+                productoSolicitadoLabel.textContent =
+                    'Se enviará una notificación o un email para la reposición del producto: ' + nombreProducto;
+            } else {
+                console.error('El nombre del producto no está disponible.');
+            }
+        } else {
+            console.error('No se pudo encontrar el atributo data-nombre-producto en el botón.');
+        }
     });
 
     // Lógica para el botón "Solicitar"
