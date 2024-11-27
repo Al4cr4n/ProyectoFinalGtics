@@ -54,6 +54,7 @@ public class CoordinadorController {
 
     @GetMapping("/crearagente_zonal")
     public String crearAgenteCoordinadorZonal(Model model, Principal principal) {
+        model.addAttribute("paginaActual", "agentes");
         // Obtener el usuario logueado
         Usuario usuarioLogueado = usuarioRepository.findByCorreo(principal.getName());
         if (usuarioLogueado == null) {
