@@ -115,109 +115,27 @@
                         <div class="table-responsive text-nowrap">
                           <table class="table table-striped">
                             <thead>
-                              <tr>
-                                <th>Selecc</th>
-                                <th>N° Orden</th>
-                                <th>Producto</th>
-                                <th>Precio</th>
-                                <th>Cantidad</th>
-                                <th>Monto</th>
-                                <th>Delivery</th>
-                                <th>Total</th>
-                                <th></th>
-                              </tr>
+                            <tr>
+                              <th>N° Orden</th>
+                              <th>Producto</th>
+                              <th>F. Facturacion</th>
+                              <th>Monto total</th>
+                              <th>Estado</th>
+
+                            </tr>
                             </thead>
-                            <tbody class="table-border-bottom-0">
-                              <tr>
-                                <td><input type="checkbox" name="order1" value="1"></td>
-                                <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>1</strong></td>
-                                <td>Celular</td>
-                                <td>1000</td>
-                                <td>10</td>
-                                <td>10000</td>
-                                <td>200</td>
-                                <td>10200</td>
-                                <td>
-                                  <div class="dropdown">
-                                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                                      <i class="bx bx-dots-vertical-rounded"></i>
-                                    </button>
-                                    <div class="dropdown-menu">
-                                      <a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal"data-bs-target="#modalScrollable"
-                                        ><i class="bx bx-detail me-1"></i> Ver detalle</a>
-                                    
-                                    </div>
-                                  </div>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td><input type="checkbox" name="order2" value="2"></td>
-                                <td><i class="fab fa-react fa-lg text-info me-3"></i> <strong>2</strong></td>
-                                <td>Celular</td>
-                                <td>1000</td>
-                                <td>10</td>
-                                <td>10000</td>
-                                <td>200</td>
-                                <td>10200</td>
-                                <td>
-                                  <div class="dropdown">
-                                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                                      <i class="bx bx-dots-vertical-rounded"></i>
-                                    </button>
-                                    <div class="dropdown-menu">
-                                      <a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal"data-bs-target="#modalScrollable"
-                                        ><i class="bx bx-detail me-1"></i> Ver detalle</a>
-                                      
-                                    </div>
-                                  </div>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td><input type="checkbox" name="order3" value="3"></td>
-                                <td><i class="fab fa-vuejs fa-lg text-success me-3"></i> <strong>3</strong></td>
-                                <td>Celular</td>
-                                <td>1000</td>
-                                <td>10</td>
-                                <td>10000</td>
-                                <td>200</td>
-                                <td>10200</td>
-                                <td>
-                                  <div class="dropdown">
-                                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                                      <i class="bx bx-dots-vertical-rounded"></i>
-                                    </button>
-                                    <div class="dropdown-menu">
-                                      <a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal"data-bs-target="#modalScrollable"
-                                        ><i class="bx bx-detail me-1"></i> Ver detalle</a>
-                                      
-                                    </div>
-                                  </div>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td><input type="checkbox" name="order4" value="4"></td>
-                                <td><i class="fab fa-bootstrap fa-lg text-primary me-3"></i> <strong>4</strong></td>
-                                <td>Celular</td>
-                                <td>1000</td>
-                                <td>10</td>
-                                <td>10000</td>
-                                <td>200</td>
-                                <td>10200</td>
-                                <td>
-                                  <div class="dropdown">
-                                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                                      <i class="bx bx-dots-vertical-rounded"></i>
-                                    </button>
-                                    <div class="dropdown-menu">
-                                      <a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal"data-bs-target="#modalScrollable"
-                                        ><i class="bx bx-detail me-1"></i> Ver detalle</a>
-                                      
-                                    </div>
-                                  </div>
-                                </td>
-                              </tr>
-                            </tbody>
-                          </table>
+
+                          <tbody class="table-border-bottom-0">
+                            <tr th:each="pago : ${pagosPendientes}">
+                              <td><strong th:text="${pago.ordenes.productoHasOrdenes}"></strong></td>
+                              <td th:text="${pago.ordenes.idOrdenes}"></td>
+                              <td th:text="${#dates.format(pago.fechaPago, 'yyyy-MM-dd')}"></td>
+                              <td th:text="${pago.monto}"></td>
+                              <td th:text="${pago.estadoPago}"></td>
+                            </tr>
+                          </tbody>>
+                          </table>>
+
                         </div>
 
                       
@@ -254,52 +172,30 @@
                       <div class="tab-pane fade" id="navs-pills-top-profile" role="tabpanel">
                         <div class="card"></div>
                         <div class="table-responsive text-nowrap">
+
                           <table class="table table-striped">
                             <thead>
-                              <tr>
-                                <th>N° Orden</th>
-                                <th>Producto</th>
-                                <th>F. Facturacion</th>
-                                <th>Monto total</th>
-                                <th>Estado</th>
-                                
-                              </tr>
+                            <tr>
+                              <th>N° Orden</th>
+                              <th>Producto</th>
+                              <th>F. Facturacion</th>
+                              <th>Monto total</th>
+                              <th>Estado</th>
+
+                            </tr>
                             </thead>
-                            <tbody class="table-border-bottom-0">
-                              <tr>
-                                <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>1</strong></td>
-                                <td>Celular</td>
-                                <td>29/08/24</td>
-                                <td>10200</td>
-                                <td>Pagado</td>
-                                
-                              </tr>
-                              <tr>
-                                <td><i class="fab fa-react fa-lg text-info me-3"></i> <strong>2</strong></td>
-                                <td>Tablet</td>
-                                <td>30/11/24</td>
-                                <td>10900</td>
-                                <td>Pagado</td>
-                                
-                              </tr>
-                              <tr>
-                                <td><i class="fab fa-vuejs fa-lg text-success me-3"></i> <strong>3</strong></td>
-                                <td>Camara</td>
-                                <td>01/03/24</td>
-                                <td>10700</td>
-                                <td>Pagado</td>
-                                
-                              </tr>
-                              <tr>
-                                <td><i class="fab fa-bootstrap fa-lg text-primary me-3"></i> <strong>4</strong></td>
-                                <td>Armario</td>
-                                <td>30/05/24</td>
-                                <td>10500</td>
-                                <td>Pagado</td>
-                                
-                              </tr>
-                            </tbody>
+
+                          <tbody class="table-border-bottom-0">
+                          <tr th:each="pago : ${pagosRealizados}">
+                            <td><strong th:text="${pago.ordenes.idOrdenes}"></strong></td>
+                            <td th:text="${pago.ordenes.productos}"></td>
+                            <td th:text="${#dates.format(pago.fechaPago, 'yyyy-MM-dd')}"></td>
+                            <td th:text="${pago.monto}"></td>
+                            <td th:text="${pago.estadoPago}"></td>
+                          </tr>
+                          </tbody>
                           </table>
+
                         </div>
                         <!-- Paginación -->
                         <div class="d-flex justify-content-end mt-4">

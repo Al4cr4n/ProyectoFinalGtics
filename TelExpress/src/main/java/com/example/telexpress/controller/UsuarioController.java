@@ -39,9 +39,10 @@ public class UsuarioController {
     private final ContrasenaAgenteRespository contrasenaAgenteRespository;
     private final PasswordEncoder passwordEncoder;
     private final ChatRoomService chatRoomService;
+    private final PagosRepository pagosRepository;
 
 
-    public UsuarioController(UsuarioRepository usuarioRepository, ProductoRepository productoRepository, ReseniaRepository reseniaRepository,
+    public UsuarioController(UsuarioRepository usuarioRepository, PagosRepository pagosRepository, ProductoRepository productoRepository, ReseniaRepository reseniaRepository,
                              OrdenesRepository ordenesRepository, DistritoRepository distritoRepository, CoordinadorRepository coordinadorRepository,
                              ProductoOrdenesRepository productoOrdenesRepository, ContrasenaAgenteRespository contrasenaAgenteRespository, PasswordEncoder passwordEncoder, ChatRoomService chatRoomService) {
         this.usuarioRepository = usuarioRepository;
@@ -54,6 +55,7 @@ public class UsuarioController {
         this.contrasenaAgenteRespository = contrasenaAgenteRespository;
         this.passwordEncoder = passwordEncoder;
         this.chatRoomService = chatRoomService;
+        this.pagosRepository = pagosRepository;
     }
 
     private final OrdenesRepository ordenesRepository;
@@ -638,8 +640,12 @@ public class UsuarioController {
     }
 
     @GetMapping("/pago")
-    public String pago(Model model){
+    public String pago(Model model) {
+        List<Pagos> pagosPendientes = pagosRepository.findByEstadoPago("Pendiente");
+        List<Pagos> pagosRealizados = pagosRepository.findByEstadoPago("Completado");
 
+        model.addAttribute("pagosPendientes", pagosPendientes);
+        model.addAttribute("pagosRealizados", pagosRealizados);
         model.addAttribute("activePage", "pago");
         return "Usuariofinal/pago";
     }
