@@ -90,23 +90,22 @@
                     <div class="nav-align-top mb-4"></div>
                     <ul class="nav nav-pills mb-3" role="tablist">
                         <li class="nav-item">
-                            <a
-                                    class="nav-link"
-                                    role="tab"
-                                    id="faqs-tab"
-                                    href="/usuario/FAQS"
-                                    aria-controls="navs-pills-top-home"
-                                    aria-selected="false"
+                            <a th:href="@{/usuario/FAQS}"
+                               class="nav-link"
+                               role="tab"
+                               id="faqs-tab"
+                               aria-controls="navs-pills-top-home"
+                               aria-selected="false"
                             >
                                 FAQs
                             </a>
                         </li>
                         <li class="nav-item">
                             <a
+                                    th:href="@{/usuario/resenia}"
                                     class="nav-link"
                                     role="tab"
                                     id="reseñas-tab"
-                                    href="/usuario/resenia"
                                     aria-controls="navs-pills-top-profile"
                                     aria-selected="true"
                             >
@@ -115,10 +114,10 @@
                         </li>
                         <li class="nav-item">
                             <a
+                                    th:href="@{/usuario/Foro}"
                                     class="nav-link active"
                                     role="tab"
                                     id="foro-tab"
-                                    href="/usuario/Foro"
                                     aria-controls="navs-pills-top-messages"
                                     aria-selected="false"
                             >
@@ -135,11 +134,13 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-8">
-                                        <input type="text" class="form-control" id="searchInput" placeholder="Buscar por título">
+                                        <!-- Search functionality can be added here -->
                                     </div>
-                                    <div class="col-md-4">
-                                        <button class="btn btn-primary me-2" id="searchBtn">Buscar</button>
-                                        <button class="btn btn-secondary" id="clearSearchBtn">Limpiar</button>
+                                    <div class="col-md-4" style="margin-right: 100px; display:flex">
+
+                                        <input type="text" class="form-control" placeholder="Buscar" id="searchInput">
+
+                                        <button class="btn btn-secondary mt-2" id="clearSearchBtn" style="margin-left: 10px">Limpiar</button>
                                     </div>
                                 </div>
                             </div>
@@ -147,16 +148,18 @@
 
                         <!-- New Post Form -->
                         <div class="card mb-4">
-                            <h5 class="card-header">Crear una Nueva Publicación</h5>
+                            <div class="card-header">
+                                <h5>Crear una Nueva Publicación</h5>
+                            </div>
                             <div class="card-body">
-                                <form id="newPostForm">
+                                <form th:action="@{/api/forum/posts}" method="post">
                                     <div class="mb-3">
-                                        <label for="postTitle" class="form-label">Título</label>
-                                        <input type="text" class="form-control" id="postTitle" placeholder="Ingrese el título de la publicación" required>
+                                        <label class="form-label">Título</label>
+                                        <input type="text" class="form-control" name="titulo" required>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="postContent" class="form-label">Contenido</label>
-                                        <textarea class="form-control" id="postContent" rows="3" placeholder="Ingrese el contenido de su publicación" required></textarea>
+                                        <label class="form-label">Contenido</label>
+                                        <textarea class="form-control" name="contenido" rows="4" required></textarea>
                                     </div>
                                     <button type="submit" class="btn btn-primary">Publicar</button>
                                 </form>
@@ -165,7 +168,13 @@
 
                         <!-- Existing Posts -->
                         <div id="existingPosts">
-                            <!-- Posts will be dynamically added here -->
+                            <div th:each="post : ${posts}" class="card mb-3">
+                                <div class="card-body">
+                                    <h5 th:text="${post.titulo}" class="card-title"></h5>
+                                    <p th:text="${post.contenido}" class="card-text"></p>
+                                    <small class="text-muted" th:text="${#temporals.format(post.createdAt, 'dd/MM/yyyy HH:mm')}"></small>
+                                </div>
+                            </div>
                         </div>
 
                         <!-- Pagination -->
@@ -190,210 +199,140 @@
 </div>
 <!-- / Layout wrapper -->
 
-<script>
+<script th:inline="javascript">
     document.addEventListener('DOMContentLoaded', function() {
-        const newPostForm = document.getElementById('newPostForm');
-        const existingPosts = document.getElementById('existingPosts');
-        const pagination = document.getElementById('pagination');
+        const postForm = document.querySelector('form[action="/api/forum/posts"]');
+        const existingPostsDiv = document.getElementById('existingPosts');
         const searchInput = document.getElementById('searchInput');
-        const searchBtn = document.getElementById('searchBtn');
         const clearSearchBtn = document.getElementById('clearSearchBtn');
-        let posts = [];
-        let filteredPosts = [];
-        const postsPerPage = 3;
-        let currentPage = 1;
+        const tituloInput = document.querySelector('input[name="titulo"]');
+        const contenidoInput = document.querySelector('textarea[name="contenido"]');
+        const submitBtn = postForm.querySelector('button[type="submit"]');
 
-        newPostForm.addEventListener('submit', function(e) {
+        // Función de crear post
+        function createPost(e) {
             e.preventDefault();
-            const title = document.getElementById('postTitle').value;
-            const content = document.getElementById('postContent').value;
-            addNewPost(title, content);
-            newPostForm.reset();
-        });
 
-        searchBtn.addEventListener('click', function() {
+            const formData = {
+                titulo: tituloInput.value,
+                contenido: contenidoInput.value
+            };
+
+            fetch('/api/forum/posts', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Error en la publicación');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    const newPostDiv = document.createElement('div');
+                    newPostDiv.className = 'card mb-3';
+                    newPostDiv.innerHTML = `
+               <div class="card-body">
+                   <h5 class="card-title">${data.titulo}</h5>
+                   <p class="card-text">${data.contenido}</p>
+                   <small class="text-muted">${new Date(data.createdAt).toLocaleString('es-ES', {
+                        day: '2-digit',
+                        month: '2-digit',
+                        year: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    })}</small>
+               </div>
+           `;
+                    existingPostsDiv.insertBefore(newPostDiv, existingPostsDiv.firstChild);
+
+                    postForm.reset();
+                    validateForm();
+                    showNotification('Publicación creada exitosamente', 'success');
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    showNotification('Error al publicar el post', 'danger');
+                });
+        }
+
+        // Función de filtrar posts
+        function filterPosts() {
             const searchTerm = searchInput.value.toLowerCase();
-            filteredPosts = posts.filter(post => post.title.toLowerCase().includes(searchTerm));
-            currentPage = 1;
-            renderPosts();
-            renderPagination();
-        });
+            const posts = existingPostsDiv.querySelectorAll('.card');
 
+            posts.forEach(post => {
+                const titulo = post.querySelector('.card-title').textContent.toLowerCase();
+                const contenido = post.querySelector('.card-text').textContent.toLowerCase();
+
+                if (titulo.includes(searchTerm) || contenido.includes(searchTerm)) {
+                    post.style.display = '';
+                } else {
+                    post.style.display = 'none';
+                }
+            });
+        }
+
+        // Función de validación
+        function validateForm() {
+            if (tituloInput.value.trim() && contenidoInput.value.trim()) {
+                submitBtn.disabled = false;
+                submitBtn.classList.remove('btn-secondary');
+                submitBtn.classList.add('btn-primary');
+            } else {
+                submitBtn.disabled = true;
+                submitBtn.classList.remove('btn-primary');
+                submitBtn.classList.add('btn-secondary');
+            }
+        }
+
+        // Función de notificaciones
+        function showNotification(message, type) {
+            const notificationContainer = document.createElement('div');
+            notificationContainer.className = `alert alert-${type} alert-dismissible fade show position-fixed top-0 end-0 m-3`;
+            notificationContainer.style.zIndex = '1050';
+            notificationContainer.innerHTML = `
+           ${message}
+           <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+       `;
+            document.body.appendChild(notificationContainer);
+
+            setTimeout(() => {
+                notificationContainer.remove();
+            }, 3000);
+        }
+
+        // Eventos
+        postForm.addEventListener('submit', createPost);
+        tituloInput.addEventListener('input', validateForm);
+        contenidoInput.addEventListener('input', validateForm);
+        searchInput.addEventListener('input', filterPosts);
         clearSearchBtn.addEventListener('click', function() {
             searchInput.value = '';
-            filteredPosts = [...posts];
-            currentPage = 1;
-            renderPosts();
-            renderPagination();
+            filterPosts();
         });
 
-        function addNewPost(title, content) {
-            const post = {
-                id: Date.now(),
-                title: title,
-                content: content,
-                author: 'You',
-                date: new Date().toLocaleString(),
-                replies: []
-            };
-            posts.unshift(post);
-            filteredPosts = [...posts];
-            renderPosts();
-            renderPagination();
-        }
-
-        function renderPosts() {
-            existingPosts.innerHTML = '';
-            const startIndex = (currentPage - 1) * postsPerPage;
-            const endIndex = startIndex + postsPerPage;
-            const pageItems = filteredPosts.slice(startIndex, endIndex);
-
-            pageItems.forEach(post => {
-                const postHtml = `
-          <div class="card mb-4" data-post-id="${post.id}">
-            <div class="card-header d-flex justify-content-between align-items-center">
-              <h5 class="mb-0">${post.title}</h5>
-              <small class="text-muted float-end">Publicado por ${post.author} - ${post.date}</small>
-            </div>
-            <div class="card-body">
-              <p class="card-text">${post.content}</p>
-
-              <div class="mt-3">
-                <button class="btn btn-sm btn-primary show-replies-btn">Ver comentarios (${post.replies.length})</button>
-                <button class="btn btn-sm btn-secondary reply-btn">Responder</button>
-              </div>
-
-              <div class="replies mt-3" style="display: none;">
-                <h6>Comentarios</h6>
-                <div class="replies-container">
-                  ${post.replies.map(reply => `
-                    <div class="reply">
-                      <p class="mb-1"><strong>${reply.author}:</strong> ${reply.content}</p>
-                      <small class="text-muted">${reply.date}</small>
-                    </div>
-                  `).join('')}
-                </div>
-                <form class="replyForm mt-2" style="display: none;">
-                  <div class="mb-3">
-                    <textarea class="form-control" rows="2" placeholder="Escribe tu respuesta aquí" required></textarea>
-                  </div>
-                  <button type="submit" class="btn btn-sm btn-primary">Enviar Respuesta</button>
-                </form>
-              </div>
-            </div>
-          </div>
-        `;
-                existingPosts.insertAdjacentHTML('beforeend', postHtml);
-            });
-
-            // Add event listeners for the new buttons
-            document.querySelectorAll('.show-replies-btn').forEach(btn => {
-                btn.addEventListener('click', toggleReplies);
-            });
-
-            document.querySelectorAll('.reply-btn').forEach(btn => {
-                btn.addEventListener('click', toggleReplyForm);
-            });
-        }
-
-        function toggleReplies(e) {
-            const repliesSection = e.target.closest('.card-body').querySelector('.replies');
-            repliesSection.style.display = repliesSection.style.display === 'none' ? 'block' : 'none';
-            e.target.textContent = repliesSection.style.display === 'none' ? `Ver comentarios (${getRepliesCount(e.target)})` : 'Ocultar comentarios';
-        }
-
-        function toggleReplyForm(e) {
-            const replyForm = e.target.closest('.card-body').querySelector('.replyForm');
-            replyForm.style.display = replyForm.style.display === 'none' ? 'block' : 'none';
-        }
-
-        function getRepliesCount(btn) {
-            const postId = btn.closest('.card').dataset.postId;
-            const post = posts.find(p => p.id == postId);
-            return post ? post.replies.length : 0;
-        }
-
-        function renderPagination() {
-            const pageCount = Math.ceil(filteredPosts.length / postsPerPage);
-            pagination.innerHTML = '';
-
-            // Previous button
-            const prevLi = document.createElement('li');
-            prevLi.classList.add('page-item');
-            prevLi.innerHTML = `<a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>`;
-            pagination.appendChild(prevLi);
-
-            // Page numbers
-            for (let i = 1; i <= pageCount; i++) {
-                const li = document.createElement('li');
-                li.classList.add('page-item');
-                if (i === currentPage) li.classList.add('active');
-                li.innerHTML = `<a class="page-link" href="#" data-page="${i}">${i}</a>`;
-                pagination.appendChild(li);
-            }
-
-            // Next button
-            const nextLi = document.createElement('li');
-            nextLi.classList.add('page-item');
-            nextLi.innerHTML = `<a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>`;
-            pagination.appendChild(nextLi);
-        }
-
-        pagination.addEventListener('click', function(e) {
-            e.preventDefault();
-            const pageCount = Math.ceil(filteredPosts.length / postsPerPage);
-            if (e.target.tagName === 'A' || e.target.parentElement.tagName === 'A') {
-                if (e.target.getAttribute('aria-label') === 'Previous' && currentPage > 1) {
-                    currentPage--;
-                } else if (e.target.getAttribute('aria-label') === 'Next' && currentPage < pageCount) {
-                    currentPage++;
-                } else if (e.target.dataset.page) {
-                    currentPage = parseInt(e.target.dataset.page);
-                }
-                renderPosts();
-                renderPagination();
+        // Límite de caracteres
+        tituloInput.addEventListener('input', function() {
+            if (this.value.length > 255) {
+                this.value = this.value.slice(0, 255);
+                showNotification('Límite de 255 caracteres alcanzado', 'warning');
             }
         });
 
-        // Event delegation for reply forms
-        existingPosts.addEventListener('submit', function(e) {
-            if (e.target.classList.contains('replyForm')) {
-                e.preventDefault();
-                const postId = e.target.closest('.card').dataset.postId;
-                const replyContent = e.target.querySelector('textarea').value;
-                addReply(postId, replyContent);
-                e.target.reset();
-                e.target.style.display = 'none';
+        contenidoInput.addEventListener('input', function() {
+            if (this.value.length > 5000) {
+                this.value = this.value.slice(0, 5000);
+                showNotification('Límite de 5000 caracteres alcanzado', 'warning');
             }
         });
 
-        function addReply(postId, content) {
-            const post = posts.find(p => p.id == postId);
-            if (post) {
-                const reply = {
-                    author: 'You',
-                    content: content,
-                    date: new Date().toLocaleString()
-                };
-                post.replies.push(reply);
-                renderPosts();
-            }
-        }
-
-        // Add some sample posts
-        addNewPost('Bienvenidos al foro', 'Este es nuestro primer post en el foro. ¡Esperamos que disfruten las discusiones!');
-        addNewPost('Tema de discusión: Tecnología', '¿Cuál creen que será la próxima gran innovación tecnológica?');
-        addNewPost('Receta del día', 'Hoy compartimos una deliciosa receta de pasta. ¿Alguien tiene otras recetas para compartir?');
-        addNewPost('Película recomendada', '¿Han visto la última película de ciencia ficción? ¡Compartamos opiniones!');
-        addNewPost('Consejos para estudiar', '¿Cuáles son sus mejores consejos para estudiar eficientemente?');
-        addNewPost('Viajes post-pandemia', '¿A dónde les gustaría viajar cuando sea seguro hacerlo?');
-
-        // Initial render
-        filteredPosts = [...posts];
-        renderPosts();
-        renderPagination();
+        // Inicializar estado
+        validateForm();
     });
-</script>
 </script>
 
 
@@ -421,3 +360,4 @@
 <script async defer src="https://buttons.github.io/buttons.js"></script>
 </body>
 </html>
+

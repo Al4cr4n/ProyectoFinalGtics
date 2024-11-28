@@ -3,6 +3,7 @@ import com.example.telexpress.dto.ProductoDTO;
 import com.example.telexpress.entity.*;
 import com.example.telexpress.repository.*;
 import com.example.telexpress.service.ChatRoomService;
+import com.example.telexpress.service.PostService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpHeaders;
@@ -40,11 +41,12 @@ public class UsuarioController {
     private final PasswordEncoder passwordEncoder;
     private final ChatRoomService chatRoomService;
     private final PagosRepository pagosRepository;
+    private final PostService postService;
 
 
     public UsuarioController(UsuarioRepository usuarioRepository, PagosRepository pagosRepository, ProductoRepository productoRepository, ReseniaRepository reseniaRepository,
                              OrdenesRepository ordenesRepository, DistritoRepository distritoRepository, CoordinadorRepository coordinadorRepository,
-                             ProductoOrdenesRepository productoOrdenesRepository, ContrasenaAgenteRespository contrasenaAgenteRespository, PasswordEncoder passwordEncoder, ChatRoomService chatRoomService) {
+                             ProductoOrdenesRepository productoOrdenesRepository, ContrasenaAgenteRespository contrasenaAgenteRespository, PasswordEncoder passwordEncoder, ChatRoomService chatRoomService, PostService postService) {
         this.usuarioRepository = usuarioRepository;
         this.productoRepository = productoRepository;
         this.reseniaRepository = reseniaRepository;
@@ -56,6 +58,7 @@ public class UsuarioController {
         this.passwordEncoder = passwordEncoder;
         this.chatRoomService = chatRoomService;
         this.pagosRepository = pagosRepository;
+        this.postService = postService;
     }
 
     private final OrdenesRepository ordenesRepository;
@@ -316,9 +319,10 @@ public class UsuarioController {
     }
 
     @GetMapping("/Foro")
-    public String Foro(Model model){
-
+    public String Foro(Model model) {
+        List<Post> posts =postService.getAllPosts();
         model.addAttribute("activePage", "foro");
+        model.addAttribute("posts", posts);
         return "Usuariofinal/Foro";
     }
 
