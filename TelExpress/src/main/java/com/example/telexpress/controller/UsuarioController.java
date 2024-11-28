@@ -641,8 +641,15 @@ public class UsuarioController {
 
     @GetMapping("/pago")
     public String pago(Model model) {
-        List<Pagos> pagosPendientes = pagosRepository.findByEstadoPago("Pendiente");
-        List<Pagos> pagosRealizados = pagosRepository.findByEstadoPago("Completado");
+
+        String correo = SecurityContextHolder.getContext().getAuthentication().getName();
+        Usuario usuarioActual = usuarioRepository.findByCorreo(correo);
+        Zona zona = usuarioActual.getZona();
+
+
+
+        List<Pagos> pagosPendientes = pagosRepository.findByUsuario_ZonaAndEstadoPago(zona,"Pendiente");
+        List<Pagos> pagosRealizados = pagosRepository.findByUsuario_ZonaAndEstadoPago(zona,"Completado");
 
         model.addAttribute("pagosPendientes", pagosPendientes);
         model.addAttribute("pagosRealizados", pagosRealizados);
