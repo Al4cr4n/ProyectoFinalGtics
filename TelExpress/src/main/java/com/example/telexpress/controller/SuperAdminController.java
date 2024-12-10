@@ -8,6 +8,7 @@ import com.example.telexpress.repository.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -1218,18 +1219,23 @@ public class SuperAdminController {
                                                                   @RequestParam("codigoDespachador") String codigoDespachador,
                                                                   RedirectAttributes redirectAttributes) {
         Map<String, String> result = new HashMap<>();
-        System.out.println("Método validarDespachador llamado");
-        System.out.println("Validando despachador: " + codigoDespachador + " para ID: " + id); // Log para debugging
-        Optional<Despachador> despachador = despachadorRepository.findByDespachador(codigoDespachador);
-        if (despachador.isPresent()) {
-            String mensaje1 = "Código despachador " + despachador.get().getEstado().toLowerCase();
-            System.out.println("Mensaje despachador: " + mensaje1); // Log para debugging
-            result.put("mensajeDespachador", mensaje1);
-        } else {
-            System.out.println("Despachador no encontrado para el código: " + codigoDespachador);
-            result.put("mensajeDespachador", "Código Despachador no encontrado");
-        }
-        return ResponseEntity.ok(result);
+            System.out.println("Método validarDespachador llamado");
+            System.out.println("Validando despachador: " + codigoDespachador + " para ID: " + id); // Log para debugging
+            Optional<Despachador> despachador = despachadorRepository.findByDespachador(codigoDespachador);
+            if (despachador.isPresent()) {
+                String mensaje1 = "Código despachador " + despachador.get().getEstado().toLowerCase();
+                System.out.println("Mensaje despachador: " + mensaje1); // Log para debugging
+                result.put("status", "success");
+                result.put("mensajeDespachador", mensaje1);
+                return ResponseEntity.ok(result);
+            } else {
+                // Si el despachador no existe
+                System.out.println("Despachador no encontrado para el código: " + codigoDespachador);
+                result.put("status", "error");
+                //result.put("mensaje", "Código Despachador no encontrado");
+                result.put("mensajeDespachador", "Lo sentimos, código despachador no encontrado");
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result);
+            }
     }
 
     @PostMapping("/validarJurisdiccion")
