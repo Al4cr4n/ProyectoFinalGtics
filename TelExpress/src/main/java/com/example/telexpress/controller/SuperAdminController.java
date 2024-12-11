@@ -1226,6 +1226,7 @@ public class SuperAdminController {
                 String mensaje1 = "Código despachador " + despachador.get().getEstado().toLowerCase();
                 System.out.println("Mensaje despachador: " + mensaje1); // Log para debugging
                 result.put("status", "success");
+                result.put("codigo", codigoDespachador);
                 result.put("mensajeDespachador", mensaje1);
                 return ResponseEntity.ok(result);
             } else {

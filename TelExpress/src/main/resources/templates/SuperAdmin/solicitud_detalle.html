@@ -84,7 +84,7 @@
                                 <div class="row mb-3">
                                     <div class="col-md-6">
                                         <label for="codigoDespachador" class="form-label">Código despachador:</label>
-                                        <input type="text" id="codigoDespachador" name="codigoDespachador" class="form-control" th:value="${postulante.despachador}" >
+                                        <input type="text" id="codigoDespachador" name="codigoDespachador" class="form-control" th:value="${postulante.despachador}" readonly>
                                     </div>
                                     <div class="col-md-3 align-self-end">
                                         <button type="button" class="btn btn-primary w-100" onclick="validarDespachador()">Validar Despachador</button>
@@ -99,7 +99,7 @@
                                 <div class="row mb-3">
                                     <div class="col-md-6">
                                         <label for="codigoJurisdiccion" class="form-label">Código de jurisdicción:</label>
-                                        <input type="text" id="codigoJurisdiccion" name="codigoJurisdiccion" class="form-control" th:value="${postulante.jurisdiccion}" >
+                                        <input type="text" id="codigoJurisdiccion" name="codigoJurisdiccion" class="form-control" th:value="${postulante.jurisdiccion}" readonly>
                                     </div>
                                     <div class="col-md-3 align-self-end">
                                         <button type="button" class="btn btn-primary w-100" onclick="validarJurisdiccion()">Validar Jurisdicción</button>
