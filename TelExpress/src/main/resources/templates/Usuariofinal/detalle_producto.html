@@ -69,7 +69,6 @@
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.3/font/bootstrap-icons.min.css">
 
       <!-- Bootstrap -->
- 	<link type="text/css" rel="stylesheet" href="/assets/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css">
 
 
@@ -250,7 +249,7 @@
                                     <a class="review-link" href="#"> Reseñas(<span th:text="${cantidadResenias}">0</span>)</a>
                                     <ul class="product-links">
                                         <li>Categoría:</li>
-                                        <li><a href="#"><span th:text="${producto.categoria}">0</span></a></li>
+                                        <li><a href="#"><span th:text="${producto.categorias.nombre}">0</span></a></li>
                                     </ul>
                                     <!--
                                     <ul class="product-links">

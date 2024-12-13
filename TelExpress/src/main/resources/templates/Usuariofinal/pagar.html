@@ -48,6 +48,7 @@
     <!-- Helpers -->
     <script src="../../assets/vendor/js/helpers.js"></script>
 
+
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="../../assets/js/config.js"></script>
@@ -55,32 +56,29 @@
     <!--TelExpress fuente de letra-->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <!-- Bootstrap -->
- 	<link type="text/css" rel="stylesheet" href="../../assets/css/bootstrap.min.css"/>
-
     <!-- Estilos personalizados -->
-        <!-- Custom stlylesheet -->
-         <link type="text/css" rel="stylesheet" href="../../assets/css/style_products.css"/>
+    <!-- Custom stlylesheet -->
+    <link type="text/css" rel="stylesheet" href="../../assets/css/style_products.css"/>
 
-        <!-- fuentes FA -->
- 	    <link type="text/css" rel="stylesheet" href="../../assets/css/font-awesome.min.css"/>
+    <!-- fuentes FA -->
+    <link type="text/css" rel="stylesheet" href="../../assets/css/font-awesome.min.css"/>
 
-         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.3/font/bootstrap-icons.min.css">
 
-         <style>
-            .btn {
-              height: 100%;
-              display: flex;
-              align-items: center;
+    <style>
+        .btn {
+            height: 100%;
+            display: flex;
+            align-items: center;
+        }
+        .btn-group {
+            display: flex;
+            flex-wrap: nowrap;
             }
-            .btn-group {
-              display: flex;
-              flex-wrap: nowrap;
-            }
-            .btn .icon-image {
-              width: 40px;
-              height: 40px;
-            }
+        .btn .icon-image {
+            width: 40px;
+            height: 40px;
+        }
 
             /*.icono-check {
                 display: inline-flex;
@@ -92,17 +90,25 @@
                 border-radius: 50%;
             }*/
             
-            .icono-check svg {
-                width: 50px;
-                height: 50px;
-                fill: white; /* Check blanco */
-            }
+        .icono-check svg {
+            width: 50px;
+            height: 50px;
+            fill: white; /* Check blanco */
+        }
 
-            .icono-check i {
-                font-size: 100px; /* Tamaño del ícono */
-                color: #79e97de3; /* Verde claro (puedes cambiar el color aquí)*/ 
+        .icono-check i {
+            font-size: 100px; /* Tamaño del ícono */
+            color: #79e97de3; /* Verde claro (puedes cambiar el color aquí)*/
+        }
+    </style>
+    <style>
+        /* Oculta el texto cuando la pantalla tiene entre 576px y 768px */
+        @media (min-width: 768px) and (max-width: 990px) {
+            .btn-text {
+                display: none;
             }
-          </style>
+        }
+    </style>
 
 </head>
 
@@ -126,38 +132,38 @@
                     <div class="card">
                         <div class="row">
                         <div class="col-md-7" style="border-right: 1px solid #dee2e6;">
-                            <div class="card-header row align-items-center justify-content-center ">
-                                <div class="card-header row g-5 align-items-center">
-                                    <div class="row g-3">
+                            <div class="card-header row g-3 align-items-center justify-content-between ">
+                                <!--<div class=" row g-3 align-items-center">-->
+                                    <!--<div class="row ">-->
                                     <div class="col-md-4 col-lg-5">
-                                        <button class="btn custom-btn btn-outline-secondary d-flex align-items-center w-100">
+                                        <button class="btn btn-outline-secondary d-flex align-items-center w-100">
                                         <input type="checkbox" id="checkbox1" class="checkbox me-4">
                                         <label for="checkbox1" class="d-flex align-items-center gap-4 form-check-label">
                                             <a href="../../assets/img/icons/unicons/visa.png" target="_blank" class="icon-link me-2">
                                             <img src="../../assets/img/icons/unicons/visa.png" alt="Icono" class="icon-image">
                                             </a>
-                                            <span>Tarjeta</span>
+                                            <span class="btn-text">Tarjeta</span>
                                         </label>
                                         </button>
                                     </div>
                                 
                                     <div class="col-md-4 col-lg-5 align-items-center justify-content-between ">
-                                        <button class="btn custom-btn btn-outline-secondary d-flex align-items-center w-100">
+                                        <button class="btn btn-outline-secondary d-flex align-items-center w-100">
                                         <input type="checkbox" id="checkbox2" class="checkbox me-4">
                                         <label for="checkbox2" class="d-flex align-items-center gap-4 form-check-label">
                                             <a href="../../assets/img/icons/unicons/paypal.png" target="_blank" class="icon-link me-2">
                                             <img src="../../assets/img/icons/unicons/paypal.png" alt="Icono" class="icon-image">
                                             </a>
-                                            <span>PayPal</span>
+                                            <span class="btn-text">PayPal</span>
                                         </label>
                                         </button>
                                     </div>
-                                    </div>
-                                </div>
+                                    <!--</div>-->
+                                <!--</div>-->
                             </div>
                             <hr class="m-0">
                             <div class="card-body">
-                                <h3 style="margin-top:0.8rem">Detalles de Compra</h3>
+                                <h3 >Detalles de Compra</h3>
                                 <div class="row g-3">
                                     <div class="col-md-6">
                                         <div class="mb-3">
@@ -173,8 +179,8 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="mb-3">
-                                            <label for="inputPassword1" class="form-label">Contraseña</label>
-                                            <input type="password" class="form-control" id="inputPassword1" placeholder="********" aria-describedby="passwordHelp">
+                                            <label for="inputcodigoOrden" class="form-label">N° Orden</label>
+                                            <input type="text" class="form-control" id="inputcodigoOrden" aria-describedby="codigoOrdenHelp" readonly>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -187,7 +193,7 @@
                                     <div class="col-md-6">
                                         <div class="mb-3">
                                             <label for="inputdirection" class="form-label">Direccion</label>
-                                            <input type="text" class="form-control" id="inputdirection" placeholder="Direccion" aria-describedby="direccionlp">
+                                            <input type="text" class="form-control" id="inputdirection" placeholder="Dirección de envío" aria-describedby="direccionlp" readonly>
                                         </div>
                                     </div>
                                 </div>
@@ -226,29 +232,30 @@
                         <!-- Sección derecha (40%) -->
                         <div class="col-md-5 my-3 ">
                             <div class="bg-lighter p-6 rounded px-3 py-2 w-100 mx-n2" >
-                                <table class="table table-bordeless " style="border-collapse: separate; border-spacing: 0;">
-                                    <thead>
-                                        <tr>
-                                            <th>Cantidad</th>
-                                            <th>Nombre del Producto</th>
-                                            <th>Precio (S/.)</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr style="border-bottom: 1px solid #dee2e6;" th:each="productodeorden : ${productosDeOrden}">
-                                            <td th:text="${productodeorden.cantidadComprada}"></td>
-                                            <td th:text="${productodeorden.nombreProducto}"></td>
-                                            <!--<td th:text="'$' + ${#numbers.formatDecimal(productodeorden.precio, 2)}"></td>-->
-                                            <td th:text ="'S/. ' + ${productodeorden.precio}">S/120.00</td>
-                                        </tr>
-                                        <tr style="border-bottom: 1px solid #dee2e6;">
-                                            <td>3</td>
-                                            <td>Producto C</td>
-                                            <td>30.00</td>
-                                        </tr>
-                                    </tbody>
-                                    
-                                </table>
+                                <div class="table-responsive">
+                                    <table class="table table-bordeless " style="border-collapse: separate; border-spacing: 0;">
+                                        <thead>
+                                            <tr>
+                                                <th>Cantidad</th>
+                                                <th>Nombre del Producto</th>
+                                                <th>Precio (S/.)</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr style="border-bottom: 1px solid #dee2e6;" th:each="productodeorden : ${productosDeOrden}">
+                                                <td th:text="${productodeorden.cantidadComprada}"></td>
+                                                <td th:text="${productodeorden.nombreProducto}"></td>
+                                                <!--<td th:text="'$' + ${#numbers.formatDecimal(productodeorden.precio, 2)}"></td>-->
+                                                <td th:text ="'S/. ' + ${productodeorden.precio}">S/120.00</td>
+                                            </tr>
+                                            <tr style="border-bottom: 1px solid #dee2e6;">
+                                                <td>3</td>
+                                                <td>Producto C</td>
+                                                <td>30.00</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                                 <!-- Sección para Delivery y Total, alineados a la última columna -->
                                 <div class="d-flex justify-content-between align-items-center mt-2 mx-3">
                                     <div></div>
