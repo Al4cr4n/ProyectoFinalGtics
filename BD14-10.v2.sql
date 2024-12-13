@@ -27,18 +27,42 @@ CREATE SCHEMA IF NOT EXISTS `db_grupo2` DEFAULT CHARACTER SET utf8mb3 ;
 USE `db_grupo2` ;
 
 -- -----------------------------------------------------
+-- Table `db_grupo2`.`categorias`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `db_grupo2`.`categorias` ;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE IF NOT EXISTS `db_grupo2`.`categorias` (
+  `id_categoria` INT NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(255) NOT NULL,
+  PRIMARY KEY (`id_categoria`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 7
+DEFAULT CHARACTER SET = utf8mb3;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+LOCK TABLES `categorias` WRITE;
+/*!40000 ALTER TABLE `categorias` DISABLE KEYS */;
+INSERT INTO `categorias` VALUES 
+(1,'Electrónica'),(2,'Muebles'),
+(3,'Accesorios'),(4,'Fotografía'),
+(5,'Oficina'),(6,'Limpieza');
+/*!40000 ALTER TABLE `categorias` ENABLE KEYS */;
+UNLOCK TABLES;
+
+-- -----------------------------------------------------
 -- Table `db_grupo2`.`despachador`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `despachador`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `despachador` (
-  `iddespachador` int NOT NULL,
+  `iddespachador` int NOT NULL AUTO_INCREMENT,
   `despachador` varchar(45) NOT NULL,
   `estado` varchar(45) NOT NULL,
   PRIMARY KEY (`iddespachador`),
   UNIQUE KEY `despachador_UNIQUE` (`despachador`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT = 100 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -158,12 +182,12 @@ DROP TABLE IF EXISTS `jurisdiccion`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `jurisdiccion` (
-  `idjurisdiccion` int NOT NULL,
+  `idjurisdiccion` int NOT NULL AUTO_INCREMENT,
   `jurisdiccion` varchar(45) NOT NULL,
   `estado` varchar(45) NOT NULL,
   PRIMARY KEY (`idjurisdiccion`),
   UNIQUE KEY `jurisdiccion_UNIQUE` (`jurisdiccion`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -294,7 +318,6 @@ DROP TABLE IF EXISTS `producto`;
 CREATE TABLE `producto` (
   `idproducto` int NOT NULL AUTO_INCREMENT,
   `nombreProducto` varchar(100) NOT NULL,
-  `categoria` varchar(45) NOT NULL,
   `cantidadDisponible` int NOT NULL,
   `descripcion` varchar(1000) NOT NULL,
   `precio` double NOT NULL,
@@ -305,7 +328,10 @@ CREATE TABLE `producto` (
   `color` varchar(45) DEFAULT NULL,
   `image` BLOB DEFAULT NULL,
   `fechaArribo` DATE DEFAULT NULL,
-  PRIMARY KEY (`idproducto`)
+  `categoria_id` int NOT NULL,
+  PRIMARY KEY (`idproducto`),
+  INDEX `fk_categoria` (`categoria_id`),
+  CONSTRAINT `fk_categoria` FOREIGN KEY (`categoria_id`) REFERENCES `categorias` (`id_categoria`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -315,16 +341,16 @@ CREATE TABLE `producto` (
 
 LOCK TABLES `producto` WRITE;
 /*!40000 ALTER TABLE `producto` DISABLE KEYS */;
-INSERT INTO `producto` VALUES (1,'Laptop Lenovo','Electrónica',15,'Laptop Lenovo con 16GB RAM, 512GB SSD, pantalla de 15.6 pulgadas.',1200.5,25,1,70,NULL,NULL,null,'2024-10-09'),
-(2,'iPhone 13','Electrónica',20,'iPhone 13 con 128GB, pantalla OLED de 6.1 pulgadas.',999.99,20,2,100,NULL,NULL,null,null),
-(3,'Samsung Galaxy S21','Electrónica',10,'Samsung Galaxy S21 con 128GB, pantalla de 6.2 pulgadas.',850.75,18,3,200,NULL,NULL,null,'2024-10-15'),
-(4,'Silla Gamer','Muebles',30,'Silla gamer ergonómica con soporte lumbar ajustable.',199.99,15,300,300,NULL,NULL,null,'2024-10-04'),
-(5,'Teclado Mecánico','Accesorios',50,'Teclado mecánico RGB con switches azules.',75,10,200,500,NULL,NULL,null,'2024-10-03'),
-(6,'Monitor 4K','Electrónica',12,'Monitor 4K UHD de 27 pulgadas con HDR.',350,22,80,200,NULL,NULL,null,null),
-(7,'Cámara Canon EOS','Fotografía',8,'Cámara Canon EOS Rebel T7i con lente de 18-55mm.',700.99,30,50,100,NULL,NULL,null,'2024-10-24'),
-(8,'Auriculares Bluetooth','Accesorios',25,'Auriculares inalámbricos Bluetooth con cancelación de ruido.',150,8,100,400,NULL,NULL,null,'2024-10-11'),
-(9,'Mouse Inalámbrico','Accesorios',60,'Mouse inalámbrico con sensor óptico de alta precisión.',35.99,5,300,700,NULL,NULL,null,null),
-(10,'Impresora HP LaserJet','Oficina',5,'Impresora HP LaserJet con impresión a doble cara automática.',250.5,12,40,400,NULL,NULL,null,null);
+INSERT INTO `producto` VALUES (1,'Laptop Lenovo',15,'Laptop Lenovo con 16GB RAM, 512GB SSD, pantalla de 15.6 pulgadas.',1200.5,25,1,70,NULL,NULL,null,'2024-10-09',1),
+(2,'iPhone 13',20,'iPhone 13 con 128GB, pantalla OLED de 6.1 pulgadas.',999.99,20,2,100,NULL,NULL,null,null,1),
+(3,'Samsung Galaxy S21',10,'Samsung Galaxy S21 con 128GB, pantalla de 6.2 pulgadas.',850.75,18,3,200,NULL,NULL,null,'2024-10-15',1),
+(4,'Silla Gamer',30,'Silla gamer ergonómica con soporte lumbar ajustable.',199.99,15,300,300,NULL,NULL,null,'2024-10-04',4),
+(5,'Teclado Mecánico',50,'Teclado mecánico RGB con switches azules.',75,10,200,500,NULL,NULL,null,'2024-10-03',3),
+(6,'Monitor 4K',12,'Monitor 4K UHD de 27 pulgadas con HDR.',350,22,80,200,NULL,NULL,null,null,1),
+(7,'Cámara Canon EOS',8,'Cámara Canon EOS Rebel T7i con lente de 18-55mm.',700.99,30,50,100,NULL,NULL,null,'2024-10-24',1),
+(8,'Auriculares Bluetooth',25,'Auriculares inalámbricos Bluetooth con cancelación de ruido.',150,8,100,400,NULL,NULL,null,'2024-10-11',3),
+(9,'Mouse Inalámbrico',60,'Mouse inalámbrico con sensor óptico de alta precisión.',35.99,5,300,700,NULL,NULL,null,null,3),
+(10,'Impresora HP LaserJet',5,'Impresora HP LaserJet con impresión a doble cara automática.',250.5,12,40,400,NULL,NULL,null,null,5);
 /*!40000 ALTER TABLE `producto` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -693,3 +719,6 @@ UNLOCK TABLES;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2024-10-11 15:41:49
+
+
+
