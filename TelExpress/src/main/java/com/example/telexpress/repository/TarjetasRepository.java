@@ -8,5 +8,5 @@ import java.util.Optional;
 
 @Repository
 public interface TarjetasRepository extends JpaRepository<Tarjetas, Integer> {
-    Optional<Tarjetas> findTarjetasByNumero_tarjeta (String numeroTarjeta);
+    Optional<Tarjetas> findTarjetasByNumeroTarjeta (String numeroTarjeta);
 }

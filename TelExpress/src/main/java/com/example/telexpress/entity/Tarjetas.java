@@ -16,12 +16,12 @@ public class Tarjetas {
     private Integer id;
 
     @Column(name="numero_tarjeta", length = 16)
-    private String numero_tarjeta;
+    private String numeroTarjeta;
 
     @Column(name = "fecha_expiracion", nullable = false)
-    private LocalDate fecha_expiracion;
+    private LocalDate fechaExpiracion;
 
-    private String codigo_cvv;
+    private String codigoCvv;
 
     private Double saldo;
 }
