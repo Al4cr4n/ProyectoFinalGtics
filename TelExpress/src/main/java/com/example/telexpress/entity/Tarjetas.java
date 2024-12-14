@@ -4,7 +4,10 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -19,9 +22,11 @@ public class Tarjetas {
     private String numeroTarjeta;
 
     @Column(name = "fecha_expiracion", nullable = false)
-    private LocalDate fechaExpiracion;
+    private Date fechaExpiracion;
 
+    @Column(name="codigo_cvv", length = 3)
     private String codigoCvv;
 
-    private Double saldo;
+    @Column(name = "saldo", precision = 12, scale = 2, nullable = false)
+    private BigDecimal saldo;
 }

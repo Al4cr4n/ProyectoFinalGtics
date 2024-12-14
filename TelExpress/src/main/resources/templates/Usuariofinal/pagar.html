@@ -65,6 +65,9 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.3/font/bootstrap-icons.min.css">
 
+    <!--uso de token dinamico-->
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <style>
         .btn {
             height: 100%;
@@ -136,20 +139,21 @@
                                 <!--<div class=" row g-3 align-items-center">-->
                                     <!--<div class="row ">-->
                                     <div class="col-md-4 col-lg-5">
-                                        <button class="btn btn-outline-secondary d-flex align-items-center w-100">
-                                        <input type="checkbox" id="checkbox1" class="checkbox me-4">
-                                        <label for="checkbox1" class="d-flex align-items-center gap-4 form-check-label">
-                                            <a href="../../assets/img/icons/unicons/visa.png" target="_blank" class="icon-link me-2">
+                                        <button id="checkbox1" class="btn btn-outline-secondary d-flex align-items-center w-100">
+                                        <!--<input type="checkbox" id="checkbox1" class="checkbox me-4">-->
+                                        <!--<label for="checkbox1" class="d-flex align-items-center gap-4 form-check-label">-->
+                                            <!--<a href="../../assets/img/icons/unicons/visa.png" target="_blank" class="icon-link me-2">
                                             <img src="../../assets/img/icons/unicons/visa.png" alt="Icono" class="icon-image">
-                                            </a>
+                                            </a>-->
+                                            <img src="../../assets/img/icons/unicons/visa.png" alt="Icono" class="icon-image">
                                             <span class="btn-text">Tarjeta</span>
-                                        </label>
+                                        <!--</label>-->
                                         </button>
                                     </div>
                                 
                                     <div class="col-md-4 col-lg-5 align-items-center justify-content-between ">
-                                        <button class="btn btn-outline-secondary d-flex align-items-center w-100">
-                                        <input type="checkbox" id="checkbox2" class="checkbox me-4">
+                                        <button id="checkbox2" class="btn btn-outline-secondary d-flex align-items-center w-100">
+                                        <!--<input type="checkbox" id="checkbox2" class="checkbox me-4">-->
                                         <label for="checkbox2" class="d-flex align-items-center gap-4 form-check-label">
                                             <a href="../../assets/img/icons/unicons/paypal.png" target="_blank" class="icon-link me-2">
                                             <img src="../../assets/img/icons/unicons/paypal.png" alt="Icono" class="icon-image">
@@ -167,11 +171,11 @@
                                 <div class="row g-3">
                                     <div class="col-md-6">
                                         <div class="mb-3">
-                                        <label for="defaultFormControlInput" class="form-label">Correo</label>
+                                        <label for="correo" class="form-label">Correo</label>
                                         <input
-                                            type="text"
+                                            type="email"
                                             class="form-control"
-                                            id="defaultFormControlInput"
+                                            id="correo"
                                             placeholder="abcd@xxxxx.com"
                                             aria-describedby="defaultFormControlHelp"
                                         />
@@ -200,11 +204,15 @@
                         
                                 <hr class="m-0" style="margin-bottom:0.5rem">
                                 <h3 style="margin-top:0.8rem">Información de Tarjeta</h3>
+
                                 <div class="row g-3">
+                                    <input type="hidden" name="ordenId" th:value="${orden.idOrdenes}">
+                                    <input type="hidden" name="monto" th:value="${totalGeneral}">
                                     <div class="col-md-20">
                                         <div class="mb-3">
-                                            <label for="inputtarjet" class="form-label">Numero de Tarjeta</label>
-                                            <input type="text" class="form-control" id="inputtarjet" placeholder="xxxx-xxxx-xxxx-xxxx" aria-describedby="inputtarjet">
+                                            <label for="numeroTarjeta" class="form-label">Numero de Tarjeta</label>
+                                            <input type="text" class="form-control" id="numeroTarjeta"
+                                                   placeholder="xxxx-xxxx-xxxx-xxxx" aria-describedby="inputtarjet">
                                         </div>
                                     </div>
                                     <div class="col-md-4">
@@ -273,7 +281,7 @@
                                 </div>
                                 
                                 <div class="d-flex justify-content-center mt-4">
-                                    <button type="button" class="btn btn-primary justify-content-center" data-bs-toggle="modal" data-bs-target="#paymentModal">Proceder con el pago</button>
+                                    <button type="button" class="btn btn-primary justify-content-center" id="btn-procesar-pago" onclick="procederConPago()">Proceder con el pago</button>
                                 </div>
                                 <div class="justify-content-center mt-3">
                                     <p>Al aceptar "Proceder con el pago" acepta nuestras Politicas de privacidad de datos del usuario </p>
@@ -285,7 +293,7 @@
                         </div>
 
                     </div>
-                    
+
                 </div>
                 
             </div>
@@ -328,7 +336,93 @@
     </div>
 </div>
   
+<script>
+    let metodoPagoSeleccionado = null
+    document.getElementById("checkbox1").addEventListener("click", function() {
+        metodoPagoSeleccionado = "tarjeta";
+        this.classList.add("active"); // Añade el estado activo al botón "Tarjeta" (aspecto visual)
+        document.getElementById("checkbox2").classList.remove("active"); // Remueve el aspecto visual de "PayPal"
+        document.getElementById("checkbox2").checked = false; // deselecciona PayPal si Tarjeta es seleccionada(aspecto de lógica)
+        this.checked = true;//marca esta opcion de forma lógica
+    });
+    document.getElementById("checkbox2").addEventListener("click", function() {
+        metodoPagoSeleccionado = "paypal";
+        this.classList.add("active");
+        document.getElementById("checkbox1").classList.remove("active");
+        document.getElementById("checkbox1").checked = false; // deselecciona Tarjeta si PayPal es seleccionada
+        this.checked = true;
+    });
+    const cvv1= document.getElementById("inputcvv").value;
+    console.log("CVV enviado:", cvv1); // Agrega este log para verificar el valor.
 
+    function procederConPago() {
+        const ordenId = document.querySelector("input[name='ordenId']").value;
+        const monto = document.querySelector("input[name='monto']").value;
+        const numeroTarjeta = document.getElementById("numeroTarjeta").value;
+        const fechaExpiracion = document.getElementById("inputfecha").value;
+        const cvv = document.getElementById("inputcvv").value;
+        // Obtener el token CSRF y el nombre del encabezado desde los meta tags
+        const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute("content");
+        const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute("content");
+        if (metodoPagoSeleccionado === "tarjeta") {
+            // Validar los campos de tarjeta antes de enviar
+            if (!numeroTarjeta || !fechaExpiracion || !cvv) {
+                alert("Por favor, complete los datos de la tarjeta.");
+                return;
+            }
+
+            fetch("/usuario/solicitudpago/tarjeta", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    [csrfHeader]: csrfToken // Agregar el token CSRF con el encabezado correcto
+                },
+                body: JSON.stringify({
+                    ordenId: ordenId,
+                    monto: monto,
+                    numeroTarjeta: numeroTarjeta,
+                    fechaExpiracion: fechaExpiracion,
+                    codigoCvv: cvv
+                })
+            })
+                .then(response => response.text())
+                .then(result => {
+                    alert(result); // Muestra un mensaje de éxito o error
+                    if (result.includes("exitosamente")) {
+                        // Redirigir a otra página o actualizar la interfaz
+                        const paymentModal = new bootstrap.Modal(document.getElementById("paymentModal"));
+                        paymentModal.show();
+                        //window.location.href = "/usuario/orden/exito";
+                    }
+                })
+                .catch(error => console.error("Error en el pago con tarjeta:", error));
+        } else if (metodoPagoSeleccionado === "paypal") {
+            // Realizar el fetch para PayPal
+            fetch("/usuario/orden/pago/paypal", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    [csrfHeader]: csrfToken
+                },
+                body: JSON.stringify({
+                    ordenId: ordenId,
+                    monto: monto
+                })
+            })
+                .then(response => response.text())
+                .then(result => {
+                    alert(result); // Muestra mensaje de éxito o error
+                    if (result.includes("exitosamente")) {
+                        // Redirigir o actualizar interfaz
+                        window.location.href = "/usuario/orden/exito";
+                    }
+                })
+                .catch(error => console.error("Error en el pago con PayPal:", error));
+        } else {
+            alert("Por favor, seleccione un método de pago antes de continuar.");
+        }
+    }
+</script>
   
 
 

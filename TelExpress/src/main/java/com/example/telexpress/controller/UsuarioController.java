@@ -1,4 +1,6 @@
 package com.example.telexpress.controller;
+import com.example.telexpress.dao.ServicioCompraDAO;
+import com.example.telexpress.dto.DatosCompra;
 import com.example.telexpress.dto.ProductoDTO;
 import com.example.telexpress.entity.*;
 import com.example.telexpress.repository.*;
@@ -6,12 +8,14 @@ import com.example.telexpress.service.ChatRoomService;
 import com.example.telexpress.service.PostService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import com.example.telexpress.repository.DistritoRepository;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,11 +25,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import com.example.telexpress.repository.UsuarioRepository;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -42,11 +48,13 @@ public class UsuarioController {
     private final ChatRoomService chatRoomService;
     private final PagosRepository pagosRepository;
     private final PostService postService;
+    private final ServicioCompraDAO servicioCompraDAO;
+    private final View error;
 
 
     public UsuarioController(UsuarioRepository usuarioRepository, PagosRepository pagosRepository, ProductoRepository productoRepository, ReseniaRepository reseniaRepository,
                              OrdenesRepository ordenesRepository, DistritoRepository distritoRepository, CoordinadorRepository coordinadorRepository,
-                             ProductoOrdenesRepository productoOrdenesRepository, ContrasenaAgenteRespository contrasenaAgenteRespository, PasswordEncoder passwordEncoder, ChatRoomService chatRoomService, PostService postService) {
+                             ProductoOrdenesRepository productoOrdenesRepository, ContrasenaAgenteRespository contrasenaAgenteRespository, PasswordEncoder passwordEncoder, ChatRoomService chatRoomService, PostService postService, ServicioCompraDAO servicioCompraDAO, View error) {
         this.usuarioRepository = usuarioRepository;
         this.productoRepository = productoRepository;
         this.reseniaRepository = reseniaRepository;
@@ -59,6 +67,8 @@ public class UsuarioController {
         this.chatRoomService = chatRoomService;
         this.pagosRepository = pagosRepository;
         this.postService = postService;
+        this.servicioCompraDAO = servicioCompraDAO;
+        this.error = error;
     }
 
     private final OrdenesRepository ordenesRepository;
@@ -641,6 +651,21 @@ public class UsuarioController {
         model.addAttribute("deliveryCost", deliveryCost);
         model.addAttribute("totalGeneral", totalGeneral);
         return "Usuariofinal/pagar";
+    }
+
+    @PostMapping("/solicitudpago/tarjeta")
+    @ResponseBody
+    public ResponseEntity<String> procesoPagoTarjata(@Valid @RequestBody  DatosCompra requestCompra, BindingResult result){
+        System.out.println("CVV recibido: " + requestCompra.getCodigoCvv());
+        System.out.println("Datos recibidos: " + requestCompra);
+        System.out.println("fecha de expiracion ingresada:" + requestCompra.getFechaExpiracion());
+        try {
+
+            String response = servicioCompraDAO.realizarCompra(requestCompra);
+            return ResponseEntity.ok(response);
+        } catch (RuntimeException ex) {
+            return ResponseEntity.badRequest().body(ex.getMessage());
+        }
     }
 
     @GetMapping("/pago")

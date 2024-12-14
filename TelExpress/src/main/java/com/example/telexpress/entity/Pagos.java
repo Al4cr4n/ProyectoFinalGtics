@@ -30,15 +30,9 @@ public class Pagos {
     @NotBlank(message = "El número de tarjeta es obligatorio")
     private String numeroTarjeta;
 
-    @Column(name = "cvv", nullable = false)
-    @NotNull(message = "El CVV es obligatorio")
-    @Min(value = 100, message = "El CVV debe tener al menos 3 dígitos")
-    @Max(value = 9999, message = "El CVV no debe tener más de 4 dígitos")
-    private Integer cvv;
-
 
     @Column(name = "fechaPago", nullable = false)
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP) // Cambiado a TIMESTAMP para incluir fecha y hora
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @NotNull(message = "La fecha de pago es obligatoria")
     private Date fechaPago;

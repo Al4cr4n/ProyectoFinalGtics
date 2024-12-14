@@ -284,7 +284,6 @@ CREATE TABLE `pagos` (
   `idpagos` int NOT NULL AUTO_INCREMENT,
   `monto` double NOT NULL,
   `numeroTarjeta` varchar(45) NOT NULL,
-  `cvv` int NOT NULL,
   `fechaPago` datetime NOT NULL,
   `metodoPago` varchar(45) NOT NULL,
   `estadoPago` varchar(45) NOT NULL,
@@ -304,7 +303,23 @@ CREATE TABLE `pagos` (
 
 LOCK TABLES `pagos` WRITE;
 /*!40000 ALTER TABLE `pagos` DISABLE KEYS */;
-INSERT INTO `pagos` VALUES (1,1300,'11111111',123,'2024-01-10 10:30:00','Tarjeta de Crédito','Completado',1001,18),(2,1200,'22222222',456,'2024-01-08 14:45:00','PayPal','Completado',1002,19),(3,1000,'33333333',789,'2024-02-07 09:15:00','Tarjeta de Débito','Completado',1003,20),(4,199.99,'44444444',234,'2024-02-20 16:20:00','Transferencia Bancaria','Completado',1004,21),(5,100.5,'55555555',567,'2024-04-28 11:00:00','Tarjeta de Crédito','Completado',1005,22),(6,400,'66666666',890,'2024-05-29 13:30:00','PayPal','Completado',1006,23),(7,1000.7,'77777777',345,'2024-06-30 15:45:00','Tarjeta de Débito','Completado',1007,24),(8,500.5,'88888888',678,'2024-07-28 10:00:00','Transferencia Bancaria','Completado',1008,25),(9,100,'99999999',901,'2024-08-14 12:15:00','Tarjeta de Crédito','Completado',1009,26),(10,500.5,'AAAAAAAA',234,'2024-09-09 17:30:00','PayPal','Completado',1010,27),(11,1300,'11111111',123,'2024-04-05 10:30:00','Tarjeta de Crédito','Completado',1011,18),(12,1250,'22222222',456,'2024-06-20 14:45:00','PayPal','Completado',1012,19),(13,900,'33333333',789,'2024-07-10 09:15:00','Tarjeta de Débito','Completado',1013,20),(14,200,'44444444',234,'2024-08-05 16:20:00','Transferencia Bancaria','Completado',1014,21),(15,100.5,'55555555',567,'2024-09-12 11:00:00','Tarjeta de Crédito','Completado',1015,22),(16,500,'66666666',890,'2024-10-18 13:30:00','PayPal','Completado',1016,23),(17,900.5,'77777777',345,'2024-11-22 15:45:00','Tarjeta de Débito','Completado',1017,24);
+INSERT INTO `pagos` VALUES (1,1300,'11111111','2024-01-10 10:30:00','Tarjeta de Crédito','Completado',1001,18),
+(2,1200,'22222222','2024-01-08 14:45:00','PayPal','Completado',1002,19),
+(3,1000,'33333333','2024-02-07 09:15:00','Tarjeta de Débito','Completado',1003,20),
+(4,199.99,'44444444','2024-02-20 16:20:00','Transferencia Bancaria','Completado',1004,21),
+(5,100.5,'55555555','2024-04-28 11:00:00','Tarjeta de Crédito','Completado',1005,22),
+(6,400,'66666666','2024-05-29 13:30:00','PayPal','Completado',1006,23),
+(7,1000.7,'77777777','2024-06-30 15:45:00','Tarjeta de Débito','Completado',1007,24),
+(8,500.5,'88888888','2024-07-28 10:00:00','Transferencia Bancaria','Completado',1008,25),
+(9,100,'99999999','2024-08-14 12:15:00','Tarjeta de Crédito','Completado',1009,26),
+(10,500.5,'AAAAAAAA','2024-09-09 17:30:00','PayPal','Completado',1010,27),
+(11,1300,'11111111','2024-04-05 10:30:00','Tarjeta de Crédito','Completado',1011,18),
+(12,1250,'22222222','2024-06-20 14:45:00','PayPal','Completado',1012,19),
+(13,900,'33333333','2024-07-10 09:15:00','Tarjeta de Débito','Completado',1013,20),
+(14,200,'44444444','2024-08-05 16:20:00','Transferencia Bancaria','Completado',1014,21),
+(15,100.5,'55555555','2024-09-12 11:00:00','Tarjeta de Crédito','Completado',1015,22),
+(16,500,'66666666','2024-10-18 13:30:00','PayPal','Completado',1016,23),
+(17,900.5,'77777777','2024-11-22 15:45:00','Tarjeta de Débito','Completado',1017,24);
 /*!40000 ALTER TABLE `pagos` ENABLE KEYS */;
 UNLOCK TABLES;
 
