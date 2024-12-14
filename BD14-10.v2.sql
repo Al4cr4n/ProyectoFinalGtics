@@ -810,6 +810,37 @@ LOCK TABLES `zona` WRITE;
 INSERT INTO `zona` VALUES (1,'Norte'),(2,'Sur'),(3,'Este'),(4,'Oeste');
 /*!40000 ALTER TABLE `zona` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `post`
+--
+
+DROP TABLE IF EXISTS `post`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `post` (
+  `idpost` int NOT NULL AUTO_INCREMENT,
+  `title` text NOT NULL,
+  `content` text NOT NULL,
+  `create_at` datetime NOT NULL,
+  `usuarioid` int NOT NULL,
+  PRIMARY KEY (`idpost`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `post`
+--
+
+LOCK TABLES `post` WRITE;
+/*!40000 ALTER TABLE `post` DISABLE KEYS */;
+INSERT INTO `post` VALUES (1,'asd','asd','2024-12-14 03:24:05',0),
+(2,'Angelito','Mi pastor','2024-12-14 03:25:05',0),
+(3,'dd','ddddddd','2024-12-14 06:20:43',0),(4,'asd','asd','2024-12-14 06:21:29',0);
+/*!40000 ALTER TABLE `post` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
