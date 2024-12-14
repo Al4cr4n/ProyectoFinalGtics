@@ -8,6 +8,7 @@ import com.example.telexpress.repository.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -1093,6 +1094,12 @@ public class SuperAdminController {
 
         // Guardar proveedor
         proveedorRepository.save(proveedor);
+        // Agregar el mensaje Flash correspondiente según si es nuevo o editado
+        if (esNuevoProveedor) {
+            attr.addFlashAttribute("success", "Proveedor creado exitosamente.");
+        } else {
+            attr.addFlashAttribute("success", "Proveedor actualizado exitosamente.");
+        }
         return "redirect:/superadmin/proveedor/lista";
     }
 
@@ -1105,8 +1112,13 @@ public class SuperAdminController {
         Optional<Proveedor> optProveedor = proveedorRepository.findById(id);
 
         if (optProveedor.isPresent()) {
-            proveedorRepository.deleteById(id);
-            attr.addFlashAttribute("success", "Proveedor eliminado exitosamente.");
+            try {
+                proveedorRepository.deleteById(id);
+                attr.addFlashAttribute("success", "Proveedor eliminado exitosamente.");
+            } catch (DataIntegrityViolationException ex) {
+                // Aquí gestionas el error, como el caso en que el proveedor está siendo referenciado
+                attr.addFlashAttribute("error", "No se puede eliminar el proveedor, ya que está asociado a productos.");
+            }
         } else {
             attr.addFlashAttribute("error", "El proveedor no fue encontrado.");
         }

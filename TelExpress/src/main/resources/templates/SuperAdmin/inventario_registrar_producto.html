@@ -108,7 +108,7 @@
                         <div class="row mb-3">
                             <!-- Precio -->
                             <div class="col-md-6">
-                                <label class="form-label">Precio:</label>
+                                <label class="form-label">Precio (S/.):</label>
 
                                 <input th:field="*{precio}"
                                        type="number"
@@ -126,7 +126,7 @@
 
                             <!-- Costo de envío -->
                             <div class="col-md-6">
-                                <label class="form-label">Costo de envío:</label>
+                                <label class="form-label">Costo de envío (S/.):</label>
 
                                 <input th:field="*{costoEnvio}"
                                        type="number"
@@ -216,7 +216,9 @@
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label">Imagen del Producto (Formato .jpg):</label>
+
                                 <input type="file" name="image" class="form-control" accept="image/*" />
+                                <small>Tamaño máximo de archivo: 16 MB</small>
                             </div>
 
                         </div>

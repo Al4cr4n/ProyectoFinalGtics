@@ -91,7 +91,7 @@
               </div>-->
 
               <div class="col-md-6">
-                <label class="form-label">Precio:</label>
+                <label class="form-label">Precio (S/.):</label>
                 <input th:field="*{precio}" type="number" class="form-control" placeholder="Ingrese el precio"
                        th:classappend="${#fields.hasErrors('precio') ? 'is-invalid' : ''}">
                 <div class="invalid-feedback" th:if="${#fields.hasErrors('precio')}" th:errors="*{precio}"></div>
@@ -102,7 +102,7 @@
                 <input th:field="*{costoEnvio}" type="number" class="form-control">
               </div>-->
               <div class="col-md-6">
-                <label class="form-label">Costo de envío:</label>
+                <label class="form-label">Costo de envío (S/.):</label>
                 <input th:field="*{costoEnvio}" type="number" class="form-control" placeholder="Ingrese el costo de envío"
                        th:classappend="${#fields.hasErrors('costoEnvio') ? 'is-invalid' : ''}">
                 <div class="invalid-feedback" th:if="${#fields.hasErrors('costoEnvio')}" th:errors="*{costoEnvio}"></div>
