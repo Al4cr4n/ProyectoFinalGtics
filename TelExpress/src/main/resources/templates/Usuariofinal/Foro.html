@@ -212,9 +212,12 @@
         // Función de crear post
         function createPost(e) {
             e.preventDefault();
+            const now = new Date().toISOString();
 
             const formData = {
                 titulo: tituloInput.value,
+                id:0,
+                createdAt:now,
                 contenido: contenidoInput.value
             };
 

@@ -3,10 +3,14 @@ package com.example.telexpress.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
 @Entity
+@Getter
+@Setter
 @Table(name ="post")
 public class Post {
     @Id
@@ -32,17 +36,5 @@ public class Post {
         this.createdAt = LocalDateTime.now();
     }
 
-    // Getters and setters
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
 
-    // Cambia estos métodos para que coincidan con los nombres de columna
-    public String getTitle() { return titulo; }
-    public void setTitle(String titulo) { this.titulo = titulo; }
-
-    public String getContent() { return contenido; }
-    public void setContent(String contenido) { this.contenido = contenido; }
-
-    public LocalDateTime getCreatedAt() { return createdAt; }
-    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
 }
