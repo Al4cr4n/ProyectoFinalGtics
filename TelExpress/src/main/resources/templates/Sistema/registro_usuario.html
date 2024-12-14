@@ -58,30 +58,37 @@
                     </div>
                     <!-- /Logo -->
                     <h4 class="mb-2" style="font-family: Zilla Slab"> Regístrate con nosotros </h4>
+                    <small>Todos los campos son obligatorios</small>
                     <!-- Formulario de Registro -->
                     <form id="formAuthentication" method="post" th:action="@{/registro_usuario}" th:object="${usuario}" class="mb-3">
+
                         <div class="mb-3">
-                            <label class="form-label">Nombre</label>
-                            <input th:field="*{nombre}" type="text" id="nombre" name="nombre" class="form-control" placeholder="Ingresa tu nombre" autofocus />
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Apellido</label>
-                            <input th:field="*{apellido}" type="text" id="apellido" name="apellido" class="form-control" placeholder="Ingresa tu apellido" />
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">DNI</label>
+                            <label class="form-label">DNI:</label>
                             <input th:field="*{dni}" type="text" id="dni" name="dni" class="form-control" placeholder="Ingresa tu DNI" />
                         </div>
+
+                        <!-- Mensaje de Carga -->
+                        <div id="loadingMessage" style="display:none; text-align: center; margin-bottom: 20px; font-size: 16px; color: #333;">Cargando datos...</div>
                         <div class="mb-3">
-                            <label class="form-label">Correo electrónico</label>
+                            <label class="form-label">Nombres:</label>
+                            <!-- Campo de solo lectura para el nombre -->
+                            <input th:field="*{nombre}" type="text" id="nombre" name="nombre" class="form-control" placeholder="Nombres" readonly />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Apellidos:</label>
+                            <!-- Campo de solo lectura para el apellido -->
+                            <input th:field="*{apellido}" type="text" id="apellido" name="apellido" class="form-control" placeholder="Apellidos" readonly />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Correo electrónico:</label>
                             <input th:field="*{correo}" type="email" class="form-control" placeholder="Ingresa tu correo" required />
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">Dirección</label>
+                            <label class="form-label">Dirección:</label>
                             <input th:field="*{direccion}" type="text" class="form-control" placeholder="Ingresa tu dirección" />
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">Distrito</label>
+                            <label class="form-label">Distrito:</label>
                             <select class="form-control form-select" th:field="*{distrito.id}" required>
                                 <option value="" disable selected>Seleccione un distrito</option>
                                 <option th:each="distrito : ${lista_distritos}"
@@ -156,20 +163,30 @@
     });
 </script>
 <script>
-    document.getElementById("dni").addEventListener("blur",function() {
+    document.getElementById("dni").addEventListener("blur", function() {
         var dni = this.value;
-        fetch(`/api/usuario/dni/${dni}`)
+        // Mostrar el mensaje de carga
+        document.getElementById("loadingMessage").style.display = "block";
+
+        fetch(`/api/usuarios/dni/${dni}`)
             .then(response => {
-                if(!response.ok) throw new Error("No se encontrarron datos para el DNI ingresado");
+                if (!response.ok) throw new Error("No se encontraron datos para el DNI ingresado");
                 return response.json();
             })
             .then(data => {
+                // Llenamos los campos de nombre y apellido automáticamente
                 document.getElementById("nombre").value = data.nombres;
                 document.getElementById("apellido").value = `${data.apellidoPaterno} ${data.apellidoMaterno}`;
+                // Ocultar el mensaje de carga
+                document.getElementById("loadingMessage").style.display = "none";
             })
-            .catch(error => console.error("Error al obtener datos del usuario",error));
+            .catch(error => {
+                alert(error.message);  // Mostrar mensaje de error
+                document.getElementById("loadingMessage").style.display = "none";  // Ocultar el mensaje de carga
+            });
     });
 </script>
+
 
 <!-- Place this tag in your head or just before your close body tag. -->
 <script async defer src="https://buttons.github.io/buttons.js"></script>

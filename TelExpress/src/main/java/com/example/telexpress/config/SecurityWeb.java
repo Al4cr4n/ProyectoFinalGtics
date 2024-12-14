@@ -101,6 +101,7 @@ public class SecurityWeb {
                         .maxSessionsPreventsLogin(false) // Si se intenta iniciar sesión nuevamente, invalida la sesión anterior
                         .expiredUrl("/login?expired") // Redirige si la sesión expira
                 ).authorizeHttpRequests(authorize -> authorize
+                                .requestMatchers("/api/usuarios/dni/**").permitAll()
                         .requestMatchers("/login","/").permitAll()
                         .requestMatchers ("/agente","/agente/**").hasAuthority("Agente") //acceso solo para agentes
                         .requestMatchers("/superadmin", "/superadmin/**", "/producto/**").hasAuthority("Superadmin")
