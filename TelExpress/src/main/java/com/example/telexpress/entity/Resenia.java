@@ -18,10 +18,10 @@ public class Resenia {
     @Column(length = 500)
     private String descripcion;  // Esto permanece igual, ya que la longitud está acorde a la tabla.
 
-    @Column(length = 45)  // Esto fue modificado para ajustarse al tamaño de la tabla.
+    @Column(length = 100)  // Esto fue modificado para ajustarse al tamaño de la tabla.
     private String calidad;
 
-    @Column(length = 45)  // Esto fue modificado para ajustarse al tamaño de la tabla.
+    @Column(length = 100)  // Esto fue modificado para ajustarse al tamaño de la tabla.
     private String rapidez;
 
     private int puntuacion;  // Esto permanece igual.

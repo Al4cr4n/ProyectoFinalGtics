@@ -51,6 +51,8 @@
         /* Estilo para el textarea no editable */
         textarea[readonly] {
             resize: none; /* Desactiva el cambio de tamaño */
+            height: auto; /* Ajusta la altura automáticamente */
+            overflow: hidden; /* Evita scroll interno */
         }
 
         /* Alineación y tamaño ajustado del buscador y botones */
@@ -139,12 +141,34 @@
                                     <!-- Preguntas de Reseñas -->
                                     <div class="mb-3">
                                         <label for="productQuality" class="form-label">El producto es de buena calidad?</label>
-                                        <textarea id="productQuality" class="form-control" th:text="${resenia.calidad}" rows="3" readonly></textarea>
+                                        <div id="productQuality"
+                                             style="background-color: #f8f9fa;
+                border: 1px solid #ced4da;
+                border-radius: .25rem;
+                padding: .375rem .75rem;
+                white-space: pre-wrap; /* Mantiene saltos de línea */
+                word-wrap: break-word; /* Ajusta palabras largas */
+                overflow: visible; /* Evita que el contenido se corte */
+                display: block; /* Asegura que el texto se comporte como bloque */
+                width: 100%; /* Usa todo el ancho disponible */"
+                                             th:text="${resenia.calidad}">
+                                        </div>
                                     </div>
 
                                     <div class="mb-3">
                                         <label for="deliverySpeed" class="form-label">Recibió rápido su producto?</label>
-                                        <textarea id="deliverySpeed" class="form-control" th:text="${resenia.rapidez}" rows="3" readonly></textarea>
+                                        <div id="deliverySpeed"
+                                             style="background-color: #f8f9fa;
+                border: 1px solid #ced4da;
+                border-radius: .25rem;
+                padding: .375rem .75rem;
+                white-space: pre-wrap; /* Mantiene saltos de línea */
+                word-wrap: break-word; /* Ajusta palabras largas */
+                overflow: visible; /* Evita que el contenido se corte */
+                display: block; /* Asegura que el texto se comporte como bloque */
+                width: 100%; /* Usa todo el ancho disponible */"
+                                             th:text="${resenia.rapidez}">
+                                        </div>
                                     </div>
 
                                     <hr class="m-0">
