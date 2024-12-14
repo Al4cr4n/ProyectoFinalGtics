@@ -248,6 +248,18 @@
                         hour: '2-digit',
                         minute: '2-digit'
                     })}</small>
+                    <div class="comments mt-3">
+                    <h6>Comentarios</h6>
+                    <div class="comments-container">
+        <!-- Los comentarios se mostrarán aquí -->
+                    </div>
+                    <form class="comment-form">
+                    <div class="mb-3">
+                    <textarea class="form-control" rows="2" placeholder="Escribe tu comentario aquí" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-sm btn-primary">Enviar Comentario</button>
+                    </form>
+                    </div>
                </div>
            `;
                     existingPostsDiv.insertBefore(newPostDiv, existingPostsDiv.firstChild);
