@@ -524,8 +524,8 @@ DROP TABLE IF EXISTS `resenias`;
 CREATE TABLE `resenias` (
   `idresenias` int NOT NULL AUTO_INCREMENT,
   `descripcion` varchar(500) NOT NULL,
-  `calidad` varchar(45) DEFAULT NULL,
-  `rapidez` varchar(45) DEFAULT NULL,
+  `calidad` varchar(100) DEFAULT NULL,
+  `rapidez` varchar(100) DEFAULT NULL,
   `puntuacion` int DEFAULT NULL,
   `foto` blob NULL,
   `productos_idproductos` int DEFAULT NULL,
