@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<body th:fragment="">
+    <script src="https://js.pusher.com/8.0.1/pusher.min.js"></script>
+    <script th:inline="javascript">
+        document.addEventListener("DOMContentLoaded",function(){
+            const userId= 'default';
+            fetch(`/agente/notificaciones?usuarioId=${userId}`)
+                .then(response => response.json())
+                .then(data=> {
+                    const notificationContainer = document.getElementById("notifcation-container");
+                    data.forEach(notif => {
+                        const notification=document.getElementById("div");
+                        notification.className= "dropdown-itm text-wrap";
+                        notification.innerHTML= `
+                        <div class="d-flex align-items-center">
+                            <div class="flex-grow-1">
+                                <h6 class="m-0">${notif.contenido}</h6>
+                                <small class="text-muted">Order ID: ${notif.orderId}</small>
+                            </div>
+                        </div>
+                    `;
+                        notificationContainer.prepend(notification);
+                    });
+                });
+
+        });
+    </script>
+
+    <script th:inline="javascript">
+        document.addEventListener("DOMContentLoaded", function(){
+            const pusher= new Pusher(,{
+               cluster: "us2",
+               encrypted: true
+            });
+        })
+        //Obtener el ID del usuario
+        const userIdd= 'default';
+        console.log(userIdd);
+        const channel= pusher.subscribe("ordenes-" + userIdd);
+
+        //Escuchar eventps de notificaciones
+        channel.bind("orden-actualizada", function(data){
+           const notificationContainer = document.getElementById("notification-container");
+
+           //Generar una nueva notificacion
+            const notification= document.createElement("div");
+            notification.className="dropdown-item text-wrap";
+            notification.innerHTML= `
+                    <div class="d-flex align-items-center">
+                        <div class="flex-grow-1">
+                            <h6 class="m-0">${data.message}</h6>
+                            <small class="text-muted">Order ID: ${data.orderId}</small>
+                        </div>
+                    </div>
+                `;
+            notificationContainer.prepend(notification);
+
+            //SI la notificacion no esta visible
+            const notiDot= document.querySelector('.noti-dot');
+            if(notiDot){
+                notiDot.style.display='inline';
+            }
+        });
+
+
+    </script>
+
+</body>
+</html>
