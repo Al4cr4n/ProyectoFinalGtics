@@ -618,6 +618,39 @@ INSERT INTO `roles` VALUES (1,'Superadmin'),(2,'Coordinador'),(3,'Agente'),(4,'U
 UNLOCK TABLES;
 
 --
+-- Table structure for table `notificacion`
+--
+DROP TABLE IF EXISTS `notificacion`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `notificacion` (
+  `idnotificacion` int NOT NULL,
+  `usuario_idusuario` int NOT NULL,
+  `ordenes_idordenes` int NOT NULL,
+  `contenido` varchar(45) NOT NULL,
+  `leido` tinyint DEFAULT NULL,
+  `fechacreado` datetime NOT NULL,
+  PRIMARY KEY (`idnotificacion`),
+  KEY `fk_notificacion_usuario1_idx` (`usuario_idusuario`),
+  KEY `fk_notificacion_ordenes1_idx` (`ordenes_idordenes`),
+  CONSTRAINT `fk_notificacion_usuario1` FOREIGN KEY (`usuario_idusuario`) REFERENCES `usuario` (`idusuario`),
+  CONSTRAINT `fk_notificacion_ordenes1` FOREIGN KEY (`ordenes_idordenes`) REFERENCES `ordenes` (`idordenes`)
+) ENGINE=InnoDB 
+DEFAULT CHARSET=utf8mb3;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `notificacion`
+--
+
+LOCK TABLES `notificacion` WRITE;
+/*!40000 ALTER TABLE `notificacion` DISABLE KEYS */;
+INSERT INTO `notificacion` VALUES 
+(2,25,2,'Bienvenido',1,'2024-11-20 10:49:46');
+/*!40000 ALTER TABLE `notificacion` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `usuario`
 --
 

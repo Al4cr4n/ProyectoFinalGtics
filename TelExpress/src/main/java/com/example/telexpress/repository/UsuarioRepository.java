@@ -2,6 +2,7 @@ package com.example.telexpress.repository;
 
 import com.example.telexpress.entity.Usuario;
 import com.example.telexpress.entity.Zona;
+import com.example.telexpress.entity.Rol;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -122,4 +123,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
             "AND o.estadoOrdenes IN ('CREADO', 'EN VALIDACION', 'EN PROCESO')", nativeQuery = true)
     void updateAgenteEncargadoByUsuario(
             @Param("usuarioId") Integer usuarioId);
+
+    //Metodo para obtener los coordis de la zona correspondiente
+    List<Usuario> findByRol_IdAndAndZona_Idzona(Rol rol, Zona zona);
 }
