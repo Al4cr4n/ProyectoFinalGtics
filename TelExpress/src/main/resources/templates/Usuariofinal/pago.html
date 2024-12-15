@@ -212,8 +212,11 @@
                             <tbody class="table-border-bottom-0">
                             <tr th:each="pago : ${pagosPendientes}">
                               <td><strong th:text="${pago.ordenes.idOrdenes}"></strong></td>
-                              <td th:text="${pago.ordenes.productos}"></td>
-                              <td th:text="${#dates.format(pago.fechaPago, 'yyyy-MM-dd')}"></td>
+                              <td>
+                                <ul>
+                                  <li th:each="producto : ${pago.ordenes.productos}" th:text="${producto.nombreProducto}"></li>
+                                </ul>
+                              </td>                            <td th:text="${#dates.format(pago.fechaPago, 'yyyy-MM-dd')}"></td>
                               <td th:text="${pago.monto}"></td>
                               <td th:text="${pago.estadoPago}"></td>
                             </tr>
@@ -248,8 +251,11 @@
                             <tbody class="table-border-bottom-0">
                             <tr th:each="pago : ${pagosRealizados}">
                               <td><strong th:text="${pago.ordenes.idOrdenes}"></strong></td>
-                              <td th:text="${pago.ordenes.productos}"></td>
-                              <td th:text="${#dates.format(pago.fechaPago, 'yyyy-MM-dd')}"></td>
+                              <td>
+                                <ul>
+                                  <li th:each="producto : ${pago.ordenes.productos}" th:text="${producto.nombreProducto}"></li>
+                                </ul>
+                              </td>                               <td th:text="${#dates.format(pago.fechaPago, 'yyyy-MM-dd')}"></td>
                               <td th:text="${pago.monto}"></td>
                               <td th:text="${pago.estadoPago}"></td>
                             </tr>

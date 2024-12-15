@@ -15,7 +15,7 @@ import java.util.Optional;
 import java.util.List;
 
 @Repository
-public interface OrdenesRepository extends JpaRepository<Ordenes, Integer> {
+public interface    OrdenesRepository extends JpaRepository<Ordenes, Integer> {
 
     // Contar órdenes por estado
     long countByEstadoOrdenes(String estado);
@@ -25,6 +25,10 @@ public interface OrdenesRepository extends JpaRepository<Ordenes, Integer> {
             nativeQuery= true)
     List<Ordenes> findByUsuarioId(Integer id);
     List<Ordenes> findByUsuario_Zona(Zona zona);
+
+
+    @Query("SELECT o FROM Ordenes o JOIN FETCH o.productos WHERE o.idOrdenes = :id")
+    Optional<Ordenes> findByIdWithProductos(@Param("id") Long id);
 
     // Si necesitas métodos adicionales para búsquedas personalizadas, puedes declararlos aquí.
     List<Ordenes> findByEstadoOrdenes(String estadoOrdenes);
