@@ -883,17 +883,27 @@ public class SuperAdminController {
         List<Producto> listaTop = productoRepository.findAll();
         listaTop.sort(Comparator.comparing(Producto::getCantidadComprada).reversed());
 
+
+        //------
+        if (listaTop.size() > 10) {
+            listaTop = listaTop.subList(0, 10);
+        }
+
+        model.addAttribute("listaTop", listaTop);
+
+
+
         List<Proveedor> topProveedoresPositivos = proveedorRepository.findTop5ByRatingDesc();
 
         // Obtener el top 5 de proveedores con peor calificación
         List<Proveedor> topProveedoresNegativos = proveedorRepository.findTop5ByRatingAsc();
 
 
-        model.addAttribute("listaTop", listaTop);
+       // model.addAttribute("listaTop", listaTop);
 
-        if (listaTop.size() > 10) {
-            listaTop = listaTop.subList(0, 10);
-        }
+        //if (listaTop.size() > 10) {
+          //  listaTop = listaTop.subList(0, 10);
+        //}
 
         if (topProveedoresPositivos.size() > 5) {
             topProveedoresPositivos = topProveedoresPositivos.subList(0, 5);

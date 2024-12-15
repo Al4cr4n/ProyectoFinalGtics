@@ -45,8 +45,12 @@ public class Proveedor implements Serializable {
     @Column(name = "correo")
     private String correo;
 
-    @Column(name = "estadoProveedor")
-    private String estadoProveedor;
+    //@Column(name = "estadoProveedor")
+    //private String estadoProveedor;
+
+    @Column(name = "estadoProveedor", nullable = false)
+    private String estadoProveedor = "Activo"; // Valor predeterminado
+
 
     @NotNull(message = "Debe seleccionar una zona")
     @ManyToOne
