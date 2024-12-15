@@ -341,7 +341,7 @@ CREATE TABLE `producto` (
   `cantidadComprada` int DEFAULT NULL,
   `modelo` varchar(45) DEFAULT NULL,
   `color` varchar(45) DEFAULT NULL,
-  `image` BLOB DEFAULT NULL,
+  `image` MEDIUMBLOB DEFAULT NULL,
   `fechaArribo` DATE DEFAULT NULL,
   `categoria_id` int NOT NULL,
   PRIMARY KEY (`idproducto`),
@@ -846,6 +846,30 @@ INSERT INTO `post` VALUES (1,'asd','asd','2024-12-14 03:24:05',18),
 /*!40000 ALTER TABLE `post` ENABLE KEYS */;
 UNLOCK TABLES;
 
+DROP TABLE IF EXISTS `comment`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `comment` (
+  `idcomment` INT NOT NULL AUTO_INCREMENT,
+  `content` TEXT NOT NULL,
+  `create_at` DATETIME NOT NULL,
+  `post_idpost` INT NOT NULL,
+  `usuario_idusuario` INT NOT NULL,
+  PRIMARY KEY (`idcomment`),
+  INDEX `fk_comment_post1_idx` (`post_idpost`),
+  INDEX `fk_comment_usuario1_idx` (`usuario_idusuario`),
+  CONSTRAINT `fk_comment_post1`
+    FOREIGN KEY (`post_idpost`)
+    REFERENCES `db_grupo2`.`post` (`idpost`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  CONSTRAINT `fk_comment_usuario1`
+    FOREIGN KEY (`usuario_idusuario`)
+    REFERENCES `db_grupo2`.`usuario` (`idusuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb3;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
