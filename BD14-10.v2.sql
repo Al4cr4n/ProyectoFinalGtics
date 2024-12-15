@@ -866,8 +866,8 @@ CREATE TABLE `comment` (
   CONSTRAINT `fk_comment_usuario1`
     FOREIGN KEY (`usuario_idusuario`)
     REFERENCES `db_grupo2`.`usuario` (`idusuario`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
