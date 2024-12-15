@@ -1005,6 +1005,61 @@ public class SuperAdminController {
         return "SuperAdmin/gestion_proveedores";
     }
 
+
+    /* / Método para banear un proveedor
+    @PostMapping("/banear")
+    public String banearProveedor(@RequestParam("id") Integer idProveedor, RedirectAttributes redirectAttributes) {
+        Proveedor proveedor = proveedorRepository.findById(idProveedor)
+                .orElseThrow(() -> new IllegalArgumentException("Proveedor no encontrado: " + idProveedor));
+
+        proveedor.setEstadoProveedor("baneado");
+        proveedorRepository.save(proveedor);
+
+        redirectAttributes.addFlashAttribute("success", "Proveedor banneado exitosamente.");
+        return "redirect:/superadmin/proveedor/lista";
+    }
+
+    // Método para desbanear un proveedor
+    @PostMapping("/desbanear")
+    public String desbanearProveedor(@RequestParam("id") Integer idProveedor, RedirectAttributes redirectAttributes) {
+        Proveedor proveedor = proveedorRepository.findById(idProveedor)
+                .orElseThrow(() -> new IllegalArgumentException("Proveedor no encontrado: " + idProveedor));
+
+        proveedor.setEstadoProveedor("activo");
+        proveedorRepository.save(proveedor);
+
+        redirectAttributes.addFlashAttribute("success", "Proveedor desbaneado exitosamente.");
+        return "redirect:/superadmin/proveedor/lista";
+    } */
+
+    @PostMapping("/proveedor/banear/{estado}")
+    public String cambiarEstadoProveedor(@RequestParam("id") Integer idProveedor,
+                                         @PathVariable("estado") String estadoProveedor,
+                                         RedirectAttributes redirectAttributes) {
+        Proveedor proveedor = proveedorRepository.findById(idProveedor)
+                .orElseThrow(() -> new IllegalArgumentException("Proveedor no encontrado: " + idProveedor));
+
+        // Verificar el estado y actualizarlo (en mayúsculas)
+        if (estadoProveedor.equals("Baneado")) {
+            proveedor.setEstadoProveedor("Baneado");
+            redirectAttributes.addFlashAttribute("success", "Proveedor baneado exitosamente.");
+        } else if (estadoProveedor.equals("Activo")) {
+            proveedor.setEstadoProveedor("Activo");
+            redirectAttributes.addFlashAttribute("success", "Proveedor desbaneado exitosamente.");
+        } else {
+            redirectAttributes.addFlashAttribute("error", "Estado inválido.");
+            return "redirect:/superadmin/proveedor/lista";
+        }
+
+        proveedorRepository.save(proveedor);
+        return "redirect:/superadmin/proveedor/lista";
+    }
+
+
+
+
+
+
     @GetMapping("/proveedor/nuevo")
     public String nuevoProveedor(Model model){
         model.addAttribute("activePage", "proveedores");

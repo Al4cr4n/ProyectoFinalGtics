@@ -107,6 +107,7 @@ public class SecurityWeb {
                         .requestMatchers("/superadmin", "/superadmin/**", "/producto/**").hasAuthority("Superadmin")
                         .requestMatchers("/coordinador","/coordinador/**").hasAuthority("Coordinador")
                         .requestMatchers("/usuario","/usuario/**").hasAnyAuthority("Superadmin", "Usuario")
+                                .requestMatchers("/proveedor/**").hasAuthority("Superadmin") // Añadir esta línea
                         .requestMatchers("/api/**").hasAnyAuthority("Superadmin", "Usuario", "Agente")
                         .anyRequest().permitAll()
                 ).exceptionHandling(exception -> exception
