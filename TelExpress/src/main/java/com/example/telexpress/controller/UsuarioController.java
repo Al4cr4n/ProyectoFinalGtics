@@ -713,7 +713,8 @@ public class UsuarioController {
         Usuario usuarioActual = usuarioRepository.findByCorreo(correo);
         Zona zona = usuarioActual.getZona();
 
-
+        List<Ordenes> ordenes = ordenesRepository.findAll();
+        model.addAttribute("ordenes", ordenes);
 
         List<Pagos> pagosPendientes = pagosRepository.findByUsuario_ZonaAndEstadoPago(zona,"Pendiente");
         List<Pagos> pagosRealizados = pagosRepository.findByUsuario_ZonaAndEstadoPago(zona,"Completado");

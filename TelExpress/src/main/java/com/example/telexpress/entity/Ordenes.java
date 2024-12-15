@@ -63,4 +63,28 @@ public class Ordenes {
 
     @OneToMany(mappedBy = "ordenes")
     private Set<ProductoOrdenes> productoHasOrdenes = new HashSet<>();
+
+
+    public Double getMontoTotal() {
+        double total = 0.0;
+
+        for (ProductoOrdenes productoOrdenes : productoHasOrdenes) {
+            Producto producto = productoOrdenes.getProducto();
+            Integer cantidad = productoOrdenes.getCantidadxproducto();
+            if (producto.getPrecio() != null && cantidad != null) {
+                total += producto.getPrecio() * cantidad;
+            }
+        }
+
+        // Agregar el costo de envío
+        for (ProductoOrdenes productoOrdenes : productoHasOrdenes) {
+            Producto producto = productoOrdenes.getProducto();
+            if (producto.getCostoEnvio() != null) {
+                total += producto.getCostoEnvio();
+            }
+        }
+
+        return total;
+    }
+
 }

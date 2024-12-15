@@ -349,7 +349,7 @@
                                             <tr th:each="producto, info : ${listaTop}">
                                                 <td th:text="${info.index + 1}"></td>
                                                 <td th:text="${producto.nombreProducto}"></td>
-                                                <td th:text="${producto.categoria}"></td>
+                                                <td th:text="${producto.categorias.nombre}"></td>
                                                 <td th:text="${producto.cantidadDisponible}"></td>
                                                 <td th:text="${producto.cantidadComprada}"></td>
                                                 <td th:text="${producto.precio}"></td>

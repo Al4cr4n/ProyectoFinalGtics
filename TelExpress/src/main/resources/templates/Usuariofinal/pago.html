@@ -55,6 +55,91 @@
   <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
   <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
   <script src="../../assets/js/config.js"></script>
+
+  <!-- ingreso de datatables para modificar la tabla a gusto -->
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <!-- DataTables CSS -->
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+  <!-- DataTables JS -->
+  <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+
+  <!-- DataTables CSS -->
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+  <!-- DataTables JS -->
+  <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+  <style>
+
+    /* Centrar la paginación en DataTables */
+    .dataTables_wrapper .dataTables_paginate {
+      display: flex; /* Usar flexbox para centrar */
+      justify-content: center; /* Centrar horizontalmente */
+      margin-top: 1.5rem; /* Añade margen superior */
+      margin-left: auto; /* Asegura que se centre */
+      margin-right: auto; /* Asegura que se centre */
+    }
+
+    /* Estilo para el paginado */
+    /*.dataTables_wrapper .dataTables_paginate {
+      text-align: center; /* Centra el paginado */
+
+
+    /* Estilo de los botones de paginación */
+    .dataTables_wrapper .dataTables_paginate .paginate_button {
+      padding: 0.5em 1em;
+      border-radius: 4px;
+      border: 1px solid #ddd;
+      background: #f5f5f5;
+      color: #89a9cc;
+    }
+    /*Estilo para la tabla */
+    .table {
+      border-collapse: collapse; /* Para que los bordes se fusionen*/
+    }
+
+
+    /* Sin bordes en las cabeceras */
+    .table th {
+      border: none; /* Sin borde en la cabecera */
+    }
+
+    /* Solo mostrar borde inferior en las celdas */
+    .table td {
+      border: none; /* Sin borde en los lados */
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1); /* Solo borde inferior para filas */
+      padding: 0.5rem; /* Espaciado interno para las celdas */
+      text-align: left; /* Alinea el contenido de las celdas a la izquierda */
+    }
+
+    table {
+      border-collapse: separate; /* Evita que las celdas estén pegadas entre sí */
+      border-spacing: 0 10px; /* Espaciado entre las filas */
+    }
+    /* Ocultar el buscador, el texto "Showing" y el selector de longitud */
+    .dataTables_wrapper .dataTables_filter,
+    .dataTables_wrapper .dataTables_info,
+    .dataTables_wrapper .dataTables_length {
+      display: none;
+    }
+
+
+
+
+
+    /* Clase personalizada para el botón verde oscuro */
+    .btn-custom-dark-green {
+      background-color: #218838; /* Verde oscuro */
+      border-color: #1e7e34;     /* Color del borde */
+      color: white;              /* Color del texto */
+    }
+
+    .btn-custom-dark-green:hover {
+      background-color: #1e7e34; /* Un verde más oscuro al hacer hover */
+      border-color: #1c7430;     /* Borde más oscuro al hacer hover */
+    }
+
+  </style>
+
 </head>
 <body>
 <!-- Layout wrapper -->
@@ -113,113 +198,111 @@
                       <div class="tab-pane fade show active" id="navs-pills-top-home" role="tabpanel">
                         <div class="card"></div>
                         <div class="table-responsive text-nowrap">
-                          <table class="table table-striped">
+                          <!-- Tabla de pagos pendientes -->
+                          <table id="tablaPagosPendientes" class="table table-striped">
                             <thead>
                             <tr>
                               <th>N° Orden</th>
                               <th>Producto</th>
-                              <th>F. Facturacion</th>
-                              <th>Monto total</th>
+                              <th>F. Facturación</th>
+                              <th>Monto total (S/)</th>
                               <th>Estado</th>
-
                             </tr>
                             </thead>
-
-                          <tbody class="table-border-bottom-0">
+                            <tbody class="table-border-bottom-0">
                             <tr th:each="pago : ${pagosPendientes}">
-                              <td><strong th:text="${pago.ordenes.productoHasOrdenes}"></strong></td>
-                              <td th:text="${pago.ordenes.idOrdenes}"></td>
-                              <td th:text="${#dates.format(pago.fechaPago, 'yyyy-MM-dd')}"></td>
-                              <td th:text="${pago.monto}"></td>
+                              <td><strong th:text="${pago.ordenes.idOrdenes}"></strong></td>
+                              <td>
+                                <ul>
+                                  <li th:each="producto : ${pago.ordenes.productos}" th:text="${producto.nombreProducto}"></li>
+                                </ul>
+                              </td>                            <td th:text="${#dates.format(pago.fechaPago, 'yyyy-MM-dd')}"></td>
+                              <td th:text="${pago.ordenes.montoTotal}"></td>
                               <td th:text="${pago.estadoPago}"></td>
                             </tr>
-                          </tbody>>
-                          </table>>
-
+                            </tbody>
+                          </table>
                         </div>
 
-                      
+
                         <!-- Botón para pagar los pagos pendientes -->
                         <div class="text-end mt-3">
                           <button type="button" class="btn btn-primary" onclick="window.location.href='pagar.html';">Pagar compras pendientes(0 seleccionados)</button>
                         </div>
                         <!-- Paginación -->
-                        <div class="d-flex justify-content-end mt-4">
-                          <nav aria-label="Page navigation" class="text-end">
-                            <ul class="pagination">
-                              <li class="page-item prev">
-                                <a class="page-link" href="#">
-                                  <i class="tf-icon bx bx-chevron-left"></i>
-                                </a>
-                              </li>
-                              <li class="page-item active">
-                                <a class="page-link" href="#">1</a>
-                              </li>
-                              <li class="page-item">
-                                <a class="page-link" href="#">2</a>
-                              </li>
-                              <li class="page-item next">
-                                <a class="page-link" href="#">
-                                  <i class="tf-icon bx bx-chevron-right"></i>
-                                </a>
-                              </li>
-                            </ul>
-                          </nav>
-                        </div>
+
                       </div>
-              
+
                       <!-- Tabla de pagos realizados -->
                       <div class="tab-pane fade" id="navs-pills-top-profile" role="tabpanel">
                         <div class="card"></div>
                         <div class="table-responsive text-nowrap">
-
-                          <table class="table table-striped">
+                          <!-- Tabla de pagos realizados -->
+                          <table id="tablaPagosRealizados" class="table table-striped">
                             <thead>
                             <tr>
                               <th>N° Orden</th>
                               <th>Producto</th>
-                              <th>F. Facturacion</th>
-                              <th>Monto total</th>
+                              <th>F. Facturación</th>
+                              <th>Monto total (S/)</th>
                               <th>Estado</th>
-
                             </tr>
                             </thead>
-
-                          <tbody class="table-border-bottom-0">
-                          <tr th:each="pago : ${pagosRealizados}">
-                            <td><strong th:text="${pago.ordenes.idOrdenes}"></strong></td>
-                            <td th:text="${pago.ordenes.productos}"></td>
-                            <td th:text="${#dates.format(pago.fechaPago, 'yyyy-MM-dd')}"></td>
-                            <td th:text="${pago.monto}"></td>
-                            <td th:text="${pago.estadoPago}"></td>
-                          </tr>
-                          </tbody>
+                            <tbody class="table-border-bottom-0">
+                            <tr th:each="pago : ${pagosRealizados}">
+                              <td><strong th:text="${pago.ordenes.idOrdenes}"></strong></td>
+                              <td>
+                                <ul>
+                                  <li th:each="producto : ${pago.ordenes.productos}" th:text="${producto.nombreProducto}"></li>
+                                </ul>
+                              </td>                               <td th:text="${#dates.format(pago.fechaPago, 'yyyy-MM-dd')}"></td>
+                              <td th:text="${pago.ordenes.montoTotal}"></td>
+                              <td th:text="${pago.estadoPago}"></td>
+                            </tr>
+                            </tbody>
                           </table>
-
                         </div>
                         <!-- Paginación -->
-                        <div class="d-flex justify-content-end mt-4">
-                            <nav aria-label="Page navigation" class="text-end">
-                              <ul class="pagination">
-                                <li class="page-item prev">
-                                  <a class="page-link" href="#">
-                                    <i class="tf-icon bx bx-chevron-left"></i>
-                                  </a>
-                                </li>
-                                <li class="page-item active">
-                                  <a class="page-link" href="#">1</a>
-                                </li>
-                                <li class="page-item">
-                                  <a class="page-link" href="#">2</a>
-                                </li>
-                                <li class="page-item next">
-                                  <a class="page-link" href="#">
-                                    <i class="tf-icon bx bx-chevron-right"></i>
-                                  </a>
-                                </li>
-                              </ul>
-                            </nav>
-                          </div>
+                        <!-- Inicialización de DataTables -->
+                        <script>
+                          $(document).ready(function () {
+                            // Configuración de DataTables para la tabla de pagos pendientes
+                            $('#tablaPagosPendientes').DataTable({
+                              paging: true,
+                              lengthChange: false,
+                              pageLength: 5, // Número de filas por página
+                              searching: true,
+                              ordering: true, // Permitir ordenar por columnas
+                              language: {
+                                paginate: {
+                                  previous: '<<',
+                                  next: '>>',
+                                },
+                                search: 'Buscar:',
+                                zeroRecords: 'No se encontraron pagos pendientes.',
+                              },
+                            });
+
+                            // Configuración de DataTables para la tabla de pagos realizados
+                            $('#tablaPagosRealizados').DataTable({
+                              paging: true,
+                              lengthChange: false,
+                              pageLength: 5,
+                              searching: true,
+                              ordering: true,
+                              language: {
+                                paginate: {
+                                  previous: '<<',
+                                  next: '>>',
+                                },
+                                search: 'Buscar:',
+                                zeroRecords: 'No se encontraron pagos realizados.',
+                              },
+                            });
+                          });
+                        </script>
+
+
                       </div>
                     </div>
                   </div>
@@ -315,7 +398,33 @@
   }
 </style>
 
-
+<script>
+  $(document).ready(function() {
+    $('#coordinadoresTable').DataTable({
+      "paging": true, //Activa la paginaci[on
+      "lengthChange":true, //Permitir cambiar el tama;o de la pagina
+      "searching": true,         // Buscar dentro de la tabla
+      "pageLength": 15,  // Mostrar 10 filas por página
+      "ordering": true,          // Permitir ordenar columnas
+      "info": true,              // Mostrar información del paginado
+      "autoWidth": false,        // Ajuste automático de ancho de columnas
+      "language": {
+        "lengthMenu": "Mostrar _MENU_ coordinadores por página",
+        "zeroRecords": "No se encontraron resultados",
+        "info": "Mostrando página _PAGE_ de _PAGES_",
+        "infoEmpty": "No hay coordinadores disponibles",
+        "infoFiltered": "(filtrado de _MAX_ coordinadores totales)",
+        "search": "Buscar:",
+        "paginate": {
+          "first": "Primero",
+          "last": "Último",
+          "next": "Siguiente",
+          "previous": "Anterior"
+        }
+      }
+    });
+  });
+</script>
 <!-- Core JS -->
 <!-- build:js assets/vendor/js/core.js -->
 <script src="../../assets/vendor/libs/jquery/jquery.js"></script>
@@ -334,6 +443,81 @@
 
 <!-- Page JS -->
 <script src="../../assets/js/dashboards-analytics.js"></script>
+<!-- DataTables JS -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const rowsPerPage = 5; // Número de filas por página
+    const table = document.getElementById("proveedoresTable");
+    const tableBody = table.querySelector("tbody");
+    const rows = tableBody.querySelectorAll("tr");
+    const pagination = document.getElementById("paginacion");
+    let currentPage = 1;
+    const totalPages = Math.ceil(rows.length / rowsPerPage);
+
+    function displayRows(page) {
+      const start = (page - 1) * rowsPerPage;
+      const end = start + rowsPerPage;
+
+      // Ocultar todas las filas y mostrar sólo las de la página actual
+      rows.forEach((row, index) => {
+        row.style.display = (index >= start && index < end) ? "" : "none";
+      });
+    }
+
+    function setupPagination() {
+      pagination.innerHTML = "";
+
+      // Botón "Anterior"
+      const prevButton = document.createElement("li");
+      prevButton.className = "page-item" + (currentPage == 1 ? " disabled" : "");
+      prevButton.innerHTML = `<a class="page-link" href="#"> << </a>`;
+      prevButton.addEventListener("click", function(e) {
+        e.preventDefault();
+        if (currentPage > 1) {
+          currentPage--;
+          displayRows(currentPage);
+          setupPagination();
+        }
+      });
+      pagination.appendChild(prevButton);
+
+      // Números de página
+      for (let i = 1; i <= totalPages; i++) {
+        const pageItem = document.createElement("li");
+        pageItem.className = "page-item" + (currentPage == i ? " active" : "");
+        pageItem.innerHTML = `<a class="page-link" href="#">${i}</a>`;
+        pageItem.addEventListener("click", function(e) {
+          e.preventDefault();
+          currentPage = i;
+          displayRows(currentPage);
+          setupPagination();
+        });
+        pagination.appendChild(pageItem);
+      }
+
+      // Botón "Siguiente"
+      const nextButton = document.createElement("li");
+      nextButton.className = "page-item" + (currentPage == totalPages ? " disabled" : "");
+      nextButton.innerHTML = `<a class="page-link" href="#"> >> </a>`;
+      nextButton.addEventListener("click", function(e) {
+        e.preventDefault();
+        if (currentPage < totalPages) {
+          currentPage++;
+          displayRows(currentPage);
+          setupPagination();
+        }
+      });
+      pagination.appendChild(nextButton);
+    }
+
+    // Inicializar la tabla y la paginación
+    displayRows(currentPage);
+    setupPagination();
+  });
+</script>
 
 <!-- Place this tag in your head or just before your close body tag. -->
 <script async defer src="https://buttons.github.io/buttons.js"></script>

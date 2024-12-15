@@ -99,6 +99,22 @@
       display: none;
     }
 
+
+
+
+
+    /* Clase personalizada para el botón verde oscuro */
+    .btn-custom-dark-green {
+      background-color: #218838; /* Verde oscuro */
+      border-color: #1e7e34;     /* Color del borde */
+      color: white;              /* Color del texto */
+    }
+
+    .btn-custom-dark-green:hover {
+      background-color: #1e7e34; /* Un verde más oscuro al hacer hover */
+      border-color: #1c7430;     /* Borde más oscuro al hacer hover */
+    }
+
   </style>
 
 
@@ -176,7 +192,11 @@
                       <th>DNI</th>
                       <th>Zona</th>
                       <th>RUC</th>
-                      <th>Acciones</th>
+
+                      <th></th>
+                      <th></th>
+                      <th></th>
+
                     </tr>
                     </thead>
                     <tbody>
@@ -188,15 +208,37 @@
                       <td th:text="${proveedor.dni}"></td>
                       <td th:text="${proveedor.zona.nombre}"></td>
                       <td th:text="${proveedor.ruc}"></td>
+
+
+
+                      <td>
+                        <!-- Botón Banear/Desbanear -->
+                        <form th:action="@{/superadmin/proveedor/banear/{estado}(estado=${proveedor.estadoProveedor == 'Baneado' ? 'Activo' : 'Baneado'})}"
+                              method="post" style="display:inline;">
+                          <input type="hidden" name="id" th:value="${proveedor.idProveedor}" />
+                          <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                          <button type="submit" class="btn btn-sm"
+                                  th:classappend="${proveedor.estadoProveedor == 'Baneado' ? 'btn-custom-dark-green' : 'btn-danger'}"
+                                  th:text="${proveedor.estadoProveedor == 'Baneado' ? 'Desbanear' : 'Banear'}">
+                          </button>
+                        </form>
+                      </td>
+
                       <td>
                         <a class="btn btn-sm btn-primary" th:href="@{'/superadmin/proveedor/editar?id=' + ${proveedor.idProveedor}}">
                           <i class="bx bx-edit-alt"></i>
                         </a>
+
+                      </td>
+
+                      <td>
+
                         <a href="#" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal"
                            th:attr="onclick='setDeleteUrl(\'/superadmin/proveedor/borrar?id=' + ${proveedor.idProveedor} + '\')'">
                           <i class="bx bx-trash"></i>
                         </a>
                       </td>
+
                     </tr>
                     <!-- Puedes agregar más filas aquí -->
                     </tbody>
