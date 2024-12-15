@@ -217,7 +217,7 @@
                                   <li th:each="producto : ${pago.ordenes.productos}" th:text="${producto.nombreProducto}"></li>
                                 </ul>
                               </td>                            <td th:text="${#dates.format(pago.fechaPago, 'yyyy-MM-dd')}"></td>
-                              <td th:text="${pago.monto}"></td>
+                              <td th:text="${pago.ordenes.montoTotal}"></td>
                               <td th:text="${pago.estadoPago}"></td>
                             </tr>
                             </tbody>
@@ -256,7 +256,7 @@
                                   <li th:each="producto : ${pago.ordenes.productos}" th:text="${producto.nombreProducto}"></li>
                                 </ul>
                               </td>                               <td th:text="${#dates.format(pago.fechaPago, 'yyyy-MM-dd')}"></td>
-                              <td th:text="${pago.monto}"></td>
+                              <td th:text="${pago.ordenes.montoTotal}"></td>
                               <td th:text="${pago.estadoPago}"></td>
                             </tr>
                             </tbody>
