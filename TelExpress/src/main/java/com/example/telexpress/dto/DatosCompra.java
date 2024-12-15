@@ -35,13 +35,14 @@ public class DatosCompra {
     @NotNull(message = "El correo es obligatorio")
     @Email(message = "El formato del correo es inválido")
     private String correo;
-
+//correo temporal para el envio de boleta
 
     @NotNull(message = "La zona es obligatoria")
     private String zona;
 
     @NotNull(message = "La dirección es obligatoria")
     private String direccion;
+    //direccion temporal para el envío de boleta
 
     @NotNull(message = "El nombre es obligatorio")
     @Size(min = 5, max = 50, message = "El nombre debe tener entre 5 y 50 caracteres")

@@ -33,7 +33,7 @@ public class ServicioCompraDAO {
 
     public String realizarCompra(DatosCompra requestCompra) {
         if (!LuhnValidacion.isValidCardNumber(requestCompra.getNumeroTarjeta())){ //validación
-            throw new RuntimeException("El numero de la tarjeta no es valido");
+            throw new RuntimeException("El numero de la tarjeta no es valido por luhn");
         }
         Tarjetas tarjeta = tarjetasRepository.findTarjetasByNumeroTarjeta(requestCompra.getNumeroTarjeta())
                 .orElseThrow(() -> new RuntimeException("Tarjeta no encontrada en el sistema"));
@@ -105,7 +105,7 @@ public class ServicioCompraDAO {
         pago.setUsuario(orden.getUsuario());
         pagosRepository.save(pago);
 
-        return "Compra exitosa";
+        return "Comprado exitosamente";
     }
 
     private void enviarBoleta(String correo, String numeroOrden, String zona, String direccion) {

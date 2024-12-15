@@ -5,6 +5,10 @@ public class LuhnValidacion {
         if (cardNumber == null || cardNumber.isEmpty()) {
             return false;
         }
+        cardNumber = cardNumber.replaceAll("\\s+", ""); // Eliminar espacios
+        if (!cardNumber.matches("\\d+")) { // Asegura que contiene solo dígitos
+            return false;
+        }
 
         int total = 0;
         boolean alternate = false;

@@ -783,7 +783,7 @@ INSERT INTO tarjetas(numero_tarjeta, fecha_expiracion, codigo_cvv, saldo) VALUES
 ('1333986362948497', '2024-12-30', '888', 9376.71),
 ('5579407651833329', '2026-07-26', '187', 17623.12),
 ('2918554823714854', '2025-02-03', '716', 7346.89),
-('8443045411809902', '2028-06-01', '674', 15007.94);
+('4111111111111111', '2028-06-01', '684', 15007.94);
 /*!40000 ALTER TABLE `tarjetas` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -823,7 +823,9 @@ CREATE TABLE `post` (
   `title` text NOT NULL,
   `content` text NOT NULL,
   `create_at` datetime NOT NULL,
-  `usuarioid` int NOT NULL,
+  `usuario_idusuario` INT NULL,
+    INDEX `fk_post_usuario1_idx` (`usuario_idusuario` ASC) VISIBLE,
+    
   PRIMARY KEY (`idpost`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;

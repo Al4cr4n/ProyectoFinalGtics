@@ -130,7 +130,6 @@
                 <!-- Content -->
                 <div class="container-xxl flex-grow-1 container-p-y">
                     <h4 class="desing-title-page">Zona Oeste</h4>
-                
 
                     <div class="card">
                         <div class="row">
@@ -155,9 +154,9 @@
                                         <button id="checkbox2" class="btn btn-outline-secondary d-flex align-items-center w-100">
                                         <!--<input type="checkbox" id="checkbox2" class="checkbox me-4">-->
                                         <label for="checkbox2" class="d-flex align-items-center gap-4 form-check-label">
-                                            <a href="../../assets/img/icons/unicons/paypal.png" target="_blank" class="icon-link me-2">
+                                            <!--<a href="../../assets/img/icons/unicons/paypal.png" target="_blank" class="icon-link me-2">-->
                                             <img src="../../assets/img/icons/unicons/paypal.png" alt="Icono" class="icon-image">
-                                            </a>
+                                            <!--</a>-->
                                             <span class="btn-text">PayPal</span>
                                         </label>
                                         </button>
@@ -168,6 +167,7 @@
                             <hr class="m-0">
                             <div class="card-body">
                                 <h3 >Detalles de Compra</h3>
+                                <form id="pagoForm" method="POST">
                                 <div class="row g-3">
                                     <div class="col-md-6">
                                         <div class="mb-3">
@@ -176,28 +176,30 @@
                                             type="email"
                                             class="form-control"
                                             id="correo"
+                                            name="correo"
                                             placeholder="abcd@xxxxx.com"
-                                            aria-describedby="defaultFormControlHelp"
+                                            aria-describedby="defaultFormControlHelp" required
                                         />
+                                            <div id="error-correo" class="text-danger"></div>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="mb-3">
                                             <label for="inputcodigoOrden" class="form-label">N° Orden</label>
-                                            <input type="text" class="form-control" id="inputcodigoOrden" aria-describedby="codigoOrdenHelp" readonly>
+                                            <input type="text" class="form-control" id="inputcodigoOrden" name="ordenId" th:value="${orden.idOrdenes}" aria-describedby="codigoOrdenHelp" readonly>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="mb-3">
                                             <label for="inputFirstName" class="form-label">Zona</label>
-                                            <input type="text" class="form-control" id="inputFirstName" value="Oeste" aria-describedby="firstNameHelp" readonly>
+                                            <input type="text" class="form-control" id="inputFirstName" name="zona" th:value="${zona}" aria-describedby="firstNameHelp" readonly>
                                         </div>
                                     </div>
                                 
                                     <div class="col-md-6">
                                         <div class="mb-3">
                                             <label for="inputdirection" class="form-label">Direccion</label>
-                                            <input type="text" class="form-control" id="inputdirection" placeholder="Dirección de envío" aria-describedby="direccionlp" readonly>
+                                            <input type="text" class="form-control" id="inputdirection" name="direccion" th:value="${direccion}" placeholder="Dirección de envío" aria-describedby="direccionlp" readonly>
                                         </div>
                                     </div>
                                 </div>
@@ -211,29 +213,33 @@
                                     <div class="col-md-20">
                                         <div class="mb-3">
                                             <label for="numeroTarjeta" class="form-label">Numero de Tarjeta</label>
-                                            <input type="text" class="form-control" id="numeroTarjeta"
-                                                   placeholder="xxxx-xxxx-xxxx-xxxx" aria-describedby="inputtarjet">
+                                            <input type="text" class="form-control" id="numeroTarjeta" name="numeroTarjeta"
+                                                   placeholder="xxxx-xxxx-xxxx-xxxx" aria-describedby="inputtarjet" >
+                                            <div id="error-numeroTarjeta" class="text-danger"></div>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="mb-3">
                                             <label for="inputnombre" class="form-label">Nombre</label>
-                                            <input type="text" class="form-control" id="inputnombre" placeholder="Guillermo perez" aria-describedby="inputnombre">
+                                            <input type="text" class="form-control" id="inputnombre" name="nombre" placeholder="Guillermo perez" aria-describedby="inputnombre">
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="mb-3">
                                             <label for="inputfecha" class="form-label">Fecha</label>
-                                            <input type="text" class="form-control" id="inputfecha" placeholder="00/00" aria-describedby="inputfecha">
+                                            <input type="text" class="form-control" id="inputfecha" name="fechaExpiracion" placeholder="00/00" aria-describedby="inputfecha">
+                                            <div id="error-fechaExpiracion" class="text-danger"></div>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="mb-3">
                                             <label for="inputcvv" class="form-label">CVV</label>
-                                            <input type="text" class="form-control" id="inputcvv" placeholder="XXX" aria-describedby="inputcvv">
+                                            <input type="text" class="form-control" id="inputcvv" name="codigoCvv" placeholder="XXX" aria-describedby="inputcvv">
+                                            <div id="error-codigoCvv" class="text-danger"></div>
                                         </div>
                                     </div>
                                 </div>
+                                </form>
                             </div>
                         </div>
 
@@ -352,8 +358,6 @@
         document.getElementById("checkbox1").checked = false; // deselecciona Tarjeta si PayPal es seleccionada
         this.checked = true;
     });
-    const cvv1= document.getElementById("inputcvv").value;
-    console.log("CVV enviado:", cvv1); // Agrega este log para verificar el valor.
 
     function procederConPago() {
         const ordenId = document.querySelector("input[name='ordenId']").value;
@@ -361,6 +365,11 @@
         const numeroTarjeta = document.getElementById("numeroTarjeta").value;
         const fechaExpiracion = document.getElementById("inputfecha").value;
         const cvv = document.getElementById("inputcvv").value;
+        const form = document.getElementById("pagoForm");
+        const formData = new FormData(form);
+        const payload = Object.fromEntries(formData.entries());
+        // Obtener el correo del formulario
+        const correoUsuario = document.getElementById("correo").value;
         // Obtener el token CSRF y el nombre del encabezado desde los meta tags
         const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute("content");
         const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute("content");
@@ -377,24 +386,71 @@
                     "Content-Type": "application/json",
                     [csrfHeader]: csrfToken // Agregar el token CSRF con el encabezado correcto
                 },
-                body: JSON.stringify({
+                /*body: JSON.stringify({
                     ordenId: ordenId,
                     monto: monto,
                     numeroTarjeta: numeroTarjeta,
                     fechaExpiracion: fechaExpiracion,
                     codigoCvv: cvv
-                })
+                })*/
+                body: JSON.stringify(payload),
             })
-                .then(response => response.text())
-                .then(result => {
+                .then(response => {
+                if (response.status === 400) {
+                    return response.json(); // Errores de validación
+                } else if (response.ok) {
+                    return response.text(); // Éxito
+                }
+                throw new Error("Error inesperado en el servidor");
+            })
+                .then(data => {
+                    /*if (typeof data === 'object') {
+                        // Manejar errores de validación
+                        mostrarErroresValidacion(data);
+                    } else {
+                        // Respuesta exitosa
+                        alert(data); // Mostrar mensaje de éxito
+                        if (data.includes("exitosamente")) {
+                            alert("Pago procesado correctamente :).");
+                            const paymentModal = new bootstrap.Modal(document.getElementById("paymentModal"));
+                            paymentModal.show();
+
+                            // Enviar boleta y correo después del éxito
+                            enviarBoletaYCorreo(correoUsuario, payload);
+                        } else {
+                            alert("Error inesperado: " + data);
+                        }
+                    }*/
+                    if (data.error) {
+                        // Manejar errores específicos del backend
+                        alert("Error: " + data.error);
+                    } else if (data.message) {
+                        // Respuesta exitosa
+                        alert(data.message); // Muestra el mensaje "Compra procesada exitosamente"
+
+                        // Muestra el modal de éxito
+                        const paymentModal = new bootstrap.Modal(document.getElementById("paymentModal"));
+                        paymentModal.show();
+
+                        // Llama al endpoint para enviar boleta y correo
+                        enviarBoletaYCorreo(correoUsuario, payload);
+                    } else {
+                        mostrarErroresValidacion(data);
+                    }
+                })
+
+              /*  .then(result => {
                     alert(result); // Muestra un mensaje de éxito o error
                     if (result.includes("exitosamente")) {
                         // Redirigir a otra página o actualizar la interfaz
                         const paymentModal = new bootstrap.Modal(document.getElementById("paymentModal"));
                         paymentModal.show();
                         //window.location.href = "/usuario/orden/exito";
+                        enviarBoletaYCorreo(correoUsuario, payload);
                     }
-                })
+                    alert("Pago por tarjeta procesado correctamente");
+
+                })*/
                 .catch(error => console.error("Error en el pago con tarjeta:", error));
         } else if (metodoPagoSeleccionado === "paypal") {
             // Realizar el fetch para PayPal
@@ -422,6 +478,54 @@
             alert("Por favor, seleccione un método de pago antes de continuar.");
         }
     }
+</script>
+<script>
+    // Nueva función para enviar boleta y correo
+    function enviarBoletaYCorreo(correo, datosCompra) {
+        const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute("content");
+        const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute("content");
+        fetch("/usuario/orden/procesaryenviar", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                [csrfHeader]: csrfToken
+            },
+            body: JSON.stringify({
+                ordenId: datosCompra.ordenId,
+                correo: correo,
+                zona: datosCompra.zona,
+                direccion: datosCompra.direccion,
+            }),
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error("Error al enviar boleta y correo.");
+                }
+                return response.text();
+            })
+            .then((result) => {
+                alert("Boleta enviada correctamente a tu correo.");
+            })
+            .catch((error) => console.error("Error en envío de boleta:", error));
+    }
+
+    function mostrarErroresValidacion(errors) {
+        // Limpiar mensajes previos
+        document.querySelectorAll('.error-message').forEach(e => e.remove());
+
+        // Iterar sobre los errores del backend y asignarlos al input correspondiente
+        for (const [field, message] of Object.entries(errors)) {
+            const inputField = document.querySelector(`[name="${field}"]`);
+            if (inputField) {
+                const errorDiv = document.createElement("div");
+                errorDiv.className = "error-message";
+                errorDiv.style.color = "red";
+                errorDiv.textContent = message;
+                inputField.parentNode.appendChild(errorDiv);
+            }
+        }
+    }
+
 </script>
   
 

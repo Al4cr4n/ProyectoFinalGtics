@@ -1,10 +1,9 @@
-package com.example.telexpress.config;
+/*package com.example.telexpress.service;
 
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -13,20 +12,8 @@ import java.io.File;
 
 @Service
 public class EmailService {
-
     @Autowired
     private JavaMailSender mailSender;
-
-    public void enviarEmailSolicitud(String destinatario, String producto, String categoria) {
-        SimpleMailMessage mensaje = new SimpleMailMessage();
-        mensaje.setTo(destinatario);
-        mensaje.setSubject("Solicitud de reposición de producto");
-        mensaje.setText("Se ha solicitado la reposición del producto: " + producto +
-                "\nCategoría: " + categoria +
-                "\nPor favor, proceda con la reposición.");
-
-        mailSender.send(mensaje);
-    }
 
     public void sendOrderConfirmation(String toEmail, String boucherPath) {
         try {
@@ -47,3 +34,4 @@ public class EmailService {
         }
     }
 }
+*/

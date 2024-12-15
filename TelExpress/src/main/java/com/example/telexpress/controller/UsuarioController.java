@@ -1,14 +1,17 @@
 package com.example.telexpress.controller;
+import com.example.telexpress.config.EmailService;
 import com.example.telexpress.dao.ServicioCompraDAO;
 import com.example.telexpress.dto.DatosCompra;
 import com.example.telexpress.dto.ProductoDTO;
 import com.example.telexpress.entity.*;
 import com.example.telexpress.repository.*;
 import com.example.telexpress.service.ChatRoomService;
+import com.example.telexpress.service.PdfService;
 import com.example.telexpress.service.PostService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -73,8 +76,10 @@ public class UsuarioController {
 
     private final OrdenesRepository ordenesRepository;
     private final DistritoRepository distritoRepository;
-
-
+    @Autowired
+    private PdfService pdfService;
+    @Autowired
+    private EmailService emailService;
 /*
     @GetMapping({"","/inicio"})
     public String index(Model model){
@@ -622,6 +627,12 @@ public class UsuarioController {
     public String verDetalleOrdenaPagar(Model model , @RequestParam Integer ordenId, RedirectAttributes attr) {
         model.addAttribute("activePage", "orden_pagar");
         //Optional<Ordenes> optionalOrdenes = ordenesRepository.findById(id);
+        String correo = SecurityContextHolder.getContext().getAuthentication().getName();
+        Usuario usuarioActual = usuarioRepository.findByCorreo(correo);
+        // Recuperar la zona del usuario
+        Zona zonaUsuario = usuarioActual.getZona();
+
+
         Ordenes orden =ordenesRepository.findById(ordenId).orElseThrow(()-> new IllegalArgumentException("Orden no encontrada"));
         //Ordenes orden = ordenesRepository.findByIdOrdenes(ordenId).orElseThrow(() -> new IllegalArgumentException("Orden no encontrada"));
 
@@ -650,22 +661,49 @@ public class UsuarioController {
         model.addAttribute("precioSubtotal", subtotal[0]);
         model.addAttribute("deliveryCost", deliveryCost);
         model.addAttribute("totalGeneral", totalGeneral);
+
+        model.addAttribute("zona", zonaUsuario.getNombre());
+        model.addAttribute("direccion", usuarioActual.getDireccion());
+        model.addAttribute("correo", usuarioActual.getCorreo());
         return "Usuariofinal/pagar";
     }
 
     @PostMapping("/solicitudpago/tarjeta")
     @ResponseBody
-    public ResponseEntity<String> procesoPagoTarjata(@Valid @RequestBody  DatosCompra requestCompra, BindingResult result){
+    public ResponseEntity<?> procesoPagoTarjata(@Valid @RequestBody  DatosCompra requestCompra, BindingResult result, Model model){
         System.out.println("CVV recibido: " + requestCompra.getCodigoCvv());
         System.out.println("Datos recibidos: " + requestCompra);
+        System.out.println("Número de tarjeta recibido: '" + requestCompra.getNumeroTarjeta() + "'");
         System.out.println("fecha de expiracion ingresada:" + requestCompra.getFechaExpiracion());
+        System.out.println("correo ingresado: "+requestCompra.getCorreo());
+        if (result.hasErrors()) {
+            // Crear un mapa para devolver los errores
+            Map<String, String> errores = new HashMap<>();
+            result.getFieldErrors().forEach(error ->
+                    errores.put(error.getField(), error.getDefaultMessage())
+            );
+            return ResponseEntity.badRequest().body(errores); // Devuelve los errores como JSON
+        }
         try {
 
             String response = servicioCompraDAO.realizarCompra(requestCompra);
-            return ResponseEntity.ok(response);
+            Map<String, String> success = new HashMap<>();
+            success.put("message", response);
+            return ResponseEntity.ok(success);
         } catch (RuntimeException ex) {
-            return ResponseEntity.badRequest().body(ex.getMessage());
+            return ResponseEntity.badRequest().body(Collections.singletonMap("error", ex.getMessage()));
         }
+    }
+
+    @PostMapping("/orden/procesaryenviar")
+    public String procesarPago(@ModelAttribute DatosCompra datosCompra, RedirectAttributes redirectAttributes) {
+        Ordenes orden = ordenesRepository.findById(datosCompra.getOrdenId())
+                .orElseThrow(() -> new IllegalArgumentException("Orden no encontrada"));
+        String boucherPath = pdfService.generateBoucher(orden, datosCompra);
+        // Enviar el correo con el boucher adjunto
+        emailService.sendOrderConfirmation(datosCompra.getCorreo(), boucherPath);
+        redirectAttributes.addFlashAttribute("success", "Pago procesado correctamente. Revisa tu correo.");
+        return "redirect:/usuario/lista_pedidos";
     }
 
     @GetMapping("/pago")
