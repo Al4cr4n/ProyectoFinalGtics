@@ -130,7 +130,9 @@
                 <!-- Content -->
                 <div class="container-xxl flex-grow-1 container-p-y">
                     <h4 class="desing-title-page">Zona Oeste</h4>
-
+                    <div id="alerta-errores" class="alert alert-danger d-none" role="alert">
+                        <!-- Aquí se insertará el mensaje de error dinámicamente -->
+                    </div>
                     <div class="card">
                         <div class="row">
                         <div class="col-md-7" style="border-right: 1px solid #dee2e6;">
@@ -379,6 +381,10 @@
                 alert("Por favor, complete los datos de la tarjeta.");
                 return;
             }
+            /*if (!correoUsuario || !validarCorreo(correoUsuario)) {
+                errorCorreo.textContent = "Debe ingresar un correo válido.";
+                return; // Detiene la ejecución si el correo no es válido
+            }*/
 
             fetch("/usuario/solicitudpago/tarjeta", {
                 method: "POST",
@@ -399,11 +405,13 @@
                 if (response.status === 400) {
                     return response.json(); // Errores de validación
                 } else if (response.ok) {
-                    return response.text(); // Éxito
+                    return response.json(); // Éxito
                 }
                 throw new Error("Error inesperado en el servidor");
             })
                 .then(data => {
+                    const alertaErrores = document.getElementById("alerta-errores");
+                    alertaErrores.classList.add("d-none");
                     /*if (typeof data === 'object') {
                         // Manejar errores de validación
                         mostrarErroresValidacion(data);
@@ -421,7 +429,22 @@
                             alert("Error inesperado: " + data);
                         }
                     }*/
-                    if (data.error) {
+                    if (data.tarjetaExpirada) {
+                        // Mostrar alerta de tarjeta expirada
+                        alertaErrores.textContent = data.tarjetaExpirada;
+                        alertaErrores.classList.remove("d-none");
+                    } else if (data.saldoInsuficiente) {
+                        // Mostrar alerta de saldo insuficiente
+                        alertaErrores.textContent = data.saldoInsuficiente;
+                        alertaErrores.classList.remove("d-none");
+                    } else if (data.codigoCvvV){
+                        alertaErrores.textContent = data.codigoCvvV;
+                        alertaErrores.classList.remove("d-none");
+                    }
+                    if (data.fechaExpiracion) {
+                        // Mostrar error de fecha de expiración directamente debajo del input
+                        document.getElementById("error-fechaExpiracion").textContent = data.fechaExpiracion;
+                    } else if (data.error) {
                         // Manejar errores específicos del backend
                         alert("Error: " + data.error);
                     } else if (data.message) {
@@ -438,19 +461,6 @@
                         mostrarErroresValidacion(data);
                     }
                 })
-
-              /*  .then(result => {
-                    alert(result); // Muestra un mensaje de éxito o error
-                    if (result.includes("exitosamente")) {
-                        // Redirigir a otra página o actualizar la interfaz
-                        const paymentModal = new bootstrap.Modal(document.getElementById("paymentModal"));
-                        paymentModal.show();
-                        //window.location.href = "/usuario/orden/exito";
-                        enviarBoletaYCorreo(correoUsuario, payload);
-                    }
-                    alert("Pago por tarjeta procesado correctamente");
-
-                })*/
                 .catch(error => console.error("Error en el pago con tarjeta:", error));
         } else if (metodoPagoSeleccionado === "paypal") {
             // Realizar el fetch para PayPal

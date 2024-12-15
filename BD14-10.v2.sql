@@ -824,9 +824,13 @@ CREATE TABLE `post` (
   `content` text NOT NULL,
   `create_at` datetime NOT NULL,
   `usuario_idusuario` INT NULL,
-    INDEX `fk_post_usuario1_idx` (`usuario_idusuario` ASC) VISIBLE,
-    
-  PRIMARY KEY (`idpost`)
+    PRIMARY KEY (`idpost`),
+    INDEX `fk_post_usuario1_idx` (`usuario_idusuario`),
+    CONSTRAINT `fk_post_usuario1`
+    FOREIGN KEY (`usuario_idusuario`)
+    REFERENCES `db_grupo2`.`usuario` (`idusuario`)
+    ON DELETE SET NULL
+    ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -836,9 +840,9 @@ CREATE TABLE `post` (
 
 LOCK TABLES `post` WRITE;
 /*!40000 ALTER TABLE `post` DISABLE KEYS */;
-INSERT INTO `post` VALUES (1,'asd','asd','2024-12-14 03:24:05',0),
-(2,'Angelito','Mi pastor','2024-12-14 03:25:05',0),
-(3,'dd','ddddddd','2024-12-14 06:20:43',0),(4,'asd','asd','2024-12-14 06:21:29',0);
+INSERT INTO `post` VALUES (1,'asd','asd','2024-12-14 03:24:05',18),
+(2,'Angelito','Mi pastor','2024-12-14 03:25:05',18),
+(3,'dd','ddddddd','2024-12-14 06:20:43',null),(4,'asd','asd','2024-12-14 06:21:29',20);
 /*!40000 ALTER TABLE `post` ENABLE KEYS */;
 UNLOCK TABLES;
 

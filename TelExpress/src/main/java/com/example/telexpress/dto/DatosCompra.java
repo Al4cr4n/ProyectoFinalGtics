@@ -1,5 +1,6 @@
 package com.example.telexpress.dto;
 
+import com.example.telexpress.config.LuhnConstraint;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
@@ -16,7 +17,7 @@ public class DatosCompra {
 
     @NotBlank(message = "El número de la tarjeta no puede estar vacío")
     @Size(min = 16, max = 16, message = "El numero de tarjeta debe tener 16 dígitos")
-    //@LuhnConstraint(message="El número de tarjeta no es válido de acuerdo a Luhn")
+    @LuhnConstraint(message="El número de tarjeta no es válido o no existe")
     private String numeroTarjeta;
 
     @NotBlank(message = "El código CVV no puede estar vacío")

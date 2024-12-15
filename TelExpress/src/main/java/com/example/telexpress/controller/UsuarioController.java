@@ -691,6 +691,16 @@ public class UsuarioController {
             success.put("message", response);
             return ResponseEntity.ok(success);
         } catch (RuntimeException ex) {
+            if (ex.getMessage().contains("Fecha de expiración incorrecta")) {
+                return ResponseEntity.badRequest().body(Collections.singletonMap("fechaExpiracion", ex.getMessage()));
+            }
+            if (ex.getMessage().contains("expirada")) {
+                return ResponseEntity.badRequest().body(Collections.singletonMap("tarjetaExpirada", ex.getMessage()));
+            } else if (ex.getMessage().contains("Saldo insuficiente")) {
+                return ResponseEntity.badRequest().body(Collections.singletonMap("saldoInsuficiente", ex.getMessage()));
+            } else if (ex.getMessage().contains("codigo de cvv no es valido")){
+                return ResponseEntity.badRequest().body(Collections.singletonMap("codigoCvvV", ex.getMessage()));
+            }
             return ResponseEntity.badRequest().body(Collections.singletonMap("error", ex.getMessage()));
         }
     }
