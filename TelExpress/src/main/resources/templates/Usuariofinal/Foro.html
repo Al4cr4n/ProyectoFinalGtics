@@ -1,17 +1,4 @@
 <!DOCTYPE html>
-
-<!-- =========================================================
-* Sneat - Bootstrap 5 HTML Admin Template - Pro | v1.0.0
-==============================================================
-
-* Product Page: https://themeselection.com/products/sneat-bootstrap-html-admin-template/
-* Created by: ThemeSelection
-* License: You must have a valid license purchased in order to legally use the theme for your project.
-* Copyright ThemeSelection (https://themeselection.com)
-
-=========================================================
- -->
-<!-- beautify ignore:start -->
 <html
         lang="en"
         class="light-style layout-menu-fixed"
@@ -20,6 +7,7 @@
         data-assets-path="../../assets/"
         data-template="vertical-menu-template-free"
         xmlns="http://www.w3.org/1999/html"
+        xmlns:th="http://www.thymeleaf.org"
         xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="utf-8" />
@@ -44,7 +32,7 @@
     />
 
     <!-- Icons. Uncomment required icon fonts -->
-    <link rel="stylesheet" href="../../assets/vendor/fonts/boxicons.css" />
+    <!--<link rel="stylesheet" href="../../assets/vendor/fonts/boxicons.css" />-->
 
     <!-- Core CSS -->
     <link rel="stylesheet" href="../../assets/vendor/css/core.css" class="template-customizer-core-css" />
@@ -67,7 +55,9 @@
 
     <!--TelExpress fuente de letra-->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-
+    <!--tokens para uso de ajax (token)-->
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
 
 </head>
 
@@ -152,7 +142,7 @@
                                 <h5>Crear una Nueva Publicación</h5>
                             </div>
                             <div class="card-body">
-                                <form th:action="@{/api/forum/posts}" method="post">
+                                <form id="postForm" th:action="@{/usuario/api/forum/posts}" method="post">
                                     <div class="mb-3">
                                         <label class="form-label">Título</label>
                                         <input type="text" class="form-control" name="titulo" required>
@@ -201,30 +191,37 @@
 
 <script th:inline="javascript">
     document.addEventListener('DOMContentLoaded', function() {
-        const postForm = document.querySelector('form[action="/api/forum/posts"]');
+        const postForm = document.getElementById('postForm');
         const existingPostsDiv = document.getElementById('existingPosts');
         const searchInput = document.getElementById('searchInput');
         const clearSearchBtn = document.getElementById('clearSearchBtn');
         const tituloInput = document.querySelector('input[name="titulo"]');
         const contenidoInput = document.querySelector('textarea[name="contenido"]');
+        const csrfToken = document.querySelector("meta[name='_csrf']").getAttribute("content");
+        const csrfHeader = document.querySelector("meta[name='_csrf_header']").getAttribute("content");
+
         const submitBtn = postForm.querySelector('button[type="submit"]');
 
         // Función de crear post
         function createPost(e) {
             e.preventDefault();
+            console.log('CSRF Header:', csrfHeader);
+            console.log('CSRF Token:', csrfToken);
+
             const now = new Date().toISOString();
 
             const formData = {
                 titulo: tituloInput.value,
-                id:0,
+                contenido: contenidoInput.value,
                 createdAt:now,
-                contenido: contenidoInput.value
             };
+            console.log('Enviando solicitud:', formData);
 
-            fetch('/api/forum/posts', {
+            fetch('/usuario/api/forum/posts', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                   [csrfHeader]: csrfToken
                 },
                 body: JSON.stringify(formData)
             })
@@ -257,9 +254,11 @@
                     showNotification('Publicación creada exitosamente', 'success');
                 })
                 .catch(error => {
-                    console.error('Error:', error);
+                    console.error('Error al procesar la respuesta del servidor:', error);
                     showNotification('Error al publicar el post', 'danger');
                 });
+
+            //postForm.addEventListener('submit', createPost);
         }
 
         // Función de filtrar posts
@@ -318,7 +317,7 @@
             filterPosts();
         });
 
-        // Límite de caracteres
+       /* // Límite de caracteres
         tituloInput.addEventListener('input', function() {
             if (this.value.length > 255) {
                 this.value = this.value.slice(0, 255);
@@ -331,7 +330,7 @@
                 this.value = this.value.slice(0, 5000);
                 showNotification('Límite de 5000 caracteres alcanzado', 'warning');
             }
-        });
+        });*/
 
         // Inicializar estado
         validateForm();

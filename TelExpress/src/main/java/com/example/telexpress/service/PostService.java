@@ -14,9 +14,9 @@ public class PostService {
     @Autowired
     private PostRepository postRepository;
 
-    public Post createPost(Post post) {
+    /*public Post createPost(Post post) {
         return postRepository.save(post);
-    }
+    }*/
 
     public List<Post> getAllPosts() {
         return postRepository.findAllByOrderByCreatedAtDesc();
@@ -24,5 +24,9 @@ public class PostService {
 
     public Optional<Post> getPostById(Long id) {
         return postRepository.findById(id);
+    }
+    public Post createPost(Post post) {
+        System.out.println("Guardando post: " + post);
+        return postRepository.save(post);
     }
 }

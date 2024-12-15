@@ -66,7 +66,7 @@ public class SecurityWeb {
                 .permitAll()
         );*/
         //http.formLogin();
-       // http.csrf(AbstractHttpConfigurer::disable)
+       //http.csrf(AbstractHttpConfigurer::disable)
                 http
                 .formLogin(form -> form
                         .loginPage("/login")
