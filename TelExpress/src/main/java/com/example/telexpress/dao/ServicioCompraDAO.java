@@ -18,6 +18,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 @Service
 public class ServicioCompraDAO {
@@ -92,7 +93,12 @@ public class ServicioCompraDAO {
         //cambiando el estado de la orden
         Ordenes orden = ordenesRepository.findById(requestCompra.getOrdenId())
                 .orElseThrow(() -> new RuntimeException("Orden no encontrada"));
-        orden.setEstadoOrdenes("En Validación");
+        orden.setEstadoOrdenes("CREADO");
+        orden.setFechaCreacion(new Date());
+        // Obtener el nombre del mes a partir de la fecha actual
+        SimpleDateFormat monthFormat = new SimpleDateFormat("MMMM", new Locale("es", "ES"));
+        String mesCreacion = monthFormat.format(new Date()); // "Diciembre", "Enero", etc.
+        orden.setMesCreacion(mesCreacion); // Actualiza el mes de creación
         ordenesRepository.save(orden);
 
         Pagos pago = new Pagos();
