@@ -20,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/agente")
@@ -477,12 +478,21 @@ public class AgenteController {
 
         List<Usuario> lUsuarios = usuarioRepository.findByIdSuperior(idAgente);
 
+        ArrayList<Integer> usuarioIds= new ArrayList<>();
+        for (Usuario usuario : lUsuarios) {
+            usuarioIds.add(usuario.getId()); // Agregar el ID del usuario al ArrayList
+        }
+
+        System.out.println("esto so los id");
+        System.out.println(usuarioIds);
+        System.out.println("------");
         System.out.println(lUsuarios);
 
         ModelAndView modelAndView = new ModelAndView("Agente/chat_agente"); // Crea un ModelAndView con la vista correcta
         Set<String> activeRooms = chatRoomService.getActiveRooms(); // Obtiene las salas activas
         modelAndView.addObject("activeRooms", activeRooms);
         modelAndView.addObject("listUsuario", lUsuarios);
+        modelAndView.addObject("idUsuario", usuarioIds);
         //modelAndView.addObject("name", name);
         modelAndView.addObject("idAgente", idAgente);// Agrega las salas activas al modelo
         return modelAndView; // Devuelve el ModelAndView
