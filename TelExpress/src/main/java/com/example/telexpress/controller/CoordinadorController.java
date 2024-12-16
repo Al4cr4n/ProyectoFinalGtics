@@ -11,6 +11,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.security.Principal;
+import java.text.Normalizer;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -251,23 +253,64 @@ public class CoordinadorController {
 
     @GetMapping("/importacion_zonal")
     public String mostrarCalendario(Model model) {
-
         model.addAttribute("paginaActual", "importaciones");
-        // Obtener la lista de productos con fecha de arribo definida
+
+        // Get products with arrival dates
         List<Producto> productosConFecha = productoRepository.findAll()
                 .stream()
                 .filter(producto -> producto.getFecharribo() != null)
                 .collect(Collectors.toList());
 
-        // Imprimir los productos en la consola del servidor para verificar
-        productosConFecha.forEach(producto -> System.out.println(producto.getNombreProducto() + " - " + producto.getFecharribo()));
+        // Prepare events for FullCalendar
+        List<Map<String, Object>> events = productosConFecha.stream()
+                .map(producto -> {
+                    Map<String, Object> event = new HashMap<>();
+                    event.put("title", producto.getNombreProducto());
+                    event.put("start", new SimpleDateFormat("yyyy-MM-dd").format(producto.getFecharribo()));
+                    String categoriaNormalizada = Normalizer
+                            .normalize(producto.getCategorias().getNombre(), Normalizer.Form.NFD)
+                            .replaceAll("[^\\p{ASCII}]", "") // Eliminar acentos
+                            .toLowerCase(); // Convertir a minúsculas
+                    event.put("type", categoriaNormalizada);
 
+                    // Asignar color según la categoría
+                    String color;
+                    switch (categoriaNormalizada) {
+                        case "electronica":
+                            color = "#007bff"; // Azul
+                            break;
+                        case "muebles":
+                            color = "#28a745"; // Verde
+                            break;
+                        case "accesorios":
+                            color = "#ffc107"; // Amarillo
+                            break;
+                        case "fotografia":
+                            color = "#6c757d"; // Gris
+                            break;
+                        case "oficina":
+                            color = "#dc3545"; // Rojo
+                            break;
+                        case "limpieza":
+                            color = "#fd7e14"; // Naranja
+                            break;
+                        default:
+                            color = "#6c757d"; // Gris por defecto
+                    }
+                    event.put("backgroundColor", color); // Color del fondo
+                    event.put("borderColor", color); // Color del borde (opcional)
 
-        // Añadir la lista de productos al modelo
+                    return event;
+                })
+                .collect(Collectors.toList());
+
+        model.addAttribute("events", events);
         model.addAttribute("productos", productosConFecha);
 
-        return "CoordinadorZonal/importacion_zonal";  // Nombre de tu vista HTML
+
+        return "CoordinadorZonal/importacion_zonal";
     }
+
 
 
 

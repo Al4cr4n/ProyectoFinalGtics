@@ -64,18 +64,7 @@
     
 
     <style>
-        
-        /* Ajustar la altura de los eventos -------/
-        .fc-event-container {
-            max-height: 2em;
-            overflow: hidden;
-        }
-    
-        /* Asegurarse de que el contenedor del calendario ocupa todo el espacio *-----
-        .col-md-8, .col-lg-9 {
-            padding-left: 15px;
-            padding-right: 15px;
-        }*/
+
        
     </style>
     
@@ -113,10 +102,13 @@
                                     <h4 class="text-thin ">Filtro por categoria</h4>
                                     <div id="event-filters col">
                                         <button class="btn btn-secondary filter-btn row my-1" data-type="all">Mostrar Todos</button>
-                                        <button class="btn btn-calendar-1 filter-btn row my-1" data-type="ropa">Ropa</button>
-                                        <button class="btn btn-calendar-2 filter-btn row my-1" data-type="tecnologia">Tecnologia</button>
-                                        <button class="btn btn-calendar-3 filter-btn row my-1" data-type="deporte">Deportes</button>
-                                        
+                                        <button class="btn btn-calendar-1 filter-btn row my-1" data-type="electronica">Electronica</button>
+                                        <button class="btn btn-calendar-2 filter-btn row my-1" data-type="muebles">Muebles</button>
+                                        <button class="btn btn-calendar-3 filter-btn row my-1" data-type="accesorios">Accesarios</button>
+                                        <button class="btn btn-calendar-4 filter-btn row my-1" data-type="fotografia">Fotografía</button>
+                                        <button class="btn btn-calendar-5 filter-btn row my-1" data-type="oficina">Oficina</button>
+                                        <button class="btn btn-calendar-6 filter-btn row my-1" data-type="limpieza">Limpieza</button>
+
                                     </div>
                                 </div>
                             </div>
@@ -176,85 +168,60 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/locale/es.js"></script><!--traduce -->
 
-<script>
-    $(document).ready(function() {
+<script th:inline="javascript">
+    $(document).ready(function () {
         // Inicializar el calendario
         $('#calendar').fullCalendar({
-
-            locale: 'es',  // Traduce los meses y días a español
-            headerToolbar: {
-                left: 'prev,next',  // Botones de navegación a la izquierda
-                center: 'title',    // Título (mes y año) centrado
-                right: 'month,agendaWeek,agendaDay'           // No hay elementos a la derecha
+            locale: 'es',
+            header: {
+                left: 'prev,next',
+                center: 'title',
+                right: 'month,agendaWeek,agendaDay'
             },
-            events: [
-                /* Aquí cargamos los productos dinámicamente desde el modelo */
-                /* Iterar sobre los productos pasados desde el controlador */
-                /* Suponiendo que 'productos' contiene la lista de productos en el modelo */
-                /* El campo de fecha es fecharribo, y se muestran nombreProducto y categoría */
-                /* Usar Thymeleaf para generar la lista de eventos */
-                /* Producto #1 */
-                /* Ejemplo de un evento, usar el forEach de Thymeleaf para crear más */
-                /* Puedes modificar esto para usar diferentes colores o estilos dependiendo de la categoría */
-                /* Nota: Asegúrate que el formato de la fecha es compatible con fullCalendar */
-
-                /* Thymeleaf itera sobre los productos */
-                /* Esto genera los eventos del calendario */
-                /* Los colores pueden cambiar por categoría */
-                /* backgroundColor puede depender de la categoría del producto */
-                /* Estos eventos se agregarán dinámicamente */
-                /* Formatea el texto para que coincida con los productos en el calendario */
-                /* Genera los eventos dinámicamente en FullCalendar */
-
-                /* Agrega lógica para el título del evento */
-                /* Tipo de lógica: Filtrar eventos */
-                /* Filtrar eventos: calendario dinámico */
-            ],
-            eventLimit: true, // Habilitar el límite de eventos por día
-            eventLimitText: function(n) {
-                return "+" + n + " more"; // Mostrar el texto "+x more"
+            events: [[${events}]], // Cargamos los eventos desde el backend
+            eventRender: function (event, element) {
+                // Cambia el color de la letra de cada evento a blanco
+                element.css('color', '#ffffff');
             },
-            eventLimitClick: 'popover', // Mostrar un popover con los eventos ocultos
+            eventLimit: true, // Límite de eventos por día
             views: {
                 month: {
-                    eventLimit: 2 // Limitar a 2 eventos visibles por día
+                    eventLimit: 6 // Mostrar máximo 6 eventos por día en la vista mensual
                 }
             }
         });
 
-        // Almacenar todos los eventos originales
+        // Almacenar todos los eventos cargados originalmente
         var allEvents = $('#calendar').fullCalendar('clientEvents');
 
-        // Filtrar eventos por tipo
-        $('.filter-btn').on('click', function() {
-            var eventType = $(this).data('type');
+        // Manejar el filtro de categorías
+        $('.filter-btn').on('click', function () {
+            var selectedCategory = $(this).data('type'); // Obtener la categoría seleccionada
 
-            //var allEvents = $('#calendar').fullCalendar('clientEvents');
-            // Eliminar todos los eventos
+            // Quitar la clase 'active' de todos los botones
+            $('.filter-btn').removeClass('active');
+
+            // Agregar la clase 'active' al botón seleccionado
+            $(this).addClass('active');
+
+            // Limpiar todos los eventos del calendario
             $('#calendar').fullCalendar('removeEvents');
 
-            // Mostrar todos los eventos si se selecciona "Mostrar Todos"
-            if (eventType === 'all') {
-                //allEvents.forEach(function(event) {
-                //    event._def.ui.display = 'block';
-                //});
-                // Mostrar todos los eventos si se selecciona "Mostrar Todos"
+            if (selectedCategory === 'all') {
+                // Mostrar todos los eventos
                 $('#calendar').fullCalendar('addEventSource', allEvents);
             } else {
-                // Filtrar eventos por tipo y agregarlos de nuevo
-                var filteredEvents = allEvents.filter(function(event) {
-                    return event.type === eventType;
+                // Filtrar eventos según la categoría seleccionada
+                var filteredEvents = allEvents.filter(function (event) {
+                    return event.type === selectedCategory;
                 });
-                //allEvents.forEach(function(event) {
-                //    event._def.ui.display = event.type === eventType ? 'block' : 'none';
-                //});
+
                 $('#calendar').fullCalendar('addEventSource', filteredEvents);
             }
-
-            // Refrescar el calendario
-            $('#calendar').fullCalendar('rerenderEvents');
         });
+
     });
+
 </script>
 
 
