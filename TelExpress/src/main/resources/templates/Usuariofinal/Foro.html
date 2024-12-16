@@ -143,6 +143,7 @@
                             </div>
                             <div class="card-body">
                                 <form id="postForm" th:action="@{/usuario/api/forum/posts}" method="post">
+                                    <input type="hidden" name="usuarioId" th:value="${id}">
                                     <div class="mb-3">
                                         <label class="form-label">Título</label>
                                         <input type="text" class="form-control" name="titulo" required>
@@ -163,6 +164,7 @@
                                     <h5 th:text="${post.titulo}" class="card-title"></h5>
                                     <p th:text="${post.contenido}" class="card-text"></p>
                                     <small class="text-muted" th:text="${#temporals.format(post.createdAt, 'dd/MM/yyyy HH:mm')}"></small>
+                                    <small class="text-muted" th:text="${post.contenido}"></small>
                                 </div>
                             </div>
                         </div>
@@ -199,6 +201,7 @@
         const contenidoInput = document.querySelector('textarea[name="contenido"]');
         const csrfToken = document.querySelector("meta[name='_csrf']").getAttribute("content");
         const csrfHeader = document.querySelector("meta[name='_csrf_header']").getAttribute("content");
+        const usuarioIdInput  = document.querySelector('input[name="usuarioId"]');
 
         const submitBtn = postForm.querySelector('button[type="submit"]');
 
@@ -214,6 +217,7 @@
                 titulo: tituloInput.value,
                 contenido: contenidoInput.value,
                 createdAt:now,
+                usuarioId: usuarioIdInput.value,
             };
             console.log('Enviando solicitud:', formData);
 

@@ -1,12 +1,15 @@
 package com.example.telexpress.entity;
 
+import com.itextpdf.layout.element.List;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.xml.stream.events.Comment;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 @Entity
 @Getter
@@ -30,6 +33,11 @@ public class Post {
 
     @Column(name = "create_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "usuario_idusuario", nullable = true)
+    private Usuario usuario;
+
 
     // Constructors
     public Post() {

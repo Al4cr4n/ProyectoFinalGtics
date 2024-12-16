@@ -334,8 +334,12 @@ public class UsuarioController {
     }
 
     @GetMapping("/Foro")
-    public String Foro(Model model) {
+    public String Foro(Model model,  HttpSession session) {
+
         List<Post> posts =postService.getAllPosts();
+        Usuario usuario = (Usuario) session.getAttribute("usuario");
+        Integer idUsuario = usuario.getId();
+        model.addAttribute("id", idUsuario);
         model.addAttribute("activePage", "foro");
         model.addAttribute("posts", posts);
         return "Usuariofinal/Foro";
