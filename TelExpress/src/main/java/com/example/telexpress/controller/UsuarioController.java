@@ -476,7 +476,14 @@ public class UsuarioController {
 
             // Obtiene la lista de productos asociados a la orden desde la tabla intermedia
             List<ProductoOrdenes> productosOrdenes = productoOrdenesRepository.findByIdOrdenesId(idOrden);
+            double subtotalAnterior = productosOrdenes.stream()
+                    .mapToDouble(po -> po.getProducto().getPrecio() * po.getCantidadxproducto())
+                    .sum();
+            int cantidadProductosAnterior = productosOrdenes.stream()
+                    .mapToInt(ProductoOrdenes::getCantidadxproducto).sum();
 
+            double subtotalNuevo = 0.00;
+            int cantidadProductosNuevo = 0;
             // Recorre los productos de la orden
         for (ProductoOrdenes po : productosOrdenes) {
             // Para cada producto, obtiene el valor de la cantidad enviada por el formulario
@@ -488,9 +495,36 @@ public class UsuarioController {
                 po.setCantidadxproducto(nuevaCantidad);
                 // Guarda la actualización en la base de datos
                 productoOrdenesRepository.save(po);
+
+                subtotalNuevo += po.getProducto().getPrecio() * nuevaCantidad;
+                cantidadProductosNuevo += nuevaCantidad;
             }
         }
-        return "redirect:/usuario/pedidos/editar?id=" + idOrden;
+            double deliveryCost = 15.00;
+            double totalNuevo = subtotalNuevo + deliveryCost;
+            // Comparar cantidad de productos
+            if (cantidadProductosNuevo > cantidadProductosAnterior) {
+                attr.addFlashAttribute("mensaje", "Se agregaron más productos. Verifique el monto adicional.");
+            } else if (cantidadProductosNuevo < cantidadProductosAnterior) {
+                attr.addFlashAttribute("mensaje", "Se eliminaron productos. El monto será ajustado.");
+            }
+            // Comparar montos
+            if (totalNuevo > subtotalAnterior + deliveryCost) {
+                // Generar un nuevo pago pendiente si el monto aumentó
+                Pagos nuevoPago = new Pagos();
+                nuevoPago.setOrdenes(orden);
+                nuevoPago.setMonto(totalNuevo - (subtotalAnterior + deliveryCost));
+                //nuevoPago.setFechaPago(new Date());
+                nuevoPago.setEstadoPago("Incompleto");
+                nuevoPago.setMetodoPago(null); // Método nulo hasta pagar
+                pagosRepository.save(nuevoPago);
+
+                attr.addFlashAttribute("mensajeMonto", "Se ha generado un nuevo pago pendiente por la diferencia de monto.");
+            } else if (totalNuevo < subtotalAnterior + deliveryCost) {
+                attr.addFlashAttribute("mensajeMonto", "El monto es menor. Pronto recibirá el reembolso correspondiente.");
+            }
+
+            return "redirect:/usuario/pedidos/editar?id=" + idOrden;
         } else {
             //ordenesRepository.save(ordenes);
             return "redirect:/usuario/lista_pedidos";

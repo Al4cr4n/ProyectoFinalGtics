@@ -106,6 +106,12 @@
                                 !-- "Enviar una reseña" link redirects to another view (e.g., 'enviar_resena.html') --
                                 <a href="enviar_resena.html" class="review-link">Enviar una reseña</a>
                             </h4>-->
+                                <div th:if="${mensaje}" class="alert alert-warning">
+                                    <span th:text="${mensaje}"></span>
+                                </div>
+                                <div th:if="${mensajeMonto}" class="alert alert-info">
+                                    <span th:text="${mensajeMonto}"></span>
+                                </div>
 
                             <div class="card">
                                 <h5 class="card-header">Productos</h5>
@@ -234,9 +240,6 @@
         <!-- / Layout page -->
     </div>
 
-    <!-- Overlay -->
-    <div class="layout-overlay layout-menu-toggle"></div>
-</div>
 <!-- / Layout wrapper -->
 
 
