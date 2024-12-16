@@ -7,6 +7,7 @@ import com.example.telexpress.repository.*;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.mail.MessagingException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -515,6 +516,39 @@ public class SuperAdminController {
         if (zona != null) {
             usuario.setZona(zona); // Asignar la zona seleccionada al usuario
         }
+        if (esNuevoCoordinador) {
+            // Contraseña generada automáticamente desde el formulario (campo readonly)
+            // Hashear la contraseña
+            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+            //usuario.setContrasena(passwordEncoder.encode(usuario.getContrasena()));
+
+            String tempPassword = usuario.getContrasena(); // Obtener la contraseña temporal
+            usuario.setContrasena(passwordEncoder.encode(tempPassword));
+            // Enviar correo con las credenciales del nuevo coordinador
+            try {
+                // Llamada al servicio de correo para enviar las credenciales al nuevo coordinador
+                emailService.sendCoordinatorCredentialsEmail(usuario.getCorreo(), usuario.getNombre(), tempPassword);
+            } catch (MessagingException e) {
+                e.printStackTrace();
+                // Manejar error de envío de correo (si es necesario)
+                rttbtsp.addFlashAttribute("mensaje", "Hubo un problema al enviar el correo.");
+                rttbtsp.addFlashAttribute("tipoMensaje", "danger");
+            }
+
+        } else {
+            // Al editar, mantener la contraseña existente
+            Optional<Usuario> existingUserOpt = adminRepository.findById(usuario.getId());
+            if (existingUserOpt.isPresent()) {
+                Usuario existingUser = existingUserOpt.get();
+                usuario.setContrasena(existingUser.getContrasena());
+            } else {
+                // Manejar caso donde el usuario no existe, si es necesario
+                rttbtsp.addFlashAttribute("mensaje", "Usuario no encontrado.");
+                rttbtsp.addFlashAttribute("tipoMensaje", "danger");
+                return "redirect:/superadmin/gestion_coordinadores";
+            }
+        }
+
         adminRepository.save(usuario);
 
         // Mensaje según si es una creación o actualización
@@ -523,18 +557,9 @@ public class SuperAdminController {
         } else {
             rttbtsp.addFlashAttribute("mensaje", "Los datos del coordinador fueron actualizados con éxito.");
         }
-        //Contraseña
-        if (usuario.getContrasena() == null || usuario.getContrasena().isEmpty()) {
-            usuario.setContrasena("contrasenapordefecto123"); // Cambia esto por lógica más segura
-        }
-        //Hashear
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        usuario.setContrasena(passwordEncoder.encode(usuario.getContrasena()));
 
         rttbtsp.addFlashAttribute("tipoMensaje", "success");
-        // Mensaje de éxito
-        //rttbtsp.addFlashAttribute("mensaje", "Los datos del coordinador fueron actualizados con éxito.");
-        rttbtsp.addFlashAttribute("tipoMensaje", "success");
+
         return "redirect:/superadmin/gestion_coordinadores";
     }
 

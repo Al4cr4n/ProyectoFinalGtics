@@ -56,7 +56,7 @@ public class EmailService {
         // Configurar el correo
         messageHelper.setFrom("TelExpress <telexpress.adm@gmail.com>");
         messageHelper.setTo(toEmail);
-        messageHelper.setSubject("Bienvenido a TelExpress");
+        messageHelper.setSubject("Bienvenid@ a TelExpress");
 
         // Configurar el contenido del correo en HTML
         String htmlContent = "<html>"
@@ -129,11 +129,46 @@ public class EmailService {
                     + "</html>";
 
             messageHelper.setText(htmlContent, true);
-
+            // Adjuntar el logo
+            FileSystemResource logo = new FileSystemResource(new File("src/main/resources/static/logo2.jpg"));
+            messageHelper.addInline("logoImage", logo);
             mailSender.send(mimeMessage);
         } catch (MessagingException e) {
             throw new RuntimeException("Error al enviar el correo de actualización de rol", e);
         }
+    }
+
+    public void sendCoordinatorCredentialsEmail(String toEmail, String userName, String password) throws MessagingException {
+        // Crear el mensaje
+        MimeMessage mimeMessage = mailSender.createMimeMessage();
+        MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+
+        // Configurar el correo
+        messageHelper.setFrom("TelExpress <telexpress.adm@gmail.com>");
+        messageHelper.setTo(toEmail);
+        messageHelper.setSubject("Bienvenid@ a TelExpress - Credenciales de acceso");
+
+        // Configurar el contenido del correo en HTML
+        String htmlContent = "<html>"
+                + "<body>"
+                + "<h2>¡Hola, " + userName + "!</h2>"
+                + "<p>Gracias por ser parte de TelExpress. Aquí tienes tus credenciales de acceso:</p>"
+                + "<p><b>Correo:</b> " + toEmail + "</p>"
+                + "<p><b>Contraseña:</b> " + password + "</p>"
+                + "<p>Por favor, inicia sesión con estas credenciales.</p>"
+                + "<br/>"
+                + "<img src='cid:logoImage' alt='TelExpress Logo' width='300' height='150'/>"
+                + "</body>"
+                + "</html>";
+
+        messageHelper.setText(htmlContent, true);
+
+        // Adjuntar el logo (si tienes uno)
+        FileSystemResource logo = new FileSystemResource(new File("src/main/resources/static/logo2.jpg"));
+        messageHelper.addInline("logoImage", logo);
+
+        // Enviar el correo
+        mailSender.send(mimeMessage);
     }
 
 

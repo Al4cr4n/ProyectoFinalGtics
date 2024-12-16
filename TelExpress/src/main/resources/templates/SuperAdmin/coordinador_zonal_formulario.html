@@ -204,10 +204,31 @@
                             </div>-->
                             <div class="col-md-6">
                                 <label class="form-label">Contraseña:</label>
-                                <input th:field="*{contrasena}" type="password" class="form-control" placeholder="Ingrese la contraseña"
-                                       th:classappend="${#fields.hasErrors('contrasena') ? 'is-invalid' : ''}" />
-                                <div class="invalid-feedback" th:if="${#fields.hasErrors('contrasena')}" th:errors="*{contrasena}">
-                                    La contraseña es obligatoria.
+
+                                <!-- Solo mostrar el campo de contraseña cuando se está creando un nuevo coordinador -->
+                                <div th:if="${coordinadorzonal.id == null}">
+                                    <!-- Campo de contraseña para creación -->
+                                    <div class="input-group">
+                                        <input th:field="*{contrasena}" type="text" class="form-control" id="contrasena" placeholder="Ingrese la contraseña"
+                                               th:classappend="${#fields.hasErrors('contrasena') ? 'is-invalid' : ''}" readonly />
+                                        <!-- Botón ojo para mostrar/ocultar la contraseña -->
+                                        <span class="input-group-text cursor-pointer" id="showPasswordButton">
+                                            <i class="bx bx-hide" id="showPasswordIcon"></i>
+                                        </span>
+                                    </div>
+                                    <div class="invalid-feedback" th:if="${#fields.hasErrors('contrasena')}" th:errors="*{contrasena}">
+                                        La contraseña es obligatoria.
+                                    </div>
+                                </div>
+
+                                <!-- Solo mostrar el campo de contraseña cuando se está editando -->
+                                <div th:if="${coordinadorzonal.id != null}">
+                                    <!-- Campo de contraseña solo lectura para edición -->
+                                    <input th:field="*{contrasena}" type="password" class="form-control" placeholder="**********"
+                                           th:classappend="${#fields.hasErrors('contrasena') ? 'is-invalid' : ''}" th:disabled="true" />
+                                    <div class="invalid-feedback" th:if="${#fields.hasErrors('contrasena')}" th:errors="*{contrasena}">
+                                        La contraseña es obligatoria.
+                                    </div>
                                 </div>
                             </div>
 
@@ -266,13 +287,42 @@
                             contrasena += caracteres[indice];
                         }
                         // Asigna la contraseña generada al campo de contraseña en el formulario
-                        document.getElementById('contrasenaTemporal').value = contrasena;
+                        document.getElementById('contrasena').value = contrasena;
                     }
 
-                    // Llama a la función cuando el formulario se carga
+                    // Llama a la función cuando el formulario se carga, solo si no está deshabilitado
                     window.onload = function() {
-                        generarContrasena();
+                        var contrasenaField = document.getElementById('contrasena');
+                        if (contrasenaField && !contrasenaField.disabled) {
+                            generarContrasena();
+                        }
+
+                        var showPasswordButton = document.getElementById('showPasswordButton');
+                        if (showPasswordButton) {
+                            showPasswordButton.addEventListener('click', function() {
+                                const passwordField = document.getElementById('contrasena');
+                                const passwordIcon = document.getElementById('showPasswordIcon');
+
+                                if (passwordField.type === 'password' || passwordField.type === 'text') {
+                                    if (passwordField.type === 'password') {
+                                        passwordField.type = 'text';  // Mostrar contraseña
+                                        passwordIcon.classList.remove('bx-hide');
+                                        passwordIcon.classList.add('bx-show');
+                                    } else {
+                                        passwordField.type = 'password';  // Ocultar contraseña
+                                        passwordIcon.classList.remove('bx-show');
+                                        passwordIcon.classList.add('bx-hide');
+                                    }
+                                }
+                            });
+                        }
                     };
+
+                    // Evento para confirmar el registro/modificación
+                    document.getElementById('confirmarRegistro').addEventListener('click', function () {
+                        const form = document.getElementById('formRegistro');
+                        form.submit();
+                    });
                 </script>
                 <!-- Bootstrap JS and dependencies (Popper.js and Bootstrap JS) -->
                 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
