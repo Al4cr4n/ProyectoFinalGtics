@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
-    <title>Crear resenia</title>
+    <title>Crear reseña</title>
 
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="../../assets/img/favicon/favicon.ico" />
@@ -76,9 +76,61 @@
             <div th:insert="~{Usuariofinal/fragments/navbar.html::navbar}"></div> <!-- este es el navbar -->
 
             <div class="content-wrapper">
+                <!-- Contenedor principal -->
                 <div class="container-xxl flex-grow-1 container-p-y">
-                    <!-- Contenedor principal sin contenido de reseñas -->
+                    <div class="card">
+                        <div class="card-body">
+                            <h6 class="desing-title-page">Crear reseña</h6>
+                            <!-- Formulario para crear reseña -->
+                            <form method="post" enctype="multipart/form-data" th:action="@{/usuario/guardar_resenia}">
+                                <!-- Adjuntar foto -->
+                                <div class="mb-3">
+                                    <label for="fotoProducto" class="form-label">Foto del producto recibido:</label>
+                                    <input type="file" class="form-control" id="fotoProducto" name="fotoProducto" accept="image/*" required>
+                                </div>
+
+                                <!-- Pregunta: Buena Calidad -->
+                                <div class="mb-3">
+                                    <label class="form-label">¿El producto es de buena calidad?</label>
+                                    <div>
+                                        <input type="radio" id="calidadSi" name="calidad" value="Si" required>
+                                        <label for="calidadSi">Sí</label>
+                                        <input type="radio" id="calidadNo" name="calidad" value="No">
+                                        <label for="calidadNo">No</label>
+                                    </div>
+                                </div>
+
+                                <!-- Pregunta: Se recibió rápido -->
+                                <div class="mb-3">
+                                    <label class="form-label">¿El producto se recibió rápido?</label>
+                                    <div>
+                                        <input type="radio" id="rapidoSi" name="rapido" value="Si" required>
+                                        <label for="rapidoSi">Sí</label>
+                                        <input type="radio" id="rapidoNo" name="rapido" value="No">
+                                        <label for="rapidoNo">No</label>
+                                    </div>
+                                </div>
+
+                                <!-- Calificación de atención del agente -->
+                                <div class="mb-3">
+                                    <label for="calificacion" class="form-label">¿Conforme con la atención del agente (1-5)?</label>
+                                    <select class="form-select" id="calificacion" name="calificacion" required>
+                                        <option value="">Selecciona una opción</option>
+                                        <option value="1">1 - Muy insatisfecho</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5 - Muy satisfecho</option>
+                                    </select>
+                                </div>
+
+                                <!-- Botón para enviar formulario -->
+                                <button type="submit" class="btn btn-crear">Enviar Reseña</button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
+
             </div>
         </div>
     </div>
