@@ -890,16 +890,26 @@ public class UsuarioController {
 
         return "Usuariofinal/respuesta_resenia";
     }
+
     // Método GET: Muestra el formulario para crear reseñas
     @GetMapping("/crear_resenia")
-    public String mostrarFormularioResenia(Model model, @AuthenticationPrincipal Usuario usuarioLogueado) {
+    public String mostrarFormularioResenia(Model model) {
         model.addAttribute("activePage", "resenia");
+
+        // Obtener el usuario autenticado desde el contexto de seguridad
+        String correo = SecurityContextHolder.getContext().getAuthentication().getName();
+        Usuario usuarioLogueado = usuarioRepository.findByCorreo(correo);
+
+        // Validar si el usuario existe
+        if (usuarioLogueado == null) {
+            throw new IllegalArgumentException("Usuario no encontrado");
+        }
 
         // Cargar lista de productos
         List<Producto> productos = productoRepository.findAll();
 
         model.addAttribute("productos", productos);
-        model.addAttribute("usuario", usuarioLogueado); // Usuario logueado
+        model.addAttribute("usuario", usuarioLogueado); // Pasar el usuario logueado a la vista
 
         return "Usuariofinal/crear_resenia"; // Vista Thymeleaf
     }
