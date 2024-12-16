@@ -780,6 +780,13 @@ public class UsuarioController {
 
         return "Usuariofinal/respuesta_resenia";
     }
+    @GetMapping("/crear_resenia")
+    public String crearResenias(Model model) {
+        model.addAttribute("activePage", "resenia");
+        List<Resenia> resenias = reseniaRepository.findAll(); // Cargar todas las reseñas desde la base de datos
+        model.addAttribute("resenias", resenias); // Pasar las reseñas al modelo
+        return "Usuariofinal/crear_resenia"; // Nombre de tu archivo HTML de Thymeleaf (resenias.html)
+    }
 
     @GetMapping("/unete")
     public String mostrarFormulario(Model model) {
