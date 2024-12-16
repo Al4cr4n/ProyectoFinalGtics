@@ -155,7 +155,7 @@
                 message: messageContent
             },
             success: function(response) {
-                showMessage(response);
+                showMessage(response,userId);
                 messageInput.value = ''; // Limpia el input correcto
             },
             error: function(error) {
@@ -164,7 +164,7 @@
         });
     }
 
-    function showMessage(message) {
+    function showMessage(message, userId) {
         // Obtener el contenedor de respuesta correcto usando el ID del usuario
         var response = document.getElementById('response-' + message.destinationuser);
         if (!response) {
@@ -173,8 +173,10 @@
 
         if (response) {
             var p = document.createElement('p');
+            console.log(message);
+            var displayName = (message.sourceuser === userId) ? 'Cliente' : 'Tú';
             console.log(message.sourceuser + ': ' + message.message);
-            p.appendChild(document.createTextNode(message.sourceuser + ': ' + message.message));
+            p.appendChild(document.createTextNode(displayName  + ': ' + message.message));
             response.appendChild(p);
             response.scrollTop = response.scrollHeight;
 
