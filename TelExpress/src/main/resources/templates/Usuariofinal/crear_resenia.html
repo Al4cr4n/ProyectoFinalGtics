@@ -83,50 +83,52 @@
                             <h6 class="desing-title-page">Crear reseña</h6>
                             <!-- Formulario para crear reseña -->
                             <form method="post" enctype="multipart/form-data" th:action="@{/usuario/guardar_resenia}">
-                                <!-- Adjuntar foto -->
-                                <div class="mb-3">
-                                    <label for="fotoProducto" class="form-label">Foto del producto recibido:</label>
-                                    <input type="file" class="form-control" id="fotoProducto" name="fotoProducto" accept="image/*" required>
-                                </div>
+                                <!-- Foto del producto -->
+                                <label>Foto del producto recibido:</label>
+                                <input type="file" name="fotoProducto" required>
 
-                                <!-- Pregunta: Buena Calidad -->
-                                <div class="mb-3">
-                                    <label class="form-label">¿El producto es de buena calidad?</label>
-                                    <div>
-                                        <input type="radio" id="calidadSi" name="calidad" value="Si" required>
-                                        <label for="calidadSi">Sí</label>
-                                        <input type="radio" id="calidadNo" name="calidad" value="No">
-                                        <label for="calidadNo">No</label>
-                                    </div>
-                                </div>
+                                <!-- Calidad -->
+                                <label>¿Buena calidad?</label>
+                                <select name="calidad" required>
+                                    <option value="Si">Sí</option>
+                                    <option value="No">No</option>
+                                </select>
 
-                                <!-- Pregunta: Se recibió rápido -->
-                                <div class="mb-3">
-                                    <label class="form-label">¿El producto se recibió rápido?</label>
-                                    <div>
-                                        <input type="radio" id="rapidoSi" name="rapido" value="Si" required>
-                                        <label for="rapidoSi">Sí</label>
-                                        <input type="radio" id="rapidoNo" name="rapido" value="No">
-                                        <label for="rapidoNo">No</label>
-                                    </div>
-                                </div>
+                                <!-- Rapidez -->
+                                <label>¿Se recibió rápido?</label>
+                                <select name="rapido" required>
+                                    <option value="Si">Sí</option>
+                                    <option value="No">No</option>
+                                </select>
 
-                                <!-- Calificación de atención del agente -->
-                                <div class="mb-3">
-                                    <label for="calificacion" class="form-label">¿Conforme con la atención del agente (1-5)?</label>
-                                    <select class="form-select" id="calificacion" name="calificacion" required>
-                                        <option value="">Selecciona una opción</option>
-                                        <option value="1">1 - Muy insatisfecho</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5 - Muy satisfecho</option>
-                                    </select>
-                                </div>
+                                <!-- Puntuación -->
+                                <label>Puntuación (1-5):</label>
+                                <input type="number" name="puntuacion" min="1" max="5" required>
 
-                                <!-- Botón para enviar formulario -->
-                                <button type="submit" class="btn btn-crear">Enviar Reseña</button>
+                                <!-- Título de la reseña -->
+                                <label>Título de la reseña:</label>
+                                <input type="text" name="tituloresena" maxlength="200" required>
+
+                                <!-- Tipo de publicación -->
+                                <label>Tipo de publicación:</label>
+                                <input type="text" name="tipoPublicacion" maxlength="45" required>
+
+                                <!-- Selección de producto -->
+                                <label>Producto:</label>
+                                <select name="productoId" required>
+                                    <option th:each="producto : ${productos}" th:value="${producto.id}" th:text="${producto.nombre}"></option>
+                                </select>
+
+                                <!-- Selección de usuario -->
+                                <label>Usuario:</label>
+                                <select name="usuarioId" required>
+                                    <option th:each="usuario : ${usuarios}" th:value="${usuario.id}" th:text="${usuario.nombre}"></option>
+                                </select>
+
+                                <!-- Botón enviar -->
+                                <button type="submit">Guardar Reseña</button>
                             </form>
+
                         </div>
                     </div>
                 </div>

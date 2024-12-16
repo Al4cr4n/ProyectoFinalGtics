@@ -37,6 +37,10 @@ import org.springframework.data.domain.PageRequest;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
+import org.springframework.web.multipart.MultipartFile;
+import java.sql.Blob;
+import javax.sql.rowset.serial.SerialBlob;
+
 
 @Controller
 @RequestMapping("/usuario")
@@ -780,13 +784,77 @@ public class UsuarioController {
 
         return "Usuariofinal/respuesta_resenia";
     }
+    // Método GET: Muestra el formulario para crear reseñas
     @GetMapping("/crear_resenia")
-    public String crearResenias(Model model) {
+    public String mostrarFormularioResenia(Model model) {
         model.addAttribute("activePage", "resenia");
-        List<Resenia> resenias = reseniaRepository.findAll(); // Cargar todas las reseñas desde la base de datos
-        model.addAttribute("resenias", resenias); // Pasar las reseñas al modelo
-        return "Usuariofinal/crear_resenia"; // Nombre de tu archivo HTML de Thymeleaf (resenias.html)
+
+        // Cargar lista de productos y usuarios disponibles (para relacionar con la reseña)
+        List<Producto> productos = productoRepository.findAll();
+        List<Usuario> usuarios = usuarioRepository.findAll();
+
+        model.addAttribute("productos", productos);
+        model.addAttribute("usuarios", usuarios);
+
+        return "Usuariofinal/crear_resenia"; // Vista Thymeleaf
     }
+
+    // Método POST: Guarda una nueva reseña
+    @PostMapping("/guardar_resenia")
+    public String guardarResenia(@RequestParam("fotoProducto") MultipartFile fotoProducto,
+                                 @RequestParam("calidad") String calidad,
+                                 @RequestParam("rapido") String rapidez,
+                                 @RequestParam("puntuacion") int puntuacion,
+                                 @RequestParam("tituloresena") String tituloresena,
+                                 @RequestParam("tipoPublicacion") String tipoPublicacion,
+                                 @RequestParam("productoId") Integer productoId,
+                                 @RequestParam("usuarioId") Long usuarioId,
+                                 RedirectAttributes redirectAttributes) {
+        try {
+            // Crear una nueva instancia de Resenia
+            Resenia resenia = new Resenia();
+
+            // Guardar campos básicos
+            resenia.setCalidad(calidad);
+            resenia.setRapidez(rapidez);
+            resenia.setPuntuacion(puntuacion);
+            resenia.setTituloresena(tituloresena);
+            resenia.setTipoPublicacion(tipoPublicacion);
+
+            // Convertir MultipartFile a Blob
+            if (!fotoProducto.isEmpty()) {
+                byte[] bytes = fotoProducto.getBytes();
+                Blob fotoBlob = new SerialBlob(bytes);
+                resenia.setFoto(fotoBlob);
+            }
+
+            // Buscar Producto con Integer
+            Producto producto = productoRepository.findById(productoId)
+                    .orElseThrow(() -> new IllegalArgumentException("Producto no encontrado"));
+
+            // Buscar Usuario con Long
+            Usuario usuario = usuarioRepository.findById(usuarioId)
+                    .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
+
+            // Asignar relaciones
+            resenia.setProducto(producto);
+            resenia.setUsuario(usuario);
+
+            // Guardar la reseña en la base de datos
+            reseniaRepository.save(resenia);
+
+            // Mensaje de éxito
+            redirectAttributes.addFlashAttribute("mensaje", "¡Reseña guardada con éxito!");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            redirectAttributes.addFlashAttribute("error", "Error al guardar la reseña: " + e.getMessage());
+        }
+
+        return "redirect:/usuario/crear_resenia"; // Redirigir al formulario
+    }
+
+
 
     @GetMapping("/unete")
     public String mostrarFormulario(Model model) {
