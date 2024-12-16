@@ -23,6 +23,7 @@ public class HomeController {
     final OrdenesRepository ordenesRepository;
     private final CoordinadorRepository coordinadorRepository;
     private final EmailService emailService;
+
     final DistritoRepository distritoRepository;
 
 
@@ -106,12 +107,27 @@ public class HomeController {
         // Guardar el usuario en la base de datos
         usuarioRepository.save(usuario);
 
+        // Enviar el correo de bienvenida al usuario
+        try {
+            String nombreCompleto = usuario.getNombre() + " " + usuario.getApellido();
+            emailService.sendWelcomeEmail(usuario.getCorreo(), nombreCompleto);
+
+        } catch (Exception e) {
+            // Loguear error si ocurre algún problema con el envío de correo
+            e.printStackTrace();
+            redirectAttributes.addFlashAttribute("errorMessage", "Hubo un problema al enviar el correo de bienvenida.");
+            return "redirect:/registro_usuario";
+        }
+
         // Añadir un mensaje de éxito en los atributos de redirección
         redirectAttributes.addFlashAttribute("successMessage", "Usuario registrado exitosamente.");
 
         // Redirigir al formulario de login o alguna otra página
         return "redirect:/login";
     }
+
+
+
 
     // Método para asignar la zona basada en el distrito
     private Zona determinarZonaPorDistrito(String nombreDistrito) {
@@ -134,4 +150,7 @@ public class HomeController {
         return zonaRepository.findByNombre(zona.getNombre())
                 .orElseThrow(() -> new RuntimeException("Zona no encontrada en la base de datos"));
     }
+
+
+
 }
