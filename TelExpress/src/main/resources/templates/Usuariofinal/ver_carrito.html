@@ -205,45 +205,67 @@
                     <li data-bs-target="#productCarousel" data-bs-slide-to="1"></li>
                     <li data-bs-target="#productCarousel" data-bs-slide-to="2"></li>
                   </ol>
-                  <div class="carousel-inner">
-                    <div class="carousel-item active">
-                      <div class="product text-center ">
-                        <div class="product-img h-auto">
-                          <img src="/assets/img/elements/product06.png" alt="Product Image" class="img-fluid mx-auto d-block">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <div class="product text-center">
+                                <div class="product-img h-auto">
+                                    <!-- Usa la imagen que esté asociada con el producto -->
+                                    <img src="/assets/img/elements/product06.png" alt="Product Image" class="img-fluid mx-auto d-block">
+                                </div>
+                                <div class="product-body mt-0">
+                                    <h3 class="product-name text-dark">
+                                        <!-- Mostrar el nombre del primer producto -->
+                                        <span th:text="${producto1.nombreProducto}">Producto1</span>
+                                    </h3>
+                                    <h4 class="product-price text-primary">
+                                        <!-- Mostrar el precio del primer producto -->
+                                        <span th:text="${producto1.precio}">precio</span>
+                                    </h4>
+                                    <button class="btn btn-success mt-1">Agregar</button>
+                                </div>
+                            </div>
                         </div>
-                        <div class="product-body mt-0">
-                          <h3 class="product-name text-dark">
-                            nombreProducto
-                          </h3>
-                          <h4 class="product-price text-primary">precio<del class="text-muted">S/. 290.00</del></h4>
-                          <button class="btn btn-success mt-1">Agregar</button>
+                        <div class="carousel-item">
+                            <div class="product text-center">
+                                <div class="product-img h-auto">
+                                    <!-- Usa la imagen que esté asociada con el producto -->
+                                    <img src="/assets/img/elements/product06.png" alt="Product Image" class="img-fluid mx-auto d-block">
+                                </div>
+                                <div class="product-body mt-0">
+                                    <h3 class="product-name text-dark">
+                                        <!-- Mostrar el nombre del segundo producto -->
+                                        <span th:text="${producto2.nombreProducto}">Producto2</span>
+                                    </h3>
+                                    <h4 class="product-price text-primary">
+                                        <!-- Mostrar el precio del segundo producto -->
+                                        <span th:text="${producto2.precio}">precio</span>
+                                    </h4>
+                                    <button class="btn btn-success mt-1">Agregar</button>
+                                </div>
+                            </div>
                         </div>
-                      </div>
+                        <div class="carousel-item">
+                            <div class="product text-center">
+                                <div class="product-img h-auto">
+                                    <!-- Usa la imagen que esté asociada con el producto -->
+                                    <img src="/assets/img/elements/product06.png" alt="Product Image" class="img-fluid mx-auto d-block">
+                                </div>
+                                <div class="product-body mt-0">
+                                    <h3 class="product-name text-dark">
+                                        <!-- Mostrar el nombre del tercer producto -->
+                                        <span th:text="${producto3.nombreProducto}">Producto3</span>
+                                    </h3>
+                                    <h4 class="product-price text-primary">
+                                        <!-- Mostrar el precio del tercer producto -->
+                                        <span th:text="${producto3.precio}">precio</span>
+                                    </h4>
+                                    <button class="btn btn-success mt-1">Agregar</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="carousel-item">
-                      <div class="product text-center">
-                        <div class="product-img h-auto">
-                          <img src="/assets/img/elements/product06.png" alt="Product Image" class="img-fluid mx-auto d-block">
-                        </div>
-                        <div class="product-body mt-0">
-                          <h3 class="product-name text-dark">
-                            Producto2
-                          </h3>
-                          <h4 class="product-price text-primary">precio<del class="text-muted">S/. 280.00</del></h4>
-                          <button class="btn btn-success mt-1">Agregar</button>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="carousel-item">
-                      <img class="d-block w-100" src="../assets/img/elements/18.jpg" alt="Third slide" />
-                      <div class="carousel-caption d-none d-md-block">
-                        <h3>Third slide</h3>
-                        <p>Lorem ipsum dolor sit amet, virtute consequat ea qui, minim graeco mel no.</p>
-                      </div>
-                    </div>
-                  </div>
-                  <a class="carousel-control-prev" href="#productCarousel" role="button" data-bs-slide="prev">
+                    <a class="carousel-control-prev" href="#productCarousel" role="button" data-bs-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                     <span class="visually-hidden">Anterior</span>
                   </a>

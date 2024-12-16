@@ -66,4 +66,13 @@ public interface ProductoRepository extends JpaRepository<Producto,Integer> {
 
     // Opcional: si deseas obtener directamente los productos con fecha de arribo
     List<Producto> findByFecharriboIsNotNull();
+
+    @Query("SELECT p FROM Producto p WHERE p.idProducto = (SELECT MAX(p2.idProducto) FROM Producto p2)")
+    Producto findProductoConIdMayor();
+
+    @Query("SELECT p FROM Producto p WHERE p.idProducto = (SELECT MAX(p2.idProducto) FROM Producto p2 WHERE p2.idProducto < (SELECT MAX(p3.idProducto) FROM Producto p3))")
+    Producto findProductoConSegundoIdMayor();
+
+    @Query("SELECT p FROM Producto p WHERE p.idProducto = (SELECT p2.idProducto FROM Producto p2 ORDER BY p2.idProducto DESC LIMIT 1 OFFSET 2)")
+    Producto findProductoConTercerIdMayor();
 }
