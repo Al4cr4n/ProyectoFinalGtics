@@ -41,8 +41,10 @@
                                 <button th:onclick="'openChat(' + ${idUsuario} + ', ' + ${idAgente} + ')'"
                                         type="button"
                                         class="user-button"
-                                        th:text="Agente">Usuario</button>
-                                <button onclick="openChat(2)">ChatBot</button>
+                                        th:text="Agente"
+                                style="margin-left: 10px; padding: 10px 20px; background-color: #7367F0; color: white; border: none; border-radius: 5px;">Usuario</button>
+                                <button onclick="openChat(2)"
+                                style ="margin-left: 10px; padding: 10px 20px; background-color: #7367F0; color: white; border: none; border-radius: 5px;">ChatBot</button>
                                 <!-- Add more users as needed -->
                             </div>
                             <div th:each="idAgente : ${idAgente}" th:attr="id='chat-container-' + ${idAgente}" class="card chat-container" style="display: none;">
