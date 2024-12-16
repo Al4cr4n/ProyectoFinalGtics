@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" class="light-style layout-menu-fixed" dir="ltr" data-theme="theme-default">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      class="light-style layout-menu-fixed" dir="ltr" data-theme="theme-default">
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=1.0, maximum-scale=1.0" />
     <title>Enviar Reseña</title>
     <link rel="icon" type="image/x-icon" href="../../assets/img/favicon/favicon.ico" />
     <link rel="stylesheet" href="../../assets/vendor/fonts/boxicons.css" />
@@ -151,7 +152,6 @@
                             <i class="bx bxs-star" data-value="4"></i>
                             <i class="bx bxs-star" data-value="5"></i>
                         </div>
-
                         <!-- Submit and Cancel Buttons -->
                         <div style="margin-top: 20px;">
                             <button class="btn-cancel">CANCELAR</button>
@@ -167,7 +167,6 @@
     </div>
     <!-- / Layout page -->
 </div>
-
 <!-- JavaScript for star rating -->
 <script>
     // Star rating script
@@ -185,7 +184,6 @@
                     s.classList.add('selected');
                 }
             });
-
             // Perform any action needed with the star rating value
             console.log(value);
         });
