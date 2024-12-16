@@ -1,4 +1,4 @@
-package com.example.telexpress.controller;
+/*package com.example.telexpress.controller;
 
 import com.example.telexpress.controller.errormanage.ResourceNotFoundException;
 import com.example.telexpress.controller.errormanage.TooManyRequestsException;
@@ -23,7 +23,7 @@ public class GlobalExceptionHandler {
         errorResponse.put("status", "error");
         errorResponse.put("mensaje", ex.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
-    }*/
+    }
 
     // Manejo de excepciones generales
     @ExceptionHandler(Exception.class)
@@ -75,3 +75,4 @@ public class GlobalExceptionHandler {
     }
 }
 
+*/

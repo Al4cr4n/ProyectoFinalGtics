@@ -116,7 +116,14 @@
             <div class="content-wrapper">
                 <!-- Content -->
                 <div class="container-xxl flex-grow-1 container-p-y">
-                    <h6 class="desing-title-page">Zona Oeste</h6>
+                    <!-- Etiqueta de éxito -->
+                    <div id="success-alert" class="alert alert-success" style="display: none;">
+                        Producto agregado con éxito
+                    </div>
+                    <!-- Etiqueta de error -->
+                    <div id="error-alert" class="alert alert-danger" style="display: none; position: fixed; top: 10px; left: 50%; transform: translateX(-50%); z-index: 1000;">
+                        Error al agregar el producto
+                    </div>
 
                     <div class="card">
                         <!-- STORE -->
@@ -244,6 +251,24 @@
     </div>
 
     <script>
+        function mostrarEtiquetaExito() {
+            const successAlert = document.getElementById("success-alert");
+            successAlert.style.display = "block"; // Mostrar la etiqueta
+
+            // Ocultar la etiqueta después de 3 segundos
+            setTimeout(() => {
+                successAlert.style.display = "none";
+            }, 3000);
+        }
+        function mostrarEtiquetaError(mensaje) {
+            const errorAlert = document.getElementById("error-alert");
+            errorAlert.textContent = mensaje; // Configurar el mensaje del error
+            errorAlert.style.display = "block"; // Mostrar la etiqueta de error
+
+            setTimeout(() => {
+                errorAlert.style.display = "none"; // Ocultar después de 3 segundos
+            }, 3000);
+        }
         function agregarProducto(button) {
             const productoId = button.getAttribute("data-product-id");
             // Obtener el token CSRF del meta tag o el input hidden
@@ -261,15 +286,15 @@
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
-                        alert(data.message); // Mostrar mensaje de éxito
-                        console.log("Producto agregado correctamente.");
+                        mostrarEtiquetaExito(); // Llamar a la función para mostrar la etiqueta
+                        console.log("Producto agregado correctamente.ok.");
                     } else {
-                        alert("Error al agregar el producto.");
+                        mostrarEtiquetaError(data.message || "Error al agregar el producto.bad.");
                     }
                 })
                 .catch(error => {
                     console.error("Error en la solicitud:", error);
-                    alert("Error al agregar el producto.");
+                    mostrarEtiquetaError("Error en la solicitud: " + error.message);
                 });
         }
     </script>

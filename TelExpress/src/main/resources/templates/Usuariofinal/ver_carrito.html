@@ -18,15 +18,10 @@
   <!--tokens para uso de ajax (token)-->
   <meta name="_csrf" th:content="${_csrf.token}" />
   <meta name="_csrf_header" th:content="${_csrf.headerName}" />
-
-
   <title>Inicio Usuario</title>
-
   <meta name="description" content="" />
-
   <!-- Favicon -->
   <link rel="icon" type="image/x-icon" href="/assets/img/favicon/favicon.ico" />
-
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -34,22 +29,17 @@
           href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
           rel="stylesheet"
   />
-
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-
   <!-- Icons. Uncomment required icon fonts -->
   <link rel="stylesheet" href="/assets/vendor/fonts/boxicons.css" />
-
   <!-- Core CSS -->
   <link rel="stylesheet" href="/assets/vendor/css/core.css" class="template-customizer-core-css" />
   <link rel="stylesheet" href="/assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
   <link rel="stylesheet" href="/assets/css/demo.css" />
-
   <!-- Vendors CSS -->
   <link rel="stylesheet" href="/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
 
   <link rel="stylesheet" href="/assets/vendor/libs/apex-charts/apex-charts.css" />
-
   <!-- Page CSS -->
   <link type="text/css" rel="stylesheet" href="/assets/css/bootstrap.min.css"/>
   <link type="text/css" rel="stylesheet" href="/assets/css/style_products.css"/>
@@ -152,7 +142,7 @@
                         </div>
                         <div class="mb-1">
                           <p class="product-price">asas<span class="original-price">Sas</span> <span class="discount">-as</span></p>
-                          <p class="product-name">stock o no stock /1 pieza de Pluma estilográfica de Metal mate 1 pieza de Pluma estilográfica de Metal mate</p>
+                          <p class="product-name">1 pieza de Pluma estilográfica de Metal mate 1 pieza de Pluma estilográfica de Metal mate</p>
                           <p class="product-attributes">Color: Dorado</p>
                         </div>
                         <div class="mb-1 d-flex flex-row align-items-center dropdown gap-2">
@@ -174,12 +164,11 @@
 
                   <!-- Communication Section -->
                   <div class=" card-footer d-flex justify-content-end align-items-center">
-                      <button class="btn btn-danger me-2">Eliminar</button>
+                      <button class="btn btn-danger me-2" onclick="eliminarProductos()">Eliminar</button>
                   </div>
                 </div>
               <!--</form>-->
             </div>
-
 
             <div class="col-md-3">
 
@@ -395,6 +384,53 @@
       });
     });
   }
+</script>
+<script>
+  function eliminarProductos() {
+    // Obtener los checkboxes seleccionados
+    const checkboxes = document.querySelectorAll(".product-checkbox:checked");
+    const idsProductos = Array.from(checkboxes).map(cb => cb.value);
+
+    if (idsProductos.length === 0) {
+      alert("Por favor, selecciona al menos un producto para eliminar.");
+      return;
+    }
+
+    // Confirmación
+    if (!confirm("¿Seguro que deseas eliminar los productos seleccionados?")) {
+      return;
+    }
+
+    // Obtener el token CSRF
+    const csrfToken = document.querySelector('meta[name="_csrf"]').content;
+    const csrfHeader = document.querySelector('meta[name="_csrf_header"]').content;
+
+    // Enviar la solicitud al backend
+    fetch("/usuario/eliminar-productos-carrito", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        [csrfHeader]: csrfToken
+      },
+      body: JSON.stringify({ ids: idsProductos })
+    })
+            .then(response => {
+              if (!response.ok) {
+                throw new Error("Error al eliminar los productos");
+              }
+              return response.text();
+            })
+            .then(data => {
+              console.log(data);
+              alert("Productos eliminados correctamente.");
+              location.reload(); // Recargar la página para actualizar la lista
+            })
+            .catch(error => {
+              console.error("Error en la eliminación:", error);
+              alert("Hubo un error al eliminar los productos.");
+            });
+  }
+
 </script>
 
 

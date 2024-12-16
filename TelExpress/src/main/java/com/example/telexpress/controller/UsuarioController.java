@@ -19,6 +19,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import com.example.telexpress.repository.DistritoRepository;
@@ -637,6 +638,7 @@ public class UsuarioController {
 
     @GetMapping("/productos-carrito-compras")
     @ResponseBody
+    @Transactional
     public List<Map<String, Object>> verCarrito() {
 
         String correo=SecurityContextHolder.getContext().getAuthentication().getName();
@@ -693,7 +695,34 @@ public class UsuarioController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Producto no encontrado en la orden");
         }
     }
+    @PostMapping("/eliminar-productos-carrito")
+    @ResponseBody
+    public ResponseEntity<String> eliminarProductosCarrito(@RequestBody Map<String, List<Integer>> request){
+        try {
+            List<Integer> ids = request.get("ids");
+            // Validación: Verificar que la lista no esté vacía
+            if (ids == null || ids.isEmpty()) {
+                System.out.println("la lista de products esta totalmente vacia");
+                return ResponseEntity.badRequest().body("La lista de productos a eliminar está vacía.");
+            }
 
+            // Obtener el usuario actual
+            String correo = SecurityContextHolder.getContext().getAuthentication().getName();
+            Usuario usuarioActual = usuarioRepository.findByCorreo(correo);
+            //elimando los productos de la orden pendiente
+            Ordenes ordenPendiente = ordenesRepository.findByUsuarioAndEstadoOrdenes(usuarioActual, "Pendiente")
+                    .orElseThrow(() -> new IllegalArgumentException("No hay orden pendiente para el usuario"));
+            ids.forEach(id -> {
+                ProductoOrdenesId productoOrdenesId = new ProductoOrdenesId(id, ordenPendiente.getIdOrdenes());
+                productoOrdenesRepository.deleteById(productoOrdenesId);
+            });
+            return ResponseEntity.ok("Productos eliminados correctamente.");
+        }
+        catch (Exception e) {
+            e.printStackTrace(); // Log para depuración
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al eliminar productos.");
+        }
+    }
 
     @GetMapping("/images/{id}")
     public ResponseEntity<byte[]> getImage(@PathVariable Integer id) {
