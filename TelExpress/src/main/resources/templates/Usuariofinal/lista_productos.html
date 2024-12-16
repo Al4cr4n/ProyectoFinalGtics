@@ -202,7 +202,7 @@
                                                 <h3 class="product-name">
                                                     <a th:href="@{/usuario/detalle_producto(id=${producto.idProducto})}">[[${producto.nombreProducto}]]</a>
                                                 </h3>
-                                                <h4 class="product-price">S/. [[${producto.precio}]] <del class="product-old-price">S/. 290.00</del></h4>
+                                                <h4 class="product-price">S/. [[${producto.precio}]] </h4>
                                                 <div class="product-btns">
                                                     <button class="quick-view"
                                                             th:onclick="'location.href=\'' + @{/usuario/detalle_producto(id=${producto.idProducto})}+ '\''">
