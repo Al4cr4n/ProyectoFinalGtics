@@ -600,7 +600,7 @@ public class UsuarioController {
                 });
         //si el producto ya existe en la orden, actualiza la cantidad
         if (productosHasOrdenes.getId() != null){
-            productosHasOrdenes.setCantidadxproducto(1);
+            productosHasOrdenes.setCantidadxproducto(productosHasOrdenes.getCantidadxproducto() + 1);
         }
         // Guardar el producto en la orden
         productoOrdenesRepository.save(productosHasOrdenes);
@@ -614,6 +614,16 @@ public class UsuarioController {
 
     @GetMapping("/ver_carrito")
     public String verCarritohtml(Model model) {
+        String correo = SecurityContextHolder.getContext().getAuthentication().getName();
+        Usuario usuario = usuarioRepository.findByCorreo(correo);
+
+        Optional<Ordenes> ordenPendienteOpt = ordenesRepository.findByUsuarioAndEstadoOrdenes(usuario, "Pendiente");
+
+        if (ordenPendienteOpt.isPresent()) {
+            model.addAttribute("ordenId", ordenPendienteOpt.get().getIdOrdenes());
+        } else {
+            model.addAttribute("ordenId", null);
+        }
         /*String correo=SecurityContextHolder.getContext().getAuthentication().getName();
         Usuario usuariodesesion =usuarioRepository.findByCorreo(correo);
         //se obtiene los productos de la orden "pendiente"
@@ -640,22 +650,29 @@ public class UsuarioController {
     @GetMapping("/productos-carrito-compras")
     @ResponseBody
     @Transactional
-    public List<Map<String, Object>> verCarrito() {
+    public Map<String, Object> verCarrito() {
 
         String correo=SecurityContextHolder.getContext().getAuthentication().getName();
         Usuario usuariodesesion =usuarioRepository.findByCorreo(correo);
         //se obtiene los productos de la orden "pendiente"
         Optional<Ordenes> ordenPendienteOpt = ordenesRepository.findByUsuarioAndEstadoOrdenes(usuariodesesion, "Pendiente");
+        Map<String, Object> respuesta = new HashMap<>();
+
         if (ordenPendienteOpt.isPresent()) {
             List<ProductoOrdenes> productosDeOrden = productoOrdenesRepository.findByIdOrdenesId(ordenPendienteOpt.get().getIdOrdenes());
 
-            return productosDeOrden.stream()
+            double subtotal = productosDeOrden.stream()
+                    .mapToDouble(p -> p.getProducto().getPrecio() * p.getCantidadxproducto())
+                    .sum();
+            int totalArticulos = productosDeOrden.stream()
+                    .mapToInt(ProductoOrdenes::getCantidadxproducto)
+                    .sum();
+            List<Map<String, Object>> productos =  productosDeOrden.stream()
                     .map(p -> {
                         Map<String, Object> productoMap = new HashMap<>();
                         productoMap.put("idProducto", p.getProducto().getIdProducto());
                         productoMap.put("nombreProducto", p.getProducto().getNombreProducto());
                         productoMap.put("precio", p.getProducto().getPrecio());
-                        productoMap.put("cantidadDisponible", p.getProducto().getCantidadDisponible());
                         productoMap.put("cantidadxproducto", p.getCantidadxproducto());
 
                         // Calcular el estado del stock en tiempo real
@@ -668,13 +685,23 @@ public class UsuarioController {
                             estadoStock = "Stock";
                         }
                         productoMap.put("estadoStock", estadoStock);
-
+                        productoMap.put("cantidadDisponible", p.getProducto().getCantidadDisponible());
                         return productoMap;
                     })
                     .collect(Collectors.toList());
+            double costoEnvio = productosDeOrden.isEmpty() ? 0.00 : 15.00;
+            respuesta.put("productos", productos);
+            respuesta.put("subtotal", subtotal);
+            respuesta.put("deliveryCost", costoEnvio);
+            respuesta.put("total", subtotal + costoEnvio);
+            respuesta.put("totalArticulos", totalArticulos);
         } else {
-            return new ArrayList<>(); //en caso de estar vacio la orden
+            respuesta.put("productos", Collections.emptyList());
+            respuesta.put("totalArticulos", 0);
+            respuesta.put("deliveryCost", 0.00);
+            respuesta.put("total", 0.00);
         }
+        return respuesta;
     }
 
     @PostMapping("/actualizar-cantidad")

@@ -41,7 +41,6 @@
 
   <link rel="stylesheet" href="/assets/vendor/libs/apex-charts/apex-charts.css" />
   <!-- Page CSS -->
-  <link type="text/css" rel="stylesheet" href="/assets/css/bootstrap.min.css"/>
   <link type="text/css" rel="stylesheet" href="/assets/css/style_products.css"/>
   <link type="text/css" rel="stylesheet" href="/assets/css/font-awesome.min.css"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.3/font/bootstrap-icons.min.css">
@@ -78,6 +77,8 @@
               <div class="d-flex justify-content-between align-items-center py-1 mb-0">
                 <h5 >Carrito</h5>
               </div>
+            <div id="success-alert" class="alert alert-info" style="display: none;">
+            </div>
           </div>
           <div class="row">
             <!--primer bloque, detalle de la orden-->
@@ -178,19 +179,20 @@
                 <h5 class="card-title text-dark">Resumen del pedido</h5>
                 <hr>
                 <div class="d-flex justify-content-between mb-1">
-                  <strong>Total de artículos:</strong>
-                  <strong>S/ <span id="totalPagar">86.06</span></strong>
+                  <strong>Total por artículos:</strong>
+                  <strong>S/ <span id="totalPagar">0.05</span></strong>
                 </div>
                 <div class="d-flex justify-content-between mb-1 "><!--text-danger-->
                   <p class="text-sm text-muted">Costo de envío:</p>
-                  <span class="text-sm fw-light">-S/ 15.00</span>
+                  <span class="text-sm fw-light"id="deliveryCost">-S/ 15.00</span>
                 </div>
                 <hr>
                 <div class="d-flex justify-content-between mb-1">
-                  <span>Total (9 artículos):</span>
+                  <span>Total :</span>
                   <span>S/ <span id="totalArticulos">205.71</span></span>
                 </div>
-                <button class="btn btn-warning w-100 fw-bold">Hacer pedido (9)</button>
+                <button class="btn btn-warning w-100 fw-bold" onclick="redirigirAPagar(this)"
+                        th:data-orden-id="${ordenId}">Hacer pedido (<span id="totalArticulosCount">0</span>)</button>
                 <small class="text-muted d-block mt-2">
                   La disponibilidad y el precio de los artículos no están garantizados hasta que se finalice el pago.
                 </small>
@@ -262,17 +264,65 @@
     <!-- / Layout page -->
   </div>
 
-  <!-- Overlay -->
-  <div class="layout-overlay layout-menu-toggle"></div>
-</div>
 <!-- / Layout wrapper -->
-<script>
+  <script>
+    function redirigirAPagar(button){
+      const ordenId = button.getAttribute("data-orden-id");
+      if (ordenId) {
+        // Redirigir directamente a la vista de pago con el ID de la orden
+        window.location.href = `/usuario/orden/pagar?ordenId=${ordenId}`;
+      } else {
+        alert("No se encontró una orden pendiente.");
+      }
+    }
+  </script>
+
+  <script>
   function toggleAllCheckboxes(masterCheckbox) {
   const checkboxes = document.querySelectorAll(".product-checkbox");
   checkboxes.forEach(checkbox => {
   checkbox.checked = masterCheckbox.checked;
   });
   }
+  function mostrarEtiquetaMensaje(mensaje,tipo) {
+    const successAlert = document.getElementById("success-alert");
+    successAlert.style.display = "block"; // Mostrar la etiqueta
+    successAlert.textContent = mensaje;
+    if (tipo === "success") {
+      successAlert.className = "alert alert-success";
+    } else if (tipo === "error") {
+      successAlert.className = "alert alert-danger";
+    } else {
+      successAlert.className = "alert alert-warning";
+    }
+
+
+    // Ocultar la etiqueta después de 3 segundos
+    setTimeout(() => {
+      successAlert.style.display = "none";
+    }, 3000);
+  }
+  function actualizarResumenCarrito() {
+    fetch("/usuario/productos-carrito-compras")
+            .then(response => {
+              if (!response.ok) {
+                throw new Error("Error al obtener el carrito.");
+              }
+              return response.json();
+            })
+            .then(data => {
+              // Actualizar el resumen del pedido
+              document.getElementById("totalPagar").textContent = data.subtotal.toFixed(2);
+              document.getElementById("totalArticulos").textContent = data.total.toFixed(2);
+              document.getElementById("totalArticulosCount").textContent = data.totalArticulos;
+              document.getElementById("deliveryCost").textContent = `S/ ${data.deliveryCost.toFixed(2)}`;
+            })
+            .catch(error => {
+              console.error("Error al actualizar el resumen del carrito:", error);
+              mostrarEtiquetaMensaje("Error al actualizar el carrito.", "error");
+            });
+  }
+
 </script>
 <script>
   document.addEventListener("DOMContentLoaded", function () {
@@ -286,15 +336,19 @@
               }
               return response.json(); // Convertir la respuesta a JSON
             }) //.then(response => response.Json() //este permite verlo como en postman
-            .then(productos => {
+            .then(data => {
               // Obtener el contenedor donde se mostrarán los productos
               const contenedorProductos = document.getElementById("productosCarrito");
               // Limpiar el contenedor antes de renderizar
               contenedorProductos.innerHTML = "";
               // Verificar si hay productos en el carrito
-              if (productos.length > 0) {
+              if (data.productos.length > 0) {
                 // Recorrer los productos y renderizarlos
-                productos.forEach(producto => {
+                data.productos.forEach(producto => {
+                  const stockMensaje = producto.estadoStock === "Sin Stock"
+                          ? `<span class="text-danger">Sin Stock</span>`
+                          : (producto.estadoStock === "Por Agotarse" ? `<span class="text-warning">Por Agotarse</span>` : `<span class="text-success">Disponible</span>`);
+
                   const productoHtml = `
                     <div class="row align-items-center">
                       <div class="col-1 col-md-1 text-center">
@@ -310,7 +364,7 @@
                         </div>
                         <div class="mb-1">
                           <p class="product-status">${producto.estadoStock}</p> <!-- Mostrar el estado del stock -->
-                          <p class="product-name">stock o no stock /1 pieza de Pluma estilográfica de Metal mate 1 pieza de Pluma estilográfica de Metal mate</p>
+                          <p class="product-name">1 pieza de Pluma estilográfica de Metal mate 1 pieza de Pluma estilográfica de Metal mate</p>
                           <p class="product-attributes">Color: Dorado</p>
                         </div>
                         <div class="mb-1 d-flex flex-row align-items-center  gap-2">
@@ -336,6 +390,8 @@
                 // Mostrar mensaje si el carrito está vacío
                 contenedorProductos.innerHTML = "<p>No hay productos en el carrito</p>";
               }
+              // Actualizar resumen inicial
+              actualizarResumenCarrito();
             })
             .catch(error => {
               console.error("Error al cargar los productos del carrito:", error);
@@ -374,12 +430,14 @@
                 })
                 .then(data => {
                   console.log(data);
-                  alert("Cantidad actualizada exitosamente");
+                  mostrarEtiquetaMensaje("Cantidad actualizada exitosamente");
                   boton.style.display = "none";
+                  // Actualizar el resumen del carrito
+                  actualizarResumenCarrito();
                 })
                 .catch(error => {
                   console.error("Error al actualizar la cantidad:", error);
-                  alert("Hubo un error al actualizar la cantidad. Intenta de nuevo.");
+                  mostrarEtiquetaMensaje("Hubo un error al actualizar la cantidad. Intenta de nuevo.");
                 });
       });
     });
@@ -392,12 +450,7 @@
     const idsProductos = Array.from(checkboxes).map(cb => cb.value);
 
     if (idsProductos.length === 0) {
-      alert("Por favor, selecciona al menos un producto para eliminar.");
-      return;
-    }
-
-    // Confirmación
-    if (!confirm("¿Seguro que deseas eliminar los productos seleccionados?")) {
+      mostrarEtiquetaMensaje("Por favor, selecciona al menos un producto para eliminar.");
       return;
     }
 
@@ -422,12 +475,20 @@
             })
             .then(data => {
               console.log(data);
-              alert("Productos eliminados correctamente.");
-              location.reload(); // Recargar la página para actualizar la lista
+              mostrarEtiquetaMensaje("Productos eliminados correctamente.");
+              //location.reload();
+              // Actualizar el DOM eliminando los elementos seleccionados
+              checkboxes.forEach(checkbox => {
+                const row = checkbox.closest(".row.align-items-center"); // Encontrar la fila del producto
+                row.remove(); // Eliminar del DOM
+              });
+
+              // Actualizar el total del carrito
+              actualizarResumenCarrito();
             })
             .catch(error => {
               console.error("Error en la eliminación:", error);
-              alert("Hubo un error al eliminar los productos.");
+              mostrarEtiquetaMensaje("Hubo un error al eliminar los productos.");
             });
   }
 
