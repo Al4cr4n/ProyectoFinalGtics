@@ -1,4 +1,4 @@
-/*package com.example.telexpress.controller;
+package com.example.telexpress.controller;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.http.HttpServletRequest;
@@ -35,7 +35,7 @@ public class CustomErrorController implements ErrorController {
                 return "Sistema/error";  // Página para 404
             } else if (statusCode == HttpStatus.INTERNAL_SERVER_ERROR.value()) {
                 model.addAttribute("errorMessage", "Error interno del servidor");
-                return "Sistema/error";  // Página para 500
+                return "Sistema/error_500";  // Página para 500
             }
         }
 
@@ -43,4 +43,4 @@ public class CustomErrorController implements ErrorController {
         model.addAttribute("errorMessage", "Ha ocurrido un error");
         return "Sistema/error";
     }
-}*/
+}
