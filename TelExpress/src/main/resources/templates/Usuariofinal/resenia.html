@@ -91,14 +91,7 @@
                         <div class="d-flex justify-content-center align-items-center card-header">
                             <div class="search-container">
                                 <form class="d-flex" th:action="@{/usuario/mostrarResenias}" method="get" id="searchForm">
-                                    <!-- Campo de búsqueda -->
-                                    <input class="form-control me-1" type="search" name="search" id="search" placeholder="Buscando..." th:value="${search}" aria-label="Search" />
 
-                                    <!-- Botón Buscar -->
-                                    <button class="btn btn-outline-primary me-1" type="submit">Buscar</button>
-
-                                    <!-- Botón Limpiar como un enlace directo -->
-                                    <a href="/usuario/mostrarResenias" class="btn btn-outline-primary">Limpiar</a>
                                 </form>
 
                                 <!-- Botón Crear -->

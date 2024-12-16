@@ -23,25 +23,63 @@
     <link rel="stylesheet" href="../../assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
     <link rel="stylesheet" href="../../assets/css/demo.css" />
 
-    <!-- Bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Vendors CSS -->
+    <link rel="stylesheet" href="../../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+    <link rel="stylesheet" href="../../assets/vendor/libs/apex-charts/apex-charts.css" />
+
+    <!-- Helpers -->
+    <script src="../../assets/vendor/js/helpers.js"></script>
+    <script src="../../assets/js/config.js"></script>
+
+    <!-- Custom Styles -->
+    <style>
+        /* Eliminar subrayado de los enlaces */
+        a {
+            text-decoration: none !important;
+        }
+
+        /* Estilo del botón igual al resenia.html */
+        .btn-crear {
+            background-color: #d4e2fc; /* Color pastel azul */
+            color: #333;
+            border: none;
+            border-radius: 5px;
+            padding: 8px 16px;
+            font-weight: 500;
+            font-family: 'Poppins', sans-serif;
+            transition: background-color 0.3s;
+        }
+
+        .btn-crear:hover {
+            background-color: #b3ccfa; /* Color pastel azul más oscuro */
+        }
+
+        /* Estilo del título */
+        h3.text-primary {
+            color: #696cff !important;
+            font-weight: 600;
+        }
+    </style>
 </head>
 <body>
 <!-- Layout wrapper -->
 <div class="layout-wrapper layout-content-navbar">
     <div class="layout-container">
-        <div th:insert="~{Usuariofinal/fragments/menu.html::menu}"></div> <!-- Menú fragmentado -->
+        <!-- Menú fragmentado -->
+        <div th:insert="~{Usuariofinal/fragments/menu.html::menu}"></div>
 
         <div class="layout-page">
-            <div th:insert="~{Usuariofinal/fragments/navbar.html::navbar}"></div> <!-- Navbar fragmentado -->
+            <!-- Navbar fragmentado -->
+            <div th:insert="~{Usuariofinal/fragments/navbar.html::navbar}"></div>
 
+            <!-- Contenido principal -->
             <div class="content-wrapper">
                 <div class="container mt-4">
                     <div class="card">
                         <div class="card-body">
-                            <h3 class="mb-4 text-center text-primary">Crear reseña</h3>
+                            <h6 class="desing-title-page">Reseñas</h6>
 
-                            <!-- Formulario para crear reseña -->
+                            <!-- Formulario -->
                             <form method="post" enctype="multipart/form-data" th:action="@{/usuario/guardar_resenia}">
                                 <!-- Foto del producto -->
                                 <div class="mb-3">
@@ -104,7 +142,7 @@
 
                                 <!-- Botón enviar -->
                                 <div class="text-center">
-                                    <button type="submit" class="btn btn-primary">Guardar Reseña</button>
+                                    <button type="submit" class="btn btn-crear">Guardar Reseña</button>
                                 </div>
                             </form>
                         </div>
