@@ -109,4 +109,32 @@ public class EmailService {
         mailSender.send(mimeMessage);
     }
 
+    public void sendRoleUpdateEmail(String toEmail, String tempPassword, Integer userId) {
+        try {
+            MimeMessage mimeMessage = mailSender.createMimeMessage();
+            MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+
+            messageHelper.setFrom("TelExpress <telexpress.adm@gmail.com>");
+            messageHelper.setTo(toEmail);
+            messageHelper.setSubject("Actualización de Rol - TelExpress");
+
+            String linkCambioPassword = "http://localhost:8080/login?logout" + userId;
+            String htmlContent = "<html>"
+                    + "<body>"
+                    + "<h2>¡Felicidades!</h2>"
+                    + "<p>Ha sido aprobado como agente. Su contraseña temporal es: <b>" + tempPassword + "</b></p>"
+                    + "<p>Por favor, acceda al siguiente enlace para establecer su nueva contraseña:</p>"
+                    + "<a href='" + linkCambioPassword + "'>Cambiar Contraseña</a>"
+                    + "</body>"
+                    + "</html>";
+
+            messageHelper.setText(htmlContent, true);
+
+            mailSender.send(mimeMessage);
+        } catch (MessagingException e) {
+            throw new RuntimeException("Error al enviar el correo de actualización de rol", e);
+        }
+    }
+
+
 }
