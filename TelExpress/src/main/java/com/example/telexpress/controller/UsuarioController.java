@@ -84,6 +84,8 @@ public class UsuarioController {
     private PdfService pdfService;
     @Autowired
     private EmailService emailService;
+    @Autowired
+    private CategoriasRepository categoriasRepository;
 /*
     @GetMapping({"","/inicio"})
     public String index(Model model){
@@ -504,6 +506,7 @@ public class UsuarioController {
                                   @RequestParam(value = "page", defaultValue = "0") Integer page,
                                   @RequestParam(value = "size", defaultValue = "9") Integer size,
                                   @RequestParam(value = "filtroStock", required = false) String filtroStock,
+                                  @RequestParam(value = "filtroCategoria", required = false) String filtroCategoria,
                                   @RequestParam(value="search", required = false) String search){
         model.addAttribute("activePage", "lista_productos");
 
@@ -514,6 +517,10 @@ public class UsuarioController {
         if(search!= null && !search.isEmpty()){
           pagproductos = productoRepository.findByNombreProductoContainingOrDescripcionContaining(search, search, pageable);
         }
+        // Filtrar por categoría
+        else if (filtroCategoria != null && !filtroCategoria.isEmpty()) {
+            pagproductos = productoRepository.findByCategorias_Nombre(filtroCategoria, pageable);
+        }
         // Filtrar productos según el valor del filtro de stock
         else if ("agotado".equals(filtroStock)) {
             // Si se selecciona "agotado", mostrar solo productos sin stock
@@ -522,12 +529,15 @@ public class UsuarioController {
             // Si no se selecciona "agotado", mostrar productos con stock
             pagproductos = productoRepository.findByCantidadDisponibleGreaterThan(0, pageable);
         }
+        List<Categorias> categoriasList = categoriasRepository.findAll();
+        model.addAttribute("categorias", categoriasList);
 
         // Pasar los productos y la información de paginación al modelo
         model.addAttribute("productos", pagproductos.getContent());
         model.addAttribute("totalPages", pagproductos.getTotalPages());
         model.addAttribute("currentPage", page);
         model.addAttribute("filtroStock", filtroStock);
+        model.addAttribute("filtroCategoria", filtroCategoria);
 
         return "Usuariofinal/lista_productos";
     }

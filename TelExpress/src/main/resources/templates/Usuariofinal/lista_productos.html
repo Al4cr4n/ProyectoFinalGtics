@@ -139,9 +139,11 @@
                                         </button>
                                         <ul class="dropdown-menu radio-options">
                                             <li><a class="dropdown-item" href="javascript:void(0);">Deporte</a></li>
-                                            <li><a class="dropdown-item" href="javascript:void(0);">Electrónico</a></li>
-                                            <li><a class="dropdown-item" href="javascript:void(0);">Limpieza</a></li>
-                                            <li><a class="dropdown-item" href="javascript:void(0);">Educación</a></li>
+                                            <li th:each="categoria : ${categorias}"><a class="dropdown-item"
+                                                   th:href="@{/usuario/lista_productos(filtroCategoria=${categoria.nombre}, page=${currentPage}, size=${size})}">
+                                                [[${categoria.nombre}]]
+                                            </a></li>
+
                                         </ul>
                                     </div>
 
@@ -192,7 +194,7 @@
                                                 <h3 class="product-name">
                                                     <a th:href="@{/usuario/detalle_producto(id=${producto.idProducto})}">[[${producto.nombreProducto}]]</a>
                                                 </h3>
-                                                <h4 class="product-price">$[[${producto.precio}]] <del class="product-old-price">S/. 290.00</del></h4>
+                                                <h4 class="product-price">S/. [[${producto.precio}]] <del class="product-old-price">S/. 290.00</del></h4>
                                                 <div class="product-btns">
                                                     <button class="quick-view"
                                                             th:onclick="'location.href=\'' + @{/usuario/detalle_producto(id=${producto.idProducto})}+ '\''">

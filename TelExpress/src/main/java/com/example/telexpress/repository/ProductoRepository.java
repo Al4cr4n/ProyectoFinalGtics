@@ -31,6 +31,9 @@ public interface ProductoRepository extends JpaRepository<Producto,Integer> {
     Page<Producto> findByCantidadDisponible(Integer cantidadDisponible, Pageable pageable);
     Page<Producto> findByCantidadDisponibleGreaterThan(Integer cantidadDisponible, Pageable pageable);
     Page<Producto> findByNombreProductoContainingOrDescripcionContaining(String nombreProducto, String descripcion, Pageable pageable);
+    Page<Producto> findByCategorias_Nombre(String nombreCategoria, Pageable pageable);
+
+
 
 
 
