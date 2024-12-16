@@ -10,6 +10,7 @@ import com.example.telexpress.repository.*;
 import com.example.telexpress.service.ChatRoomService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -18,6 +19,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import com.example.telexpress.helpers.ContrasenhaGenerator;
+import com.example.telexpress.dto.*;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -408,51 +411,60 @@ public class AgenteController {
     }
 
     @PostMapping("/cambia_contra_agente")
-    public String ActualizarContraAgente(
-            @ModelAttribute("id") Integer id,
-            @RequestParam("currentPassword") String currentPassword,  // Contraseña actual
-            @RequestParam("newPassword") String newPassword, // Nueva contraseña
-            @RequestParam("confirmPassword") String confirmNewPassword, // Confirmación de la nueva contraseña
-            Model model) {
+    public String actualizarContraAgente(
+            @RequestParam("id") Integer id,
+            @RequestParam("currentPassword") String currentPassword,
+            @RequestParam("newPassword") String newPassword,
+            @RequestParam("confirmPassword") String confirmPassword,
+            RedirectAttributes redirectAttributes) {
 
+        //hasheamos la contraseña ingresada osea la actual
+        String contraHasheadaIngresada= passwordEncoder.encode(currentPassword);
 
-        System.out.println("ID recibido: " + id);
         // Obtener la contraseña almacenada en la base de datos
         String storedPassword = contrasenaAgenteRespository.findcontrasena(id);
-        String hashcurrentPassword = passwordEncoder.encode(currentPassword);
-        String hashnewPassword = passwordEncoder.encode(newPassword);
-        String hashconfirmNewPassword = passwordEncoder.encode(confirmNewPassword);
 
-
-        // Verificar que la contraseña actual sea correcta
-        if (!passwordEncoder.matches(currentPassword, storedPassword)) {
-            model.addAttribute("error", "La contraseña actual es incorrecta.");
-            System.out.println("1" + hashnewPassword);
-            model.addAttribute("id", id);
-            return "redirect:/agente/cambio_contra_agente"; // Redirigir a tu html
+        // Validar que la contraseña actual coincida
+        if (!Objects.equals(contraHasheadaIngresada, storedPassword)) {
+            redirectAttributes.addFlashAttribute("error", "La contraseña actual es incorrecta.");
+            redirectAttributes.addAttribute("id", id); // Volver a enviar el id en redirección
+            return "redirect:/agente/cambio_contra_agente";
         }
 
-        // Verificar que la nueva contraseña y su confirmación coincidan
-        if (!newPassword.equals(confirmNewPassword)) {
-            model.addAttribute("error", "Las nuevas contraseñas no coinciden.");
-            System.out.println("2" + hashnewPassword);
-            return "redirect:/agente/inicio"; // Retornar a la vista con mensaje de error
+        // Validar que la nueva contraseña cumpla con la política de seguridad
+        String regex = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$";
+        if (!newPassword.matches(regex)) {
+            redirectAttributes.addFlashAttribute("error", "La nueva contraseña debe tener al menos 8 caracteres, incluir mayúsculas, minúsculas, números y caracteres especiales.");
+            redirectAttributes.addAttribute("id", id);
+            return "redirect:/agente/cambio_contra_agente";
         }
 
-        // Si la nueva contraseña es igual a la contraseña actual, prevenir el cambio
-        if (currentPassword.equals(newPassword)) {
-            model.addAttribute("error", "La nueva contraseña no puede ser igual a la contraseña actual.");
-            System.out.println("3" + hashnewPassword);
-            return "redirect:/agente/inicio"; // Retornar a la vista con mensaje de error
+        // Verificar que las nuevas contraseñas coincidan
+        if (!newPassword.equals(confirmPassword)) {
+            redirectAttributes.addFlashAttribute("error", "Las nuevas contraseñas no coinciden.");
+            redirectAttributes.addAttribute("id", id);
+            return "redirect:/agente/cambio_contra_agente";
         }
+
+        // Validar que la nueva contraseña no sea igual a la contraseña actual
+        if (passwordEncoder.matches(newPassword, storedPassword)) {
+            redirectAttributes.addFlashAttribute("error", "La nueva contraseña no puede ser igual a la contraseña actual.");
+            redirectAttributes.addAttribute("id", id);
+            return "redirect:/agente/cambio_contra_agente";
+        }
+
+        // Hashear la nueva contraseña
+        String hashedNewPassword = passwordEncoder.encode(newPassword);
 
         // Actualizar la contraseña en la base de datos
-        contrasenaAgenteRespository.updatecontrasena(id, hashnewPassword);
-        System.out.println("aaaa" +  newPassword);
-        // Redireccionar al perfil del agente con mensaje de éxito
-        model.addAttribute("success", "Contraseña cambiada exitosamente.");
-        return "redirect:/agente/inicio"; // Redirigir al perfil
+        contrasenaAgenteRespository.updatecontrasena(id, hashedNewPassword);
+
+        // Mensaje de éxito
+        redirectAttributes.addFlashAttribute("success", "Contraseña cambiada exitosamente.");
+        return "redirect:/agente/inicio";
     }
+
+
 
     @GetMapping("/perfil")
     public String verPerfil(Model model, @RequestParam("id") Integer id) {
@@ -509,6 +521,52 @@ public class AgenteController {
         model.addAttribute("usuariosBaneados", usuariosBaneados);
         return "Agente/usuarios_baneados";
     }*/
+
+    //Nuevos metodos para cambiar contraseña
+    @GetMapping("/contrasenha")
+    public String vistaCambiarContrasenha(Model model){
+        model.addAttribute("passwordChangeDto", new ContrasenhaCambioDTO());
+        return "Agente/cambio_contra_agente2";
+
+    }
+
+    @PostMapping("/cambiarContrasenha")
+    public String cambiarContrasena(@Valid ContrasenhaCambioDTO passwordChangeDto,
+                                    BindingResult result,
+                                    Authentication authentication,
+                                    RedirectAttributes redirectAttributes,
+                                    Model model) {
+
+        // Validación de errores
+        if (result.hasErrors()) {
+            model.addAttribute("errors", result.getAllErrors());
+            return "redirect:/agente/cambio_contra_agente2";  // Retorna a la vista con los errores
+        }
+
+        // Obtener el usuario autenticado desde el sistema de seguridad
+        Usuario usuario = usuarioRepository.findByCorreo(authentication.getName());
+
+        // Verificar si la contraseña actual ingresada coincide con la almacenada
+        if (!passwordEncoder.matches(passwordChangeDto.getCurrentPassword(), usuario.getContrasena())) {
+            model.addAttribute("error", "La contraseña actual es incorrecta.");
+            return "redirect:/agente/cambio_contra_agente2";  // Retorna a la vista con el mensaje de error
+        }
+
+        // Verificar si las contraseñas nuevas coinciden
+        if (!passwordChangeDto.getNewPassword().equals(passwordChangeDto.getConfirmNewPassword())) {
+            model.addAttribute("error", "Las contraseñas nuevas no coinciden.");
+            return "redirect:/agente/cambio_contra_agente2";  // Retorna a la vista con el mensaje de error
+        }
+
+        // Actualizar la contraseña del usuario
+        usuario.setContrasena(passwordEncoder.encode(passwordChangeDto.getNewPassword()));
+        usuarioRepository.save(usuario);  // Guardar los cambios en la base de datos
+
+        // Agregar mensaje de éxito a los flash attributes
+        redirectAttributes.addFlashAttribute("exito", "Contraseña cambiada con éxito.");
+
+        return "redirect:/agente/inicio";  // Redirige a la página del perfil
+    }
 
 
 
