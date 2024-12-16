@@ -227,11 +227,31 @@
 
                         <!-- Botón para pagar los pagos pendientes -->
                         <div class="text-end mt-3">
-                          <button type="button" class="btn btn-primary" onclick="window.location.href='pagar.html';">Pagar compras pendientes(0 seleccionados)</button>
+                          <button type="button" class="btn btn-primary mx-2" data-bs-toggle="modal" data-bs-target="#confirmModal">Pagar compras pendientes</button>
                         </div>
+
                         <!-- Paginación -->
 
                       </div>
+                      <!-- Modal de Confirmación -->
+                      <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="confirmModalLabel">Confirmar Pago</h5>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                              ¿Estás seguro de que deseas pagar tus deudas?
+                            </div>
+                            <div class="modal-footer">
+                              <a th:href="@{'/usuario/pago'}" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</a>
+                              <button type="submit" class="btn btn-primary">Confirmar</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
 
                       <!-- Tabla de pagos realizados -->
                       <div class="tab-pane fade" id="navs-pills-top-profile" role="tabpanel">
