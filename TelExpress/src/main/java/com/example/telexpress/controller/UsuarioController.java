@@ -42,8 +42,8 @@ import java.util.stream.Collectors;
 import org.springframework.web.multipart.MultipartFile;
 import java.sql.Blob;
 import javax.sql.rowset.serial.SerialBlob;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 @Controller
 @RequestMapping("/usuario")
@@ -892,19 +892,25 @@ public class UsuarioController {
     }
     // Método GET: Muestra el formulario para crear reseñas
     @GetMapping("/crear_resenia")
-    public String mostrarFormularioResenia(Model model, @AuthenticationPrincipal Usuario usuarioLogueado) {
+    public String mostrarFormularioResenia(Model model) {
         model.addAttribute("activePage", "resenia");
 
         // Cargar lista de productos
         List<Producto> productos = productoRepository.findAll();
-
         model.addAttribute("productos", productos);
-        model.addAttribute("usuario", usuarioLogueado); // Usuario logueado
+
+        // Obtener el usuario logueado
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String emailUsuario = auth.getName(); // Obtener el nombre de usuario (email, en este caso)
+
+        // Buscar el usuario en la base de datos por su correo electrónico
+        Usuario usuarioLogueado = usuarioRepository.findByCorreo(emailUsuario)
+                .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
+
+        model.addAttribute("usuario", usuarioLogueado); // Añadir el usuario logueado al modelo
 
         return "Usuariofinal/crear_resenia"; // Vista Thymeleaf
     }
-
-
     // Método POST: Guarda una nueva reseña
     @PostMapping("/guardar_resenia")
     public String guardarResenia(@RequestParam("fotoProducto") MultipartFile fotoProducto,
