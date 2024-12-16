@@ -50,6 +50,31 @@ INSERT INTO `categorias` VALUES
 /*!40000 ALTER TABLE `categorias` ENABLE KEYS */;
 UNLOCK TABLES;
 
+--
+-- Table structure for table `chatmessage`
+--
+
+DROP TABLE IF EXISTS `chatmessage`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `chatmessage` (
+  `idchatmessage` int NOT NULL AUTO_INCREMENT,
+  `destinationuser` int DEFAULT NULL,
+  `sourceuser` int DEFAULT NULL,
+  `message` text,
+  PRIMARY KEY (`idchatmessage`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `chatmessage`
+--
+
+LOCK TABLES `chatmessage` WRITE;
+/*!40000 ALTER TABLE `chatmessage` DISABLE KEYS */;
+/*!40000 ALTER TABLE `chatmessage` ENABLE KEYS */;
+UNLOCK TABLES;
+
 -- -----------------------------------------------------
 -- Table `db_grupo2`.`despachador`
 -- -----------------------------------------------------
