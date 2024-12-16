@@ -221,7 +221,7 @@
                                         <!-- Mostrar el precio del primer producto -->
                                         <span th:text="${producto1.precio}">precio</span>
                                     </h4>
-                                    <button class="btn btn-success mt-1">Agregar</button>
+                                    <button class="add-to-cart-btn"  th:data-product-id="${producto1.idProducto}" onclick="agregarProducto(this)"><i class="bx bx-cart"></i> Agregar</button>
                                 </div>
                             </div>
                         </div>
@@ -240,7 +240,7 @@
                                         <!-- Mostrar el precio del segundo producto -->
                                         <span th:text="${producto2.precio}">precio</span>
                                     </h4>
-                                    <button class="btn btn-success mt-1">Agregar</button>
+                                    <button class="add-to-cart-btn"  th:data-product-id="${producto2.idProducto}" onclick="agregarProducto(this)"><i class="bx bx-cart"></i> Agregar</button>
                                 </div>
                             </div>
                         </div>
@@ -259,8 +259,7 @@
                                         <!-- Mostrar el precio del tercer producto -->
                                         <span th:text="${producto3.precio}">precio</span>
                                     </h4>
-                                    <button class="btn btn-success mt-1">Agregar</button>
-                                </div>
+                                    <button class="add-to-cart-btn"  th:data-product-id="${producto3.idProducto}" onclick="agregarProducto(this)"><i class="bx bx-cart"></i> Agregar</button>
                             </div>
                         </div>
                     </div>
@@ -464,6 +463,54 @@
       });
     });
   }
+</script>
+<script>
+    function mostrarEtiquetaExito() {
+        const successAlert = document.getElementById("success-alert");
+        successAlert.style.display = "block"; // Mostrar la etiqueta
+
+        // Ocultar la etiqueta después de 3 segundos
+        setTimeout(() => {
+            successAlert.style.display = "none";
+        }, 3000);
+    }
+    function mostrarEtiquetaError(mensaje) {
+        const errorAlert = document.getElementById("error-alert");
+        errorAlert.textContent = mensaje; // Configurar el mensaje del error
+        errorAlert.style.display = "block"; // Mostrar la etiqueta de error
+
+        setTimeout(() => {
+            errorAlert.style.display = "none"; // Ocultar después de 3 segundos
+        }, 3000);
+    }
+    function agregarProducto(button) {
+        const productoId = button.getAttribute("data-product-id");
+        // Obtener el token CSRF del meta tag o el input hidden
+        var csrfToken = document.querySelector("meta[name='_csrf']").getAttribute("content");
+        var csrfHeader = document.querySelector("meta[name='_csrf_header']").getAttribute("content");
+        fetch("/usuario/agregar/orden/carrito", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                [csrfHeader]: csrfToken
+            },
+            body: JSON.stringify({ productoId: productoId })
+
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    mostrarEtiquetaExito(); // Llamar a la función para mostrar la etiqueta
+                    console.log("Producto agregado correctamente.ok.");
+                } else {
+                    mostrarEtiquetaError(data.message || "Error al agregar el producto.bad.");
+                }
+            })
+            .catch(error => {
+                console.error("Error en la solicitud:", error);
+                mostrarEtiquetaError("Error en la solicitud: " + error.message);
+            });
+    }
 </script>
 <script>
   function eliminarProductos() {
