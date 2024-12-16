@@ -530,18 +530,69 @@ public class UsuarioController {
             pagproductos = productoRepository.findByCantidadDisponibleGreaterThan(0, pageable);
         }
         List<Categorias> categoriasList = categoriasRepository.findAll();
+        if (pagproductos.isEmpty()) {
+            model.addAttribute("totalPages", 0);
+        } else {
+            model.addAttribute("totalPages", pagproductos.getTotalPages());
+        }
+
+
         model.addAttribute("categorias", categoriasList);
 
         // Pasar los productos y la información de paginación al modelo
         model.addAttribute("productos", pagproductos.getContent());
-        model.addAttribute("totalPages", pagproductos.getTotalPages());
+        //model.addAttribute("totalPages", pagproductos.getTotalPages());
         model.addAttribute("currentPage", page);
         model.addAttribute("filtroStock", filtroStock);
         model.addAttribute("filtroCategoria", filtroCategoria);
 
         return "Usuariofinal/lista_productos";
     }
+    @PostMapping("/agregar/orden/carrito")
+    @ResponseBody
+    public Map<String, Object> agregarProductoCarrito(@RequestBody Map<String,Object >map){
 
+        // Obtener el usuario autenticado
+        String correo = SecurityContextHolder.getContext().getAuthentication().getName();
+        Usuario usuarioActual = usuarioRepository.findByCorreo(correo);
+        // Obtener el ID del producto
+        Integer productoId = Integer.parseInt((String) map.get("productoId"));
+
+        Producto producto = productoRepository.findById(productoId)
+                .orElseThrow(() -> new IllegalArgumentException("Producto no encontrado"));
+        // Encontrar o crear una orden pendiente
+        Ordenes ordenPendiente = ordenesRepository.findByUsuarioAndEstadoOrdenes(usuarioActual, "Pendiente")
+                .orElseGet(() -> {
+                    Ordenes nuevaOrden = new Ordenes();
+                    nuevaOrden.setEstadoOrdenes("Pendiente");
+                    nuevaOrden.setUsuario(usuarioActual);
+                    return ordenesRepository.save(nuevaOrden);
+                });
+        // Crear la clave compuesta
+        ProductoOrdenesId productoOrdenesId = new ProductoOrdenesId(producto.getIdProducto(), ordenPendiente.getIdOrdenes());
+        // Crear o actualizar el producto en la orden
+        ProductoOrdenes productosHasOrdenes = productoOrdenesRepository.findById(productoOrdenesId)
+                .orElseGet(() -> {
+                    ProductoOrdenes nuevoProductoOrdenes = new ProductoOrdenes();
+                    nuevoProductoOrdenes.setId(productoOrdenesId);
+                    nuevoProductoOrdenes.setProducto(producto);
+                    nuevoProductoOrdenes.setOrdenes(ordenPendiente);
+                    nuevoProductoOrdenes.setCantidadxproducto(1); // Cantidad por defecto
+                    return nuevoProductoOrdenes;
+                });
+        //si el producto ya existe en la orden, actualiza la cantidad
+        if (productosHasOrdenes.getId() != null){
+            productosHasOrdenes.setCantidadxproducto(1);
+        }
+        // Guardar el producto en la orden
+        productoOrdenesRepository.save(productosHasOrdenes);
+        // Respuesta JSON
+        Map<String, Object> respuesta = new HashMap<>();
+        respuesta.put("success", true);
+        respuesta.put("message", "Producto agregado al carrito con éxito");
+
+        return respuesta;
+    }
 
     @GetMapping("/ver_carrito")
     public String verCarritohtml(Model model) {

@@ -48,7 +48,9 @@
     <link type="text/css" rel="stylesheet" href="/assets/css/style_products.css"/>
     <link type="text/css" rel="stylesheet" href="/assets/css/font-awesome.min.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.3/font/bootstrap-icons.min.css">
-
+    <!--tokens para uso de ajax (token)-->
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <style>
         /* Estilo para los filtros */
         .dropdown .btn {
@@ -138,7 +140,6 @@
                                             Categoría <i class="bi bi-chevron-down"></i>
                                         </button>
                                         <ul class="dropdown-menu radio-options">
-                                            <li><a class="dropdown-item" href="javascript:void(0);">Deporte</a></li>
                                             <li th:each="categoria : ${categorias}"><a class="dropdown-item"
                                                    th:href="@{/usuario/lista_productos(filtroCategoria=${categoria.nombre}, page=${currentPage}, size=${size})}">
                                                 [[${categoria.nombre}]]
@@ -203,27 +204,27 @@
                                                 </div>
                                             </div>
                                             <div class="add-to-cart">
-                                                <button class="add-to-cart-btn"><i class="bx bx-cart"></i> agregar</button>
+                                                <button class="add-to-cart-btn"  th:data-product-id="${producto.idProducto}" onclick="agregarProducto(this)"><i class="bx bx-cart"></i> agregar</button>
                                             </div>
                                         </div>
                                     </div>
                                     <!-- /product -->
                                 </div>
 
-                                <div class="pagination-container-user-products d-flex justify-content-center">
+                                <div class="pagination-container-user-products d-flex justify-content-center" th:if="${totalPages > 1}">
                                     <div class="pagination-container">
                                         <ul class="pagination">
                                             <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled' : ''">
-                                                <a class="page-link" th:href="@{/usuario/lista_productos(page=${currentPage - 1})}" aria-label="Previous">
+                                                <a class="page-link" th:href="@{/usuario/lista_productos(page=${currentPage - 1}, filtroStock=${filtroStock},filtroCategoria=${filtroCategoria}, search=${search})}" aria-label="Previous">
                                                     <span aria-hidden="true">&laquo;</span>
                                                 </a>
                                             </li>
                                             <li class="page-item" th:each="i : ${#numbers.sequence(0, totalPages - 1)}"
                                                 th:classappend="${i == currentPage} ? 'active' : ''">
-                                                <a class="page-link" th:href="@{/usuario/lista_productos(page=${i})}">[[${i + 1}]]</a>
+                                                <a class="page-link" th:href="@{/usuario/lista_productos(page=${i}, filtroStock=${filtroStock}, filtroCategoria=${filtroCategoria}, search=${search})}">[[${i + 1}]]</a>
                                             </li>
                                             <li class="page-item" th:classappend="${currentPage == totalPages - 1} ? 'disabled' : ''">
-                                                <a class="page-link" th:href="@{/usuario/lista_productos(page=${currentPage + 1})}" aria-label="Next">
+                                                <a class="page-link" th:href="@{/usuario/lista_productos(page=${currentPage + 1}, filtroStock=${filtroStock}, filtroCategoria=${filtroCategoria}, search=${search})}" aria-label="Next">
                                                     <span aria-hidden="true">&raquo;</span>
                                                 </a>
                                             </li>
@@ -242,9 +243,37 @@
         <!-- / Layout page -->
     </div>
 
-    <!-- Overlay -->
-    <div class="layout-overlay layout-menu-toggle"></div>
-</div>
+    <script>
+        function agregarProducto(button) {
+            const productoId = button.getAttribute("data-product-id");
+            // Obtener el token CSRF del meta tag o el input hidden
+            var csrfToken = document.querySelector("meta[name='_csrf']").getAttribute("content");
+            var csrfHeader = document.querySelector("meta[name='_csrf_header']").getAttribute("content");
+            fetch("/usuario/agregar/orden/carrito", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    [csrfHeader]: csrfToken
+                },
+                body: JSON.stringify({ productoId: productoId })
+
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert(data.message); // Mostrar mensaje de éxito
+                        console.log("Producto agregado correctamente.");
+                    } else {
+                        alert("Error al agregar el producto.");
+                    }
+                })
+                .catch(error => {
+                    console.error("Error en la solicitud:", error);
+                    alert("Error al agregar el producto.");
+                });
+        }
+    </script>
+
 
 <!-- Modal -->
 <div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
