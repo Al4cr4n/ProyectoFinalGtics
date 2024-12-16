@@ -676,18 +676,7 @@ public class UsuarioController {
             model.addAttribute("productos", productospendientesDTO);
         } else {
             model.addAttribute("productos", new ArrayList<>()); // No hay productos
-
-
         }*/
-
-
-        Producto producto1 = productoRepository.findProductoConIdMayor();
-        Producto producto2 = productoRepository.findProductoConSegundoIdMayor();
-        Producto producto3 = productoRepository.findProductoConTercerIdMayor();
-
-        model.addAttribute("producto1", producto1);
-        model.addAttribute("producto2", producto2);
-        model.addAttribute("producto3", producto3);
         return "Usuariofinal/ver_carrito"; // Ruta a la plantilla HTML
     }
 
