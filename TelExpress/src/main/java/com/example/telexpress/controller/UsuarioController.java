@@ -957,11 +957,11 @@ public class UsuarioController {
     public String mostrarFormularioResenia(Model model) {
         model.addAttribute("activePage", "resenia");
 
-        // Obtener el usuario autenticado desde el contexto de seguridad
+        // Obtener el correo del usuario autenticado desde el contexto de seguridad
         String correo = SecurityContextHolder.getContext().getAuthentication().getName();
-        Usuario usuarioLogueado = usuarioRepository.findByCorreo(correo);
 
-        // Validar si el usuario existe
+        // Buscar el usuario por correo
+        Usuario usuarioLogueado = usuarioRepository.findByCorreo(correo);
         if (usuarioLogueado == null) {
             throw new IllegalArgumentException("Usuario no encontrado");
         }
@@ -974,7 +974,6 @@ public class UsuarioController {
 
         return "Usuariofinal/crear_resenia"; // Vista Thymeleaf
     }
-
 
     // Método POST: Guarda una nueva reseña
     @PostMapping("/guardar_resenia")

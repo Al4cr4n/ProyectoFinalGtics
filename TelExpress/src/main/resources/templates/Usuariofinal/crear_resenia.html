@@ -85,8 +85,7 @@
                     </select>
                 </div>
 
-                <!-- Campo oculto para el usuario logueado -->
-                <input type="hidden" name="usuarioId" th:value="${#authentication.principal.id}" />
+                <input type="hidden" name="usuarioId" th:value="${usuario.id}" />
 
                 <!-- Botón enviar -->
                 <div class="text-center">
