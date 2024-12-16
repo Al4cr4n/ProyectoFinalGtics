@@ -428,6 +428,46 @@ public class UsuarioController {
         return "Usuariofinal/lista_pedidos";
     }
 
+    @GetMapping("/pedidos/detallesRecibido")
+    public String verPedidoRecibido(Model model, @RequestParam("id") Integer id) {
+        model.addAttribute("activePage", "lista_pedidos");
+
+        Optional<Ordenes> optionalOrdenes = ordenesRepository.findById(id);
+
+        if (optionalOrdenes.isPresent()) {
+            Ordenes ordenes = optionalOrdenes.get();
+            // Obtener los productos asociados a esta orden usando la tabla intermedia
+            List<ProductoOrdenes> productosOrdenes = productoOrdenesRepository.findByIdOrdenesId(id);
+            // Cargar los productos y sus detalles
+            final double[] subtotal = {0.0};
+            List<Producto> productos = new ArrayList<>();
+
+            for (ProductoOrdenes po : productosOrdenes) {
+                Optional<Producto> producto = productoRepository.findById(po.getProducto().getIdProducto());
+                producto.ifPresent(p -> {
+                    p.setCantidadComprada(po.getCantidadxproducto());
+                    productos.add(p);
+                    subtotal[0] += p.getPrecio() * po.getCantidadxproducto(); /// Agregar la cantidad de la tabla intermedia
+
+                });
+            }
+            double deliveryCost = 15.00; // Suponiendo un costo de envío fijo
+            double totalGeneral = subtotal[0] + deliveryCost;
+
+            model.addAttribute("orden", ordenes);
+            // Añadir la lista de productos al modelo
+            model.addAttribute("productos", productos);
+            model.addAttribute("subtotal", subtotal[0]);
+            model.addAttribute("deliveryCost", deliveryCost);
+            model.addAttribute("totalGeneral", totalGeneral);
+
+            return "Usuariofinal/ver_detalle_orden";
+        } else {
+            return "redirect:/usuario/lista_pedidos";
+        }
+    }
+
+
 
     @GetMapping("/pedidos/editar")
     public String editarPedidos(Model model, @RequestParam("id") Integer id) {
