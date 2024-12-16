@@ -476,13 +476,8 @@ public class AgenteController {
         System.out.println("estoy en monitor page");
 
         List<Usuario> lUsuarios = usuarioRepository.findByIdSuperior(idAgente);
-        //Usuario name =  ;
-        ArrayList<Integer> listUsuario= new ArrayList<>();
+
         System.out.println(lUsuarios);
-        listUsuario.add(18);
-        listUsuario.add(4);
-        listUsuario.add(5);
-        listUsuario.add(6);
 
         ModelAndView modelAndView = new ModelAndView("Agente/chat_agente"); // Crea un ModelAndView con la vista correcta
         Set<String> activeRooms = chatRoomService.getActiveRooms(); // Obtiene las salas activas

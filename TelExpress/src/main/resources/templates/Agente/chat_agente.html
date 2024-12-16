@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
     <title>Chat - Agente</title>
     <meta name="description" content="" />
+    <!--<meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>-->
     <link rel="icon" type="image/x-icon" href="/assets/img/favicon/favicon.ico" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -87,10 +89,17 @@
 <script src="/assets/js/dashboards-analytics.js"></script>
 <script async defer src="https://buttons.github.io/buttons.js"></script>
 <script th:inline="javascript" >
+    //const csrfToken = document.querySelector("meta[name='_csrf']").getAttribute("content");
+    //const csrfHeader = document.querySelector("meta[name='_csrf_header']").getAttribute("content");
     var currentChatUser = 1;
     var chatMessages = {};
     var idAgente = [[${idAgente}]];
 
+    /**$.ajaxSetup({
+        beforeSend: function(xhr) {
+            xhr.setRequestHeader(csrfHeader, csrfToken);
+        }
+    });**/
 
     function openChat(userId, agentId) {
         console.log('openChat called with userId:', userId);
@@ -149,6 +158,7 @@
                 sourceuser: agentId, // El agente es quien envía
                 destinationuser: userId, // El usuario es quien recibe
                 message: messageContent
+          //      [csrfHeader]: csrfToken  // Añadir token CSRF manualmente
             },
             success: function(response) {
                 showMessage(response);
