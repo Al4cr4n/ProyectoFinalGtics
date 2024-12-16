@@ -473,6 +473,7 @@ public class AgenteController {
         model.addAttribute("paginaActual", "chat_agente");
         Usuario agente = (Usuario) session.getAttribute("usuario");
         Integer idAgente = agente.getId() ;
+        
         //Usuario name =  ;
         ArrayList<Integer> listUsuario= new ArrayList<>();
         listUsuario.add(18);

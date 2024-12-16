@@ -49,7 +49,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     // Método para obtener todos los usuarios cuyo estado es 'Baneado'
     List<Usuario> findByEstadoUsuario(String estadoUsuario);
 
-
+    Usuario findById(Integer userId);
 
     // Método para buscar por nombre o apellido (solo usuarios baneados)
     List<Usuario> findByEstadoUsuarioAndNombreContainingOrApellidoContaining(String estadoUsuario, String nombre, String apellido);

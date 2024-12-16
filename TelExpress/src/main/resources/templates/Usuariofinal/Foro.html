@@ -163,8 +163,21 @@
                                 <div class="card-body">
                                     <h5 th:text="${post.titulo}" class="card-title"></h5>
                                     <p th:text="${post.contenido}" class="card-text"></p>
-                                    <small class="text-muted" th:text="${#temporals.format(post.createdAt, 'dd/MM/yyyy HH:mm')}"></small>
                                     <small class="text-muted" th:text="${post.contenido}"></small>
+                                    <small class="text-muted" th:text="${#temporals.format(post.createdAt, 'dd/MM/yyyy HH:mm')}"></small>
+                                    <div class="comments mt-3">
+                                        <h6>Comentarios</h6>
+                                        <div class="comments-container">
+                                            <!-- Los comentarios se mostrarán aquí -->
+                                        </div>
+                                        <form class="comment-form">
+                                            <div class="mb-3">
+                                                <textarea class="form-control" rows="2" placeholder="Escribe tu comentario aquí" required></textarea>
+                                            </div>
+                                            <button type="submit" class="btn btn-sm btn-primary">Enviar Comentario</button>
+                                        </form>
+                                    </div>
+                                </div>
                                 </div>
                             </div>
                         </div>
@@ -193,6 +206,42 @@
 
 <script th:inline="javascript">
     document.addEventListener('DOMContentLoaded', function() {
+        function agregarComentario(e, postId) {
+            e.preventDefault();
+            const commentForm = e.target;
+            const textarea = commentForm.querySelector('textarea');
+            const content = textarea.value;
+
+            const commentData = {
+                content,
+                postId,
+                userId: commentForm.dataset.userId, // Suponiendo que este atributo contiene el ID del usuario actual
+            };
+
+            fetch('/api/comments', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    [csrfHeader]: csrfToken
+                },
+                body: JSON.stringify(commentData)
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Error al agregar comentario');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    agregarComentarioALista(data, commentForm.parentNode.querySelector('.comments-container'));
+                    textarea.value = '';
+                    mostrarNotificacion('Comentario agregado exitosamente', 'success');
+                })
+                .catch(error => {
+                    console.error('Error al agregar comentario:', error);
+                    mostrarNotificacion('Error al agregar comentario', 'danger');
+                });
+        }
         const postForm = document.getElementById('postForm');
         const existingPostsDiv = document.getElementById('existingPosts');
         const searchInput = document.getElementById('searchInput');
@@ -275,6 +324,113 @@
                 });
 
             //postForm.addEventListener('submit', createPost);
+        }
+
+        // Agregar un nuevo comentario
+        function agregarComentario(e, postId) {
+            console.log('calling add comment')
+            e.preventDefault();
+            const commentForm = e.target;
+            const textarea = commentForm.querySelector('textarea');
+            const content = textarea.value;
+
+            const commentData = {
+                content,
+                postId,
+                userId: commentForm.dataset.userId, // Suponiendo que este atributo contiene el ID del usuario actual
+            };
+
+            fetch('/api/comments', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    [csrfHeader]: csrfToken
+                },
+                body: JSON.stringify(commentData)
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Error al agregar comentario');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    agregarComentarioALista(data, commentForm.parentNode.querySelector('.comments-container'));
+                    textarea.value = '';
+                    mostrarNotificacion('Comentario agregado exitosamente', 'success');
+                })
+                .catch(error => {
+                    console.error('Error al agregar comentario:', error);
+                    mostrarNotificacion('Error al agregar comentario', 'danger');
+                });
+        }
+
+        // Agregar un post a la lista
+        function agregarPostALista(post) {
+            const postDiv = document.createElement('div');
+            postDiv.className = 'card mb-3';
+            postDiv.innerHTML = `
+            <div class="card-body">
+                <h5 class="card-title">${post.titulo}</h5>
+                <p class="card-text">${post.contenido}</p>
+                <small class="text-muted">${new Date(post.createdAt).toLocaleString('es-ES', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            })}</small>
+                <div class="comments mt-3">
+                    <h6>Comentarios</h6>
+                    <div class="comments-container">
+                        <!-- Comentarios se agregarán aquí -->
+                    </div>
+                    <form class="comment-form" data-post-id="${post.id}" data-user-id="${post.usuarioId}">
+                        <div class="mb-3">
+                            <textarea class="form-control" rows="2" placeholder="Escribe tu comentario aquí" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-sm btn-primary">Enviar Comentario</button>
+                    </form>
+                </div>
+            </div>
+        `;
+
+            const commentsContainer = postDiv.querySelector('.comments-container');
+
+            // Cargar comentarios existentes
+            fetch(`/api/comments/${post.id}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Error al cargar los comentarios');
+                    }
+                    return response.json();
+                })
+                .then(comments => {
+                    comments.forEach(comment => {
+                        agregarComentarioALista(comment, commentsContainer);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error al cargar los comentarios:', error);
+                });
+
+            const commentForm = postDiv.querySelector('.comment-form');
+            commentForm.addEventListener('submit', function(e) {
+                agregarComentario(e, post.id);
+            });
+
+            existingPostsDiv.insertBefore(postDiv, existingPostsDiv.firstChild);
+        }
+
+        // Agregar un comentario a la lista
+        function agregarComentarioALista(comment, container) {
+            const commentDiv = document.createElement('div');
+            commentDiv.className = 'comment';
+            commentDiv.innerHTML = `
+            <p>${comment.content}</p>
+            <small class="text-muted">${new Date(comment.createdAt).toLocaleString('es-ES')}</small>
+        `;
+            container.appendChild(commentDiv);
         }
 
         // Función de filtrar posts
