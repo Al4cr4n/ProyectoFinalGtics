@@ -93,7 +93,7 @@
               <img src="/assets/img/icons/unicons/logo.png" alt="Logo" style="width: 250px; display: block; margin: -70px auto -90px auto;" />
               <div class="app-brand justify-content-center">
                 <!--imagen de logo-->
-                <a href="Login" class="app-brand-link gap-2">
+                <a th:href="@{/login}" class="app-brand-link gap-2">
                   <h1 style="color: #696CFF; font-family: 'Poppins', sans-serif; font-size: 3rem; text-align: center; margin-bottom: 2px;">
                     TelExpress
                   </h1>
@@ -118,7 +118,7 @@
                 <div class="mb-3 form-password-toggle">
                   <div class="d-flex justify-content-between">
                     <label class="form-label" for="password">Contraseña</label>
-                    <a href="auth-forgot-password-basic.html">
+                    <a th:href="@{/forgot_password}">
                       <small>Olvidé mi contraseña</small>
                     </a>
                   </div>

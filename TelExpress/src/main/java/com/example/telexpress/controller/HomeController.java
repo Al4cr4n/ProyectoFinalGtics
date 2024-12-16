@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 public class HomeController {
@@ -150,7 +151,39 @@ public class HomeController {
         return zonaRepository.findByNombre(zona.getNombre())
                 .orElseThrow(() -> new RuntimeException("Zona no encontrada en la base de datos"));
     }
+    @GetMapping("/forgot_password")
+    public String mostrarFormularioOlvideContrasena() {
+        // Retorna la vista ubicada en "src/main/resources/templates/Sistema/olvide_contrasena.html"
+        return "Sistema/olvide_contrasena";
+    }
 
+    @PostMapping("/forgot_password")
+    public String forgotPassword(@RequestParam("email") String email, RedirectAttributes redirectAttributes) {
+        // Buscar usuario por email
+        Usuario usuario = usuarioRepository.findByCorreo(email);
+        if (usuario == null) {
+            redirectAttributes.addFlashAttribute("errorMessage", "No se encontró una cuenta con ese correo.");
+            return "redirect:/forgot_password";
+        }
 
+        // Generar una contraseña temporal
+        String tempPassword = UUID.randomUUID().toString().substring(0, 10); // 10 caracteres
+        String hashedPassword = passwordEncoder.encode(tempPassword);
 
+        // Guardar la contraseña temporal en la base de datos
+        usuario.setContrasena(hashedPassword);
+        usuarioRepository.save(usuario);
+
+        // Enviar el correo con la contraseña temporal
+        try {
+            emailService.sendForgotPasswordEmail(usuario.getCorreo(), tempPassword, usuario.getNombre());
+        } catch (Exception e) {
+            e.printStackTrace();
+            redirectAttributes.addFlashAttribute("errorMessage", "Error al enviar el correo.");
+            return "redirect:/forgot_password";
+        }
+
+        redirectAttributes.addFlashAttribute("successMessage", "Se ha enviado una nueva contraseña a su correo electrónico.");
+        return "redirect:/login";
+    }
 }

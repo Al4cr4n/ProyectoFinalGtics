@@ -62,7 +62,7 @@ public class EmailService {
         String htmlContent = "<html>"
                 + "<body>"
                 + "<h2>¡Hola, " + userName + "!</h2>"
-                + "<p>Gracias por registrarte en <b>TelExpress</b>. ¡Bienvenido a nuestra comunidad!</p>"
+                + "<p>Gracias por registrarte en <b>TelExpress</b>. ¡Bienvenid@ a nuestra comunidad!</p>"
                 + "<img src='cid:logoImage' alt='TelExpress Logo' width='300' height='150'/>"
                 + "</body>"
                 + "</html>";
@@ -76,4 +76,37 @@ public class EmailService {
         // Enviar el correo
         mailSender.send(mimeMessage);
     }
+
+    public void sendForgotPasswordEmail(String toEmail, String tempPassword, String userName) throws MessagingException {
+        // Crear el mensaje
+        MimeMessage mimeMessage = mailSender.createMimeMessage();
+        MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+
+        // Configurar el correo
+        messageHelper.setFrom("TelExpress <telexpress.adm@gmail.com>");
+        messageHelper.setTo(toEmail);
+        messageHelper.setSubject("Restablecimiento de Contraseña - TelExpress");
+
+        // Contenido del correo en HTML
+        String htmlContent = "<html>"
+                + "<body>"
+                + "<h2>¡Hola, " + userName + "!</h2>"
+                + "<p>Hemos recibido una solicitud para restablecer tu contraseña.</p>"
+                + "<p>Tu nueva contraseña temporal es: <b>" + tempPassword + "</b></p>"
+                + "<p>Por favor, inicia sesión y cambia tu contraseña lo antes posible.</p>"
+                + "<br/>"
+                + "<img src='cid:logoImage' alt='TelExpress Logo' width='300' height='150'/>"
+                + "</body>"
+                + "</html>";
+
+        messageHelper.setText(htmlContent, true);
+
+        // Adjuntar el logo
+        FileSystemResource logo = new FileSystemResource(new File("src/main/resources/static/logo2.jpg"));
+        messageHelper.addInline("logoImage", logo);
+
+        // Enviar el correo
+        mailSender.send(mimeMessage);
+    }
+
 }
