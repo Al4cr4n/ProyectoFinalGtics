@@ -162,99 +162,13 @@
             <div class="row">
                 <div class="col-12">
                   <div class="nav-align-top mb-4">
-                    <ul class="nav nav-pills mb-3" role="tablist">
-                      <li class="nav-item">
-                        <button
-                          type="button"
-                          class="nav-link active"
-                          role="tab"
-                          data-bs-toggle="tab"
-                          data-bs-target="#navs-pills-top-home"
-                          aria-controls="navs-pills-top-home"
-                          aria-selected="true"
-                        >
-                          Pagos pendientes
-                        </button>
-                      </li>
-              
-                      <li class="nav-item">
-                        <button
-                          type="button"
-                          class="nav-link"
-                          role="tab"
-                          data-bs-toggle="tab"
-                          data-bs-target="#navs-pills-top-profile"
-                          aria-controls="navs-pills-top-profile"
-                          aria-selected="false"
-                        >
-                          Pagos realizados
-                        </button>
-                      </li>
-                    </ul>
+
               
                     <!-- Contenido de las pestañas -->
-                    <div class="tab-content">
-                      <!-- Tabla de pagos pendientes -->
-                      <div class="tab-pane fade show active" id="navs-pills-top-home" role="tabpanel">
-                        <div class="card"></div>
-                        <div class="table-responsive text-nowrap">
-                          <!-- Tabla de pagos pendientes -->
-                          <table id="tablaPagosPendientes" class="table table-striped">
-                            <thead>
-                            <tr>
-                              <th>N° Orden</th>
-                              <th>Producto</th>
-                              <th>F. Facturación</th>
-                              <th>Monto total (S/)</th>
-                              <th>Estado</th>
-                            </tr>
-                            </thead>
-                            <tbody class="table-border-bottom-0">
-                            <tr th:each="pago : ${pagosPendientes}">
-                              <td><strong th:text="${pago.ordenes.idOrdenes}"></strong></td>
-                              <td>
-                                <ul>
-                                  <li th:each="producto : ${pago.ordenes.productos}" th:text="${producto.nombreProducto}"></li>
-                                </ul>
-                              </td>                            <td th:text="${#dates.format(pago.fechaPago, 'yyyy-MM-dd')}"></td>
-                              <td th:text="${pago.ordenes.montoTotal}"></td>
-                              <td th:text="${pago.estadoPago}"></td>
-                            </tr>
-                            </tbody>
-                          </table>
-                        </div>
-
-
-                        <!-- Botón para pagar los pagos pendientes -->
-                        <div class="text-end mt-3">
-                          <button type="button" class="btn btn-primary mx-2" data-bs-toggle="modal" data-bs-target="#confirmModal">Pagar compras pendientes</button>
-                        </div>
-
-                        <!-- Paginación -->
-
-                      </div>
-                      <!-- Modal de Confirmación -->
-                      <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <h5 class="modal-title" id="confirmModalLabel">Confirmar Pago</h5>
-                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                              ¿Estás seguro de que deseas pagar tus deudas?
-                            </div>
-                            <div class="modal-footer">
-                              <a th:href="@{'/usuario/pago'}" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</a>
-                              <button type="submit" class="btn btn-primary">Confirmar</button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
 
 
                       <!-- Tabla de pagos realizados -->
-                      <div class="tab-pane fade" id="navs-pills-top-profile" role="tabpanel">
+
                         <div class="card"></div>
                         <div class="table-responsive text-nowrap">
                           <!-- Tabla de pagos realizados -->
@@ -323,8 +237,8 @@
                         </script>
 
 
-                      </div>
-                    </div>
+
+
                   </div>
                 </div>
               </div>
