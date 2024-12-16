@@ -26,19 +26,10 @@
           <img src="/assets/img/avatars/1.png" class="rounded-circle" alt="Logo" style="width: 120px; display: block; margin:  -20px auto;" />
           <h4 class="mb-2" style="font-family: Zilla Slab">TelExpress</h4>
 
-            <div th:if="${error}" class="alert alert-danger" role="alert">
-                <span th:text="${error}"></span>
-            </div>
-
-            <div th:if="${success}" class="alert alert-success" role="alert">
-                <span th:text="${success}"></span>
-            </div>
-
-
-            <!-- Formulario de Cambio de Contraseña -->
+          <!-- Formulario de Cambio de Contraseña -->
           <form id="formAuthentication" class="mb-3" th:action="@{/agente/cambia_contra_agente}" method="post">
             <!-- Contraseña Actual almacenada desde el servidor -->
-            <!--<input type="hidden" id="currentPasswordHidden" th:value="${passw}" />-->
+            <input type="hidden" id="currentPasswordHidden" th:value="${passw}" />
 
             <input type="hidden" name="id" th:value="${id}" />
 
@@ -106,22 +97,6 @@
   togglePasswordVisibility('new-password', 'toggle-password-nueva');
   togglePasswordVisibility('confirmNewPassword', 'toggle-password-confirm');
 </script>
-<script>
-    document.getElementById("formAuthentication").addEventListener("submit", function (event) {
-        const newPassword = document.getElementById("new-password").value;
-        const confirmPassword = document.getElementById("confirmNewPassword").value;
-        const regex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-
-        if (!regex.test(newPassword)) {
-            alert("La contraseña debe tener al menos 8 caracteres, incluir mayúsculas, minúsculas, números y caracteres especiales.");
-            event.preventDefault();
-        } else if (newPassword !== confirmPassword) {
-            alert("Las nuevas contraseñas no coinciden.");
-            event.preventDefault();
-        }
-    });
-</script>
-
 </body>
 </html>
 
