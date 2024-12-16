@@ -61,13 +61,28 @@
      <!-- FullCalendar CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css" rel="stylesheet" />
 
-    
+
 
     <style>
+        /* Botón de filtro activo */
+        .filter-btn.active {
+            background-color: #007bff !important; /* Color azul */
+            color: #ffffff !important; /* Letra blanca */
+            font-weight: bold;
+            border: none;
+        }
 
-       
+        /* Agregar margen al lado izquierdo del texto del botón */
+        .color-box {
+            display: inline-block;
+            width: 15px;
+            height: 15px;
+            margin-right: 10px;
+            border-radius: 3px;
+        }
     </style>
-    
+
+
 
 </head>
 
@@ -100,16 +115,30 @@
                                 </div-->
                                 <div class="panel-body">
                                     <h4 class="text-thin ">Filtro por categoria</h4>
-                                    <div id="event-filters col">
-                                        <button class="btn btn-secondary filter-btn row my-1" data-type="all">Mostrar Todos</button>
-                                        <button class="btn btn-calendar-1 filter-btn row my-1" data-type="electronica">Electronica</button>
-                                        <button class="btn btn-calendar-2 filter-btn row my-1" data-type="muebles">Muebles</button>
-                                        <button class="btn btn-calendar-3 filter-btn row my-1" data-type="accesorios">Accesarios</button>
-                                        <button class="btn btn-calendar-4 filter-btn row my-1" data-type="fotografia">Fotografía</button>
-                                        <button class="btn btn-calendar-5 filter-btn row my-1" data-type="oficina">Oficina</button>
-                                        <button class="btn btn-calendar-6 filter-btn row my-1" data-type="limpieza">Limpieza</button>
-
+                                    <div id="event-filters" class="col">
+                                        <button class="btn btn-secondary filter-btn row my-1 active" data-type="all">
+                                            <span class="color-box" style="background-color: #6c757d;"></span> Mostrar Todos
+                                        </button>
+                                        <button class="btn btn-calendar-1 filter-btn row my-1" data-type="electronica">
+                                            <span class="color-box" style="background-color: #007bff;"></span> Electronica
+                                        </button>
+                                        <button class="btn btn-calendar-2 filter-btn row my-1" data-type="muebles">
+                                            <span class="color-box" style="background-color: #28a745;"></span> Muebles
+                                        </button>
+                                        <button class="btn btn-calendar-3 filter-btn row my-1" data-type="accesorios">
+                                            <span class="color-box" style="background-color: #ffc107;"></span> Accesorios
+                                        </button>
+                                        <button class="btn btn-calendar-4 filter-btn row my-1" data-type="fotografia">
+                                            <span class="color-box" style="background-color: #6c757d;"></span> Fotografía
+                                        </button>
+                                        <button class="btn btn-calendar-5 filter-btn row my-1" data-type="oficina">
+                                            <span class="color-box" style="background-color: #dc3545;"></span> Oficina
+                                        </button>
+                                        <button class="btn btn-calendar-6 filter-btn row my-1" data-type="limpieza">
+                                            <span class="color-box" style="background-color: #fd7e14;"></span> Limpieza
+                                        </button>
                                     </div>
+
                                 </div>
                             </div>
                         </div>
@@ -219,6 +248,7 @@
                 $('#calendar').fullCalendar('addEventSource', filteredEvents);
             }
         });
+
 
     });
 
