@@ -1,6 +1,7 @@
 package com.example.telexpress.controller;
 
 import com.example.telexpress.config.DashboardService;
+import com.example.telexpress.config.EmailService;
 import com.example.telexpress.entity.*;
 import com.example.telexpress.repository.*;
 
@@ -8,6 +9,7 @@ import com.example.telexpress.repository.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +20,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.security.SecureRandom;
 import java.util.*;
 import java.time.format.DateTimeFormatter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -43,6 +46,9 @@ public class SuperAdminController {
     private final ContrasenaAgenteRespository contrasenaAgenteRespository;
     private final PasswordEncoder passwordEncoder;
     private final DashboardService dashboardService;
+
+    @Autowired
+    EmailService emailService;
 
     public SuperAdminController(AdminRepository adminRepository, ZonaRepository zonaRepository,
                                 ProductoRepository productoRepository, UsuarioRepository usuarioRepository,
@@ -1333,27 +1339,52 @@ public class SuperAdminController {
         }
         return ResponseEntity.ok(result1);
     }
+
+
+    // Para generar contraseñas temporales
+    public class PasswordGenerator {
+        private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*";
+        private static final int PASSWORD_LENGTH = 8;
+
+        public static String generatePassword() {
+            SecureRandom random = new SecureRandom();
+            StringBuilder password = new StringBuilder(PASSWORD_LENGTH);
+
+            for (int i = 0; i < PASSWORD_LENGTH; i++) {
+                int index = random.nextInt(CHARACTERS.length());
+                password.append(CHARACTERS.charAt(index));
+            }
+            return password.toString();
+        }
+    }
     @PostMapping("/actualizarRol")
     public String actualizarRol(@RequestParam("id") Integer id, RedirectAttributes redirectAttributes) {
         Optional<Usuario> optUsuario = coordinadorRepository.findById(id);
         if (optUsuario.isPresent()) {
             Usuario usuario = optUsuario.get();
-            // Comparar el id del rol, no el objeto Rol completo
-            if (usuario.getRol().getId() == 4) {
-                // Cambiar el rol del usuario a un nuevo rol con id 3
-                Rol nuevoRol = new Rol();
-                nuevoRol.setId(3); // Aquí puedes cambiarlo por el rol que necesites
 
-                // Actualizar el campo solicitudAgente a 0
-                usuario.setSolicitud(0);
+            // Solo actualizar si el rol actual es 4
+            if (usuario.getRol().getId() == 4) {
+                // Generar contraseña temporal
+                String nuevaPassword = PasswordGenerator.generatePassword();
+                String passwordEncriptada = passwordEncoder.encode(nuevaPassword);
+
+                // Actualizar rol y contraseña
+                Rol nuevoRol = new Rol();
+                nuevoRol.setId(3);
                 usuario.setRol(nuevoRol);
+                usuario.setContrasena(passwordEncriptada);
                 usuarioRepository.save(usuario);
-                redirectAttributes.addFlashAttribute("mensajeExito", "Rol actualizado correctamente a Agente");
+
+                // Enviar correo con la contraseña temporal
+                emailService.sendRoleUpdateEmail(usuario.getCorreo(), nuevaPassword, usuario.getId());
+
+                redirectAttributes.addFlashAttribute("mensajeExito", "Rol actualizado y correo enviado correctamente.");
             } else {
-                redirectAttributes.addFlashAttribute("mensajeError", "El usuario no tiene el rol requerido para la actualización");
+                redirectAttributes.addFlashAttribute("mensajeError", "El usuario no tiene el rol requerido para la actualización.");
             }
         } else {
-            redirectAttributes.addFlashAttribute("mensajeError", "Usuario no encontrado");
+            redirectAttributes.addFlashAttribute("mensajeError", "Usuario no encontrado.");
         }
         return "redirect:/superadmin/solicitud_detalle?id=" + id;
     }
