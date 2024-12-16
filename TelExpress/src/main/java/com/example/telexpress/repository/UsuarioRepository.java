@@ -54,7 +54,8 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     // Método para buscar por nombre o apellido (solo usuarios baneados)
     List<Usuario> findByEstadoUsuarioAndNombreContainingOrApellidoContaining(String estadoUsuario, String nombre, String apellido);
 
-
+    @Query("SELECT u FROM Usuario u WHERE u.idSuperior.id = :idSuperior")
+    List<Usuario> findByIdSuperior(@Param("idSuperior") int idSuperior);
 
     // Comparar con el campo id del Usuario superior
     List<Usuario> findByIdSuperior_IdAndEstadoUsuarioIgnoreCaseInAndNombreContainingIgnoreCaseOrApellidoContainingIgnoreCase(

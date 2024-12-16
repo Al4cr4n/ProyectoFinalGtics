@@ -161,21 +161,24 @@
                         <div id="existingPosts">
                             <div th:each="post : ${posts}" class="card mb-3">
                                 <div class="card-body">
-                                    <h5 th:text="${post.titulo}" class="card-title"></h5>
-                                    <p th:text="${post.contenido}" class="card-text"></p>
-                                    <small class="text-muted" th:text="${post.contenido}"></small>
-                                    <small class="text-muted" th:text="${#temporals.format(post.createdAt, 'dd/MM/yyyy HH:mm')}"></small>
+                                    <h5 th:text="${post.post.titulo}" class="card-title"></h5>
+                                    <p th:text="${post.post.contenido}" class="card-text"></p>
+                                    <small class="text-muted" th:text="${post.post.contenido}"></small>
+                                    <small class="text-muted" th:text="${#temporals.format(post.post.createdAt, 'dd/MM/yyyy HH:mm')}"></small>
                                     <div class="comments mt-3">
                                         <h6>Comentarios</h6>
                                         <div class="comments-container">
                                             <!-- Los comentarios se mostrarán aquí -->
-                                        </div>
-                                        <form class="comment-form">
-                                            <div class="mb-3">
-                                                <textarea class="form-control" rows="2" placeholder="Escribe tu comentario aquí" required></textarea>
+                                            <div th:each="comment:${post.list}">
+                                                <p th:text="${comment.content}" class="card-text"></p>
                                             </div>
-                                            <button type="submit" class="btn btn-sm btn-primary">Enviar Comentario</button>
-                                        </form>
+                                        </div>
+                                        <div class="comment-form">
+                                            <div class="mb-3">
+                                                <textarea th:id="${post.post.id}" class="form-control" rows="2" placeholder="Escribe tu comentario aquí" required></textarea>
+                                            </div>
+                                            <button class="btn btn-sm btn-primary" th:onclick="'agregarComentario(' + ${post.post.id} + ')'">Enviar Comentario</button>
+                                        </div>
                                     </div>
                                 </div>
                                 </div>
@@ -205,8 +208,47 @@
 <!-- / Layout wrapper -->
 
 <script th:inline="javascript">
+    const csrfToken = document.querySelector("meta[name='_csrf']").getAttribute("content");
+    const csrfHeader = document.querySelector("meta[name='_csrf_header']").getAttribute("content");
+    function agregarComentario( postId) {
+        console.log('calling add comment')
+        console.log(postId)
+        const textarea = document.getElementById(postId);
+        const content = textarea.value;
+
+        const commentData = {
+            content,
+            postId,
+            userId: 5 // Suponiendo que este atributo contiene el ID del usuario actual
+        };
+
+        fetch('/api/comments', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                [csrfHeader]: csrfToken
+            },
+            body: JSON.stringify(commentData)
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error al agregar comentario');
+                }
+                return response.json();
+            })
+            .then(data => {
+                //agregarComentarioALista(data, commentForm.parentNode.querySelector('.comments-container'));
+                textarea.value = '';
+               window.location.reload()
+                // mostrarNotificacion('Comentario agregado exitosamente', 'success');
+            })
+            .catch(error => {
+                console.error('Error al agregar comentario:', error);
+                mostrarNotificacion('Error al agregar comentario', 'danger');
+            });
+    }
     document.addEventListener('DOMContentLoaded', function() {
-        function agregarComentario(e, postId) {
+        function agregarComentarioxd(e, postId) {
             e.preventDefault();
             const commentForm = e.target;
             const textarea = commentForm.querySelector('textarea');
@@ -327,43 +369,7 @@
         }
 
         // Agregar un nuevo comentario
-        function agregarComentario(e, postId) {
-            console.log('calling add comment')
-            e.preventDefault();
-            const commentForm = e.target;
-            const textarea = commentForm.querySelector('textarea');
-            const content = textarea.value;
 
-            const commentData = {
-                content,
-                postId,
-                userId: commentForm.dataset.userId, // Suponiendo que este atributo contiene el ID del usuario actual
-            };
-
-            fetch('/api/comments', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    [csrfHeader]: csrfToken
-                },
-                body: JSON.stringify(commentData)
-            })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Error al agregar comentario');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    agregarComentarioALista(data, commentForm.parentNode.querySelector('.comments-container'));
-                    textarea.value = '';
-                    mostrarNotificacion('Comentario agregado exitosamente', 'success');
-                })
-                .catch(error => {
-                    console.error('Error al agregar comentario:', error);
-                    mostrarNotificacion('Error al agregar comentario', 'danger');
-                });
-        }
 
         // Agregar un post a la lista
         function agregarPostALista(post) {

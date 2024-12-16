@@ -39,26 +39,28 @@
                             <h4 style="font-family: 'Poppins', sans-serif; color: #7367F0; font-weight: bold; padding-top: 1rem; padding-bottom: 1rem; margin-bottom: 1rem; text-align: center; font-size: 40px;">
                                 Chat
                             </h4>
-                            <div id="user-list" style="margin-bottom: 20px;" th:each="idUsuario : ${listUsuario}" th:attr="id='chat-container-' + ${idAgente}">
+                            <div id="user-list" style="margin-bottom: 20px;" th:each="usuario : ${listUsuario}" th:attr="id='chat-container-' + ${idAgente}">
                                 <!-- List of users to chat with -->
-                                <button th:onclick="'openChat(' + ${idUsuario} + ', ' + ${idAgente} + ')'"
+
+                                <button th:onclick="'openChat(' + ${usuario.getId()} + ', ' + ${idAgente} + ')'"
                                         type="button"
                                         class="user-button"
-                                        th:text="'Usuario ' + ${idUsuario}">Usuario</button>
-                                <button onclick="openChat(2)">ChatBot</button>
+                                        th:text="'Chat con ' + ${usuario.getNombre()}" style="margin-left: 10px; padding: 10px 20px; background-color: #7367F0; color: white; border: none; border-radius: 5px;">Usuario</button>
+
                                 <!-- Add more users as needed -->
                             </div>
-                            <div th:each="idUsuario : ${listUsuario}" th:attr="id='chat-container-' + ${idUsuario}" class="card chat-container" style="display: none;">
+                            <div> <button onclick="openChat(2)" style="margin-left: 10px; padding: 10px 20px; background-color: #7367F0; color: white; border: none; border-radius: 5px;">ChatBot</button></div>
+                            <div th:each="usuario : ${listUsuario}" th:attr="id='chat-container-' + ${usuario.getId()}" class="card chat-container" style="display: none;">
                                 <div class="card-body">
                                     <h4 style="font-family: 'Poppins', sans-serif; color: #7367F0; font-weight: bold; padding-top: 1rem; padding-bottom: 1rem; margin-bottom: 1rem; text-align: center; font-size: 40px;">
-                                        Chat con Usuario <span th:text="${idUsuario}"></span>
+                                        Chat con Usuario <span th:text="${usuario.getNombre()}"></span>
                                     </h4>
                                     <div class="chat-box" style="display: flex; flex-direction: column; height: 500px; border: 1px solid #ccc; padding: 10px;">
                                         <!-- Asigna un ID único para cada contenedor de respuesta -->
-                                        <div th:attr="id='response-' + ${idUsuario}" style="flex-grow: 1; overflow-y: auto;"></div>
+                                        <div th:attr="id='response-' + ${usuario.getId()}" style="flex-grow: 1; overflow-y: auto;"></div>
                                         <div style="display: flex; margin-top: 10px;">
-                                            <input type="text" th:attr="id='message-' + ${idUsuario}" placeholder="Escribe tu mensaje..." style="flex-grow: 1; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
-                                            <button th:attr="onclick='sendMessage(' + ${idUsuario} + ', ' + ${idAgente} + ')'" style="margin-left: 10px; padding: 10px 20px; background-color: #7367F0; color: white; border: none; border-radius: 5px;">Enviar</button>
+                                            <input type="text" th:attr="id='message-' + ${usuario.getNombre()}" placeholder="Escribe tu mensaje..." style="flex-grow: 1; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+                                            <button th:attr="onclick='sendMessage(' + ${usuario.getId()} + ', ' + ${idAgente} + ')'" style="margin-left: 10px; padding: 10px 20px; background-color: #7367F0; color: white; border: none; border-radius: 5px;">Enviar</button>
                                         </div>
                                     </div>
                                 </div>

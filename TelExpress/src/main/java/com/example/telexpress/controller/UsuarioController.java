@@ -2,6 +2,7 @@ package com.example.telexpress.controller;
 import com.example.telexpress.config.EmailService;
 import com.example.telexpress.dao.ServicioCompraDAO;
 import com.example.telexpress.dto.DatosCompra;
+import com.example.telexpress.dto.PostDTO;
 import com.example.telexpress.dto.ProductoDTO;
 import com.example.telexpress.entity.*;
 import com.example.telexpress.repository.*;
@@ -57,11 +58,13 @@ public class UsuarioController {
     private final PostService postService;
     private final ServicioCompraDAO servicioCompraDAO;
     private final View error;
+    private final CommentRepository commentRepository;
 
 
     public UsuarioController(UsuarioRepository usuarioRepository, PagosRepository pagosRepository, ProductoRepository productoRepository, ReseniaRepository reseniaRepository,
                              OrdenesRepository ordenesRepository, DistritoRepository distritoRepository, CoordinadorRepository coordinadorRepository,
-                             ProductoOrdenesRepository productoOrdenesRepository, ContrasenaAgenteRespository contrasenaAgenteRespository, PasswordEncoder passwordEncoder, ChatRoomService chatRoomService, PostService postService, ServicioCompraDAO servicioCompraDAO, View error) {
+                             ProductoOrdenesRepository productoOrdenesRepository, ContrasenaAgenteRespository contrasenaAgenteRespository, PasswordEncoder passwordEncoder, ChatRoomService chatRoomService,
+                             PostService postService, ServicioCompraDAO servicioCompraDAO, View error, CommentRepository commentRepository) {
         this.usuarioRepository = usuarioRepository;
         this.productoRepository = productoRepository;
         this.reseniaRepository = reseniaRepository;
@@ -76,6 +79,7 @@ public class UsuarioController {
         this.postService = postService;
         this.servicioCompraDAO = servicioCompraDAO;
         this.error = error;
+        this.commentRepository = commentRepository;
     }
 
     private final OrdenesRepository ordenesRepository;
@@ -343,11 +347,23 @@ public class UsuarioController {
     public String Foro(Model model,  HttpSession session) {
 
         List<Post> posts =postService.getAllPosts();
+        List<PostDTO> postDTOList= new ArrayList<>();
+        posts.forEach(
+
+                post -> {
+                    PostDTO postDTO = new PostDTO();
+                    List<Comment> comments =  commentRepository.findByPostId(post.getId().intValue());
+                    postDTO.setPost(post);
+                    postDTO.setList(comments);
+                    postDTOList.add(postDTO);
+                }
+
+        );
         Usuario usuario = (Usuario) session.getAttribute("usuario");
         Integer idUsuario = usuario.getId();
         model.addAttribute("id", idUsuario);
         model.addAttribute("activePage", "foro");
-        model.addAttribute("posts", posts);
+        model.addAttribute("posts", postDTOList);
         return "Usuariofinal/Foro";
     }
 
