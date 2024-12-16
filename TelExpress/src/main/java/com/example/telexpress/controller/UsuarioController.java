@@ -957,13 +957,13 @@ public class UsuarioController {
     public String mostrarFormularioResenia(Model model) {
         model.addAttribute("activePage", "resenia");
 
-        // Obtener el correo del usuario autenticado desde el contexto de seguridad
+        // Obtener el usuario autenticado desde el contexto de seguridad
         String correo = SecurityContextHolder.getContext().getAuthentication().getName();
-
-        // Buscar el usuario por correo
         Usuario usuarioLogueado = usuarioRepository.findByCorreo(correo);
+
+        // Verificar si el usuario existe
         if (usuarioLogueado == null) {
-            throw new IllegalArgumentException("Usuario no encontrado");
+            throw new IllegalArgumentException("Usuario no encontrado con el correo: " + correo);
         }
 
         // Cargar lista de productos
@@ -975,7 +975,6 @@ public class UsuarioController {
         return "Usuariofinal/crear_resenia"; // Vista Thymeleaf
     }
 
-    // Método POST: Guarda una nueva reseña
     @PostMapping("/guardar_resenia")
     public String guardarResenia(@RequestParam("fotoProducto") MultipartFile fotoProducto,
                                  @RequestParam("calidad") String calidad,
@@ -984,50 +983,46 @@ public class UsuarioController {
                                  @RequestParam("tituloresena") String tituloresena,
                                  @RequestParam("tipoPublicacion") String tipoPublicacion,
                                  @RequestParam("productoId") Integer productoId,
-                                 @RequestParam("usuarioId") Long usuarioId,
+                                 @RequestParam("usuarioId") Integer usuarioId,
                                  RedirectAttributes redirectAttributes) {
         try {
-            // Crear una nueva instancia de Resenia
+            // Crear y configurar la reseña
             Resenia resenia = new Resenia();
-
-            // Guardar campos básicos
             resenia.setCalidad(calidad);
             resenia.setRapidez(rapidez);
             resenia.setPuntuacion(puntuacion);
             resenia.setTituloresena(tituloresena);
             resenia.setTipoPublicacion(tipoPublicacion);
 
-            // Convertir MultipartFile a Blob
+            // Guardar la foto
             if (!fotoProducto.isEmpty()) {
                 byte[] bytes = fotoProducto.getBytes();
                 Blob fotoBlob = new SerialBlob(bytes);
                 resenia.setFoto(fotoBlob);
             }
 
-            // Buscar Producto con Integer
+            // Asignar Producto y Usuario
             Producto producto = productoRepository.findById(productoId)
                     .orElseThrow(() -> new IllegalArgumentException("Producto no encontrado"));
 
-            // Buscar Usuario con Long
-            Usuario usuario = usuarioRepository.findById(usuarioId)
-                    .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
+            Usuario usuario = usuarioRepository.findById(usuarioId);
+            if (usuario == null) {
+                throw new IllegalArgumentException("Usuario no encontrado con ID: " + usuarioId);
+            }
 
-            // Asignar relaciones
             resenia.setProducto(producto);
             resenia.setUsuario(usuario);
 
-            // Guardar la reseña en la base de datos
+            // Guardar la reseña
             reseniaRepository.save(resenia);
-
-            // Mensaje de éxito
             redirectAttributes.addFlashAttribute("mensaje", "¡Reseña guardada con éxito!");
 
         } catch (Exception e) {
-            e.printStackTrace();
             redirectAttributes.addFlashAttribute("error", "Error al guardar la reseña: " + e.getMessage());
         }
 
-        return "redirect:/usuario/crear_resenia"; // Redirigir al formulario
+        // Redirigir al listado de reseñas
+        return "redirect:/usuario/mostrarResenias";
     }
 
     @GetMapping("/unete")
