@@ -137,9 +137,17 @@
                 <div th:if="${loginError}" class="alert alert-danger" style="margin-bottom: 20px;">
                   <p th:text="${loginError}"></p>
                 </div>
+                <!--
                 <div class="mb-3">
                   <button class="btn btn-primary d-grid w-100" type="submit">Iniciar sesión</button>
+                </div> -->
+                <div class="mb-3">
+                  <button class="btn d-grid w-100" type="submit"
+                          style="background-color: #696CFF; color: white; border: none;">
+                    Iniciar sesión
+                  </button>
                 </div>
+
               </form>
 
               <p class="text-center">

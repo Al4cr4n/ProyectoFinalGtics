@@ -167,7 +167,7 @@ public class HomeController {
         }
 
         // Generar una contraseña temporal
-        String tempPassword = UUID.randomUUID().toString().substring(0, 10); // 10 caracteres
+        String tempPassword = UUID.randomUUID().toString().substring(0, 14); // 10 caracteres
         String hashedPassword = passwordEncoder.encode(tempPassword);
 
         // Guardar la contraseña temporal en la base de datos

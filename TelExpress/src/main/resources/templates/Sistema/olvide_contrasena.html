@@ -2,32 +2,59 @@
 <html lang="en" class="light-style customizer-hide" dir="ltr" data-theme="theme-default">
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
-    <title>Olvidé mi Contraseña - TelExpress</title>
+    <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
+    />
+
+    <title>Login- TelExpress</title>
+
+    <meta name="description" content="" />
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="../../assets/img/favicon/favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="/assets/img/favicon/favicon.ico" />
 
     <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600&display=swap" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+            href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+            rel="stylesheet"
+    />
+
+    <!-- Icons. Uncomment required icon fonts -->
+    <link rel="stylesheet" href="/assets/vendor/fonts/boxicons.css" />
 
     <!-- Core CSS -->
-    <link rel="stylesheet" href="../../assets/vendor/css/core.css" />
-    <link rel="stylesheet" href="../../assets/vendor/css/theme-default.css" />
-    <link rel="stylesheet" href="../../assets/css/demo.css" />
+    <link rel="stylesheet" href="/assets/vendor/css/core.css" class="template-customizer-core-css" />
+    <link rel="stylesheet" href="/assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
+    <link rel="stylesheet" href="/assets/css/demo.css" />
 
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Vendors CSS -->
+    <link rel="stylesheet" href="/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
 
+    <!-- Page CSS -->
+    <!-- Page -->
+    <link rel="stylesheet" href="/assets/vendor/css/pages/page-auth.css" />
+    <!-- COLOR DEL FONDO-->
     <style>
         body {
-            background-color: #F2F3F4;
-        }
-        .form-title {
-            font-family: 'Poppins', sans-serif;
-            font-weight: 700;
+            background-color:#F2F3F4; /* Azul claro, puedes cambiar este valor */
         }
     </style>
+    <!--FUENTE DEL TITULO-->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap" rel="stylesheet">
+    <!--FUENTE DEL TEXTO 1-->
+    <link href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- Helpers -->
+    <script src="/assets/vendor/js/helpers.js"></script>
+
+    <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
+    <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
+    <script src="/assets/js/config.js"></script>
+
+
 </head>
 
 <body>
@@ -38,10 +65,22 @@
             <div class="card">
                 <div class="card-body">
                     <!-- Logo -->
-                    <img src="../../assets/img/avatars/1.png" class="rounded-circle" alt="Logo"
-                         style="width: 120px; display: block; margin: -20px auto;" />
+                    <img src="/assets/img/icons/unicons/logo.png" alt="Logo" style="width: 250px; display: block; margin: -70px auto -90px auto;" />
+                    <div class="app-brand justify-content-center">
+                        <!--imagen de logo-->
+                        <a th:href="@{/login}" class="app-brand-link gap-2">
+                            <h1 style="color: #696CFF; font-family: 'Poppins', sans-serif; font-size: 3rem; text-align: center; margin-bottom: 2px;">
+                                TelExpress
+                            </h1>
+                        </a>
+                    </div>
+
+                    <!--
                     <h4 class="mb-3 text-center form-title">¿Olvidaste tu Contraseña?</h4>
-                    <p class="text-center">Ingresa tu correo electrónico para restablecer tu contraseña.</p>
+                    <p class="text-center">Ingresa tu correo electrónico para restablecer tu contraseña.</p> -->
+
+                    <h4 class="mb-2" style="font-family: Zilla Slab">¿Olvidaste tu Contraseña? </h4>
+                    <p class="mb-4" style="font-family: Zilla Slab, sans-serif;">Ingresa tu correo electrónico para restablecer tu contraseña.</p>
 
                     <form id="forgotPasswordForm" class="mb-3" th:action="@{/forgot_password}" method="POST">
                         <!-- Campo de Correo -->
@@ -53,16 +92,17 @@
                         </div>
 
                         <!-- Botón de Enviar -->
-                        <div class="mb-3">
-                            <button type="button" class="btn btn-primary w-100" data-bs-toggle="modal"
-                                    data-bs-target="#confirmModal">
+                        <div class="mb-3 text-center">
+                            <button type="submit" class="btn w-75" data-bs-toggle="modal"
+                                    data-bs-target="#confirmModal"
+                                    style="background-color: #696CFF; color: white; border: none;">
                                 Enviar Correo de Recuperación
                             </button>
                         </div>
 
                         <!-- Botón de Regresar -->
-                        <div class="mb-3">
-                            <a class="btn btn-secondary mx-2" th:href="@{/login}">Volver</a>
+                        <div class="mb-3 text-center">
+                            <a class="btn btn-danger w-75" th:href="@{/login}">Volver</a>
                         </div>
                     </form>
                 </div>
@@ -70,8 +110,8 @@
         </div>
     </div>
 </div>
-
-<!-- Modal de Confirmación -->
+<!-- <button type="button" class="btn btn-primary" id="confirmSend">Enviar</button> -->
+<!-- Modal de Confirmación
 <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -84,20 +124,56 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-primary" id="confirmSend">Enviar</button>
+
+                <button type="button" class="btn" id="confirmSend"
+                        style="background-color: #696CFF; color: white; border: none;">
+                    Enviar
+                </button>
+
+
             </div>
         </div>
     </div>
-</div>
+</div>-->
 
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/assets/vendor/libs/jquery/jquery.js"></script>
+<script src="/assets/vendor/libs/popper/popper.js"></script>
+<script src="/assets/vendor/js/bootstrap.js"></script>
+<script src="/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
 
+<script src="/assets/vendor/js/menu.js"></script>
+<!-- endbuild -->
+
+<!-- Vendors JS -->
+
+<!-- Main JS -->
+<script src="/assets/js/main.js"></script>
+
+<!-- Page JS -->
+
+<!-- Place this tag in your head or just before your close body tag. -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+<script>
+    document.getElementById('forgotPasswordForm').addEventListener('submit', function(event) {
+        var emailInput = document.getElementById('email');
+        if (emailInput.value === '') {
+            alert('Por favor, ingresa un correo electrónico.');
+            event.preventDefault(); // Previene el envío del formulario
+        } else if (!emailInput.validity.valid) {
+            alert('Por favor, ingresa un correo válido.');
+            event.preventDefault(); // Previene el envío del formulario
+        }
+    });
+</script>
+
+<!--
 <script>
     document.getElementById('confirmSend').addEventListener('click', function () {
         // Enviar el formulario desde el botón del modal
         document.getElementById('forgotPasswordForm').submit();
     });
-</script>
+</script> -->
 </body>
 </html>
