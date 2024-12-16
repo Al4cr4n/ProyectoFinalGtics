@@ -42,6 +42,7 @@ import java.util.stream.Collectors;
 import org.springframework.web.multipart.MultipartFile;
 import java.sql.Blob;
 import javax.sql.rowset.serial.SerialBlob;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 
 
 @Controller
@@ -863,7 +864,6 @@ public class UsuarioController {
         model.addAttribute("resenias", resenias); // Pasar las reseñas al modelo
         return "Usuariofinal/resenia"; // Nombre de tu archivo HTML de Thymeleaf (resenias.html)
     }
-
     // Método para mostrar todas las reseñas
     @GetMapping("/mostrarResenias")
     public String mostrarResenias(Model model, @RequestParam(value = "search", required = false) String search) {
@@ -892,18 +892,18 @@ public class UsuarioController {
     }
     // Método GET: Muestra el formulario para crear reseñas
     @GetMapping("/crear_resenia")
-    public String mostrarFormularioResenia(Model model) {
+    public String mostrarFormularioResenia(Model model, @AuthenticationPrincipal Usuario usuarioLogueado) {
         model.addAttribute("activePage", "resenia");
 
-        // Cargar lista de productos y usuarios disponibles (para relacionar con la reseña)
+        // Cargar lista de productos
         List<Producto> productos = productoRepository.findAll();
-        List<Usuario> usuarios = usuarioRepository.findAll();
 
         model.addAttribute("productos", productos);
-        model.addAttribute("usuarios", usuarios);
+        model.addAttribute("usuario", usuarioLogueado); // Usuario logueado
 
         return "Usuariofinal/crear_resenia"; // Vista Thymeleaf
     }
+
 
     // Método POST: Guarda una nueva reseña
     @PostMapping("/guardar_resenia")
@@ -959,8 +959,6 @@ public class UsuarioController {
 
         return "redirect:/usuario/crear_resenia"; // Redirigir al formulario
     }
-
-
 
     @GetMapping("/unete")
     public String mostrarFormulario(Model model) {
