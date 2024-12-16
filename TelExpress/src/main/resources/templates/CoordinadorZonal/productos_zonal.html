@@ -147,7 +147,7 @@
                                 <tr th:each="producto, iter : ${producto}">
                                     <td><strong th:text="${iter.count}"></strong></td>
                                     <td th:text="${producto.nombreProducto}"></td>
-                                    <td th:text="${producto.categoria}"></td>
+                                    <td th:text="${producto.categorias.nombre}"></td>
                                     <td th:text="${producto.cantidadDisponible}"></td>
                                     <td>
                                         <button
@@ -182,7 +182,7 @@
                                                 data-bs-target="#fechaModal"
                                                 th:data-producto-id="${producto.idProducto}"
                                                 th:data-producto-nombre="${producto.nombreProducto}"
-                                                th:data-producto-categoria="${producto.categoria}">
+                                                th:data-producto-categoria="${producto.categorias.nombre}">
                                             <img src="/assets/img/icons/unicons/editarcalendario.png" alt="Imagen Modal" style="width: 24px; height: 24px;">
                                         </button>
                                     </td>
