@@ -1,4 +1,4 @@
-/*package com.example.telexpress.controller;
+package com.example.telexpress.controller;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.http.HttpServletRequest;
@@ -43,4 +43,4 @@ public class CustomErrorController implements ErrorController {
         model.addAttribute("errorMessage", "Ha ocurrido un error");
         return "Sistema/error";
     }
-}*/
+}
